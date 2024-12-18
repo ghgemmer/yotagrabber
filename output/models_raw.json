@@ -33,8 +33,8 @@
   },
   {
     "asShownDisclaimer":null,
-    "asShown":"$50,385 as shown [global_msrp_as_shown_disclaimer]",
-    "cityMPG":null,
+    "asShown":"$41,395 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"",
     "disclaimer":"",
     "family":[
       "Crossovers &amp; SUVs",
@@ -42,25 +42,25 @@
     ],
     "families":[
       {
-        "seqNo":10,
+        "seqNo":11,
         "familiyType":"Crossovers &amp; SUVs"
       },
       {
-        "seqNo":13,
+        "seqNo":14,
         "familiyType":"Electrified"
       }
     ],
     "hoverImage":null,
-    "hwyMPG":null,
-    "image":"https:\/\/www.toyota.com\/imgix\/content\/dam\/toyota\/jellies\/relative\/2024\/bz4x\/base.png",
+    "hwyMPG":"",
+    "image":"https:\/\/www.toyota.com\/imgix\/content\/dam\/toyota\/jellies\/relative\/2025\/bz4x\/base.png",
     "modelCode":"bz4x",
-    "msrp":"43070",
+    "msrp":"37070",
     "series":"bZ4X",
     "shortDescription":null,
     "title":"bZ4X",
-    "year":"2024",
+    "year":"2025",
     "mpgDisclaimerCode":"",
-    "mpgeDisclaimerCode":"[global_bz4x_2024_total_range_disclaimer]",
+    "mpgeDisclaimerCode":"[global_bz4x_2025_total_range_disclaimer]",
     "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
     "mpge":null,
     "range":"252",
@@ -839,9 +839,9 @@
   },
   {
     "asShownDisclaimer":null,
-    "asShown":"$43,325 as shown [global_msrp_as_shown_disclaimer]",
+    "asShown":"$42,900 as shown [global_msrp_as_shown_disclaimer]",
     "cityMPG":"21",
-    "disclaimer":"[global_prelim_mpg_2024_disclaimer]",
+    "disclaimer":"[global_prelim_mpg_2025_disclaimer]",
     "family":[
       "Trucks"
     ],
@@ -853,27 +853,27 @@
     ],
     "hoverImage":null,
     "hwyMPG":"26",
-    "image":"https:\/\/www.toyota.com\/imgix\/content\/dam\/toyota\/jellies\/relative\/2024\/tacoma\/base.png",
+    "image":"https:\/\/www.toyota.com\/imgix\/content\/dam\/toyota\/jellies\/relative\/2025\/tacoma\/base.png",
     "modelCode":"tacoma",
-    "msrp":"31500",
+    "msrp":"31590",
     "series":"Tacoma",
     "shortDescription":null,
     "title":"Tacoma",
-    "year":"2024",
-    "mpgDisclaimerCode":"[global_prelim_mpg_2024_disclaimer]",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_prelim_mpg_2025_disclaimer]",
     "mpgeDisclaimerCode":"",
     "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
     "mpge":null,
-    "range":null,
+    "range":"",
     "topLabel.iconField":null,
     "topLabel.textField":"",
     "bottomLabel.textField":""
   },
   {
     "asShownDisclaimer":null,
-    "asShown":"$64,900 as shown [global_msrp_starting_disclaimer]",
+    "asShown":"$63,735 as shown [global_msrp_as_shown_disclaimer]",
     "cityMPG":"23",
-    "disclaimer":"[global_prelim_mpg_2024_disclaimer]",
+    "disclaimer":"[global_prelim_mpg_2025_disclaimer]",
     "family":[
       "Trucks",
       "Electrified"
@@ -884,24 +884,24 @@
         "familiyType":"Trucks"
       },
       {
-        "seqNo":18,
+        "seqNo":20,
         "familiyType":"Electrified"
       }
     ],
     "hoverImage":null,
     "hwyMPG":"24",
-    "image":"https:\/\/www.toyota.com\/imgix\/content\/dam\/toyota\/jellies\/relative\/2024\/tacomahybrid\/base.png",
+    "image":"https:\/\/www.toyota.com\/imgix\/content\/dam\/toyota\/jellies\/relative\/2025\/tacomahybrid\/base.png",
     "modelCode":"tacomahybrid",
-    "msrp":"46300",
+    "msrp":"46320",
     "series":"Tacoma i-FORCE MAX",
     "shortDescription":null,
     "title":"Tacoma i-FORCE MAX",
-    "year":"2024",
-    "mpgDisclaimerCode":"[global_prelim_mpg_2024_disclaimer]",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_prelim_mpg_2025_disclaimer]",
     "mpgeDisclaimerCode":"",
     "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
     "mpge":null,
-    "range":null,
+    "range":"",
     "topLabel.iconField":null,
     "topLabel.textField":"Hybrid EV",
     "bottomLabel.textField":""

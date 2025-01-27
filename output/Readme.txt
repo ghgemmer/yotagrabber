@@ -1,12 +1,15 @@
 This folder contains the inventory for all Toyota vehicle models in the US (including Alaska, and Hawaii).
 
-Folder updates typically show up each day at 4am CDT. Each model's inventory is placed in a .csv file.  A raw
+Folder updates typically show up each day around 6am CDT. Each model's inventory is placed in a .csv file.  A raw
 pandas parquet file is also created which is the raw inventory gotten from the Toyota website for the model
 before various fitlering is applied, such as only current and last year vehicles, certain fields are removed,
-some field names and content are modified for readability, etc). There is a <model>_StatusInfo.json file also associated
+some field names and content are modified for readability, etc). There is also a <model>_StatusInfo.json file  associated
 with the raw parquet file that indicates status details of the gotten raw inventory which are: 
-did the get work (got valid responses although may be missing some vehicles),  
+did the get work (got some valid responses although may be missing some vehicles),  
 how many vehicles found, how many vehicles were missing, date and time of the get.
+
+For some unknown reason we are not able to get all the grandhighlander inventory (miss some 1200 vehicles)
+and usually miss getting some 17 highlander vehicles.  Still in the process of investigating this
 
 A log file InventoryRunlog.txt is also provided which indicates when the inventory search started, log of
 progress on getting each model (page number on , number of pages, number of records, any error messages or

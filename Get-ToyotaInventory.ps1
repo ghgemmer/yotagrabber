@@ -64,7 +64,12 @@ function Get-VehicleInventoryForModelsA {
             }
             Write-Host "Uploading Inventory to Google Drive Started"
             py src\upload-files.py ".\output"  "Vehicle_Inventory"  $credentialsFileName
-            Write-Host "Uploading Inventory to Google Drive Completed"
+            if ($LASTEXITCODE -ne 0) { 
+                Write-Host "Error: Failed to upload all inventory to google drive"
+            } 
+            else {
+                Write-Host "Uploading Inventory to Google Drive Completed"
+            }   
         }
     }
     else

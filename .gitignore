@@ -169,3 +169,4 @@ credentials.json
 /output/*
 !/output/Readme.txt
 !/output/rav4pluginhybrid_StatusInfo.json
+/src/Edit*

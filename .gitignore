@@ -170,3 +170,17 @@ credentials.json
 !/output/Readme.txt
 !/output/rav4pluginhybrid_StatusInfo.json
 /src/Edit*
+/src/*
+!/src/SearchVehicles-Example_config.yaml
+!/src/SearchVehiclesRav4pluginhybrid_config.yaml
+!/src/zipCodesToCheck.txt
+!/src/pkgInstallList-latest.txt
+!/src/pkgInstallList.txt
+!/src/Invocation.txt
+!/src/XSE_PP_CloseToIowa_UserMatchCriteriaFilter.py
+!/src/upload-files.py
+!/src/searchForVehicles.py
+!/src/Rav4PluginHybridUserMatchCriteriaFilter.py
+!/src/Example_UserMatchCriteriaFilter.py
+!/src/dealers.py
+!/src/MatchSoundNotification.mp3

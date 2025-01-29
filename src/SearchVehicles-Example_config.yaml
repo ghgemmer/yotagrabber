@@ -39,6 +39,14 @@ resultsFileName: '.\SearchVehiclesResults.txt',
 # 
 # runOnceAndExit: False,
 
+# maxNumberRawMissingVehicles - Indicates the maximum number of Raw missing vehicles we allow. 
+# When the inventory is gotten for a given model we get an indication upfront of how many vehicles there are for that model.
+# If we cannot get all those vehicles then the number we don't get are considered missing.
+# We will only report results if the number of missing vehicles is less than or equal to this value
+# otherwise we consider the data returned from the website to be insufficient to show results.
+# Default 0.
+#maxNumberRawMissingVehicles: 0,
+
 # minWaitTimeBetweenSearches is the minimum time to wait between searches when nothing was found so as to not overload the website with requests.
 # maxRandomAdderTimeBetweenSearches is the max random time to add to the min time to get the total time between searches to provide some randomness
 # Time delay before next search  = minWaitTimeBetweenSearches + (random number between 0 and 1 * maxRandomAdderTimeBetweenSearches)

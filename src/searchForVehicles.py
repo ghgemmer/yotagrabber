@@ -41,7 +41,7 @@ from timeit import default_timer as timer
 from yotagrabber import vehicles
 
 # Version
-searchForVehiclesVersionStr = "Ver 1.11 Jan 25 2025"  #
+searchForVehiclesVersionStr = "Ver 1.12 Jan 28 2025"  #
 
 class userMatchCriteria:
     def __init__(self):
@@ -111,6 +111,8 @@ debugEnabled = False
 useLocalInventoryFile = False
 
 runOnceAndExit = False
+
+maxNumberRawMissingVehicles = 0
 
 minWaitTimeBetweenSearches = 60*20 #secs
 maxRandomAdderTimeBetweenSearches = 60*10 #secs
@@ -219,6 +221,7 @@ configParametersInfo = {
 "userMatchCriteriaFilterFileName": configParameterInfo(),
 "useLocalInventoryFile": configParameterInfo(),
 "runOnceAndExit": configParameterInfo(),
+"maxNumberRawMissingVehicles": configParameterInfo(),
 "minWaitTimeBetweenSearches": configParameterInfo(),
 "maxRandomAdderTimeBetweenSearches": configParameterInfo(),
 "debugEnabled": configParameterInfo(),
@@ -256,6 +259,7 @@ def parseConfigFile(fileName):
     global userMatchCriteriaFilterFileName
     global useLocalInventoryFile
     global runOnceAndExit
+    global maxNumberRawMissingVehicles
     global minWaitTimeBetweenSearches
     global maxRandomAdderTimeBetweenSearches
     global debugEnabled
@@ -309,6 +313,8 @@ def parseConfigFile(fileName):
                             useLocalInventoryFile = paramsDic[paramName]
                         elif paramName == "runOnceAndExit":
                             runOnceAndExit = paramsDic[paramName]
+                        elif paramName == "maxNumberRawMissingVehicles":
+                            maxNumberRawMissingVehicles = paramsDic[paramName]
                         elif paramName == "userMatchCriteriaFilterFileName":
                             userMatchCriteriaFilterFileName = paramsDic[paramName]
                         elif paramName == "minWaitTimeBetweenSearches":
@@ -865,8 +871,10 @@ def getOutputResultsMethodString(outputResultsMethod):
 
 def outputSearchingInfoToUser(matchCriteria):
     global username
+    global maxNumberRawMissingVehicles
     print("outputResultsMethod:", getOutputResultsMethodString(outputResultsMethod))
     print("runOnceAndExit: ", runOnceAndExit)
+    print("maxNumberRawMissingVehicles: ", maxNumberRawMissingVehicles)
     print(getModelToGetInfo())
     matchCriteria.print("", toConsole = True)
     print("Username:", username)
@@ -1075,6 +1083,7 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
     global matchesFoundEvent
     global resultsFileName
     global unitDetailsDelimiter
+    global maxNumberRawMissingVehicles
     modelInfoStr = getModelToGetInfo()
     # get date and time for timstamping this log entry
     dt = datetime.datetime.now().astimezone()  #local date time with timezone
@@ -1129,6 +1138,7 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
         f.write("-------------------------------------------------------------------------- \n")
         f.write("outputResultsMethod: " + getOutputResultsMethodString(outputResultsMethod) + "\n")
         f.write(modelInfoStr + "\n")
+        f.write("maxNumberRawMissingVehicles: " + str(maxNumberRawMissingVehicles) + "\n")
         f.write(updateVehiclesStatusMsg + "\n")
         matchCriteria.print("", f, toConsole = False)
         f.write("Username: " + username + "\n")
@@ -1233,6 +1243,7 @@ def searchForVehicles(args):
     global lastRunUserMatchesParquetFileName
     global useLocalInventoryFile
     global runOnceAndExit
+    global maxNumberRawMissingVehicles
     try:
         print("Search for Vehicles program", searchForVehiclesVersionStr)
         done = False
@@ -1250,6 +1261,7 @@ def searchForVehicles(args):
         logToResultsFile("--------------------------------------------------------------------------", printIt = False, timestamp = False)        
         logToResultsFile("Started Up Search For Vehicles program " + searchForVehiclesVersionStr + " ------------------------------------------", printIt = False) 
         logModelToGetInfo()
+        logToResultsFile("maxNumberRawMissingVehicles: " + str(maxNumberRawMissingVehicles) , printIt = True, timestamp = False)
         notificationsInitialization()
         notificationsAuthorization()
         notifyRemoteUserOfSearchStart()
@@ -1277,7 +1289,8 @@ def searchForVehicles(args):
             df, updateVehiclesCompletionStatus = vehicles.update_vehicles_and_return_df(dbgUsingLocalVehicleDataFile or useLocalInventoryFile)
             updateVehiclesStatusMsg = createUpdateVehiclesStatusMsg(updateVehiclesCompletionStatus)
             print(updateVehiclesStatusMsg)
-            if (df is not None) and updateVehiclesCompletionStatus["completedOk"] and (updateVehiclesCompletionStatus["numberRawVehiclesMissing"] < 15):
+            print("maxNumberRawMissingVehicles: ", maxNumberRawMissingVehicles)
+            if (df is not None) and updateVehiclesCompletionStatus["completedOk"] and (updateVehiclesCompletionStatus["numberRawVehiclesMissing"] <= maxNumberRawMissingVehicles):
                 #replace nan with None in the DataFrame to ease computations later on 
                 df = df.replace({np.nan: None})
                 # Filter the dataframe against user defined match criteria
@@ -1295,6 +1308,7 @@ def searchForVehicles(args):
                     print("searchForVehicles lastUserMatchesDf \n", lastUserMatchesDf)
             else:
                 logToResultsFile(updateVehiclesStatusMsg, printIt = False)
+                logToResultsFile("maxNumberRawMissingVehicles: " + str(maxNumberRawMissingVehicles) , printIt = False, timestamp = False)
             if useLocalInventoryFile or runOnceAndExit:
                 break
             waitForNextSearchTime()

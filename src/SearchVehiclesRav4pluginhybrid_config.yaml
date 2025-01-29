@@ -1,0 +1,265 @@
+{username: "ghgemmer",  # Not used for now
+
+# resultsFileName is the file where match results are appended to.
+resultsFileName: '.\SearchVehiclesRav4pluginhybridResults.txt',
+
+# useLocalInventoryFile -  Indicates to use the existing raw local vehicle inventory file for the model (parquet file) 
+# and not query the website to get current inventory.
+# Default is False
+# !!!!!  When true, the search program will only do one search and then exit the program, thus continuous searching is disabled.
+# !!!!!  Thus minWaitTimeBetweenSearches, and maxRandomAdderTimeBetweenSearches are not applicable in this case
+# This is typically used when a higher level script/batch program runs the vehicles.py program to get the current
+# inventory from the website for a given model (which creates that local inventory file for that model) and then runs IN SERIES
+# one or more searches that use different user match criteria on that model.
+# These different searches put their results in different results files (specified in the config file)
+# and the email/text notifications for each can use different prefixes (specified in the config file) to easily allow 
+# the user to see which match criteria the notification is for.
+# This can be used to reduce the amount of traffic the website receives for a given model by getting the current inventory once
+# and then running the several searches against it in series. 
+# This also allows the script/batch/powershell program to be more flexibly scheduled by the user via the OS
+# to run at whatever intervals/times the user wants
+#
+# Another alternative is the user can just run each search in a separate command/terminal window and directory, with 
+# useLocalInventoryFile to False in each config file. This maintains the separate search times, search results and 
+# unique notifications as above but does increase traffic to the website as each continuous search is 
+# requesting the inventory.
+#
+# Note that alternativley the user can always combine all the user criteria together(via Or logic), set useLocalInventoryFile
+# to False, and the search program will continuously search when started up. The disadvantge to that is it is 
+# harder to see which individual criteria matched in the search results logs, notifications and email/texts.
+#   
+#useLocalInventoryFile: False,
+
+
+# minWaitTimeBetweenSearches is the minimum time to wait between searches when nothing was found so as to not overload the website with requests.
+# maxRandomAdderTimeBetweenSearches is the max random time to add to the min time to get the total time between searches to provide some randomness
+# Time delay before next search  = minWaitTimeBetweenSearches + (random number between 0 and 1 * maxRandomAdderTimeBetweenSearches)
+# !!! Note that by hitting the return key you can end any current wait and immediately proceed
+# !!! Hitting Ctrl-C terminates the program
+minWaitTimeBetweenSearches: 14400, # 60 * 60 * 4 secs
+maxRandomAdderTimeBetweenSearches: 1800, # 60*30 secs
+
+# userMatchCriteriaFilterFileName - The file name of a python (must have .py ending extension) file that contains two functions.
+# def filterDataFrame (df):  
+#    where df is the passed panda data frame to be filtered to meet the desired user match criteria and the function return value 
+#    is the filtered data frame (leaving df unchanged)
+# 
+# def criteriaPrintableString ():  
+#    returns a printable string containing the user match criteria.  This can be the panda expression used to do the filtering
+#    or whatever indicates the filtering that was done. 
+#
+# See Example_UserMatchCriteriaFilter.py for an example of this file.
+# userMatchCriteriaFilterFileName config item must be present and the file must exist otherwise a config file error is issued.
+# 
+userMatchCriteriaFilterFileName: '.\Rav4PluginHybridUserMatchCriteriaFilter.py',
+
+
+# outputResultsMethod -  Determines how unfiltered match results are output to the running history file, and user notifications.
+# Default is outputAllSearchResultsOnChange when commented out.
+# outputResultsMethod is one of the following values:
+# "outputAllSearchResultsOnChange" -  Outputs all the unfiltered search results to the history file and user notifications when changes occur 
+# "outputChangedSearchResultsOnChange" - Outputs only the changes in unfiltered search results to the history file and notifications when changes occur
+# "outputAddedSearchResultsOnChange"  - Outputs only the added units compared to the previous results (thus removals and stay the same not printed) when changes occur
+outputResultsMethod: "outputChangedSearchResultsOnChange",
+
+# For debugging set this to true
+debugEnabled: False,
+
+#  email, text and sound notification events.
+#  An email, text, or sound is sent/played for the notification events specified for it
+#  Note that other config items settings or program conditions may override this  even if soundNotificationEvents has matchesFoundEvent in it
+#  Also sound notifications are not played for programStartUpEvent, programTerminateEvent events regardless of them being in soundNotificationEvents 
+#  Notification events are as follows"
+#  "programStartUpEvent", "programTerminateEvent", "matchesFoundEvent", "
+# 
+# Defaults are as follows when the item is not present or commented out:
+#emailNotificationEvents: [ "matchesFoundEvent"],
+#textNotificationEvents: ["matchesFoundEvent"],
+#soundNotificationEvents: ["matchesFoundEvent"],
+#
+#emailNotificationEvents: [ "matchesFoundEvent"],
+textNotificationEvents: [],
+#soundNotificationEvents: ["matchesFoundEvent],
+
+
+# 1 second or so sound file for notification sound from laptop or computer when a match occurs.  Comment out if don't want computer sound notification
+# This sound file is played approx 30 times when a match is found with 1 second between plays.  Aborting the search stops the playing.
+computerSoundNotificationFileName: '.\MatchSoundNotification.mp3',
+
+# emailingMethod -  Indicates the method used for emailing.  
+# If emailing notifications and texting notifications via email to text are not used leave emailingMethod commented out.
+# emailingMethod is one of the following strings
+# "emailMessagingWithGmailAndCreds" -  Uses gmail with OAuth authorization.  The sender has a gmail account and has set it up for OAuth 2 credential operation
+#   For this method the authenticationAuthorizationPath config item applies.  This is the most secure method of accessing your email server.
+# "emailMessagingWithLogin" - Uses user login to the email account.   Less secure method but still acceptable, and easier to setup than the emailMessagingWithGmailAndCreds.  
+#   For a google account requires
+#   the password to be an app generated password as the Less Secure Apps Enable setting is no longer allowed by google.
+#   This password should be remembered, but not shared, and the user must enter it each time the search program is started up
+#   and is not saved off by the program in any manner.
+#   When using this it is generally more secure to create another google account
+#   that is only used to send search notifications so if that account gets compromised it's not a big impact on the user.
+#   For this method the emailMessagingServerUrl needs to be supplied.
+#
+emailingMethod: "emailMessagingWithGmailAndCreds",
+#emailingMethod: "emailMessagingWithLogin",
+
+# emailMessagingServerUrl -  Used with emailMessagingWithLoginMethod.  Specifies the email server to access
+#    If not using , leave commented out or a non blank valid value
+emailMessagingServerUrl: "smtp.gmail.com",
+
+# textingMethod -  Indicates the method used for texting.  If texting is not used leave textingMethod commented out.
+# Texting allows a user to easily be notified via a smartphone of search notifications.  Additionally most smartphone
+# texting apps can set a unique notification sound based on who sent the received text message thus allowing an easy way
+# day or night to know if a search notification was received such as a search match.
+#
+# textingMethod is one of the following strings
+# "textMessagingViaEmail" -  text messages are sent by sending an email to an sms gateway.  
+#    The text "to" address, which is an email address, is basically of the form  <phone number>@<smsgateway>.  See farther down below for more detail
+#    Texts may be significantly delayed in time (hours) depending on the priorities of the carriers sms gateway.
+#    Generally do a test trial with this to determine the delay and if it is acceptable.
+#    The advantage of this method is that it is free to use.  The disadvantage is that there could be unacceptable delays in reception of the message.
+#    Note:  google voice numbers are free and in general there is usually no delay or very little delay when sending from your gmail
+#    to the associated google voice number.  Both Android and Apple phones have a google voice app so you can receive and send google voice calls
+#    and thus have a unique sound notification for who you received them from.
+#
+#
+# "textMessagingWithSinch" - Uses a Sinch account to send texts.  This is a SMS/MMS service that charges by the message sent/received
+# and monthly for the phone number.  
+# Use this when text messaging via email has to much of a delay as this service has more of a guarantee of timely delivery.
+# Again this service charges a small cost for each message sent/received, on the order of $1.22 for 100 messages
+# and $2/month for the phone number  (as of 8/4/2022).
+#
+# "textMessagingWithTwilio" - Uses a Twilio account to send texts.  This is a SMS/MMS service that charges by the message sent/received
+# and monthly for the phone number.  
+# Use this when text messaging via email has to much of a delay as this service has more of a guarantee of timely delivery.
+# Again this service charges a small cost for each message sent/received, on the order of $1.22 for 100 messages
+# and $1.75/month (unless you opt out of emergency calling, then $1/month but caveats apply to this)  for the phone number (as of 8/4/2022).
+#
+textingMethod: "textMessagingViaEmail",
+#textingMethod: "textMessagingWithSinch",
+#textingMethod: "textMessagingWithTwilio",
+
+# For textMessagingWithSinch textingMethod the following are required:  Leave these commented out if not used or non blank and valid.
+# servicePlanId - is the sinch service plan Id for your sinch source phone numbers.
+# sinchAuthorizationToken - is the sinch authorization token for sinch source phone numbers.
+# sinchRegion - is the sinch region for sinch source phone numbers  (like us, ca, etc).
+#sinchServicePlanId: "", 
+#sinchAuthorizationToken: "",
+#sinchRegion: "us", 
+
+# For textMessagingWithTwilio textingMethod the following are required:  Leave these commented out if not used or non blank and valid.
+# twilioSid - is the twilio account sid for your twilio source phone number.
+# twilioAppKeySid - is the twilio App Key sid for your twilio source phone number.  To create an App key sid and secret go to your account in twilio.com
+# twilioAppKeySecret - is the twilio App Key secret for your twilio source phone number.
+# App Keys can be deleted to prevent access if they have been compromised, and then a new one created.
+#twilioSid: "", 
+#twilioAppKeySid: "",
+#twilioAppKeySecret: "",
+
+# textOnlyMatchesNotification -  Indicates that for texts, to only send match notification and not the start and stop notification texts.
+# Defaults to True if left commented out.  If not commented out must be a valid value (True or False).
+# This does not affect emails which get all notifications.
+# Can be used to reduce message costs when using paid texting platforms
+textOnlyMatchesNotification: True,
+
+# Notification Text message 'To' address when sending text notifications.  Leave commented out if do not want to send text message notifications.
+# This is the overall enable/disable of sending text message notifications.
+# When not using the textMessagingViaEmail textingMethod the "to" address is a 10 digit phone number with possibly a 1 added to the front of it
+# depending on the text service.
+
+# When using the textMessagingViaEmail textingMethod the format of a text message 'To' address is as follows:
+# Note: You can also just lookup the format for sending sms, mms messages by using https://www.freecarrierlookup.com/  and entering the phone number
+
+# !!! For sending google voice text messages via gmail the 'To' address is :  <1 plus 10 digitphone google voice phone number>.<1 plus 10 digitphone number to send to>.<special identifier based on those phone numbers>@txt.voice.google.com
+#    That 'To' address is obtained by sending a text message from google voice with the
+#    "forward messages to email" google voice setting enabled.  Then reply from the phone the text message was received on and look at the received gmail's 'To' address.
+#    That is the 'To' address you want to use when sending texts to that phone number using gmail.
+#    Note: For sending a text to your own google voice number it appears you cannot use an email sender address other than the one tied to the google voice
+#    number !!!!  So either that must be used or alternatively send to an actual cell phone number (say the one tied to the google voice number)
+#    Note:  google voice numbers are free and in general there is usually no delay or very little delay when sending from your gmail
+#    to the associated google voice number.  Both Android and Apple phones have a google voice app so you can receive and send google voice calls
+#    and thus have a unique sound notification for who you received them from.
+# For other phone carriers
+# To send a text message via email, you must use a SMS or MMS to email gateway (email address). 
+# Just substitute a 10-digit cell phone number for ‘number’ for each carrier below:
+# how to send text messages from email
+# Note that in general choose the SMS one over the MMS as long as not sending pictures too.
+# The SMS ones usually limit text to 160 chars.
+# 
+# AT&T: number@txt.att.net (SMS), number@mms.att.net (MMS)
+# Boost Mobile: number@sms.myboostmobile.com (SMS), number@myboostmobile.com (MMS)
+# C-Spire: number@cspire1.com
+# Consumer Cellular: number@mailmymobile.net
+# Cricket: number@sms.cricketwireless.net (SMS), number@mms.cricketwireless.net (MMS)
+# Google Fi (Project Fi): number@msg.fi.google.com (SMS & MMS)
+# Metro PCS: number@mymetropcs.com (SMS & MMS)
+# Mint Mobile: number@mailmymobile.net (SMS)
+# Page Plus: number@vtext.com (SMS), number@mypixmessages.com (MMS)
+# Red Pocket: Red Pocket uses AT&T or T-Mobile (for GSM SIMs) & Verizon for CDMA. See info. for those carriers.
+# Republic Wireless: number@text.republicwireless.com (SMS)
+# Simple Mobile: number@smtext.com (SMS)
+# Sprint: number@messaging.sprintpcs.com (SMS), number@pm.sprint.com (MMS)
+# T-Mobile: number@tmomail.net (SMS & MMS)
+# Ting: number@message.ting.com (SMS for CDMA), number@tmomail.net (SMS for GSM)
+# Tracfone: number@mmst5.tracfone.com (MMS)
+# U.S. Cellular: number@email.uscc.net (SMS), number@mms.uscc.net (MMS)
+# Verizon: number@vtext.com (SMS), number@vzwpix.com (MMS)
+# Virgin Mobile: number@vmobl.com (SMS), number@vmpix.com (MMS)
+# Xfinity Mobile: number@vtext.com (SMS), number@mypixmessages.com (MMS)
+
+"notificationTextMsgToAddress": '13197750436.13197750436.FCcsw16C9-@txt.voice.google.com',
+#"notificationTextMsgToAddress": '13199294361',
+#"notificationTextMsgToAddress": '3199294361@vtext.com',
+
+# For verizon phone nubmers leave the long distance "1" prefix off the verizon number.  Also check other numbers for this as well
+# <number>@vtext.com for email to text appears to be delayed sometimes in receiving message by about 10 minutes and sometimes even way longer so may not be reliable enough???
+# It can also seem to send messages out of order if sent back to back (most recent sent first)
+# while @txt.voice.google.com appears right away in reception.
+
+# If you want to send a text message and the textingMethod  is not textMessagingViaEmail then set this  as the 10 digit phone number 
+# of the sender of the text (with possibly a 1 prefix added), otherwise leave it commented out or non blank and valid.
+#twilio phone number 13193204240
+"notificationTextMsgFromAddress": '13193204240',
+#"notificationTextMsgFromAddress": '12064743795',
+
+# If you want to send email notifications set this email "To" address otherwise leave it commented out
+# This is the overall enable/disable of sending email notifications.
+"notificationEmailToAddress": "ghgemmer@gmail.com",
+
+# If want to send email notifications or text messages via emails set this sender address with your own email address otherwise leave it commented out or non blank and valid
+"notificationSenderEmailAddress": "ghgemmer@gmail.com",
+#"notificationSenderEmailAddress": "exchangesearchoperationsgg@gmail.com",
+
+# authenticationAuthorizationPath is path to where the google project credentials.json and token.json files are when using
+# the  "emailMessagingWithGmailAndCreds" emailingMethod.  If not using that emailingMethod then leave it commented out or non blank and valid
+# Use of these OAuth 2.0 credentials are strongly suggested to keep you gmail account secure.  
+# Alternatively you can create another separate gmail account just for just this search usage and then generate a google app password for it and use
+# the emailMessagingWithLogin emailingMethod, and thus don't need to setup these credentials.  That alternative is less secure
+# so using a different email address than the one you normally use for everything is recommended.
+# Initially you get the credentials.json from the google console credentials page (you create these OAuth 2.0 Client IDs credentials)  and place it at this path location and then delete token.json
+# in that location. 
+# If you don't have a gmail account , you will need to create one.  Then create a google developers project and enable the gmail app for it,
+# then create OAuth 2.0 Client IDs credentials for this project using the credentials page, during that creation select the scopes for the
+# gmail app to sending email only to limit the access to email (thus can't read any received emails or see contacts).  This consent
+# authorizaton can be edited at anytime to change scopes, etc (using the OAuth consent screen , and click on the Edit button).
+# Then download the credentials.json file
+# The credentials.json file contains the project ID, project name, client ID (an ID for you), client secret (for secure access).
+# When you run the python search for matching timeshare unit exchanges program it will request credentials from the gmail app.
+# If it is the first time is has requested these (i.e. token.json does not exist in authenticationAuthorizationPath), it will cause the project to send 
+# a permission request to the user (to the device the program was started on) asking the user to allow the timeshare exhange search program to have gmail send privileges. 
+# See https://developers.google.com/workspace/guides/create-project for creating a google developers project (google cloud project)
+# See https://developers.google.com/workspace/guides/enable-apis for enabling the gmail google API for this project.
+# See https://developers.google.com/workspace/guides/configure-oauth-consent, and https://developers.google.com/workspace/guides/auth-overview 
+# for creating credentials and downloading the credentials.json file.
+# Note that for now levae the project at a "test" status and only you as the user.
+# See https://cloud.google.com/docs/authentication/end-user for general overview of authentication as an end user.
+
+"authenticationAuthorizationPath": '.\',
+
+# String prefixed to Text messages as well as email subject titles.  Used to differentiate between multiple concurrent searches sent to same
+# phone number or email.  Leave blank if you don't want a prefix.
+"notificationMsgPrefixString": "Rav4pluginhybridSrchRslt: "
+
+}
+
+

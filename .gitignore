@@ -164,3 +164,7 @@ credentials.json
 *credentials.json
 *.token.json
 *_token.json
+/src/output/*
+/src/test/
+/output/*
+!/output/Readme.txt

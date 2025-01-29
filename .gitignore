@@ -168,3 +168,4 @@ credentials.json
 /src/test/
 /output/*
 !/output/Readme.txt
+!/output/rav4pluginhybrid_StatusInfo.json

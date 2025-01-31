@@ -41,7 +41,7 @@ from timeit import default_timer as timer
 from yotagrabber import vehicles
 
 # Version
-searchForVehiclesVersionStr = "Ver 1.12 Jan 28 2025"  #
+searchForVehiclesVersionStr = "Ver 1.13 Jan 30 2025"  #
 
 class userMatchCriteria:
     def __init__(self):
@@ -1084,6 +1084,8 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
     global resultsFileName
     global unitDetailsDelimiter
     global maxNumberRawMissingVehicles
+    print("Started analyzing ", len(dfMatches), "vehicle matches for differences from prior vehicle matches")
+    print("Note: This could take from several seconds for 2000 matches to close to 90 seconds for 20,000 matches")
     modelInfoStr = getModelToGetInfo()
     # get date and time for timstamping this log entry
     dt = datetime.datetime.now().astimezone()  #local date time with timezone

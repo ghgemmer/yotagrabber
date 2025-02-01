@@ -1,5 +1,5 @@
 # Gets list of Toyota models, current inventory for each model in the US
-# and commits all this to git
+# and upload this to a google drive
 
 function Get-VehicleModels {
     # Gets a list of all models (fields modelCode, Title) and writes it to the json file output/models.json

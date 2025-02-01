@@ -14,8 +14,8 @@ function Get-VehicleInventoryForModels {
         $credentialsFileName = ""
     )
     # Use the following to log all console output as it is consistent in doing this over the inconsistent Start-Transcript
-    # Note that the console output is redirected to the log file so you want see it as it is running unless
-    # you use some linux like tail function, like the power shell 
+    # Note that the console output is redirected to the log file so if you want see it as it is running
+    # use some linux like tail function on that log file, like the power shell 
     # Get-Content -Path filename -Tail 0 -Wait in another window to output the logfile contents as it is appended.
     $logfile = $DirectoryToRunIn + "\output\InventoryRunlog.txt"
     Get-VehicleInventoryForModelsA -DirectoryToRunIn $DirectoryToRunIn -PythonVENVPowershellActivateScript $PythonVENVPowershellActivateScript -uploadInventory $uploadInventory -credentialsFileName $credentialsFileName  *>> $logfile

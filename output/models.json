@@ -68,8 +68,8 @@
     "title":"Prius"
   },
   {
-    "modelCode":"priusprime",
-    "title":"Prius Prime"
+    "modelCode":"priuspluginhybrid",
+    "title":"Prius Plug-in Hybrid"
   },
   {
     "modelCode":"rav4",
@@ -122,5 +122,9 @@
   {
     "modelCode":"bz4x",
     "title":"bZ4X"
+  },
+  {
+    "modelCode":"rav4prime",
+    "title":"RAV4 Prime"
   }
 ]

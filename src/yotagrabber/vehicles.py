@@ -158,7 +158,7 @@ def query_toyota(page_number, query, headers):
                             break
                     else:
                         break
-            except (requests.exceptions.JSONDecodeError) as inst:
+            except (requests.exceptions.JSONDecodeError,  KeyError) as inst:
                 print ("query_toyota: Exception occurred with accessing json response:", str(type(inst)) + " "  + str(inst))
                 print("resp.status_code", resp.status_code)
                 print("resp.headers", resp.headers)

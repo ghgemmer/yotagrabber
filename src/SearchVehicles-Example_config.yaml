@@ -47,7 +47,8 @@ resultsFileName: '.\SearchVehiclesResults.txt',
 # Default 0.
 #maxNumberRawMissingVehicles: 0,
 
-# minWaitTimeBetweenSearches is the minimum time to wait between searches when nothing was found so as to not overload the website with requests.
+# minWaitTimeBetweenSearches is the minimum time to wait between searches (that is after each search completes but before the next search)
+# so as to not overload the website with requests.
 # maxRandomAdderTimeBetweenSearches is the max random time to add to the min time to get the total time between searches to provide some randomness
 # Time delay before next search  = minWaitTimeBetweenSearches + (random number between 0 and 1 * maxRandomAdderTimeBetweenSearches)
 # !!! Note that by hitting the return key you can end any current wait and immediately proceed

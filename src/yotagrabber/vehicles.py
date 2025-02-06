@@ -165,7 +165,7 @@ def query_toyota(page_number, query, headers):
                 #print("resp.text", resp.text)
                 #print("resp.content", resp.content)
                 #return None
-        except (requests.exceptions.ReadTimeout) as inst:
+        except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError) as inst:
             print ("query_toyota: Exception occurred :", str(type(inst)) + " "  + str(inst))
         tryCount -= 1
         tm = 7 + (6 * random.random())

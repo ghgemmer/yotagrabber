@@ -33,7 +33,7 @@ resultsFileName: '.\SearchVehiclesResults.txt',
 
 # runOnceAndExit - Indicates to run the search program for one pass and then exit. i.e. it is not run continuosly
 # Default is False
-# This is typically used when running several searches in sequence (serially) via a higher level
+# This is typically used when running several searches in sequence (serially) for the same model via a higher level
 # script/batch file/power shell to avoid potentially overloading the toyota 
 # website causing it to throttle or block you.
 # 

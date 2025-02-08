@@ -240,8 +240,16 @@ def get_all_pages():
             result = query_toyota(page_number, vehicleQueryObjects[queryDetailString], headers)
             if result and "vehicleSummary" in result:
                 pages = result["pagination"]["totalPages"]
+                if pages is None:
+                    #Treat pages returned as None as 0
+                    print("Warning: Pages field was None type so treating it as 0 pages")
+                    pages = 0
                 gotPageInfoAtLeastOnce = True
                 records = result["pagination"]["totalRecords"]
+                if records is None:
+                    #Treat records returned as None as 0
+                    print("Warning: records field was None type so treating it as 0 records")
+                    records = 0
                 if firstPageInfoForThisPageNumber:
                     firstPageInfoForThisPageNumber = False
                     # reset pages and records to get to this as the maximum and let the actual pages gotten for this page number reduce it as needed. 
@@ -315,6 +323,13 @@ def update_vehicles_and_return_df(useLocalData = False):
     if df.empty:
         print(f"No vehicles found for model: {MODEL}")
         emptyDfWithFinalColumns = pd.DataFrame(columns = ["vin", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "dealerMarketingName", "dealerWebsite", "Dealer State", "options", "eta.currFromDate", "eta.currToDate"])
+        if statusOfGetAllPages["completedOk"]:
+            # store current results
+            emptyDfWithFinalColumns.to_csv(f"output/{MODEL}.csv", index=False)
+            df.to_parquet(f"output/{MODEL}_raw.parquet", index=False)
+            writeCompletionStatusToFile(statusOfGetAllPages)
+        else:
+            print(f"Completion status not Ok for model: {MODEL}, not storing any results in output files")
         return (emptyDfWithFinalColumns, statusOfGetAllPages)
 
     # Write the raw data to a file.

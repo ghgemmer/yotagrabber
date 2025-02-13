@@ -257,6 +257,9 @@ def get_all_pages():
                     recordsToGet = records
                 print(queryDetailString + ":    ", len(result["vehicleSummary"]))
                 adderDfNormalized = pd.json_normalize(result["vehicleSummary"])
+                # Add in date that got this vehicle info
+                infoDateTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                adderDfNormalized["infoDateTime"] = infoDateTime
                 if PAGE_FILES_DEBUG_ENABLED:
                     adderDfNormalized.to_csv(f"output/pages/{MODEL}{queryDetailString}_raw_page{page_number}.csv", index=False)
                 df = pd.concat([df, adderDfNormalized])
@@ -322,7 +325,7 @@ def update_vehicles_and_return_df(useLocalData = False):
     # Stop here if there are no vehicles to list.
     if df.empty:
         print(f"No vehicles found for model: {MODEL}")
-        emptyDfWithFinalColumns = pd.DataFrame(columns = ["vin", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "dealerMarketingName", "dealerWebsite", "Dealer State", "options", "eta.currFromDate", "eta.currToDate"])
+        emptyDfWithFinalColumns = pd.DataFrame(columns = ["vin", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "dealerMarketingName", "dealerWebsite", "Dealer State", "options", "eta.currFromDate", "eta.currToDate", "infoDateTime"])
         if statusOfGetAllPages["completedOk"]:
             # store current results
             emptyDfWithFinalColumns.to_csv(f"output/{MODEL}.csv", index=False)
@@ -391,6 +394,7 @@ def update_vehicles_and_return_df(useLocalData = False):
                 "options",
                 "eta.currFromDate",
                 "eta.currToDate",
+                "infoDateTime",
             ]
         ]
         .copy(deep=True)
@@ -464,6 +468,7 @@ def update_vehicles_and_return_df(useLocalData = False):
             "Dealer",
             "Dealer Website",
             "Dealer State",
+            "infoDateTime",
             # "Image",
             "Options",
         ]

@@ -7,6 +7,8 @@ some field names and content are modified for readability, etc). There is also a
 with the raw parquet file that indicates status details of the gotten raw inventory which are: 
 did the get work (got some valid responses although may be missing some vehicles),  
 how many vehicles found, how many vehicles were missing, date and time of the get.
+Note that the .csv file also includes an infoDateTime column which indicates when the information for
+that row was gotten from the toyota website.
 
 For some unknown reason we are not able to get all the grandhighlander inventory (miss some 1200 vehicles)
 and usually miss getting some 17 highlander vehicles.  Still in the process of investigating this
@@ -37,6 +39,7 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                     Usually From and To Date will now appear.
                     "At dealer" - The car is at the dealer
                     The above "Shipping Status" defintions were copied and pasted from another developers spreadsheet
+infoDateTime -  the date and time that the row was gotten from the toyota website.
 
 For issues or questions contact ghgemmer@gmail.com
 See github repository https://github.com/ghgemmer/yotagrabber

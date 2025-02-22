@@ -122,5 +122,9 @@
   {
     "modelCode":"rav4prime",
     "title":"RAV4 Prime"
+  },
+  {
+    "modelCode":"venza",
+    "title":"Venza"
   }
 ]

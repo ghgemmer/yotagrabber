@@ -43,7 +43,7 @@ class WAFBypass:
                         page.goto("https://www.toyota.com/search-inventory/model/" + "corollahatchback" + "/?zipcode=90210")
                         #print("https://www.toyota.com/search-inventory/model/" + "corollahatchback" + "/?zipcode=90210")
                         page.wait_for_load_state("networkidle", timeout=60000)
-                    except PlaywrightTimeoutError as inst:
+                    except Exception as inst:
                         print("Error: WAFBypass.get_headers: exception in code going to inventory page: ", str(inst))
                     finally:
                         browser.close()
@@ -54,7 +54,7 @@ class WAFBypass:
                     sleepTime = 60* 10
                     print("Waiting time ", sleepTime, "secs before retrying WAF Bypass")
                     getUserInput("Enter Cr to terminate wait early", sleepTime)
-            except PlaywrightTimeoutError as inst:
+            except Exception as inst:
                 print("Error: WAFBypass.get_headers exception", str(inst))
                 sleepTime = 60* 10
                 print("Waiting time ", sleepTime, "secs before retrying WAF Bypass")

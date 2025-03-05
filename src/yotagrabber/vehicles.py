@@ -124,6 +124,7 @@ def query_toyota(page_number, query, headers):
 
     tryCount = 3
     result = None
+    resp = None
     # TODO: still getting many query failures even with this retry method (goes through all retires withuot success)
     # and not sure why?  Printed resp.text does not seem to contain any readable ascii text.
     while tryCount:
@@ -131,6 +132,7 @@ def query_toyota(page_number, query, headers):
         json_post = {"query": query}
         url = "https://api.search-inventory.toyota.com/graphql"
         try:
+            resp = None
             resp = requests.post(
                 url,
                 json=json_post,
@@ -158,14 +160,14 @@ def query_toyota(page_number, query, headers):
                             break
                     else:
                         break
-            except (requests.exceptions.JSONDecodeError,  KeyError) as inst:
+            except Exception as inst:
                 print ("query_toyota: Exception occurred with accessing json response:", str(type(inst)) + " "  + str(inst))
                 print("resp.status_code", resp.status_code)
                 print("resp.headers", resp.headers)
                 #print("resp.text", resp.text)
                 #print("resp.content", resp.content)
                 #return None
-        except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError) as inst:
+        except Exception as inst:
             print ("query_toyota: Exception occurred :", str(type(inst)) + " "  + str(inst))
         tryCount -= 1
         tm = 7 + (6 * random.random())

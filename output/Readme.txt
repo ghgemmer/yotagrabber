@@ -7,7 +7,7 @@ some field names and content are modified for readability, etc). There is also a
 with the raw parquet file that indicates status details of the obtained raw inventory which are: 
 did the get work (got some valid responses although may be missing some vehicles),  
 how many vehicles found, how many vehicles were missing, date and time of the get.
-Note that the .csv file also includes an infoDateTime column which indicates when the information for
+Note that the .parquet and .csv file also include an infoDateTime column which indicates when the information for
 that row was updated from the toyota website.
 
 A log file InventoryRunlog.txt is also provided which indicates when the inventory search started, log of

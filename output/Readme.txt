@@ -10,8 +10,8 @@ how many vehicles found, how many vehicles were missing, date and time of the ge
 Note that the .parquet and .csv file also include an infoDateTime column which indicates when the information for
 that row was updated from the toyota website.
 
-These files are read only view on my google drive.  Thus if you wish to do filtering, etc you need to download the file
-and open it to do that.  Or copy it to your own google drive and access it that way.
+These files are read only view on my google drive.  Thus if you wish to do filtering, etc you need to either 
+download the file and open it to do,  or click on the file's More Actions --> Open With --> Excel Desktop.
 
 A log file InventoryRunlog.txt is also provided which indicates when the inventory search started, log of
 progress on getting each model (page number on , number of pages, number of records, any error messages or

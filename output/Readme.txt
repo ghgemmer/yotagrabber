@@ -1,4 +1,6 @@
-This folder contains the inventory for all Toyota vehicle models in the US (including Alaska, and Hawaii).
+This folder contains the inventory for all Toyota vehicle models in the US (including Alaska, but currently excluding Hawaii).
+The inventory is obtained from the same place the Toyota Inventory search (https://www.toyota.com/search-inventory/)
+gets its data.
 
 Folder updates typically show up each day around 5am CDT. Each model's inventory is placed in a .csv file.  A raw
 pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model

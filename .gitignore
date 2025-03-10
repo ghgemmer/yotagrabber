@@ -184,3 +184,6 @@ credentials.json
 !/src/Example_UserMatchCriteriaFilter.py
 !/src/dealers.py
 !/src/MatchSoundNotification.mp3
+!/src/yotagrabber/data/dealers.csv
+!/src/yotagrabber/data/zipcodes.txt
+

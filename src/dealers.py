@@ -111,9 +111,11 @@ def updateDealers(dealerFileName, zipCodeFileName):
                 tryCount -= 1
                 interruptibleSleep(4)
                 print("Retrying request, tryCount = ", tryCount)
-        if (result is not None) and result and ("dealers" in result):
+        if (result is not None) and result and ("dealers" in result) and (len(result["dealers"]) > 0):
+            #print("Result is", result)
             #df = pd.DataFrame.from_dict(result["dealers"])
             df = pd.json_normalize(result["dealers"])
+            #print ("df is", df)
             df = df[["code", "dealerId", "name", "url", "regionId", "state", "lat", "long"]]
             if False:
                 # force the code and dealerId fields to ints as the vehicles.py expects that type (i.e. leading 0s are removed)
@@ -125,7 +127,7 @@ def updateDealers(dealerFileName, zipCodeFileName):
             dealers = pd.concat([dealers, df])
             dealers.drop_duplicates(subset=["code"], inplace=True)
         else:
-            print("Error: Failed getting dealers near zipcode.  Response is not json format or does not contain a 'dealers' field.  ZipCode checked was", zipCodeWithLeadingZeroes)
+            print("Error: Failed getting dealers near zipcode.  Response is not json format or does not contain a 'dealers' field or dealers field was empty.  ZipCode checked was", zipCodeWithLeadingZeroes)
         indx +=1
         if (indx % 50) == 0:
             # Since the number of zipCodesToUpdateDealers could be very large,  i.e. 42000, 

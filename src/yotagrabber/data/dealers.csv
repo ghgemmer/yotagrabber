@@ -1242,3 +1242,7 @@ code,dealerId,name,url,regionId,state,lat,long
 50012,50012,Kendall Toyota of Anchorage,https://www.kendalltoyotaofanchorage.com,13,AK,61.157755,-149.865692
 50013,50013,Kendall Toyota of Fairbanks,https://www.kendalltoyotaoffairbanks.com,13,AK,64.853266,-147.748194
 50014,50014,Juneau Toyota,https://www.juneautoyota.com,13,AK,58.36115,-134.57431
+42417,42417,Toyota of Pharr,https://www.toyotaofpharr.com,60,TX,26.199688,-98.20042
+37204,37204,Jim Shorkey Toyota of Greensburg,https://www.jimshorkeytoyotagreensburg.com,80,PA,40.29837,-79.481549
+17082,17082,Carlock Toyota of Slidell,https://www.carlocktoyotaofslidell.com,60,LA,30.23967,-89.76556
+48072,48072,Umansky Toyota,https://www.umanskytoyota.com,21,WI,43.11941,-87.93062

@@ -353,7 +353,12 @@ def update_vehicles_and_return_df(useLocalData = False):
     # how = 'left' will keep vehicle entry even if can't find dealer code for it, so state will show up as blank or NAN.  
     # Without the how = 'left' any row we can't find the matching dealer code in dealers would be removed from df which we don't want.
     # Note that we still have the dealer name and VIN to find the car externally manually.
-
+    dfMissingDealerState = df[df["Dealer State"].isnull() | df["Dealer State"].isin(["", None])].drop_duplicates(subset=["dealerWebsite"], inplace=False)
+    if len(dfMissingDealerState) > 0:
+        #print("Found missing dealer states. Number of missing dealer states is", len(dfMissingDealerState))
+        print("Missing State for the following dealers (update the dealers csv file):")
+        for value in dfMissingDealerState["dealerWebsite"]:
+            print(value)
     renames = {
         "vin": "VIN",
         "price.baseMsrp": "Base MSRP",

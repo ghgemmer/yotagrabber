@@ -388,6 +388,11 @@ def update_vehicles_and_return_df(useLocalData = False):
                 "price.totalMsrp",
                 "price.sellingPrice",
                 "price.dioTotalDealerSellingPrice",
+                "price.advertizedPrice",
+                "price.nonSpAdvertizedPrice",
+                "price.dph",
+                "price.dioTotalMsrp",
+                "price.dealerCashApplied",
                 "isPreSold",
                 "holdStatus",
                 "year",
@@ -418,13 +423,19 @@ def update_vehicles_and_return_df(useLocalData = False):
     # Calculate the various prices.
     df["TMSRP plus DIO"] = df["Total MSRP"] + df["price.dioTotalDealerSellingPrice"]
     df["TMSRP plus DIO"] = df["TMSRP plus DIO"].fillna(df["Total MSRP"])
-    # Set selling price to 0 if it was NAN
-    df["Selling Price"] = df["Selling Price"].fillna(0.0)
-    # Selling Price Incomplete indicates if the Selling Price did not include Dealer Discounts/Markups
-    # This occurs when the raw Selling Price value is 0 or NAN
-    df["Selling Price Incomplete"] = True
-    df["Selling Price Incomplete"] = df["Selling Price Incomplete"].where(df["Selling Price"] == 0, False)
-    # Selling price is the TMSRP + Dealer installed options + Dealer discounts/markups with the exception when Selling Price Incomplete is True as indicated above
+    # Selling price is the TMSRP + Dealer installed options + Dealer discounts/markups with the exception when Selling Price Incomplete is True
+    # From analyzing several graphql returned inventories with all the graphql prices in them 
+    # and the corresponding dealer websites to look at final bottom line prices listed by dealers,
+    # it was determined that the Selling price we want to use  (bottom line final price shown by dealers) from the graphql is
+    # the raw Selling Price if present and not 0
+    # else use nonSpAdvertizedPrice if present and not 0
+    # else use advertizedPrice if present and not 0
+    # else use  TMSRP + DIO price  and indicate Selling price is incomplete
+    df["Raw Selling Price"] = df["Selling Price"]
+    df["Selling Price"] = df["Selling Price"].where((df["Selling Price"].isnull() == False) & (df["Selling Price"] != 0), df["price.nonSpAdvertizedPrice"] )
+    df["Selling Price"] = df["Selling Price"].where((df["Selling Price"].isnull() == False) & (df["Selling Price"] != 0), df["price.advertizedPrice"] )
+    df["Selling Price Incomplete"] = False
+    df["Selling Price Incomplete"] = df["Selling Price Incomplete"].where((df["Selling Price"].isnull() == False) & (df["Selling Price"] != 0), True)
     df["Selling Price"] = df["Selling Price"].where(df["Selling Price Incomplete"] != True, df["TMSRP plus DIO"] )
     # The Markup column is defined to show the cost of the Dealer Installed Options plus the actual dealer discount/markup
     # i.e everything the dealer adds on to the TMSRP including discounts/markups
@@ -466,6 +477,13 @@ def update_vehicles_and_return_df(useLocalData = False):
             "Selling Price Incomplete",
             "Markup",
             "TMSRP plus DIO",
+            #"Raw Selling Price",
+            #"price.advertizedPrice",
+            #"price.nonSpAdvertizedPrice",
+            #"price.dph",
+            #"price.dioTotalMsrp",
+            #"price.dioTotalDealerSellingPrice",
+            #"price.dealerCashApplied",
             "Shipping Status",
             "Pre-Sold",
             "Hold Status",

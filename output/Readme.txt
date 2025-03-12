@@ -1,6 +1,6 @@
 This folder contains the inventory for all Toyota vehicle models in the US (including Alaska, but currently excluding Hawaii).
 The inventory is obtained from the same place the Toyota Inventory search (https://www.toyota.com/search-inventory/)
-gets its data.  Only the current and last year inventory are shown.
+gets its data.  Only the current and last year inventory are extracted.
 
 Folder updates typically show up each day around 5am CDT. Each model's inventory is placed in a .csv file.  A raw
 pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model
@@ -31,10 +31,14 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
 "Total MSRP" -  Also referred to as the Total SRP (Suggested Retail Price) as shown on the cars window sticker is the 
                 Base MSRP + all the factory and Port installed options/packages + delivery/handling fees  
                 (excludes taxes and other fees like Doc fee, registration fees, etc)
-"Selling Price" -  is the total price (excluding taxes, fees) = Total MSRP + Dealer installed options + Dealer Markup/Discount
+"Selling Price" -  is the total dealer price (excluding taxes, fees) = Total MSRP + Dealer installed options + Dealer Markup/Discount/adjustments
+                   It is the bottom line final price the dealers show on their website.
+                   Note: This is calculated from the several raw prices the toyota graphql website returns and was arrived at 
+                   by comparing those to the dealer websites final price numbers listed for many vehicles.
+                   
 "Selling Price Incomplete" - Indicates if the Selling Price is incomplete. When incomplete the price 
                              does not include the Dealer Markup/Discount as it was unknown.
-"Markup" - Dealer installed options plus Dealer Markup/Discount (i.e everything above the Total MSRP)
+"Markup" - Dealer installed options plus Dealer Markup/Discount/adjustments (i.e everything above the Total MSRP to get to the Selling Price)
 "TMSRP plus DIO" -  Total MSRP plus Dealer installed options
 "Shipping Status" - "Factory to port" -  Allocated, or in production, or on the ship, or sitting at the port
                     "Port to dealer" -  Checked in at the port and in the process of moving from the port to the dealership lot.
@@ -42,6 +46,11 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                     "At dealer" - The car is at the dealer
                     The above "Shipping Status" defintions were copied and pasted from another developers spreadsheet
 infoDateTime -  the date and time that the row was updated from the toyota website.
+
+Note that sometimes a "Dealer State" column cell may be blank.  I will automatically be alerted of this and this will be corrected
+typically within a day or two. This is because the dealer state information is currently maintained in a separate
+database and changes only infrequently, so is not dynamically extracted from the website when the inventory is gotten
+to reduce the time it takes to get the inventory.
 
 For issues or questions contact ghgemmer@gmail.com
 See github repository https://github.com/ghgemmer/yotagrabber

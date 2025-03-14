@@ -410,9 +410,9 @@
   },
   {
     "asShownDisclaimer":null,
-    "asShown":"$61,020 as shown [global_msrp_as_shown_disclaimer]",
+    "asShown":"$60,050 as shown [global_msrp_as_shown_disclaimer]",
     "cityMPG":"23",
-    "disclaimer":"[global_prelim_mpg_2024_supra_disclaimer]",
+    "disclaimer":"[global_mpg_2026_supra_disclaimer]",
     "family":[
       "Cars &amp; Minivan"
     ],
@@ -424,14 +424,14 @@
     ],
     "hoverImage":null,
     "hwyMPG":"31",
-    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/grsupra\/base.png?fmt=png-alpha",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2026\/grsupra\/base.png?fmt=png-alpha",
     "modelCode":"grsupra",
-    "msrp":"56250",
+    "msrp":"56900",
     "series":"GR Supra",
     "shortDescription":null,
     "title":"GR Supra",
-    "year":"2025",
-    "mpgDisclaimerCode":"[global_prelim_mpg_2024_supra_disclaimer]",
+    "year":"2026",
+    "mpgDisclaimerCode":"[global_mpg_2026_supra_disclaimer]",
     "mpgeDisclaimerCode":"",
     "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
     "mpge":null,
@@ -442,15 +442,15 @@
   },
   {
     "asShownDisclaimer":null,
-    "asShown":"$46,815 as shown [global_msrp_as_shown_disclaimer]",
+    "asShown":"$47,115 as shown [global_msrp_as_shown_disclaimer]",
     "cityMPG":"22",
-    "disclaimer":"[global_epa_2025_highlander_disclaimer]",
+    "disclaimer":"[global_mpg_2025_highlander_disclaimer]",
     "family":[
       "Crossovers &amp; SUVs"
     ],
     "families":[
       {
-        "seqNo":7,
+        "seqNo":6,
         "familiyType":"Crossovers &amp; SUVs"
       }
     ],
@@ -458,12 +458,12 @@
     "hwyMPG":"29",
     "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/highlander\/base.png?fmt=png-alpha",
     "modelCode":"highlander",
-    "msrp":"39520",
+    "msrp":"39820",
     "series":"Highlander",
     "shortDescription":null,
     "title":"Highlander",
     "year":"2025",
-    "mpgDisclaimerCode":"[global_epa_2025_highlander_disclaimer]",
+    "mpgDisclaimerCode":"[global_mpg_2025_highlander_disclaimer]",
     "mpgeDisclaimerCode":"",
     "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
     "mpge":null,
@@ -474,20 +474,20 @@
   },
   {
     "asShownDisclaimer":null,
-    "asShown":"$52,680 as shown [global_msrp_as_shown_disclaimer]",
+    "asShown":"$52,980 as shown [global_msrp_as_shown_disclaimer]",
     "cityMPG":"35",
-    "disclaimer":"[global_epa_2025_highlander_disclaimer]",
+    "disclaimer":"[global_mpg_2025_highlander_disclaimer]",
     "family":[
       "Crossovers &amp; SUVs",
       "Electrified"
     ],
     "families":[
       {
-        "seqNo":8,
+        "seqNo":7,
         "familiyType":"Crossovers &amp; SUVs"
       },
       {
-        "seqNo":11,
+        "seqNo":10,
         "familiyType":"Electrified"
       }
     ],
@@ -495,12 +495,12 @@
     "hwyMPG":"35",
     "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/highlanderhybrid\/base.png?fmt=png-alpha",
     "modelCode":"highlanderhybrid",
-    "msrp":"46020",
+    "msrp":"46320",
     "series":"Highlander Hybrid",
     "shortDescription":null,
     "title":"Highlander Hybrid",
     "year":"2025",
-    "mpgDisclaimerCode":"[global_epa_2025_highlander_disclaimer]",
+    "mpgDisclaimerCode":"[global_mpg_2025_highlander_disclaimer]",
     "mpgeDisclaimerCode":"",
     "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
     "mpge":null,
@@ -659,7 +659,7 @@
   },
   {
     "asShownDisclaimer":null,
-    "asShown":"$37,155 as shown [global_msrp_as_shown_disclaimer]",
+    "asShown":"$37,555 as shown [global_msrp_as_shown_disclaimer]",
     "cityMPG":"27",
     "disclaimer":"[global_epa_2025_rav4_disclaimer]",
     "family":[
@@ -675,7 +675,7 @@
     "hwyMPG":"35",
     "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/rav4\/base.png?fmt=png-alpha",
     "modelCode":"rav4",
-    "msrp":"28850",
+    "msrp":"29250",
     "series":"RAV4",
     "shortDescription":null,
     "title":"RAV4",
@@ -691,7 +691,7 @@
   },
   {
     "asShownDisclaimer":null,
-    "asShown":"$35,120 as shown [global_msrp_as_shown_disclaimer]",
+    "asShown":"$35,520 as shown [global_msrp_as_shown_disclaimer]",
     "cityMPG":"41",
     "disclaimer":"[global_epa_2025_rav4_disclaimer]",
     "family":[
@@ -712,7 +712,7 @@
     "hwyMPG":"38",
     "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/rav4hybrid\/base.png?fmt=png-alpha",
     "modelCode":"rav4hybrid",
-    "msrp":"31900",
+    "msrp":"32300",
     "series":"RAV4 Hybrid",
     "shortDescription":null,
     "title":"RAV4 Hybrid",

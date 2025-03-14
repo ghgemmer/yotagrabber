@@ -125,7 +125,7 @@ def updateDealers(dealerFileName, zipCodeFileName):
             #print("type(df['code'][0])", type(df["code"][0]))
             #print("type(df['lat'][0])", type(df["lat"][0]))
             dealers = pd.concat([dealers, df])
-            dealers.drop_duplicates(subset=["code"], inplace=True)
+            dealers.drop_duplicates(subset=["code"], keep='last', inplace=True)
         else:
             print("Error: Failed getting dealers near zipcode.  Response is not json format or does not contain a 'dealers' field or dealers field was empty.  ZipCode checked was", zipCodeWithLeadingZeroes)
         indx +=1

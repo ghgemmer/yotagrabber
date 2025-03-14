@@ -1,11 +1,12 @@
 This folder contains the inventory for all Toyota vehicle models in the US (including Alaska, but currently excluding Hawaii).
 The inventory is obtained from the same place the Toyota Inventory search (https://www.toyota.com/search-inventory/)
-gets its data.  Only the current and last model year inventory are extracted.
+gets its data.  Only the current and prior model year of production inventory are extracted.
+No history is kept, so the files contain only what that inventory website showed at the time it was accessed.
 
 Folder updates typically show up each day around 5am CDT. Each model's inventory is placed in a .csv file.  A raw
 pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model
-before various fitlering is applied, such as only current and last year vehicles, certain fields are removed,
-some field names and content are modified for readability, etc). There is also a <model>_StatusInfo.json file  associated
+before various fitlering is applied, such as only current and prior model years, certain fields are removed,
+some field names and content are modified for readability, etc. There is also a <model>_StatusInfo.json file  associated
 with the raw parquet file that indicates status details of the obtained raw inventory which are: 
 did the get work (got some valid responses although may be missing some vehicles),  
 how many vehicles found, how many vehicles were missing, date and time of the get.

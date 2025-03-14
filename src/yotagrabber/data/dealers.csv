@@ -619,17 +619,10 @@ code,dealerId,name,url,regionId,state,lat,long
 34138,34138,Toyota of North Canton,https://www.toyotaofnorthcanton.com,22,OH,40.875699,-81.423805
 13076,13076,Cronin Toyota of  Richmond,https://www.cronintoyotaofrichmond.com,21,IN,39.831126,-84.826102
 34130,34130,White's Toyota of Lima,https://www.whitestoyotalima.com,22,OH,40.773265,-84.169095
-13058,13058,Ed Martin Toyota,https://www.edmartintoyota.com,21,IN,39.993489,-86.006232
-13077,13077,Bill Estes Toyota,https://www.billestestoyota.com,21,IN,39.924247,-86.11156
-13057,13057,O'Brien Toyota,https://www.obrientoyota.com,21,IN,39.804473,-86.045745
-13033,13033,Tom Wood Toyota,https://www.tomwoodtoyota.com,21,IN,39.946533,-86.35094
-13070,13070,Andy Mohr Toyota,https://www.andymohrtoyota.com,21,IN,39.762468,-86.36185
 13049,13049,Beck Toyota,https://www.becktoyota.com,21,IN,39.648976,-86.135786
 13042,13042,Kokomo Toyota,https://www.kokomo-toyota.com,21,IN,40.442369,-86.127419
 13071,13071,Toyota of Muncie,https://www.toyotaofmuncie.com,21,IN,40.220003,-85.462035
 13027,13027,Bob Rohrman Toyota,https://www.rohrmantoyota.com,21,IN,40.418283,-86.832726
-13045,13045,Royal South Toyota,https://www.royalsouthtoyota.com,21,IN,39.128388,-86.530914
-13066,13066,Carver Toyota of Columbus,https://www.carvertoyota.com,21,IN,39.297169,-85.95684
 13078,13078,Bosak Toyota of Chesterton,https://www.bosaktoyotachesterton.com,21,IN,41.6032,-87.11556
 13068,13068,Toyota of Merrillville,https://www.toyotaofmerrillville.com,21,IN,41.47188,-87.28185
 13060,13060,Team Toyota,https://www.teamtoyotaon41.com,21,IN,41.515643,-87.471612
@@ -1247,3 +1240,10 @@ code,dealerId,name,url,regionId,state,lat,long
 17082,17082,Carlock Toyota of Slidell,https://www.carlocktoyotaofslidell.com,60,LA,30.23967,-89.76556
 48072,48072,Umansky Toyota,https://www.umanskytoyota.com,21,WI,43.11941,-87.93062
 13080,13080,Hubler Toyota,https://www.hublertoyota.com,21,IN,39.648976,-86.135786
+13057,13057,O'Brien Toyota,https://www.obrientoyota.com,21,IN,39.804473,-86.045745
+13070,13070,Andy Mohr Toyota,https://www.andymohrtoyota.com,21,IN,39.762468,-86.36185
+13077,13077,Bill Estes Toyota,https://www.billestestoyota.com,21,IN,39.924247,-86.11156
+13033,13033,Tom Wood Toyota,https://www.tomwoodtoyota.com,21,IN,39.946533,-86.35094
+13058,13058,Ed Martin Toyota,https://www.edmartintoyota.com,21,IN,39.993489,-86.006232
+13066,13066,Carver Toyota of Columbus,https://www.carvertoyota.com,21,IN,39.297169,-85.95684
+13045,13045,Royal South Toyota,https://www.royalsouthtoyota.com,21,IN,39.128388,-86.530914

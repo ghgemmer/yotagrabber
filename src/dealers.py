@@ -53,7 +53,7 @@ def writeZipCodes(zipCodes, startIndex, fileName):
 
 def updateDealers(dealerFileName, zipCodeFileName):
     print("This program updates the passed dealer file (or creates that file if not present)") 
-    print("with any new dealers found, that are not already in that file, during the search ")
+    print("with any dealers found (new or update of existing), during the search ")
     print("of the remaining zip codes to look for dealers for, out of the zip code file")
     print("The remaining zip codes to search are in file <zipCodeFileName>.remainingToSearch.txt",)
     print("and that is an intermediate file the program creates and periodically updates to tell it what")

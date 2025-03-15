@@ -78,7 +78,7 @@ def updateDealers(dealerFileName, zipCodeFileName):
     if Path(dealerFileName).is_file():
         print("Reading in existing Dealer csv", dealerFileName)
         # leave the code and dealerId fields as strings (since they are unquoted)
-        dealers = pd.read_csv(dealerFileName, dtype = { 'code': 'str', 'dealerId': 'str'})
+        dealers = pd.read_csv(dealerFileName, dtype = { 'code': 'str', 'dealerId': 'str', 'zip': 'str', 'address1': 'str', 'phone': 'str'})
         if False:
             # force code and dealerId fields to be ints as vehicles.py expects this.
             dealers["code"] = dealers["code"].apply(pd.to_numeric)
@@ -116,7 +116,7 @@ def updateDealers(dealerFileName, zipCodeFileName):
             #df = pd.DataFrame.from_dict(result["dealers"])
             df = pd.json_normalize(result["dealers"])
             #print ("df is", df)
-            df = df[["code", "dealerId", "name", "url", "regionId", "state", "lat", "long"]]
+            df = df[["code", "dealerId", "name", "url", "regionId", "state", "lat", "long", "address1", "city", "zip", "phone"]]
             if False:
                 # force the code and dealerId fields to ints as the vehicles.py expects that type (i.e. leading 0s are removed)
                 df["code"] = df["code"].apply(pd.to_numeric)

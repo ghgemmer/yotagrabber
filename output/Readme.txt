@@ -66,7 +66,7 @@ log file options, etc. See SearchVehicles-Example_config.yaml for all the config
 
 searchForVehicles.py runs the vehicles.py update_vehicles() method to collect an inventory of all vehicles in
 the US for a desired model , or all vehicles within a specified distance from a specified zip code for that
-model, and then runs a specified user match criteria against that looking for specific vehicles.  Whenever any
-inventory changes occur for that match criteria the program notifies the user via 
+model (limited to 10,000 vehicles at most), and then runs a specified user match criteria against that 
+looking for specific vehicles.  Whenever any inventory changes occur for that match criteria the program notifies the user via 
 any user specified combination of sound, email, text.
 

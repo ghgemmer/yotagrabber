@@ -8,6 +8,8 @@ Contains updates due to Toyota website changes and graphql field changes.
 The previously existing vehicles.py was also updated to fix an issue where it was not getting all the inventory for a given model,
 to make it more robust with retries and communication errors, 
 and to optionally allow searching for all vehicles within a specified distance from a specified zip code for a given model.
+When searching with a specified zipcode you are limited to finding at most 10,000 vehicles for a given model
+where as with no specified zipcode you can find at least 40,000 vehicles for a given model.
 Also added a dealers.py program that can generate the dealers.csv file that is used to lookup the dealer Id to
 dealer state that vehicles.py uses.
 

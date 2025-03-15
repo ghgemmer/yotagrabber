@@ -46,8 +46,20 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                     Usually From and To Date will now appear.
                     "At dealer" - The car is at the dealer
                     The above "Shipping Status" defintions were copied and pasted from another developers spreadsheet
-infoDateTime -  the date and time that the row was updated from the toyota website.
-
+"infoDateTime" -  the date and time that the row was updated from the toyota website.
+"Dealer Lat" -  Dealer Latitude
+"Dealer Long" - Dealer Longitude.  The Dealer Lat and Long can be used to calculate distance from a given Center latitude and longitude.
+                The user can then filter on this for say a distance <= X miles from the Center.
+                The formula for calculating the distance in miles is
+                =ACOS(COS(RADIANS(90-DealerLat))*COS(RADIANS(90-CenterLat))+SIN(RADIANS(90-DealerLat))*SIN(RADIANS(90-CenterLat))*COS(RADIANS(DealerLong-CenterLong)))*6371*0.621371
+                if DealerLat is in cell A1, DealerLong in cell B1,  CenterLat in cell C1, and CenterLong in cell D1 then the 
+                excel formula in cell E1 to calculate the distance is 
+                =ACOS(COS(RADIANS(90-A1))*COS(RADIANS(90-C1))+SIN(RADIANS(90-A1))*SIN(RADIANS(90-C1))*COS(RADIANS(B1-D1)))*6371*0.621371
+                Thus a CenterLat and Long columns can be added after the DealerLong column and filled with a fixed value
+                you want to find the distance from
+                and then a distance column added after that and then the above cell E1 in another sheet can be copied
+                and pasted to all cells in the distance column
+ 
 Note that sometimes a "Dealer State" column cell may be blank.  I will automatically be alerted of this and this will be corrected
 typically within a day or two. This is because the dealer state information is currently maintained in a separate
 database and changes only infrequently, so is not dynamically extracted from the website when the inventory is gotten
@@ -66,7 +78,7 @@ log file options, etc. See SearchVehicles-Example_config.yaml for all the config
 
 searchForVehicles.py runs the vehicles.py update_vehicles() method to collect an inventory of all vehicles in
 the US for a desired model , or all vehicles within a specified distance from a specified zip code for that
-model (limited to 10,000 vehicles at most), and then runs a specified user match criteria against that 
+model (limited to 10,000 vehicles at most when specify zipcode), and then runs a specified user match criteria against that 
 looking for specific vehicles.  Whenever any inventory changes occur for that match criteria the program notifies the user via 
 any user specified combination of sound, email, text.
 

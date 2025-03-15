@@ -11,6 +11,7 @@ from time import sleep
 from timeit import default_timer as timer
 
 import pandas as pd
+import csv
 import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass
@@ -327,7 +328,7 @@ def update_vehicles_and_return_df(useLocalData = False):
     # Stop here if there are no vehicles to list.
     if df.empty:
         print(f"No vehicles found for model: {MODEL}")
-        emptyDfWithFinalColumns = pd.DataFrame(columns = ["vin", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "dealerMarketingName", "dealerWebsite", "Dealer State", "options", "eta.currFromDate", "eta.currToDate", "infoDateTime"])
+        emptyDfWithFinalColumns = pd.DataFrame(columns = ["vin", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "dealerMarketingName", "dealerWebsite", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "options", "eta.currFromDate", "eta.currToDate", "infoDateTime"])
         if statusOfGetAllPages["completedOk"]:
             # store current results
             emptyDfWithFinalColumns.to_csv(f"output/{MODEL}.csv", index=False)
@@ -343,11 +344,12 @@ def update_vehicles_and_return_df(useLocalData = False):
         df.to_parquet(f"output/{MODEL}_raw.parquet", index=False)
         writeCompletionStatusToFile(statusOfGetAllPages)
 
-    # Add dealer data.  Note that without a dtype parameter the line below will automatically convert unquoted dealerId field to numeric thus removing any leading 0s the dealerId has 
-    dealers = pd.read_csv(f"{config.BASE_DIRECTORY}/data/dealers.csv")[
-        ["dealerId", "state"]
+    # Add dealer data.  Note that without a dtype parameter on the dealerID field the line below will automatically convert unquoted dealerId field to numeric thus removing any leading 0s the dealerId has
+    # which is what we want for the dealerId.
+    dealers = pd.read_csv(f"{config.BASE_DIRECTORY}/data/dealers.csv", dtype = { 'zip': 'str', 'address1': 'str', 'phone': 'str'})[
+        ["dealerId", "state", "city", "zip", "lat", "long"]
     ]
-    dealers.rename(columns={"state": "Dealer State"}, inplace=True)
+    dealers.rename(columns={"state": "Dealer State", "city": "Dealer City", "zip": "Dealer Zip", "lat": "Dealer Lat", "long": "Dealer Long"}, inplace=True)
     df["dealerCd"] = df["dealerCd"].apply(pd.to_numeric)
     df = df.merge(dealers, left_on="dealerCd", right_on="dealerId", how='left')  
     # how = 'left' will keep vehicle entry even if can't find dealer code for it, so state will show up as blank or NAN.  
@@ -402,6 +404,10 @@ def update_vehicles_and_return_df(useLocalData = False):
                 "dealerMarketingName",
                 "dealerWebsite",
                 "Dealer State",
+                "Dealer City",
+                "Dealer Zip",
+                "Dealer Lat",
+                "Dealer Long",
                 "options",
                 "eta.currFromDate",
                 "eta.currToDate",
@@ -492,6 +498,10 @@ def update_vehicles_and_return_df(useLocalData = False):
             "Dealer",
             "Dealer Website",
             "Dealer State",
+            "Dealer City",
+            "Dealer Zip",
+            "Dealer Lat",
+            "Dealer Long",
             "infoDateTime",
             # "Image",
             "Options",

@@ -1189,14 +1189,6 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 31172,31172,Curry Toyota,https://www.currytoyota.com,16,NY,41.308003,-73.877117,3026 E. Main Street,Cortlandt Manor,10567,(914) 528-4347
 20016,20016,Balise Toyota,https://www.balisetoyota.com/,17,MA,42.142538,-72.62707,1399 Riverdale Street,West Springfield,01089,(413) 734-8795
 06029,06029,Toyota of Greenwich,https://www.toyotaofgreenwich.com,16,CT,41.036442,-73.60276,"75 E. Putnam Ave, Box 402",Cos Cob,06807,(203) 661-5055
-13080,13080,Hubler Toyota,https://www.hublertoyota.com,21,IN,39.648976,-86.135786,8055 U.S. 31 South,Indianapolis,46227,(317) 882-2600
-13057,13057,O'Brien Toyota,https://www.obrientoyota.com,21,IN,39.804473,-86.045745,2550 N. Shadeland Avenue,Indianapolis,46219,(317) 351-7000
-13070,13070,Andy Mohr Toyota,https://www.andymohrtoyota.com,21,IN,39.762468,-86.36185,8941 E. U.S. Hwy. 36,Avon,46123,(317) 686-9682
-13077,13077,Bill Estes Toyota,https://www.billestestoyota.com,21,IN,39.924247,-86.11156,3232 Harper Road,Indianapolis,46240,(317) 846-9600
-13033,13033,Tom Wood Toyota,https://www.tomwoodtoyota.com,21,IN,39.946533,-86.35094,6408 Crane Drive,Whitestown,46075,(317) 297-2444
-13058,13058,Ed Martin Toyota,https://www.edmartintoyota.com,21,IN,39.993489,-86.006232,9230 E. 141 Street,Noblesville,46060,(317) 764-2700
-13066,13066,Carver Toyota of Columbus,https://www.carvertoyota.com,21,IN,39.297169,-85.95684,10255 N. U.S. Highway 31,Taylorsville,47280,(812) 526-7700
-13045,13045,Royal South Toyota,https://www.royalsouthtoyota.com,21,IN,39.128388,-86.530914,3115 S. Walnut Street,Bloomington,47401,(812) 331-1100
 04154,04154,Toyota of North Hollywood,https://www.northhollywoodtoyota.com,11,CA,34.153856,-118.367637,4606 Lankershim Boulevard,North Hollywood,91602,(818) 508-2900
 04772,04772,Culver City Toyota,https://www.culvercitytoyota.com,11,CA,34.025498,-118.39131,9077 Washington Blvd.,Culver City,90232,(310) 559-3777
 04102,04102,Toyota of Hollywood,https://www.hollywoodtoyota.com,11,CA,34.101528,-118.321183,6920 Sunset Blvd.,Los Angeles,90028,(323) 817-0282
@@ -1242,3 +1234,11 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 04044,04044,Larry H. Miller Toyota Corona,https://www.lhmtoyotacorona.com,11,CA,33.878384,-117.599106,1700 West 6th Street,Corona,92882,(951) 734-6020
 04101,04101,Crown Toyota,https://www.crowntoyota.com,11,CA,34.052119,-117.546812,1201 Kettering Drive,Ontario,91761,(909) 390-9700
 04638,04638,AutoNation Toyota Irvine,https://www.autonationtoyotairvine.com,11,CA,33.640481,-117.736842,9101 Research Drive,Irvine,92618,(949) 287-8766
+13080,13080,Hubler Toyota,https://www.hublertoyota.com,21,IN,39.648976,-86.135786,8055 U.S. 31 South,Indianapolis,46227,(317) 882-2600
+13057,13057,O'Brien Toyota,https://www.obrientoyota.com,21,IN,39.804473,-86.045745,2550 N. Shadeland Avenue,Indianapolis,46219,(317) 351-7000
+13070,13070,Andy Mohr Toyota,https://www.andymohrtoyota.com,21,IN,39.762468,-86.36185,8941 E. U.S. Hwy. 36,Avon,46123,(317) 686-9682
+13077,13077,Bill Estes Toyota,https://www.billestestoyota.com,21,IN,39.924247,-86.11156,3232 Harper Road,Indianapolis,46240,(317) 846-9600
+13033,13033,Tom Wood Toyota,https://www.tomwoodtoyota.com,21,IN,39.946533,-86.35094,6408 Crane Drive,Whitestown,46075,(317) 297-2444
+13058,13058,Ed Martin Toyota,https://www.edmartintoyota.com,21,IN,39.993489,-86.006232,9230 E. 141 Street,Noblesville,46060,(317) 764-2700
+13066,13066,Carver Toyota of Columbus,https://www.carvertoyota.com,21,IN,39.297169,-85.95684,10255 N. U.S. Highway 31,Taylorsville,47280,(812) 526-7700
+13045,13045,Royal South Toyota,https://www.royalsouthtoyota.com,21,IN,39.128388,-86.530914,3115 S. Walnut Street,Bloomington,47401,(812) 331-1100

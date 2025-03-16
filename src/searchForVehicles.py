@@ -1114,7 +1114,9 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
         else:
             lastUserMatchesDfCopy["VinIsInCurrent"] = False
     # !!!! Update the Ignore columns below if add any columns to dfMatchesCopy or lastUserMatchesDfCopy that are not in the non copies
-    detailsSameColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "infoDateTime", "CenterLat", "CenterLong", "DistanceFromCenter"]
+    # or that do not want to compare.
+    # Currently don't compae fields "Dealer Long", "Dealer Lat" as a problem with comparing nan values at the moment.
+    detailsSameColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "infoDateTime", "CenterLat", "CenterLong", "DistanceFromCenter", "Dealer Long", "Dealer Lat"]
     printColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "CenterLat", "CenterLong", "DistanceFromCenter" ]
     
     addedUnitTo = False

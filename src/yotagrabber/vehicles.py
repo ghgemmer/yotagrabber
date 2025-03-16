@@ -470,6 +470,12 @@ def update_vehicles_and_return_df(useLocalData = False):
 
     # Add the drivetrain to the model name to reduce complexity.
     df["Model"] = df["Model"] + " " + df["Drivetrain"]
+    
+    # Add columns for CenterLat, CenterLong, DistanceFromCenter
+    df["CenterLat"] = 41.978382
+    df["CenterLong"] = -91.668626
+    df["DistanceFromCenter"] = ""
+    
 
     df = df[
         [
@@ -502,14 +508,23 @@ def update_vehicles_and_return_df(useLocalData = False):
             "Dealer Zip",
             "Dealer Lat",
             "Dealer Long",
+            "CenterLat",
+            "CenterLong",
+            "DistanceFromCenter",
             "infoDateTime",
             # "Image",
             "Options",
         ]
     ]
 
-    # Write the data to a file.
     df.sort_values(by=["VIN"], inplace=True)
+    df.reset_index(drop=True, inplace=True)  # drop keeps from inserting current index as a column in dataframe
+    # Add the distance From Center formula to DistanceFromCenter column in the first cell only
+    # to keep size of csv decent and convienient to look at with a text editor.  User can easily do copy down of this cell
+    # once it is open in Excel
+    #df["DistanceFromCenter"] = "=ACOS(COS(RADIANS(90-U" + (df['DistanceFromCenter'].index + 2).astype(str) + "))*COS(RADIANS(90-W" + (df['DistanceFromCenter'].index + 2).astype(str) + "))+SIN(RADIANS(90-U" + (df['DistanceFromCenter'].index + 2).astype(str) + "))*SIN(RADIANS(90-W" + (df['DistanceFromCenter'].index + 2).astype(str) + "))*COS(RADIANS(V" + (df['DistanceFromCenter'].index + 2).astype(str) + "-X" + (df['DistanceFromCenter'].index + 2).astype(str) + ")))*6371*0.621371"
+    df["DistanceFromCenter"] = df["DistanceFromCenter"].where(df["DistanceFromCenter"].index != 0, "= ACOS(COS(RADIANS(90-U2))*COS(RADIANS(90-W2))+SIN(RADIANS(90-U2))*SIN(RADIANS(90-W2))*COS(RADIANS(V2-X2)))*6371*0.621371")
+    # Write the data to a file.
     df.to_csv(f"output/{MODEL}.csv", index=False)
     return (df, statusOfGetAllPages )
 

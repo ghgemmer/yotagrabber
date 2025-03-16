@@ -916,7 +916,7 @@ def getNamesOfModifiedFieldsIntoString (details1, details2, columnsToIgnore):
                     break
                 break
     else:
-        Print("Error:  getNamesOfModifiedFieldsIntoString:  details1 and details2 do not have all the same field names")
+        print("Error:  getNamesOfModifiedFieldsIntoString:  details1 and details2 do not have all the same field names")
     #if debugEnabled:
     #    print("getNamesOfModifiedFieldsIntoString returning namesOfModifiedFieldsString as", namesOfModifiedFieldsString)
     return namesOfModifiedFieldsString
@@ -1114,8 +1114,8 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
         else:
             lastUserMatchesDfCopy["VinIsInCurrent"] = False
     # !!!! Update the Ignore columns below if add any columns to dfMatchesCopy or lastUserMatchesDfCopy that are not in the non copies
-    detailsSameColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "infoDateTime" ]
-    printColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent" ]
+    detailsSameColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "infoDateTime", "CenterLat", "CenterLong", "DistanceFromCenter"]
+    printColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "CenterLat", "CenterLong", "DistanceFromCenter" ]
     
     addedUnitTo = False
     if (not dfMatchesCopyEmpty) and (not dfMatchesCopy["VinIsInLast"].all()):

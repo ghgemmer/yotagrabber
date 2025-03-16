@@ -48,18 +48,26 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                     The above "Shipping Status" defintions were copied and pasted from another developers spreadsheet
 "infoDateTime" -  the date and time that the row was updated from the toyota website.
 "Dealer Lat" -  Dealer Latitude
-"Dealer Long" - Dealer Longitude.  The Dealer Lat and Long can be used to calculate distance from a given Center latitude and longitude.
-                The user can then filter on this for say a distance <= X miles from the Center.
-                The formula for calculating the distance in miles is
-                =ACOS(COS(RADIANS(90-DealerLat))*COS(RADIANS(90-CenterLat))+SIN(RADIANS(90-DealerLat))*SIN(RADIANS(90-CenterLat))*COS(RADIANS(DealerLong-CenterLong)))*6371*0.621371
-                if DealerLat is in cell A1, DealerLong in cell B1,  CenterLat in cell C1, and CenterLong in cell D1 then the 
-                excel formula in cell E1 to calculate the distance is 
-                =ACOS(COS(RADIANS(90-A1))*COS(RADIANS(90-C1))+SIN(RADIANS(90-A1))*SIN(RADIANS(90-C1))*COS(RADIANS(B1-D1)))*6371*0.621371
-                Thus a CenterLat and Long columns can be added after the DealerLong column and filled with a fixed value
-                you want to find the distance from
-                and then a distance column added after that and then the above cell E1 in another sheet can be copied
-                and pasted to all cells in the distance column
- 
+"Dealer Long" - Dealer Longitude.  
+"CenterLat" -  Latitude of a user desired Center location. User manually fills in this desired location in the spreadsheet
+               opened in Excel and uses the same value for each cell in this column.  Only needed if user want to do distance
+               calculations.
+"CenterLong" - Longitude of a user desired Center location. User manually fills in this desired location in the spreadsheet
+               opened in Excel and uses the same value for each cell in this column. Only needed if user want to do distance
+               calculations.
+"DistanceFromCenter" -  The distance from the Center location to the Dealer location in miles (straight line).
+                        Only the first cell in this column is filled in with the Excel formula that calculates this distance
+                        using the Dealer Lat, Long, and Center Lat, Long values in the row.  The following is only needed
+                        if the user desires to calculate this distance for all rows in the spreadsheet.
+                        The user must then Excel copy and paste this cell to all the other cells in this column in Excel
+                        to get the calculated distance from Center location to Dealer location for each row.
+                        Only the first cell formula is supplied so that the .csv file size remains reasonably small.
+                        The Excel spreadsheet can be saved to a .xlsx file if desired to retain this.
+                        The CenterLat and CenterLong columns can be updated as desired and the calculated distance automatically
+                        shows up then.
+                        The formula is the Haversine formula for the distance.
+                        =ACOS(COS(RADIANS(90-DealerLat))*COS(RADIANS(90-CenterLat))+SIN(RADIANS(90-DealerLat))*SIN(RADIANS(90-CenterLat))*COS(RADIANS(DealerLong-CenterLong)))*6371*0.621371
+
 Note that sometimes a "Dealer State" column cell may be blank.  I will automatically be alerted of this and this will be corrected
 typically within a day or two. This is because the dealer state information is currently maintained in a separate
 database and changes only infrequently, so is not dynamically extracted from the website when the inventory is gotten

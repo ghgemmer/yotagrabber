@@ -184,6 +184,8 @@ credentials.json
 !/src/Example_UserMatchCriteriaFilter.py
 !/src/dealers.py
 !/src/MatchSoundNotification.mp3
+!/src/4runnerhybridTest0_raw.parquet
+!/src/4runnerhybridTest1_raw.parquet
 !/src/yotagrabber/data/dealers.csv
 !/src/yotagrabber/data/zipcodes.txt
 

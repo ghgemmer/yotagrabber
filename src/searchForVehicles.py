@@ -41,7 +41,7 @@ from timeit import default_timer as timer
 from yotagrabber import vehicles
 
 # Version
-searchForVehiclesVersionStr = "Ver 1.14 Feb 13 2025"  #
+searchForVehiclesVersionStr = "Ver 1.15 Mar 17 2025"  #
 
 class userMatchCriteria:
     def __init__(self):
@@ -878,6 +878,9 @@ def outputSearchingInfoToUser(matchCriteria):
     print(getModelToGetInfo())
     matchCriteria.print("", toConsole = True)
     print("Username:", username)
+    
+def valueIsNanNoneNull(value):
+    return (value is None) or (isinstance(value, float) and np.isnan(value))
 
 def getNamesOfModifiedFieldsIntoString (details1, details2, columnsToIgnore):
     # returns the names of the modified fields (fields whose value changed between details1 and details) as well as the 
@@ -909,10 +912,13 @@ def getNamesOfModifiedFieldsIntoString (details1, details2, columnsToIgnore):
             for index1 in details1.index:
                 for index2 in details2.index:
                     for column1 in columns1:
-                        if details1.at[index1, column1] != details2.at[index2, column1]:
-                            namesOfModifiedFieldsString += column1 + " :: " + str(details2.at[index2, column1]) + " --> " +  str(details1.at[index1, column1]) + " || "
-                            #if debugEnabled:
-                            #    print("getNamesOfModifiedFieldsIntoString index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1]", index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1])
+                        details1Value = details1.at[index1, column1]
+                        details2Value = details2.at[index2, column1]
+                        if (details1Value != details2Value):
+                            if not (valueIsNanNoneNull(details1Value) and valueIsNanNoneNull(details2Value)):
+                                namesOfModifiedFieldsString += column1 + " :: " + str(details2Value) + " --> " +  str(details1Value) + " || "
+                                #if debugEnabled:
+                                #    print("getNamesOfModifiedFieldsIntoString index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1]", index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1])
                     break
                 break
     else:
@@ -982,11 +988,14 @@ def detailsAreTheSame(details1, details2, columnsToIgnore):
         # both have all the exact same column labels (assumed to be unique)
         theSame = True
         for column1 in columns1:
-            if details1[column1] != details2[column1]:
-                theSame = False
-                #if debugEnabled:
-                #    print("detailsAreTheSame index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1]", index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1])
-                break
+            details1Value = details1[column1]
+            details2Value = details2[column1]
+            if (details1Value != details2Value):
+                if not (valueIsNanNoneNull(details1Value) and valueIsNanNoneNull(details2Value)):
+                    theSame = False
+                    #if debugEnabled:
+                    #    print("detailsAreTheSame index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1]", index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1])
+                    break
     #if debugEnabled:
     #    print("detailsAreTheSame returning theSame as", theSame)
     return theSame
@@ -1114,9 +1123,7 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
         else:
             lastUserMatchesDfCopy["VinIsInCurrent"] = False
     # !!!! Update the Ignore columns below if add any columns to dfMatchesCopy or lastUserMatchesDfCopy that are not in the non copies
-    # or that do not want to compare.
-    # Currently don't compae fields "Dealer Long", "Dealer Lat" as a problem with comparing nan values at the moment.
-    detailsSameColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "infoDateTime", "CenterLat", "CenterLong", "DistanceFromCenter", "Dealer Long", "Dealer Lat"]
+    detailsSameColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "infoDateTime", "CenterLat", "CenterLong", "DistanceFromCenter"]
     printColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "CenterLat", "CenterLong", "DistanceFromCenter" ]
     
     addedUnitTo = False

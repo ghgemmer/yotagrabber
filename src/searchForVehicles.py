@@ -1,5 +1,6 @@
 #
 import copy
+import math
 import random
 import getpass
 import smtplib
@@ -41,7 +42,7 @@ from timeit import default_timer as timer
 from yotagrabber import vehicles
 
 # Version
-searchForVehiclesVersionStr = "Ver 1.15 Mar 17 2025"  #
+searchForVehiclesVersionStr = "Ver 1.16 Mar 18 2025"  #
 
 class userMatchCriteria:
     def __init__(self):
@@ -122,6 +123,8 @@ resultsFileName = "" #invalid
 username = "" #invalid
 
 userMatchCriteriaFilterFileName = "" #invalid
+
+CenterLatLong = [ None, None]
 
 emailingMethod =  -1 # invalid
 textingMethod =  -1 # invalid
@@ -219,6 +222,7 @@ configParametersInfo = {
 "username": configParameterInfo(),
 "resultsFileName": configParameterInfo(),
 "userMatchCriteriaFilterFileName": configParameterInfo(),
+"CenterLatLong": configParameterInfo(),
 "useLocalInventoryFile": configParameterInfo(),
 "runOnceAndExit": configParameterInfo(),
 "maxNumberRawMissingVehicles": configParameterInfo(),
@@ -257,6 +261,7 @@ def parseConfigFile(fileName):
     global username
     global resultsFileName
     global userMatchCriteriaFilterFileName
+    global CenterLatLong
     global useLocalInventoryFile
     global runOnceAndExit
     global maxNumberRawMissingVehicles
@@ -317,6 +322,8 @@ def parseConfigFile(fileName):
                             maxNumberRawMissingVehicles = paramsDic[paramName]
                         elif paramName == "userMatchCriteriaFilterFileName":
                             userMatchCriteriaFilterFileName = paramsDic[paramName]
+                        elif paramName == "CenterLatLong":
+                            CenterLatLong = paramsDic[paramName]
                         elif paramName == "minWaitTimeBetweenSearches":
                             minWaitTimeBetweenSearches = paramsDic[paramName]
                         elif paramName == "maxRandomAdderTimeBetweenSearches":
@@ -1085,6 +1092,29 @@ def updateMatchingVinIndex(rowSeries, lastUserMatchesDfCopy, columnsToIgnore):
         detailsSame = detailsAreTheSame(rowSeries, rowLastSeries, columnsToIgnore)  #TODO fix ignoring added columns
         rowSeries["VinLastRowModified"] = not detailsSame
     return rowSeries
+
+def calcDistanceFromCenter(rowSeries, CenterLat, CenterLong):
+    # rowSeries is a row of df
+    radiansPerdegree =  math.pi/180
+    dealerLat = rowSeries["Dealer Lat"]
+    dealerLong = rowSeries["Dealer Long"]
+    if not (valueIsNanNoneNull(dealerLat) or valueIsNanNoneNull(dealerLong) or valueIsNanNoneNull(CenterLat) or valueIsNanNoneNull(CenterLong)):
+        rowSeries["DistanceFromCenter"] = math.acos(math.cos(radiansPerdegree * (90-dealerLat))*math.cos(radiansPerdegree * (90-CenterLat))+math.sin(radiansPerdegree * (90-dealerLat))*math.sin(radiansPerdegree * (90-CenterLat))*math.cos(radiansPerdegree * (dealerLong-CenterLong)))*6371*0.621371
+    else:
+        rowSeries["DistanceFromCenter"] =  None
+    return rowSeries
+
+def calculateDistanceFromCenter(df, CenterLatLong):
+    # Calculates the dealer distance from CenterLatLong using the passed df and updates the passed df with this
+    # 
+    CenterLat = CenterLatLong[0]
+    CenterLong = CenterLatLong[1]
+    dfNew = df
+    if not (valueIsNanNoneNull(CenterLat) or valueIsNanNoneNull(CenterLong)):
+        dfNew = dfNew.apply(calcDistanceFromCenter, axis=1, args= (CenterLat, CenterLong ))
+    else:
+        dfNew["DistanceFromCenter"] =  None
+    return dfNew
     
 def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updateVehiclesStatusMsg = ""):
     global outputResultsMethod
@@ -1124,7 +1154,7 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
             lastUserMatchesDfCopy["VinIsInCurrent"] = False
     # !!!! Update the Ignore columns below if add any columns to dfMatchesCopy or lastUserMatchesDfCopy that are not in the non copies
     detailsSameColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "infoDateTime", "CenterLat", "CenterLong", "DistanceFromCenter"]
-    printColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "CenterLat", "CenterLong", "DistanceFromCenter" ]
+    printColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent" ]
     
     addedUnitTo = False
     if (not dfMatchesCopyEmpty) and (not dfMatchesCopy["VinIsInLast"].all()):
@@ -1256,6 +1286,7 @@ def searchForVehicles(args):
     global useLocalInventoryFile
     global runOnceAndExit
     global maxNumberRawMissingVehicles
+    global CenterLatLong
     try:
         print("Search for Vehicles program", searchForVehiclesVersionStr)
         done = False
@@ -1303,8 +1334,13 @@ def searchForVehicles(args):
             print(updateVehiclesStatusMsg)
             print("maxNumberRawMissingVehicles: ", maxNumberRawMissingVehicles)
             if (df is not None) and updateVehiclesCompletionStatus["completedOk"] and (updateVehiclesCompletionStatus["numberRawVehiclesMissing"] <= maxNumberRawMissingVehicles):
+                # Update CenterLat and CenterLong columns with specified values
+                df["CenterLat"] = CenterLatLong[0]
+                df["CenterLong"] = CenterLatLong[1]
                 #replace nan with None in the DataFrame to ease computations later on 
                 df = df.replace({np.nan: None})
+                # Calculate distances from center
+                df = calculateDistanceFromCenter(df, CenterLatLong)
                 # Filter the dataframe against user defined match criteria
                 print("Determining matches from criteria")
                 dfMatches = matchCriteria.filterDataFrame(df)

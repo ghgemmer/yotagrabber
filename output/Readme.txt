@@ -1,4 +1,4 @@
-Readme.txt updated 3/18/2025
+Readme.txt updated 3/18/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US (including Alaska, but currently excluding Hawaii).
 The inventory is obtained from the same place the Toyota Inventory search (https://www.toyota.com/search-inventory/)
@@ -79,7 +79,7 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
 
 Note that sometimes a "Dealer State" column cell may be blank.  I will automatically be alerted of this and this will be corrected
 typically within a day or two. This is because the dealer state information is currently maintained in a separate
-database and changes only infrequently, so is not dynamically extracted from the website when the inventory is gotten
+database and changes only infrequently, so is not dynamically extracted from the website when the inventory is extracted
 to reduce the time it takes to get the inventory.
 
 For issues or questions contact ghgemmer@gmail.com

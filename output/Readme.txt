@@ -1,9 +1,12 @@
+Readme.txt updated 3/18/2025
+
 This folder contains the inventory for all Toyota vehicle models in the US (including Alaska, but currently excluding Hawaii).
 The inventory is obtained from the same place the Toyota Inventory search (https://www.toyota.com/search-inventory/)
 gets its data.  Only the current and prior model year of production inventory are extracted.
 No history is kept, so the files contain only what that inventory website showed at the time it was accessed.
 
-Folder updates typically show up each day around 5am CDT. Each model's inventory is placed in a .csv file.  A raw
+Folder updates typically show up each day around 5am CDT.  Once a week it might not show up until 1pm.
+Each model's inventory is placed in a .csv file.  A raw
 pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model
 before various fitlering is applied, such as only current and prior model years, certain fields are removed,
 some field names and content are modified for readability, etc. There is also a <model>_StatusInfo.json file  associated
@@ -36,6 +39,12 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                    It is the bottom line final price the dealers show on their website.
                    Note: This is calculated from the several raw prices the toyota graphql website returns and was arrived at 
                    by comparing those to the dealer websites final price numbers listed for many vehicles.
+                   The logic used to determine the Selling Price from the price fields obtained from the toyota inventory 
+                   website is:
+                    the price.sellingPrice if present and not 0
+                    else use price.nonSpAdvertizedPrice if present and not 0
+                    else use price.advertizedPrice if present and not 0
+                    else use  TMSRP + DIO price  and indicate Selling price is incomplete 
                    
 "Selling Price Incomplete" - Indicates if the Selling Price is incomplete. When incomplete the price 
                              does not include the Dealer Markup/Discount as it was unknown.

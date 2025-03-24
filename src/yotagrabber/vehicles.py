@@ -328,15 +328,26 @@ def update_vehicles_and_return_df(useLocalData = False):
     # Stop here if there are no vehicles to list.
     if df.empty:
         print(f"No vehicles found for model: {MODEL}")
-        emptyDfWithFinalColumns = pd.DataFrame(columns = ["vin", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "dealerMarketingName", "dealerWebsite", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "options", "eta.currFromDate", "eta.currToDate", "infoDateTime"])
+        emptyDfWithColumnsForParquet = pd.DataFrame(columns = ["vin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "dealerMarketingName", "dealerWebsite", "options", "eta.currFromDate", "eta.currToDate", "infoDateTime"])
+        emptyDfWithFinalColumnsForCsv = pd.DataFrame(columns = ["Year", "Model", "Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "infoDateTime", "Options"])
         if statusOfGetAllPages["completedOk"]:
-            # store current results
-            emptyDfWithFinalColumns.to_csv(f"output/{MODEL}.csv", index=False)
-            df.to_parquet(f"output/{MODEL}_raw.parquet", index=False)
-            writeCompletionStatusToFile(statusOfGetAllPages)
+            if (not USE_LOCAL_DATA_ONLY) and (not useLocalData):
+                # store current results as valid get
+                emptyDfWithFinalColumnsForCsv.to_csv(f"output/{MODEL}.csv", index=False)
+                emptyDfWithColumnsForParquet.to_parquet(f"output/{MODEL}_raw.parquet", index=False)
+                writeCompletionStatusToFile(statusOfGetAllPages)
         else:
-            print(f"Completion status not Ok for model: {MODEL}, not storing any results in output files")
-        return (emptyDfWithFinalColumns, statusOfGetAllPages)
+            print(f"Error: Completion status not Ok for model: {MODEL}, not storing any results in output files and leaving them as is.")
+            print(f"update_vehicles_and_return_df returning empty dataframe and status not Ok to caller so caller does nothing")
+            # When completion status is not Ok it was decided we don't want to overwrite the stored files but just leave them as is
+            # with their last data for any user to access as that is the last valid data we got, and the user can know how old it is by the
+            # status file and the infoDateTime field in the inventory file.
+            # Even if we are told to use local data on the next run it will return the last valid data we got (when we had completion OK = True)
+            # and so no change is seen by the higher level calling program.  We want to avoid the higher level caller
+            # thinking we got a valid response of empty when the completion status was not ok thinking there was no
+            # inventory for that model anymore which would be incorrect as it was because of an error (incomplete)
+            # TODO.  May need to revisit this approach in regards to when local data is being used.
+        return (emptyDfWithFinalColumnsForCsv, statusOfGetAllPages)
 
     # Write the raw data to a file.
     if (not USE_LOCAL_DATA_ONLY) and (not useLocalData):

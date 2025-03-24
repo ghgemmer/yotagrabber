@@ -42,7 +42,7 @@ from timeit import default_timer as timer
 from yotagrabber import vehicles
 
 # Version
-searchForVehiclesVersionStr = "Ver 1.16 Mar 18 2025"  #
+searchForVehiclesVersionStr = "Ver 1.17 Mar 24 2025"  #
 
 class userMatchCriteria:
     def __init__(self):
@@ -885,6 +885,19 @@ def outputSearchingInfoToUser(matchCriteria):
     print(getModelToGetInfo())
     matchCriteria.print("", toConsole = True)
     print("Username:", username)
+
+def getSearchResultsColumnsLabelsStr(dfMatchesCopy , columnsToIgnore):
+    # returns the column lables string that is output to match the search results lines 
+    # Can be used when open text file with Excel and specifying to use the delimiter to read it in.
+    global unitDetailsDelimiter
+    labelsStr = ""
+    labelsStr += "Found Date" + unitDetailsDelimiter + "Diff Prefix" + unitDetailsDelimiter 
+    for column in dfMatchesCopy:
+        if not (column in columnsToIgnore):
+            # Add a dummy blank column label and then the actual column label to match how the
+            # search results outputs a label name + delimiter + value + delimiter  for each column in the dataframe
+            labelsStr += unitDetailsDelimiter + column + unitDetailsDelimiter 
+    return labelsStr
     
 def valueIsNanNoneNull(value):
     return (value is None) or (isinstance(value, float) and np.isnan(value))
@@ -1189,6 +1202,7 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
         else:
             resultsHeaderStr =  "The following list of matching units was found on: " + dateTimeWithTimeZoneStr
         f.write(resultsHeaderStr + "\n")
+        f.write(getSearchResultsColumnsLabelsStr(dfMatchesCopy , printColumnsToIgnore) +"\n")
         for detailsCurIndex in dfMatchesCopy.index:
             curRowSeries = dfMatchesCopy.loc[detailsCurIndex]
             addedUnit = False

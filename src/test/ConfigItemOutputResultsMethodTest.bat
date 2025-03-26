@@ -2,23 +2,15 @@ echo off
 echo This script tests various settings of the config items outputResultsMethod, alsoNotifyOnOnlyRemovals, and
 echo showRemovalsWhenOutputStatusIsAll.  Testing is done with 4runnerhybrid Model files.
 echo !!!! Currently we only have tests for when outputResultsMethod == outputAllSearchResultsOnChange but
-echo more test to be added in the future for the other values outputResultsMethod can take on.  
-echo Step 1: Ensure you are in a parent directory where there is subdirectory named output and the the parent directory contains
-echo the following files (you can usually get them from the test directory)
-echo 4runnerhybridTest0_raw.parquet,
-echo 4runnerhybridTest1_raw.parquet,
-echo 4runnerhybridTest2Empty_raw.parquet,
-echo 4runnerhybridTest3HalfEmpty_raw.parquet,
-echo 4runnerhybridTest0_StatusInfo.json
-echo 4runnerhybridTest1_StatusInfo.json
-echo 4runnerhybridTest2Empty_StatusInfo.json
-echo 4runnerhybridTest3HalfEmpty_StatusInfo.json
-echo searchForVehicles.py and all supporting files structure 
-echo Test_UserMatchCriteriaFilter.py
-echo SearchVehicles4runnerhybridTestCnfg0_config.yaml
-echo SearchVehicles4runnerhybridTestCnfg1_config.yaml
-echo ConfigItemOutputResultsMethodTest.bat
-echo Warning!!!! SearchVehicles4runnerhybridTest.txt will be deleted so if you want to save it
+echo more test to be added in the future for the other values outputResultsMethod can take on.
+echo.
+echo Step 1: Ensure you are in test directory (an output subdirectory will be made off of it)
+echo Set up the PYTHONPATH environment variable if needed (to point to where searchForVehicles.py and associated python modules
+echo as needed)
+echo Set up the SEARCHFORVEHICLESPATH to point to the directory where searchForVehicles.py you want to test
+echo is (no ending slash)
+echo Get the gmail credentials.json file and place it in the test directory.
+echo Warning!!!! SearchVehicles4runnerhybridTest.txt will be deleted in the current directory so if you want to save it
 echo copy it somewhere or rename it before hitting return below. 
 echo Hit return to continue after ensuring all the above or hit CTRL-C to abort  -------------------- 
 pause
@@ -27,6 +19,7 @@ set MODEL=4runnerhybrid
 set VEHICLE_MAKE=
 set MODEL_SEARCH_ZIPCODE=
 set MODEL_SEARCH_RADIUS=
+mkdir output
 echo off
 echo Hit return to continue
 pause
@@ -43,9 +36,11 @@ pause
 echo on
 del SearchVehicles4runnerhybridTest.txt
 del SearchVehicles4runnerhybridTest.txt.lastUserMatches.parquet
+copy modelsTest0.json output\models.json
+copy modelsTest0_raw.json output\models_raw.json
 copy 4runnerhybridTest0_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest0_StatusInfo.json output\4runnerhybrid_StatusInfo.json
-py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
 echo off
 echo Step 3: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -61,7 +56,7 @@ echo config item settings are in SearchVehicles4runnerhybridTestCnfg0_config.yam
 echo Hit return to run the test
 pause
 echo on
-py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
 echo off
 echo Step 5: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -83,7 +78,7 @@ pause
 echo on
 copy 4runnerhybridTest3HalfEmpty_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest3HalfEmpty_StatusInfo.json output\4runnerhybrid_StatusInfo.json
-py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
 echo off
 echo Step 7: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -104,7 +99,7 @@ pause
 echo on
 copy 4runnerhybridTest2Empty_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest2Empty_StatusInfo.json output\4runnerhybrid_StatusInfo.json
-py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
 echo off
 echo Step 9: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -127,7 +122,7 @@ pause
 echo on
 copy 4runnerhybridTest0_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest0_StatusInfo.json output\4runnerhybrid_StatusInfo.json
-py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
 echo off
 echo Step 11: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -160,7 +155,7 @@ pause
 echo on
 copy 4runnerhybridTest1_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest1_StatusInfo.json output\4runnerhybrid_StatusInfo.json
-py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
 echo off
 echo Step 13: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file

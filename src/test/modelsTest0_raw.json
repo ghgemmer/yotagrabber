@@ -1,0 +1,1052 @@
+[
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$55,035 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"20",
+    "disclaimer":"[global_epa_2025_4runner_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs"
+    ],
+    "families":[
+      {
+        "seqNo":9,
+        "familiyType":"Crossovers &amp; SUVs"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"26",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/4runner\/base.png?fmt=png-alpha",
+    "modelCode":"4runner",
+    "msrp":"40770",
+    "series":"4Runner",
+    "shortDescription":null,
+    "title":"4Runner",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_4runner_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$41,395 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"",
+    "disclaimer":"",
+    "family":[
+      "Crossovers &amp; SUVs",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":11,
+        "familiyType":"Crossovers &amp; SUVs"
+      },
+      {
+        "seqNo":14,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/bz4x\/base.png?fmt=png-alpha",
+    "modelCode":"bz4x",
+    "msrp":"37070",
+    "series":"bZ4X",
+    "shortDescription":null,
+    "title":"bZ4X",
+    "year":"2025",
+    "mpgDisclaimerCode":"",
+    "mpgeDisclaimerCode":"[global_bz4x_2025_total_range_disclaimer]",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"252",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Battery EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$35,825 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"53",
+    "disclaimer":"[global_epa_2025_camry_disclaimer]",
+    "family":[
+      "Cars &amp; Minivan",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":6,
+        "familiyType":"Cars &amp; Minivan"
+      },
+      {
+        "seqNo":6,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"50",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/camry\/base.png?fmt=png-alpha",
+    "modelCode":"camry",
+    "msrp":"28700",
+    "series":"Camry",
+    "shortDescription":null,
+    "title":"Camry",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_camry_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$27,150 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"32",
+    "disclaimer":"[global_epa_2025_corolla_disclaimer]",
+    "family":[
+      "Cars &amp; Minivan"
+    ],
+    "families":[
+      {
+        "seqNo":1,
+        "familiyType":"Cars &amp; Minivan"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"41",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/corolla\/base.png?fmt=png-alpha",
+    "modelCode":"corolla",
+    "msrp":"22325",
+    "series":"Corolla",
+    "shortDescription":null,
+    "title":"Corolla",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_corolla_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$28,735 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"31",
+    "disclaimer":"[global_epa_2025_corolla_cross_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs"
+    ],
+    "families":[
+      {
+        "seqNo":1,
+        "familiyType":"Crossovers &amp; SUVs"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"33",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/corollacross\/base.png?fmt=png-alpha",
+    "modelCode":"corollacross",
+    "msrp":"24035",
+    "series":"Corolla Cross",
+    "shortDescription":null,
+    "title":"Corolla Cross",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_corolla_cross_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$32,055 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"45",
+    "disclaimer":"[global_epa_2025_corolla_cross_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":2,
+        "familiyType":"Crossovers &amp; SUVs"
+      },
+      {
+        "seqNo":5,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"38",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/corollacrosshybrid\/base.png?fmt=png-alpha",
+    "modelCode":"corollacrosshybrid",
+    "msrp":"28395",
+    "series":"Corolla Cross Hybrid",
+    "shortDescription":null,
+    "title":"Corolla Cross Hybrid",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_corolla_cross_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$27,080 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"32",
+    "disclaimer":"[global_epa_2025_corollahb_disclaimer]",
+    "family":[
+      "Cars &amp; Minivan"
+    ],
+    "families":[
+      {
+        "seqNo":3,
+        "familiyType":"Cars &amp; Minivan"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"41",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/corollahatchback\/base.png?fmt=png-alpha",
+    "modelCode":"corollahatchback",
+    "msrp":"23780",
+    "series":"Corolla Hatchback",
+    "shortDescription":null,
+    "title":"Corolla Hatchback",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_corollahb_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$27,665 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"53",
+    "disclaimer":"[global_epa_2025_corolla_disclaimer]",
+    "family":[
+      "Cars &amp; Minivan",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":2,
+        "familiyType":"Cars &amp; Minivan"
+      },
+      {
+        "seqNo":2,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"46",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/corollahybrid\/base.png?fmt=png-alpha",
+    "modelCode":"corollahybrid",
+    "msrp":"23825",
+    "series":"Corolla Hybrid",
+    "shortDescription":null,
+    "title":"Corolla Hybrid",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_corolla_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$35,270 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"20",
+    "disclaimer":"[global_epa_2025_gr86_disclaimer]",
+    "family":[
+      "Cars &amp; Minivan"
+    ],
+    "families":[
+      {
+        "seqNo":9,
+        "familiyType":"Cars &amp; Minivan"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"26",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/gr86\/base.png?fmt=png-alpha",
+    "modelCode":"gr86",
+    "msrp":"30000",
+    "series":"GR86",
+    "shortDescription":null,
+    "title":"GR86",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_gr86_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$54,520 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"21",
+    "disclaimer":"[global_mpg_2025_grand_highlander_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs"
+    ],
+    "families":[
+      {
+        "seqNo":12,
+        "familiyType":"Crossovers &amp; SUVs"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"28",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/grandhighlander\/base.png?fmt=png-alpha",
+    "modelCode":"grandhighlander",
+    "msrp":"43630",
+    "series":"Grand Highlander",
+    "shortDescription":null,
+    "title":"Grand Highlander",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_mpg_2025_grand_highlander_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$52,610 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"37",
+    "disclaimer":"[global_mpg_2025_grand_highlander_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":13,
+        "familiyType":"Crossovers &amp; SUVs"
+      },
+      {
+        "seqNo":15,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"34",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/grandhighlanderhybrid\/base.png?fmt=png-alpha",
+    "modelCode":"grandhighlanderhybrid",
+    "msrp":"45380",
+    "series":"Grand Highlander Hybrid",
+    "shortDescription":null,
+    "title":"Grand Highlander Hybrid",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_mpg_2025_grand_highlander_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$47,990 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"21",
+    "disclaimer":"[global_epa_2025_grcorolla_disclaimer]",
+    "family":[
+      "Cars &amp; Minivan"
+    ],
+    "families":[
+      {
+        "seqNo":10,
+        "familiyType":"Cars &amp; Minivan"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"28",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/grcorolla\/base.png?fmt=png-alpha",
+    "modelCode":"grcorolla",
+    "msrp":"38860",
+    "series":"GR Corolla",
+    "shortDescription":null,
+    "title":"GR Corolla",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_grcorolla_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$60,050 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"23",
+    "disclaimer":"[global_mpg_2026_supra_disclaimer]",
+    "family":[
+      "Cars &amp; Minivan"
+    ],
+    "families":[
+      {
+        "seqNo":11,
+        "familiyType":"Cars &amp; Minivan"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"31",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2026\/grsupra\/base.png?fmt=png-alpha",
+    "modelCode":"grsupra",
+    "msrp":"56900",
+    "series":"GR Supra",
+    "shortDescription":null,
+    "title":"GR Supra",
+    "year":"2026",
+    "mpgDisclaimerCode":"[global_mpg_2026_supra_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$47,115 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"22",
+    "disclaimer":"[global_mpg_2025_highlander_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs"
+    ],
+    "families":[
+      {
+        "seqNo":6,
+        "familiyType":"Crossovers &amp; SUVs"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"29",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/highlander\/base.png?fmt=png-alpha",
+    "modelCode":"highlander",
+    "msrp":"39820",
+    "series":"Highlander",
+    "shortDescription":null,
+    "title":"Highlander",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_mpg_2025_highlander_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$52,980 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"35",
+    "disclaimer":"[global_mpg_2025_highlander_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":7,
+        "familiyType":"Crossovers &amp; SUVs"
+      },
+      {
+        "seqNo":10,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"35",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/highlanderhybrid\/base.png?fmt=png-alpha",
+    "modelCode":"highlanderhybrid",
+    "msrp":"46320",
+    "series":"Highlander Hybrid",
+    "shortDescription":null,
+    "title":"Highlander Hybrid",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_mpg_2025_highlander_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$61,820 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"22",
+    "disclaimer":"[global_epa_2025_land_cruiser_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":15,
+        "familiyType":"Crossovers &amp; SUVs"
+      },
+      {
+        "seqNo":17,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"25",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/landcruiser\/base.png?fmt=png-alpha",
+    "modelCode":"landcruiser",
+    "msrp":"56700",
+    "series":"Land Cruiser",
+    "shortDescription":null,
+    "title":"Land Cruiser",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_land_cruiser_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$67,540 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"76",
+    "disclaimer":"",
+    "family":[
+      "Cars &amp; Minivan",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":8,
+        "familiyType":"Cars &amp; Minivan"
+      },
+      {
+        "seqNo":16,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"71",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2024\/mirai\/base.png?fmt=png-alpha",
+    "modelCode":"mirai",
+    "msrp":"50190",
+    "series":"Mirai",
+    "shortDescription":null,
+    "title":"Mirai",
+    "year":"2024",
+    "mpgDisclaimerCode":"",
+    "mpgeDisclaimerCode":"[global_prelim_mpge_2024_mirai_disclaimer]",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Fuel Cell EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$36,765 as shown [global_msrp_as_shown_disclaimer] ",
+    "cityMPG":"57",
+    "disclaimer":"[global_epa_2024_prius_disclaimer]",
+    "family":[
+      "Cars &amp; Minivan",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":4,
+        "familiyType":"Cars &amp; Minivan"
+      },
+      {
+        "seqNo":3,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"56",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/prius\/base.png?fmt=png-alpha",
+    "modelCode":"prius",
+    "msrp":"28350",
+    "series":"Prius",
+    "shortDescription":null,
+    "title":"Prius",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2024_prius_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$40,070 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"50",
+    "disclaimer":"[global_prius_phev_2025_mpge_disclaimer]",
+    "family":[
+      "Cars &amp; Minivan",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":5,
+        "familiyType":"Cars &amp; Minivan"
+      },
+      {
+        "seqNo":4,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"47",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/priuspluginhybrid\/base.png?fmt=png-alpha",
+    "modelCode":"priuspluginhybrid",
+    "msrp":"33375",
+    "series":"Prius Plug-in Hybrid",
+    "shortDescription":null,
+    "title":"Prius Plug-in Hybrid",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_prius_phev_2025_mpge_disclaimer]",
+    "mpgeDisclaimerCode":"[global_prius_phev_2025_mpge_disclaimer]",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":"114",
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Plug-in Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$37,555 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"27",
+    "disclaimer":"[global_epa_2025_rav4_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs"
+    ],
+    "families":[
+      {
+        "seqNo":3,
+        "familiyType":"Crossovers &amp; SUVs"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"35",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/rav4\/base.png?fmt=png-alpha",
+    "modelCode":"rav4",
+    "msrp":"29250",
+    "series":"RAV4",
+    "shortDescription":null,
+    "title":"RAV4",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_rav4_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$35,520 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"41",
+    "disclaimer":"[global_epa_2025_rav4_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":4,
+        "familiyType":"Crossovers &amp; SUVs"
+      },
+      {
+        "seqNo":7,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"38",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/rav4hybrid\/base.png?fmt=png-alpha",
+    "modelCode":"rav4hybrid",
+    "msrp":"32300",
+    "series":"RAV4 Hybrid",
+    "shortDescription":null,
+    "title":"RAV4 Hybrid",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_rav4_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$51,570 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"40",
+    "disclaimer":"[global_rav4_phev_2025_mpge_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":5,
+        "familiyType":"Crossovers &amp; SUVs"
+      },
+      {
+        "seqNo":8,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"36",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/rav4pluginhybrid\/base.png?fmt=png-alpha",
+    "modelCode":"rav4pluginhybrid",
+    "msrp":"44265",
+    "series":"RAV4 Plug-in Hybrid",
+    "shortDescription":null,
+    "title":"RAV4 Plug-in Hybrid",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_rav4_phev_2025_mpge_disclaimer]",
+    "mpgeDisclaimerCode":"[global_rav4_phev_2025_mpge_disclaimer]",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":"94",
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Plug-in Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$80,860 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"21",
+    "disclaimer":"[global_epa_2025_sequoia_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":16,
+        "familiyType":"Crossovers &amp; SUVs"
+      },
+      {
+        "seqNo":18,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"24",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/sequoia\/base.png?fmt=png-alpha",
+    "modelCode":"sequoia",
+    "msrp":"62425",
+    "series":"Sequoia",
+    "shortDescription":null,
+    "title":"Sequoia",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_sequoia_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$47,115 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"36",
+    "disclaimer":"[global_epa_2025_sienna_disclaimer]",
+    "family":[
+      "Cars &amp; Minivan",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":12,
+        "familiyType":"Cars &amp; Minivan"
+      },
+      {
+        "seqNo":10,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"36",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/sienna\/base.png?fmt=png-alpha",
+    "modelCode":"sienna",
+    "msrp":"39185",
+    "series":"Sienna",
+    "shortDescription":null,
+    "title":"Sienna",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_sienna_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$42,900 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"21",
+    "disclaimer":"[global_prelim_mpg_2025_disclaimer]",
+    "family":[
+      "Trucks"
+    ],
+    "families":[
+      {
+        "seqNo":1,
+        "familiyType":"Trucks"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"26",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/tacoma\/base.png?fmt=png-alpha",
+    "modelCode":"tacoma",
+    "msrp":"31590",
+    "series":"Tacoma",
+    "shortDescription":null,
+    "title":"Tacoma",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_prelim_mpg_2025_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$63,735 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"23",
+    "disclaimer":"[global_prelim_mpg_2025_disclaimer]",
+    "family":[
+      "Trucks",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":2,
+        "familiyType":"Trucks"
+      },
+      {
+        "seqNo":19,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"24",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/tacomahybrid\/base.png?fmt=png-alpha",
+    "modelCode":"tacomahybrid",
+    "msrp":"46320",
+    "series":"Tacoma i-FORCE MAX",
+    "shortDescription":null,
+    "title":"Tacoma i-FORCE MAX",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_prelim_mpg_2025_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$45,950 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"42",
+    "disclaimer":"[global_epa_2025_crown_disclaimer]",
+    "family":[
+      "Cars &amp; Minivan",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":7,
+        "familiyType":"Cars &amp; Minivan"
+      },
+      {
+        "seqNo":12,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"41",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/toyotacrown\/base.png?fmt=png-alpha",
+    "modelCode":"toyotacrown",
+    "msrp":"41440",
+    "series":"Toyota Crown",
+    "shortDescription":null,
+    "title":"Toyota Crown",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_crown_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$47,990 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"39",
+    "disclaimer":"[global_epa_2025_crown_signia_disclaimer]",
+    "family":[
+      "Crossovers &amp; SUVs",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":14,
+        "familiyType":"Crossovers &amp; SUVs"
+      },
+      {
+        "seqNo":13,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"37",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/toyotacrownsignia\/base.png?fmt=png-alpha",
+    "modelCode":"toyotacrownsignia",
+    "msrp":"43590",
+    "series":"Toyota Crown Signia",
+    "shortDescription":null,
+    "title":"Toyota Crown Signia",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_crown_signia_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$48,010 as shown [global_msrp_as_shown_disclaimer]",
+    "cityMPG":"18",
+    "disclaimer":"[global_epa_2025_tundra_disclaimer]",
+    "family":[
+      "Trucks"
+    ],
+    "families":[
+      {
+        "seqNo":3,
+        "familiyType":"Trucks"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"23",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/tundra\/base.png?fmt=png-alpha",
+    "modelCode":"tundra",
+    "msrp":"40090",
+    "series":"Tundra",
+    "shortDescription":null,
+    "title":"Tundra",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_tundra_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"",
+    "bottomLabel.textField":""
+  },
+  {
+    "asShownDisclaimer":null,
+    "asShown":"$72,510 as shown [global_msrp_a_shown_disclaimer]",
+    "cityMPG":"20",
+    "disclaimer":"[global_epa_2025_tundra_disclaimer]",
+    "family":[
+      "Trucks",
+      "Electrified"
+    ],
+    "families":[
+      {
+        "seqNo":4,
+        "familiyType":"Trucks"
+      },
+      {
+        "seqNo":20,
+        "familiyType":"Electrified"
+      }
+    ],
+    "hoverImage":null,
+    "hwyMPG":"24",
+    "image":"https:\/\/tmna.aemassets.toyota.com\/is\/image\/toyota\/toyota\/jellies\/relative\/2025\/tundrahybrid\/base.png?fmt=png-alpha",
+    "modelCode":"tundrahybrid",
+    "msrp":"58005",
+    "series":"Tundra i-FORCE MAX",
+    "shortDescription":null,
+    "title":"Tundra i-FORCE MAX",
+    "year":"2025",
+    "mpgDisclaimerCode":"[global_epa_2025_tundra_disclaimer]",
+    "mpgeDisclaimerCode":"",
+    "msrpDisclaimerCode":"[global_msrp_starting_disclaimer]",
+    "mpge":null,
+    "range":"",
+    "topLabel.iconField":null,
+    "topLabel.textField":"Hybrid EV",
+    "bottomLabel.textField":""
+  }
+]

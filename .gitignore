@@ -198,10 +198,13 @@ credentials.json
 !/src/test/4runnerhybridTest3HalfEmpty_raw.parquet
 !/src/test/4runnerhybridTest3HalfEmpty_StatusInfo.json
 !/src/test/ConfigItemOutputResultsMethodTest.bat
+!/src/test/SearchVehicles4runnerhybridTest.bat
 !/src/test/SearchVehicles4runnerhybridTestCnfg0_config.yaml
 !/src/test/SearchVehicles4runnerhybridTestCnfg1_config.yaml
 !/src/test/Test_UserMatchCriteriaFilter.py
-
+!/src/test/modelsTest0.json
+!/src/test/modelsTest0_raw.json
+!/src/test/MatchSoundNotification.mp3
 
 
 

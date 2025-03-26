@@ -85,9 +85,11 @@ userMatchCriteriaFilterFileName: '.\XSE_PP_CloseToIowa_UserMatchCriteriaFilter.p
 # outputResultsMethod -  Determines how match results are output to the running history file, and user notifications.
 # Default is outputAllSearchResultsOnChange when commented out.
 # outputResultsMethod is one of the following values:
-# "outputAllSearchResultsOnChange" -  Outputs all the unfiltered search results to the history file and user notifications when changes occur 
-# "outputChangedSearchResultsOnChange" - Outputs only the changes in unfiltered search results to the history file and notifications when changes occur
-# "outputAddedSearchResultsOnChange"  - Outputs only the added units (new vins) compared to the previous results 
+# "outputAllSearchResultsOnChange" -  Outputs all the unfiltered search results to the history file and user notifications with the exception that
+# if only removals have occurred we do not notify the user via email/text/sound unless alsoNotifyOnOnlyRemovals is True (useful when user cannot access the history file to see current match status in one place)
+# "outputChangedSearchResultsOnChange" - Outputs only the changes in unfiltered search results to the history file and notifications when changes occur with the exception that
+# if only removals have occurred we do not notify the user via email/text/sound unless alsoNotifyOnOnlyRemovals is True (useful when user cannot access the history file to see current match status in one place)
+# "outputAddedSearchResultsOnChange"  - Outputs only the added units compared to the previous results (thus removals, modified, and stay the same not printed) when changes occur
 # Thus removed, modified, and stay the same are not output when changes occur.  This option is useful if you
 # only want to be notified when new vins are added (usually allocated so not built yet) which typically is when you have the highest 
 # chance of seeing something before everyone else and calling the dealer to attempt to secure it (assuming no waiting lists in effect) 
@@ -98,6 +100,18 @@ userMatchCriteriaFilterFileName: '.\XSE_PP_CloseToIowa_UserMatchCriteriaFilter.p
 # *ADDED, *MODED, *REMOVED in that email text file to quickly find those changes anyway.
 #  
 #outputResultsMethod: "outputAllSearchResultsOnChange",
+
+# alsoNotifyOnOnlyRemovals - When only removals have occurred, indicates, when outputResultsMethod != outputAddedSearchResultsOnChange, if we also notify the 
+# user via emails/texts (if those are enabled) .  Useful when user cannot access the 
+# history file to see current match status in one place.
+# Default is False when not present.
+alsoNotifyOnOnlyRemovals: False,
+
+# showRemovalsWhenOutputStatusIsAll - Indicates, when outputResultsMethod = outputAllSearchResultsOnChange, 
+# if we also show removals in the history file and notifications  
+# Normally these are not shown when outputResultsMethod = outputAllSearchResultsOnChange.
+# Default is False
+showRemovalsWhenOutputStatusIsAll: False,
 
 # For debugging set this to true
 debugEnabled: False,

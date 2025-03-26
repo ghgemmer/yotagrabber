@@ -28,7 +28,7 @@ resultsFileName: '.\SearchVehiclesRav4pluginhybridResults.txt',
 # to False, and the search program will continuously search when started up. The disadvantge to that is it is 
 # harder to see which individual criteria matched in the search results logs, notifications and email/texts.
 #   
-#useLocalInventoryFile: False,
+#useLocalInventoryFile: True,
 
 
 # minWaitTimeBetweenSearches is the minimum time to wait between searches when nothing was found so as to not overload the website with requests.
@@ -52,6 +52,13 @@ maxRandomAdderTimeBetweenSearches: 1800, # 60*30 secs
 # userMatchCriteriaFilterFileName config item must be present and the file must exist otherwise a config file error is issued.
 # 
 userMatchCriteriaFilterFileName: '.\Rav4PluginHybridUserMatchCriteriaFilter.py',
+
+# CenterLatAndLong -  The latitude and longitude of a center point from which distances are calculated to the Dealers.
+#                     That distance is what appears in the DistanceFromCenter column.
+# example:  CenterLatLong: [41.978382, -91.668626]
+# Default if not present is CenterLatLong: [None, None]
+CenterLatLong: [41.978382, -91.668626],
+
 
 
 # outputResultsMethod -  Determines how unfiltered match results are output to the running history file, and user notifications.
@@ -253,6 +260,7 @@ textOnlyMatchesNotification: True,
 # for creating credentials and downloading the credentials.json file.
 # Note that for now levae the project at a "test" status and only you as the user.
 # See https://cloud.google.com/docs/authentication/end-user for general overview of authentication as an end user.
+# To access your existing google cloud projects go to https://console.cloud.google.com/home
 
 "authenticationAuthorizationPath": '.\',
 

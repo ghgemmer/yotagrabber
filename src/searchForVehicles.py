@@ -42,7 +42,7 @@ from timeit import default_timer as timer
 from yotagrabber import vehicles
 
 # Version
-searchForVehiclesVersionStr = "Ver 1.17 Mar 24 2025"  #
+searchForVehiclesVersionStr = "Ver 1.18 Mar 25 2025"  #
 
 class userMatchCriteria:
     def __init__(self):
@@ -150,6 +150,10 @@ computerSoundNotificationFileName = ""
 
 outputResultsMethod = outputAllSearchResultsOnChange
 
+showRemovalsWhenOutputStatusIsAll = False
+
+alsoNotifyOnOnlyRemovals = False
+
 emailNotificationEvents = [ matchesFoundEvent]
 textNotificationEvents = [ matchesFoundEvent]
 soundNotificationEvents = [ matchesFoundEvent]
@@ -247,6 +251,8 @@ configParametersInfo = {
 "emailMessagingServerUrl": configParameterInfo(),
 "textOnlyMatchesNotification": configParameterInfo(),
 "outputResultsMethod": configParameterInfo(),
+"alsoNotifyOnOnlyRemovals": configParameterInfo(),
+"showRemovalsWhenOutputStatusIsAll": configParameterInfo(),
 "emailNotificationEvents": configParameterInfo(),
 "textNotificationEvents": configParameterInfo(),
 "soundNotificationEvents": configParameterInfo()
@@ -287,6 +293,8 @@ def parseConfigFile(fileName):
     global emailMessagingServerUrl
     global textOnlyMatchesNotification
     global outputResultsMethod
+    global alsoNotifyOnOnlyRemovals
+    global showRemovalsWhenOutputStatusIsAll
     global emailNotificationEvents
     global textNotificationEvents
     global soundNotificationEvents
@@ -380,6 +388,10 @@ def parseConfigFile(fileName):
                             else:
                                 print("Error: parseConfigFile: outputResultsMethod not valid in config file ", paramsDic[paramName])
                                 configOk = False
+                        elif paramName == "alsoNotifyOnOnlyRemovals":
+                             alsoNotifyOnOnlyRemovals = paramsDic[paramName]
+                        elif paramName == "showRemovalsWhenOutputStatusIsAll":
+                             showRemovalsWhenOutputStatusIsAll = paramsDic[paramName]
                         elif paramName == "emailNotificationEvents":
                             emailNotificationEvents = []
                             for event in paramsDic[paramName]:
@@ -879,7 +891,12 @@ def getOutputResultsMethodString(outputResultsMethod):
 def outputSearchingInfoToUser(matchCriteria):
     global username
     global maxNumberRawMissingVehicles
+    global alsoNotifyOnOnlyRemovals
+    global showRemovalsWhenOutputStatusIsAll
+    global outputResultsMethod
     print("outputResultsMethod:", getOutputResultsMethodString(outputResultsMethod))
+    print("alsoNotifyOnOnlyRemovals:", alsoNotifyOnOnlyRemovals)
+    print("showRemovalsWhenOutputStatusIsAll", showRemovalsWhenOutputStatusIsAll)
     print("runOnceAndExit: ", runOnceAndExit)
     print("maxNumberRawMissingVehicles: ", maxNumberRawMissingVehicles)
     print(getModelToGetInfo())
@@ -1131,6 +1148,8 @@ def calculateDistanceFromCenter(df, CenterLatLong):
     
 def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updateVehiclesStatusMsg = ""):
     global outputResultsMethod
+    global alsoNotifyOnOnlyRemovals
+    global showRemovalsWhenOutputStatusIsAll
     global soundNotificationEvents
     global matchesFoundEvent
     global resultsFileName
@@ -1186,12 +1205,14 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
         
     if addedUnitTo or (modifiedUnitTo and (outputResultsMethod != outputAddedSearchResultsOnChange))  or (removedUnitFrom and (outputResultsMethod in [outputAllSearchResultsOnChange, outputChangedSearchResultsOnChange])):
         # This section is only for log file and user text/email notifications.  We only update those when something has changed
-        # This keeps from flooding text/email notifications when nothing changed and we have a small between searches delay,
-        # as well as not sending text/email notifications when there are only removals
+        # This keeps from flooding text/email notifications when nothing changed and we have a small between searches delay
+        # 
         currentMatchesFileName = Path(resultsFileName + ".temp.txt")
         f = open(currentMatchesFileName, "w")
         f.write("-------------------------------------------------------------------------- \n")
         f.write("outputResultsMethod: " + getOutputResultsMethodString(outputResultsMethod) + "\n")
+        f.write("alsoNotifyOnOnlyRemovals: " + str(alsoNotifyOnOnlyRemovals) + "\n")
+        f.write("showRemovalsWhenOutputStatusIsAll: " + str(showRemovalsWhenOutputStatusIsAll) + "\n")
         f.write(modelInfoStr + "\n")
         f.write("maxNumberRawMissingVehicles: " + str(maxNumberRawMissingVehicles) + "\n")
         f.write(updateVehiclesStatusMsg + "\n")
@@ -1222,7 +1243,7 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
                     addedString = ":,   ***MODED"  # Use word Moded to easily see what was modified out of all the matches
                     namesOfModifiedFieldsString = getNamesOfModifiedFieldsIntoString(dfMatchesCopy.loc[[detailsCurIndex]], lastUserMatchesDfCopy.loc[[curRowSeries["VinLastRowLoc"]]], detailsSameColumnsToIgnore) 
                 printUnitDetails(dateTimeWithTimeZoneStr + unitDetailsDelimiter + addedString, dfMatchesCopy.loc[[detailsCurIndex]], printColumnsToIgnore, f, printIt = False, suppressFixedUnitDetailsPrefix = False, sanitizeStrings = True, namesOfModifiedFieldsString = namesOfModifiedFieldsString)  #  use ":, " to make ultra edit filtering of non Went Unavailable strings easier
-        if outputResultsMethod == outputChangedSearchResultsOnChange:
+        if (outputResultsMethod == outputChangedSearchResultsOnChange) or ((outputResultsMethod == outputAllSearchResultsOnChange) and showRemovalsWhenOutputStatusIsAll):
             # also print units that disappeared
             removedUnit = False
             if not lastUserMatchesDfCopyEmpty:
@@ -1235,8 +1256,8 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
         with open(Path(resultsFileName), 'a+') as f1:
             with open(currentMatchesFileName, 'r') as f2:
                 f1.write(f2.read())
-        if addedUnitTo or (modifiedUnitTo and (outputResultsMethod != outputAddedSearchResultsOnChange)):
-            # only notify user via text and emails if we added/modified something to the list compared to the prior list
+        if addedUnitTo or (modifiedUnitTo and (outputResultsMethod != outputAddedSearchResultsOnChange)) or (removedUnitFrom and ((outputResultsMethod == outputChangedSearchResultsOnChange) or ((outputResultsMethod == outputAllSearchResultsOnChange) and alsoNotifyOnOnlyRemovals))):
+            # only notify user via text and emails if we added/(modified with conditions/(removed with conditions) something to the list compared to the prior list
             notifyRemoteUserOfMatches(currentMatchesFileName)
     if not dfMatchesCopy.empty:
         # This section is for terminal output and sounding the computer alarm for matches

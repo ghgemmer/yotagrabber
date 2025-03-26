@@ -1,0 +1,173 @@
+echo off
+echo This script tests various settings of the config items outputResultsMethod, alsoNotifyOnOnlyRemovals, and
+echo showRemovalsWhenOutputStatusIsAll.  Testing is done with 4runnerhybrid Model files.
+echo !!!! Currently we only have tests for when outputResultsMethod == outputAllSearchResultsOnChange but
+echo more test to be added in the future for the other values outputResultsMethod can take on.  
+echo Step 1: Ensure you are in a parent directory where there is subdirectory named output and the the parent directory contains
+echo the following files (you can usually get them from the test directory)
+echo 4runnerhybridTest0_raw.parquet,
+echo 4runnerhybridTest1_raw.parquet,
+echo 4runnerhybridTest2Empty_raw.parquet,
+echo 4runnerhybridTest3HalfEmpty_raw.parquet,
+echo 4runnerhybridTest0_StatusInfo.json
+echo 4runnerhybridTest1_StatusInfo.json
+echo 4runnerhybridTest2Empty_StatusInfo.json
+echo 4runnerhybridTest3HalfEmpty_StatusInfo.json
+echo searchForVehicles.py and all supporting files structure 
+echo Test_UserMatchCriteriaFilter.py
+echo SearchVehicles4runnerhybridTestCnfg0_config.yaml
+echo SearchVehicles4runnerhybridTestCnfg1_config.yaml
+echo ConfigItemOutputResultsMethodTest.bat
+echo Warning!!!! SearchVehicles4runnerhybridTest.txt will be deleted so if you want to save it
+echo copy it somewhere or rename it before hitting return below. 
+echo Hit return to continue after ensuring all the above or hit CTRL-C to abort  -------------------- 
+pause
+echo on
+set MODEL=4runnerhybrid
+set VEHICLE_MAKE=
+set MODEL_SEARCH_ZIPCODE=
+set MODEL_SEARCH_RADIUS=
+echo off
+echo Hit return to continue
+pause
+echo Step 2: Will run first test where the input inventory file contains 100 entries 
+echo and the programs last user matches parquet file has been deleted
+echo to show that all new inventory VINs have been added in the search results file when the program is run. 
+echo config item settings are in SearchVehicles4runnerhybridTestCnfg0_config.yaml and contain the normal settings 
+echo for these tests with the following changes:
+echo outputResultsMethod: "outputAllSearchResultsOnChange"
+echo alsoNotifyOnOnlyRemovals: False
+echo showRemovalsWhenOutputStatusIsAll: False
+echo Hit return to run the test
+pause
+echo on
+del SearchVehicles4runnerhybridTest.txt
+del SearchVehicles4runnerhybridTest.txt.lastUserMatches.parquet
+copy 4runnerhybridTest0_raw.parquet output\4runnerhybrid_raw.parquet
+copy 4runnerhybridTest0_StatusInfo.json output\4runnerhybrid_StatusInfo.json
+py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
+echo off
+echo Step 3: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
+echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
+echo a "The following list of matching units was found on:" line somewhere below and then below that line a section 
+echo containing exactly 100 inventory lines and that they all have  "***ADDED" prefix on them,  
+echo AND that an email was sent with subject line "4runnerhybridTestSrchRslt: Vehicle Match Found"
+echo and the contents of that email's attached file has a that same section of entries as indicated above 
+echo Hit return to continue
+pause
+echo Step 4: Will run next test where the input inventory file and config file remain the same to show the program
+echo does not add any inventory lines to the search results file
+echo config item settings are in SearchVehicles4runnerhybridTestCnfg0_config.yaml 
+echo Hit return to run the test
+pause
+echo on
+py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
+echo off
+echo Step 5: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
+echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
+echo no section with inventory entires after it
+echo AND that an email was NOT sent
+echo Hit return to continue
+pause
+echo Step 6: Will run next test where the input inventory file now only contains the first 50 entries of the file 
+echo in the prior step, and the config file is the same as in prior step, so that
+echo that when the program is run the search results file has those 50 entries of inventory added to it
+echo with a blank prefix, and no email/text should have been sent since
+echo showRemovalsWhenOutputStatusIsAll: False , outputResultsMethod: "outputAllSearchResultsOnChange",  and 
+echo alsoNotifyOnOnlyRemovals: False
+echo So even though entries were removed from the input inventory file we don't show them because of those config
+echo file settings.
+echo config item settings are in SearchVehicles4runnerhybridTestCnfg0_config.yaml 
+echo Hit return to run the test
+pause
+echo on
+copy 4runnerhybridTest3HalfEmpty_raw.parquet output\4runnerhybrid_raw.parquet
+copy 4runnerhybridTest3HalfEmpty_StatusInfo.json output\4runnerhybrid_StatusInfo.json
+py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
+echo off
+echo Step 7: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
+echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
+echo a section that only has those 50 inventory lines in all with a blank prefix
+echo AND that an email was NOT sent
+echo Hit return to continue
+pause
+echo Step 8: Will run next test where the input inventory has no entries in it, the config file has modified normal settings of
+echo outputResultsMethod: "outputAllSearchResultsOnChange"
+echo alsoNotifyOnOnlyRemovals: True
+echo showRemovalsWhenOutputStatusIsAll: True
+echo to show that when the program is run the search results file has added the 50 entries from the last step
+echo but now with a ***REMOVED prefix on them, and that an email is sent with an attached file containing that
+echo same inventory information.
+echo config file used is SearchVehicles4runnerhybridTestCnfg1_config.yaml
+echo Hit return to run the test
+pause
+echo on
+copy 4runnerhybridTest2Empty_raw.parquet output\4runnerhybrid_raw.parquet
+copy 4runnerhybridTest2Empty_StatusInfo.json output\4runnerhybrid_StatusInfo.json
+py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
+echo off
+echo Step 9: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
+echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
+echo a "The following list of matching units was found on:" line somewhere below and then below that line a section 
+echo containing exactly 50 inventory lines from the prior run and that they all have  "***REMOVED" prefix on them,  
+echo AND that an email was sent with subject line "4runnerhybridTestSrchRslt: Vehicle Match Found"
+echo and the contents of that email's attached file has a that same section of entries as indicated above 
+echo Hit return to continue
+pause
+echo Step 10: Will run next test where the input inventory file contains the same entries as in Step2 (the 100 entries)
+echo and config file settings are the same as in the prior step
+echo to show that all 100 inventory entries have been added in the search results file with the ***ADDED prefix
+echo when the program is run. 
+echo SearchVehicles4runnerhybridTestCnfg1_config.yaml is the config file with all the normal settings and modifications of
+echo outputResultsMethod: "outputAllSearchResultsOnChange"
+echo alsoNotifyOnOnlyRemovals: True
+echo showRemovalsWhenOutputStatusIsAll: True
+echo Hit return to run the test
+pause
+echo on
+copy 4runnerhybridTest0_raw.parquet output\4runnerhybrid_raw.parquet
+copy 4runnerhybridTest0_StatusInfo.json output\4runnerhybrid_StatusInfo.json
+py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
+echo off
+echo Step 11: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
+echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
+echo a "The following list of matching units was found on:" line somewhere below and then below that line a section 
+echo containing exactly 100 inventory lines and that they all have  "***ADDED" prefix on them,  
+echo AND that an email was sent with subject line "4runnerhybridTestSrchRslt: Vehicle Match Found"
+echo and the contents of that email's attached file has a that same section of entries as indicated above 
+echo Hit return to continue
+pause
+echo Step 12: Will run next test where the input inventory file contains the same entries as in the prior step (the 100 entries)
+echo but with 2 new unique VIN entries added at the start JTDAAAAA3RA01Add1, and JTDAAAAA3RA01Add2,
+echo and the existing VIN JTEVB5BR0S111CQ36 entry modfied so that
+echo "year" = 2051
+echo "eta.currFromDate" = '2026-02-18' 
+echo "eta.currToDate" = '2026-03-18'
+echo "stockNum" = '116963'
+echo and VIN JTEVB5BR0S111CI20 entry deleted. 
+echo and config file settings are the same as in the prior step
+echo to show that the new VINS show up in the search results file with the ***ADDED prefix,
+echo the modified VIN shows up in the search results file with the ***MODED prefix and 
+echo a Names of Modified Fields sentence at the last tabbed field of that VINs line with each field that changed value and the previous and
+echo current value,
+echo and the deleted VIN entry shows up with a ***REMOVED prefix at the very end of the section
+echo SearchVehicles4runnerhybridTestCnfg1_config.yaml is the config file with all the normal settings and modifications of
+echo outputResultsMethod: "outputAllSearchResultsOnChange"
+echo alsoNotifyOnOnlyRemovals: True
+echo showRemovalsWhenOutputStatusIsAll: True
+echo Hit return to run the test
+pause
+echo on
+copy 4runnerhybridTest1_raw.parquet output\4runnerhybrid_raw.parquet
+copy 4runnerhybridTest1_StatusInfo.json output\4runnerhybrid_StatusInfo.json
+py searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
+echo off
+echo Step 13: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
+echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
+echo a "The following list of matching units was found on:" line somewhere below and then below that line a section 
+echo containing exactly 102 inventory lines with the values and prefixes indicated in the prior Step  
+echo AND that an email was sent with subject line "4runnerhybridTestSrchRslt: Vehicle Match Found"
+echo and the contents of that email's attached file has a that same section of entries as indicated above 
+echo Hit return to continue
+pause
+echo  Completed Testing

@@ -112,7 +112,7 @@ def update_models():
     new_model_row1 = pd.DataFrame({'modelCode': ['venza'], 'title': ['Venza']})
     models = pd.concat([models, new_model_row1], ignore_index=True)
     models.drop_duplicates(subset=["modelCode"], inplace=True)
-    new_model_row2 = pd.DataFrame({'modelCode': ['4runnerhybrid'], 'title': ['4Runner Hybrid']})
+    new_model_row2 = pd.DataFrame({'modelCode': ['4runnerhybrid'], 'title': ['4Runner']})
     models = pd.concat([models, new_model_row2], ignore_index=True)
     new_model_row3 = pd.DataFrame({'modelCode': ['priusprime'], 'title': ['Prius Prime']})
     models = pd.concat([models, new_model_row3], ignore_index=True)

@@ -1,4 +1,4 @@
-Readme.txt updated 3/19/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 3/31/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US (including Alaska, but currently excluding Hawaii).
 The inventory is obtained from the same place the Toyota Inventory search (https://www.toyota.com/search-inventory/)
@@ -31,6 +31,7 @@ the latest is at the bottom of the file.
 
 
 Column definitions that are not obvious or to remove any ambiguity are as follows:
+"Int Color" - Internal color
 "Base MSRP" -  Is as shown on the cars window sticker and is the Base manufacturer retail price 
 "Total MSRP" -  Also referred to as the Total SRP (Suggested Retail Price) as shown on the cars window sticker is the 
                 Base MSRP + all the factory and Port installed options/packages + delivery/handling fees  

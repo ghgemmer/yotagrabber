@@ -3,6 +3,7 @@ import datetime
 import json
 import os
 import sys
+import re
 import uuid
 import random
 from functools import cache
@@ -310,6 +311,19 @@ def get_all_pages():
     statusInfo = {"completedOk": gotPageInfoAtLeastOnce, "numberRawVehiclesFound": numberRawVehiclesFound, "numberRawVehiclesMissing": numberRawVehiclesMissing, "completionMsg": completionMsg, "date": str(datetime.datetime.now())}
     return (df, statusInfo )
 
+def sanitizeStr(strng):
+    # Replace tabs, and characters outside ascii 0 -7F range in string that might cause issues with other programs,
+    # with a " ". 
+    # Also replaces &nbsp with a " "
+    sanitizedString = strng
+    if isinstance(sanitizedString, str):
+        sanitizedString = sanitizedString.replace('&nbsp;', ' ')
+        rePattern = r'[^\u0000-\u007F]'  # only allow ascii chars represented by hex value 0 -7F.  Pattern is the negation of htis (ie finds anything not this()
+        sanitizedString = re.sub(rePattern, ' ', sanitizedString)
+        rePattern = r'[\u0009]'
+        sanitizedString = re.sub(rePattern, ' ', sanitizedString)
+    return sanitizedString
+
 
 def update_vehicles_and_return_df(useLocalData = False):
     """Generate a curated database file for the given vehicle model environment variable, as well as 
@@ -378,6 +392,7 @@ def update_vehicles_and_return_df(useLocalData = False):
         "price.sellingPrice": "Selling Price",
         "model.marketingName": "Model",
         "extColor.marketingName": "Color",
+        "intColor.marketingName": "Int Color",
         "dealerCategory": "Shipping Status",
         "dealerMarketingName": "Dealer",
         "dealerWebsite": "Dealer Website",
@@ -412,6 +427,7 @@ def update_vehicles_and_return_df(useLocalData = False):
                 # "media",
                 "model.marketingName",
                 "extColor.marketingName",
+                "intColor.marketingName",
                 "dealerMarketingName",
                 "dealerWebsite",
                 "Dealer State",
@@ -435,7 +451,8 @@ def update_vehicles_and_return_df(useLocalData = False):
     # Clean up colors with extra tags.
     # df = df[df["Color"].notna()]  # don't remove entries with missing color as still want to see those vehicles.
     df["Color"] = df["Color"].str.replace(" [extra_cost_color]", "", regex=False)
-
+    df["Int Color"] = df["Int Color"].apply(sanitizeStr)
+    
     # Calculate the various prices.
     df["TMSRP plus DIO"] = df["Total MSRP"] + df["price.dioTotalDealerSellingPrice"]
     df["TMSRP plus DIO"] = df["TMSRP plus DIO"].fillna(df["Total MSRP"])
@@ -493,6 +510,7 @@ def update_vehicles_and_return_df(useLocalData = False):
             "Year",
             "Model",
             "Color",
+            "Int Color",
             "Base MSRP",
             "Total MSRP",
             "Selling Price",
@@ -533,8 +551,7 @@ def update_vehicles_and_return_df(useLocalData = False):
     # Add the distance From Center formula to DistanceFromCenter column in the first cell only
     # to keep size of csv decent and convienient to look at with a text editor.  User can easily do copy down of this cell
     # once it is open in Excel
-    #df["DistanceFromCenter"] = "=ACOS(COS(RADIANS(90-U" + (df['DistanceFromCenter'].index + 2).astype(str) + "))*COS(RADIANS(90-W" + (df['DistanceFromCenter'].index + 2).astype(str) + "))+SIN(RADIANS(90-U" + (df['DistanceFromCenter'].index + 2).astype(str) + "))*SIN(RADIANS(90-W" + (df['DistanceFromCenter'].index + 2).astype(str) + "))*COS(RADIANS(V" + (df['DistanceFromCenter'].index + 2).astype(str) + "-X" + (df['DistanceFromCenter'].index + 2).astype(str) + ")))*6371*0.621371"
-    df["DistanceFromCenter"] = df["DistanceFromCenter"].where(df["DistanceFromCenter"].index != 0, "= ACOS(COS(RADIANS(90-U2))*COS(RADIANS(90-W2))+SIN(RADIANS(90-U2))*SIN(RADIANS(90-W2))*COS(RADIANS(V2-X2)))*6371*0.621371")
+    df["DistanceFromCenter"] = df["DistanceFromCenter"].where(df["DistanceFromCenter"].index != 0, "= ACOS(COS(RADIANS(90-V2))*COS(RADIANS(90-X2))+SIN(RADIANS(90-V2))*SIN(RADIANS(90-X2))*COS(RADIANS(W2-Y2)))*6371*0.621371")
     # Write the data to a file.
     df.to_csv(f"output/{MODEL}.csv", index=False)
     return (df, statusOfGetAllPages )

@@ -38,11 +38,10 @@ import importlib.util
 from timeit import default_timer as timer
 
 
-
 from yotagrabber import vehicles
 
 # Version
-searchForVehiclesVersionStr = "Ver 1.18 Mar 25 2025"  #
+searchForVehiclesVersionStr = "Ver 1.19 Mar 31 2025"  #
 
 class userMatchCriteria:
     def __init__(self):
@@ -922,7 +921,6 @@ def valueIsNanNoneNull(value):
 def getNamesOfModifiedFieldsIntoString (details1, details2, columnsToIgnore):
     # returns the names of the modified fields (fields whose value changed between details1 and details) as well as the 
     # the current value and prior value of the field
-    # Assumes both passed details have the exact same field names and are not empty
     # details1 has the current values and details2 has the prior values
     global debugEnabled
     #if debugEnabled:
@@ -959,7 +957,42 @@ def getNamesOfModifiedFieldsIntoString (details1, details2, columnsToIgnore):
                     break
                 break
     else:
-        print("Error:  getNamesOfModifiedFieldsIntoString:  details1 and details2 do not have all the same field names")
+        # This case typically only happens when we add new columns to the vehicles.py program going forward and thus
+        # usually happens just once when they are added as the new columns are now present going forward.
+        # Append the columns in details2 to the columns in details1 in a new list and remove duplicates
+        columnsTemp = columns1 + columns2
+        columnsCombined = []
+        for column in columnsTemp:
+            if column not in columnsCombined:
+                columnsCombined.append(column)
+        columnsCombined.sort()
+        if details1.shape[0] == details2.shape[0]:
+            # both have same number of rows which should be 0 or 1.  We only compare the first row anyway
+            for index1 in details1.index:
+                for index2 in details2.index:
+                    for column in columnsCombined:
+                        if (column in columns2) and (column in columns1):
+                            # column in both
+                            details1Value = details1.at[index1, column]
+                            details2Value = details2.at[index2, column]
+                            if (details1Value != details2Value):
+                                if not (valueIsNanNoneNull(details1Value) and valueIsNanNoneNull(details2Value)):
+                                    namesOfModifiedFieldsString += column + " :: " + str(details2Value) + " --> " +  str(details1Value) + " || "
+                                    #if debugEnabled:
+                                    #    print("getNamesOfModifiedFieldsIntoString index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1]", index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1])
+                        elif (column not in columns2):
+                            # column not in column2 so a column was added as details1 has the current and  details2 has the old
+                            details1Value = details1.at[index1, column]
+                            namesOfModifiedFieldsString += column + " :: " + "-" + " --Added-> " +  str(details1Value) + " || "
+                        else:
+                            # column must not in columns1 as combined has only columns in 1 and or 2
+                            # column not in column1 so a column was removed as details1 has the current and  details2 has the old
+                            details2Value = details2.at[index2, column]
+                            namesOfModifiedFieldsString += column + " :: " + str(details2Value) + " --Removed-> " + "-"  + " || "
+                            
+                    break
+                break
+        
     #if debugEnabled:
     #    print("getNamesOfModifiedFieldsIntoString returning namesOfModifiedFieldsString as", namesOfModifiedFieldsString)
     return namesOfModifiedFieldsString

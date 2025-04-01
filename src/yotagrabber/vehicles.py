@@ -342,8 +342,8 @@ def update_vehicles_and_return_df(useLocalData = False):
     # Stop here if there are no vehicles to list.
     if df.empty:
         print(f"No vehicles found for model: {MODEL}")
-        emptyDfWithColumnsForParquet = pd.DataFrame(columns = ["vin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "dealerMarketingName", "dealerWebsite", "options", "eta.currFromDate", "eta.currToDate", "infoDateTime"])
-        emptyDfWithFinalColumnsForCsv = pd.DataFrame(columns = ["Year", "Model", "Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "infoDateTime", "Options"])
+        emptyDfWithColumnsForParquet = pd.DataFrame(columns = ["vin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.name', 'cab', 'bed', "infoDateTime", "options"])
+        emptyDfWithFinalColumnsForCsv = pd.DataFrame(columns = ["Year", "Model", "Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Name", "Cab", "Bed", "infoDateTime", "Options"])
         if statusOfGetAllPages["completedOk"]:
             if (not USE_LOCAL_DATA_ONLY) and (not useLocalData):
                 # store current results as valid get
@@ -385,6 +385,16 @@ def update_vehicles_and_return_df(useLocalData = False):
         #print("Found missing dealer states. Number of missing dealer states is", len(dfMissingDealerState))
         for index, row in dfMissingDealerState.iterrows():
             print("Missing State for dealer Name, website:", row["dealerMarketingName"], ",", row["dealerWebsite"])
+    if 'cab' not in df.columns:
+        if 'cab.title' in df.columns:
+            df['cab'] = df['cab.title']
+        else:
+            df['cab'] = None
+    if 'bed' not in df.columns:
+        if 'bed.title' in df.columns:
+            df['bed'] = df['bed.title']
+        else:
+            df['bed'] = None
     renames = {
         "vin": "VIN",
         "price.baseMsrp": "Base MSRP",
@@ -401,6 +411,13 @@ def update_vehicles_and_return_df(useLocalData = False):
         "year": "Year",
         "drivetrain.code": "Drivetrain",
         "options": "Options",
+        'transmission.transmissionType': "Transmission",
+        'mpg.combined': "MPG Combined",
+        'mpg.city': "MPG City",
+        'mpg.highway': "MPG Highway",
+        'engine.name': "Engine Name",
+        'cab': "Cab",
+        'bed': "Bed",
     }
 
     with open(f"output/models.json", "r") as fileh:
@@ -438,6 +455,13 @@ def update_vehicles_and_return_df(useLocalData = False):
                 "options",
                 "eta.currFromDate",
                 "eta.currToDate",
+                'transmission.transmissionType',
+                'mpg.combined',
+                'mpg.city',
+                'mpg.highway',
+                'engine.name',
+                'cab',
+                'bed',
                 "infoDateTime",
             ]
         ]
@@ -540,6 +564,13 @@ def update_vehicles_and_return_df(useLocalData = False):
             "CenterLat",
             "CenterLong",
             "DistanceFromCenter",
+            "Transmission",
+            "MPG Combined",
+            "MPG City",
+            "MPG Highway",
+            "Engine Name",
+            "Cab",
+            "Bed",
             "infoDateTime",
             # "Image",
             "Options",

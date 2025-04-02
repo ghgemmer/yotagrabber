@@ -31,6 +31,7 @@ the latest is at the bottom of the file.
 
 
 Column definitions that are not obvious or to remove any ambiguity are as follows:
+"Color" - Exterior color
 "Int Color" - Interior color
 "Base MSRP" -  Is as shown on the cars window sticker and is the Base manufacturer retail price 
 "Total MSRP" -  Also referred to as the Total SRP (Suggested Retail Price) as shown on the cars window sticker is the 

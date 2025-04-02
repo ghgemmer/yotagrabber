@@ -41,7 +41,7 @@ from timeit import default_timer as timer
 from yotagrabber import vehicles
 
 # Version
-searchForVehiclesVersionStr = "Ver 1.19 Mar 31 2025"  #
+searchForVehiclesVersionStr = "Ver 1.20 Apr 1 2025"  #
 
 class userMatchCriteria:
     def __init__(self):
@@ -1179,7 +1179,7 @@ def calculateDistanceFromCenter(df, CenterLatLong):
         dfNew["DistanceFromCenter"] =  None
     return dfNew
     
-def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updateVehiclesStatusMsg = ""):
+def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, dfUnfilteredInventory, updateVehiclesStatusMsg = ""):
     global outputResultsMethod
     global alsoNotifyOnOnlyRemovals
     global showRemovalsWhenOutputStatusIsAll
@@ -1283,7 +1283,19 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updat
                 for detailsPreviousIndex in lastUserMatchesDfCopy.index:
                     if not lastUserMatchesDfCopy.loc[detailsPreviousIndex]["VinIsInCurrent"]:
                         removedUnit = True
-                        printUnitDetails(dateTimeWithTimeZoneStr + unitDetailsDelimiter +  ":, ***REMOVED", lastUserMatchesDfCopy.loc[[detailsPreviousIndex]], printColumnsToIgnore, f, printIt = False)
+                        removedVin = lastUserMatchesDfCopy.loc[detailsPreviousIndex]["VIN"]
+                        dfVinInUnfilteredInventory = dfUnfilteredInventory[dfUnfilteredInventory["VIN"] == removedVin]
+                        if len(dfVinInUnfilteredInventory):
+                            # VIN is also in the current unfiltered inventory so it was removed due to the match filtering
+                            # and not because it disappeared from the current unfiltered Inventory
+                            # In this case we want treat it the same as if the VIN data was modified
+                            # from the last match to the current unfiltered inventory
+                            # so the user can see why the match filtering removed it,
+                            # but we use the REMOVED prefix in this case instead of MODED
+                            namesOfModifiedFieldsString = getNamesOfModifiedFieldsIntoString(dfVinInUnfilteredInventory, lastUserMatchesDfCopy.loc[[detailsPreviousIndex]], detailsSameColumnsToIgnore) 
+                            printUnitDetails(dateTimeWithTimeZoneStr + unitDetailsDelimiter +  ":, ***REMOVED", dfVinInUnfilteredInventory, printColumnsToIgnore, f, printIt = False, suppressFixedUnitDetailsPrefix = False, sanitizeStrings = True, namesOfModifiedFieldsString = namesOfModifiedFieldsString)
+                        else:
+                            printUnitDetails(dateTimeWithTimeZoneStr + unitDetailsDelimiter +  ":, ***REMOVED", lastUserMatchesDfCopy.loc[[detailsPreviousIndex]], printColumnsToIgnore, f, printIt = False)
         f.close()
         # Append this file to the cumulative match history file
         with open(Path(resultsFileName), 'a+') as f1:
@@ -1413,7 +1425,7 @@ def searchForVehicles(args):
                 print("Determining matches from criteria")
                 dfMatches = matchCriteria.filterDataFrame(df)
                 # output search results to user
-                outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, updateVehiclesStatusMsg = updateVehiclesStatusMsg)
+                outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, df, updateVehiclesStatusMsg = updateVehiclesStatusMsg)
                 updatePreviousMatchingList(dfMatches)
                 # save off previous matching to parquet file in case the program is terminated and restarted so we pick
                 # up where we left off in regards to the last matches.

@@ -186,6 +186,8 @@ credentials.json
 !/src/dealers.py
 !/src/MatchSoundNotification.mp3
 !/src/createTestParquetFiles.py
+!/src/RunUserVehicleSearchesExample.bat
+!/src/waitForSeconds.py
 !/src/yotagrabber/data/dealers.csv
 !/src/yotagrabber/data/zipcodes.txt
 

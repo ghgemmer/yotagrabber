@@ -1,28 +1,30 @@
-Readme.txt updated 4/1/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 4/8/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US (including Alaska, but currently excluding Hawaii).
 The inventory is obtained from the same place the Toyota Inventory search (https://www.toyota.com/search-inventory/)
-gets its data.  Only the current and prior model year of production inventory are extracted.
-No history is kept, so the files contain only what that inventory website showed at the time it was accessed.
+gets its data.  The folder also contains the sold inventory  (inventory that no longer appears in the inventory gotten from the 
+website)
 
-Folder updates typically show up each day around 5am CDT.  Once a week it might not show up until 1pm.
-Each model's inventory is placed in a .csv file.  A raw
-pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model
-before various fitlering is applied, such as only current and prior model years, certain fields are removed,
-some field names and content are modified for readability, etc. There is also a <model>_StatusInfo.json file  associated
+Folder updates typically show up each day around 5am CDT, although once a week it might not show up until 1pm.
+Each model's inventory is placed in a .csv file.  A raw  (filename <model>_Lastraw.parquet)
+python pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model
+before various filtering/modification is applied for the csv file, such as removal of many fields we don't use or 
+want to show in the .csv file, some field names and content are modified for readability,  etc. 
+There is also a <model>_LastStatusInfo.json file  associated
 with the raw parquet file that indicates status details of the obtained raw inventory which are: 
-did the get work (got some valid responses although may be missing some vehicles),  
+did the inventory get work (got valid inventory responses although may be missing some vehicles),  
 how many vehicles found, how many vehicles were missing, date and time of the get.
 Note that the .parquet and .csv file also include an infoDateTime column which indicates when the information for
-that row was updated from the toyota website.
+that row was updated from the toyota website, as well as a FirstAddedDate for the date the VIN first appeared in 
+the inventory.
 
 These files are read only view on my google drive.  Thus if you wish to do filtering, etc you need to either 
-download the file and open it to do,  or click on the file's More Actions --> Open With --> Excel Desktop.
+download the file and open it,  or click on the file's More Actions --> Open With --> Excel Desktop.
 
 A log file InventoryRunlog.txt is also provided which indicates when the inventory search started, log of
-progress on getting each model (page number on , number of pages, number of records, any error messages or
-retries) as well as if the program could not find all the inventory for a given model and how many vehicles
-were missing for that model in that case. Note that as each page of vehicle inventory is gotten for a given
+progress on getting each model (graphql inventory page number on , number of pages, number of records, i.e. vehicles, 
+any error messages or retries) as well as if the program could not find all the inventory for a given model and how many 
+vehicles were missing for that model in that case. Note that as each page of vehicle inventory is gotten for a given
 model, the total records (total number of vehicles for that model that will be returned over the total number
 of pages indicated for that model ) the website returns can change on the fly.  So sometimes when we get close
 to the end of the inventory pages for a model, we may miss a few just newly added vehicles.  These will then
@@ -57,7 +59,8 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                     Usually From and To Date will now appear.
                     "At dealer" - The car is at the dealer
                     The above "Shipping Status" defintions were copied and pasted from another developers spreadsheet
-"infoDateTime" -  the date and time that the row was updated from the toyota website.
+"FirstAddedDate" - Date the VIN first appeared in inventory retrieved from the website.
+"infoDateTime" -  the date and time that the row was updated from the inventory website.
 "Dealer Lat" -  Dealer Latitude
 "Dealer Long" - Dealer Longitude.  
 "CenterLat" -  Latitude of a user desired Center location. User manually fills in this desired location in the spreadsheet

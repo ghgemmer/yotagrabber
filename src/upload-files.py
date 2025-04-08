@@ -95,7 +95,28 @@ def upload_inventory_files(directory, googleDriveFolderName, credentialsFileName
     # create or replace the files in that folder
     files = os.listdir( directory )
     for filename in files:
-        if ((onlyForModel == "") or (onlyForModel ==  os.path.splitext(filename)[0][:len(onlyForModel)])) and (os.path.isfile(Path(directory + "/" + filename))) and ((os.path.splitext(filename)[1] in [".csv", ".parquet"]) or (filename in ["InventoryRunlog.txt", "models.json", "models_raw.json"] ) or (filename[-16:] == "_StatusInfo.json") ):
+        # when onlyForModel is blank  we want to upload all files of the form
+        # *.csv  (gets the current and sold ones), *_Lastraw.parquet, *_Sold_raw.parquet, *_LastStatusInfo.json
+        # "InventoryRunlog.txt", "models.json", "models_raw.json"
+        # when onlyForModel is not blank, and thus specifies a model we want to upload files of the form
+        # <onlyForModel>.csv ,  <onlyForModel>_*_Sold.csv, <onlyForModel>_Lastraw.parquet, <onlyForModel>_*_Sold_raw.parquet, , <onlyForModel>_LastStatusInfo.json
+        if  (
+              ( (onlyForModel == "") and (os.path.isfile(Path(directory + "/" + filename))) and 
+                (  filename.endswith(".csv") or 
+                   filename.endswith("_Lastraw.parquet") or 
+                   filename.endswith("_Sold_raw.parquet") or
+                   filename.endswith("_LastStatusInfo.json") or 
+                   (filename in ["InventoryRunlog.txt", "models.json", "models_raw.json"] )
+                )
+              ) 
+            or
+              ( (onlyForModel != "") and (os.path.isfile(Path(directory + "/" + filename))) and 
+                (  (filename.endswith("_Sold.csv") and filename.startswith(onlyForModel + "_")  ) or 
+                   (filename.endswith("_Sold_raw.parquet")  and filename.startswith(onlyForModel + "_")) or 
+                   (filename in [onlyForModel + ".csv", onlyForModel + "_Lastraw.parquet", onlyForModel + "_LastStatusInfo.json"] )
+                )
+              ) 
+            ):
             fileid = fileIsInDriveFolder(service, folder_id, filename)
             if fileid:
                 # filename already exists in that google drive folder

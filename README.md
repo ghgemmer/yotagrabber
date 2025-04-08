@@ -3,13 +3,27 @@
 Forked version of major/yotagrabber (major/yotagrabber gets inventory data from Toyota's GraphQL endpoints and
 periodically updates and posts csv data files on all the toyota models with that inventory data)
 
-Contains updates due to Toyota website changes and graphql field changes.
+Contains updates due to Toyota website changes and graphql field changes.  Also contains new features/enhancements.
 
-The previously existing vehicles.py was also updated to fix an issue where it was not getting all the inventory for a given model,
+The previously existing vehicles.py was updated to:
+
+- fix Toyota website changes and graphql field changes
+ 
+- fix an issue where it was not getting all the inventory for a given model,
 to make it more robust with retries and communication errors, 
 and to optionally allow searching for all vehicles within a specified distance from a specified zip code for a given model.
 When searching with a specified zipcode you are limited to finding at most 10,000 vehicles for a given model
 where as with no specified zipcode you can find at least 40,000 vehicles for a given model.
+
+-Added other spreadsheet columns ( internal Color, cab, bed, transmission type, engine name, , city/highway/combined mpg , 
+Dealer city, zipcode, Dealer and Center latitude and longitude, Distance from Center, first date the VIN was added, 
+date the row was upgdated from the inventory website)
+
+- Added automatically creating files that contain the Sold inventory for a given model year (i.e.
+inventory that no longer appears in the inventory gotten from the website)
+These files are <model>_<year>_Sold.csv and <model>_<year>_Sold_raw.parquet files 
+
+
 Also added a dealers.py program that can generate the dealers.csv file that is used to lookup the dealer Id to
 dealer state that vehicles.py uses.
 

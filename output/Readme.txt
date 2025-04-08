@@ -17,6 +17,9 @@ how many vehicles found, how many vehicles were missing, date and time of the ge
 Note that the .parquet and .csv file also include an infoDateTime column which indicates when the information for
 that row was updated from the toyota website, as well as a FirstAddedDate for the date the VIN first appeared in 
 the inventory.
+Also note that currently if a temp VIN is turned into a real VIN, and thus the temp VIN disappears, 
+the temp VIN is treated as Sold and is placed in the associated Sold file. I may get around to
+not putting temp VINs in the Sold.
 
 These files are read only view on my google drive.  Thus if you wish to do filtering, etc you need to either 
 download the file and open it,  or click on the file's More Actions --> Open With --> Excel Desktop.

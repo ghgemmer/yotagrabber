@@ -15,7 +15,7 @@ and to optionally allow searching for all vehicles within a specified distance f
 When searching with a specified zipcode you are limited to finding at most 10,000 vehicles for a given model
 where as with no specified zipcode you can find at least 40,000 vehicles for a given model.
 
--Added other spreadsheet columns ( internal Color, cab, bed, transmission type, engine name, , city/highway/combined mpg , 
+- Added other spreadsheet columns ( internal Color, cab, bed, transmission type, engine name, , city/highway/combined mpg , 
 Dealer city, zipcode, Dealer and Center latitude and longitude, Distance from Center, first date the VIN was added, 
 date the row was upgdated from the inventory website)
 

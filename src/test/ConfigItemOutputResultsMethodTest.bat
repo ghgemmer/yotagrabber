@@ -19,6 +19,7 @@ set MODEL=4runnerhybrid
 set VEHICLE_MAKE=
 set MODEL_SEARCH_ZIPCODE=
 set MODEL_SEARCH_RADIUS=
+set MODEL_UPDATE_VEHICLES_TEST_MODE=ON
 mkdir output
 echo off
 echo Hit return to continue
@@ -36,11 +37,16 @@ pause
 echo on
 del SearchVehicles4runnerhybridTest.txt
 del SearchVehicles4runnerhybridTest.txt.lastUserMatches.parquet
+SearchVehicles4runnerhybridTest.txt.token.json
+del output\4runnerhybrid_Lastraw.parquet
+del output\4runnerhybrid_LastStatusInfo.json
+del output\4runnerhybrid_????_Sold_raw.parquet
+del output\4runnerhybrid_????_Sold.csv
 copy modelsTest0.json output\models.json
 copy modelsTest0_raw.json output\models_raw.json
 copy 4runnerhybridTest0_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest0_StatusInfo.json output\4runnerhybrid_StatusInfo.json
-py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml 
 echo off
 echo Step 3: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -136,15 +142,15 @@ echo Step 12: Will run next test where the input inventory file contains the sam
 echo but with 2 new unique VIN entries added at the start JTDAAAAA3RA01Add1, and JTDAAAAA3RA01Add2,
 echo and the existing VIN JTEVB5BR0S111CQ36 entry modfied so that
 echo "year" = 2051
-echo "eta.currFromDate" = '2026-02-18' 
-echo "eta.currToDate" = '2026-03-18'
+echo "eta.currFromDate" = '2051-02-18' 
+echo "eta.currToDate" = '2051-03-18'
 echo "stockNum" = '116963'
 echo and VIN JTEVB5BR0S111CI20 entry deleted. 
 echo and config file settings are the same as in the prior step
 echo to show that the new VINS show up in the search results file with the ***ADDED prefix,
 echo the modified VIN shows up in the search results file with the ***MODED prefix and 
 echo a Names of Modified Fields sentence at the last tabbed field of that VINs line with each field that changed value and the previous and
-echo current value,
+echo current value  (except for the stockNum which is not field that is displayed in the results or modified names),
 echo and the deleted VIN entry shows up with a ***REMOVED prefix at the very end of the section
 echo SearchVehicles4runnerhybridTestCnfg1_config.yaml is the config file with all the normal settings and modifications of
 echo outputResultsMethod: "outputAllSearchResultsOnChange"

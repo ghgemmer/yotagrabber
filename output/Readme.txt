@@ -19,7 +19,8 @@ that row was updated from the toyota website, as well as a FirstAddedDate for th
 the inventory.
 Also note that currently if a temp VIN is turned into a real VIN, and thus the temp VIN disappears, 
 the temp VIN is treated as Sold and is placed in the associated Sold file. I may get around to
-not putting temp VINs in the Sold.
+not putting temp VINs in the Sold, although the current way allows temp VINs to still be seen and you
+know when it was turned into a real VIN by the infoDateTime field (not necessarily what the real VIN is).
 
 These files are read only view on my google drive.  Thus if you wish to do filtering, etc you need to either 
 download the file and open it,  or click on the file's More Actions --> Open With --> Excel Desktop.

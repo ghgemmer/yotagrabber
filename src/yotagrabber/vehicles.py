@@ -36,8 +36,8 @@ forceQueryRspFailureTest = 0 # set to > 0 to perform tests related to forcing a 
 totalPageRetries= 0
 MAX_TOTAL_PAGE_RETIRES_FOR_MODEL = 2 * 3 * 30 # say on avg 3 groups of 2 retries per page (10 sec avg per retry) over 30 pages  giving 30 minutes extra worst case per model
 
-columnsForEmptyDfParquet = ["vin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.name', 'cab', 'bed', "FirstAddedDate", "infoDateTime", "options"]
-columnsForEmptyDfFinalCsv = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Name", "Cab", "Bed" , "FirstAddedDate", "infoDateTime", "Options"]
+columnsForEmptyDfParquet = ["vin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', 'cab.code', 'cab', 'bed.code', 'bed', "FirstAddedDate", "infoDateTime", "options"]
+columnsForEmptyDfFinalCsv = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", "infoDateTime", "Options"]
 
 
 
@@ -448,21 +448,27 @@ def transformRawDfToCsvStyleDf ( inputDf):
             #print("Found missing dealer states. Number of missing dealer states is", len(dfMissingDealerState))
             for index, row in dfMissingDealerState.iterrows():
                 print("Missing State for dealer Name, website:", row["dealerMarketingName"], ",", row["dealerWebsite"])
-    
+                
         if 'cab.title' in df.columns:
             df['cab'] = df['cab.title']
         elif 'cab' in df.columns:
             pass
         else:
             df['cab'] = None
-    
+            
         if 'bed.title' in df.columns:
             df['bed'] = df['bed.title']
         elif 'bed' in df.columns:
             pass
         else:
             df['bed'] = None
-    
+            
+        if not ('cab.code' in df.columns):
+            df['cab.code'] = None
+            
+        if not ('bed.code' in df.columns):
+            df['bed.code'] = None
+            
         renames = {
             "vin": "VIN",
             "price.baseMsrp": "Base MSRP",
@@ -483,7 +489,10 @@ def transformRawDfToCsvStyleDf ( inputDf):
             'mpg.combined': "MPG Combined",
             'mpg.city': "MPG City",
             'mpg.highway': "MPG Highway",
+            'engine.engineCd': "Engine Code",
             'engine.name': "Engine Name",
+            'cab.code': "Cab Code", 
+            'bed.code': "Bed Code",
             'cab': "Cab",
             'bed': "Bed",
         }
@@ -527,8 +536,11 @@ def transformRawDfToCsvStyleDf ( inputDf):
                     'mpg.combined',
                     'mpg.city',
                     'mpg.highway',
+                    'engine.engineCd',
                     'engine.name',
+                    'cab.code',
                     'cab',
+                    'bed.code',
                     'bed',
                     "FirstAddedDate",
                     "infoDateTime",
@@ -633,8 +645,11 @@ def transformRawDfToCsvStyleDf ( inputDf):
                 "MPG Combined",
                 "MPG City",
                 "MPG Highway",
+                "Engine Code",
                 "Engine Name",
+                "Cab Code", 
                 "Cab",
+                "Bed Code",
                 "Bed",
                 "FirstAddedDate",
                 "infoDateTime",

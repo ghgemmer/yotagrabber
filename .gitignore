@@ -172,6 +172,9 @@ credentials.json
 /src/*
 !src/test/
 /src/test/*
+!src/yotagrabber/
+/src/yotagrabber/graphql/*
+/src/yotagrabber/data/*
 !/src/SearchVehicles-Example_config.yaml
 !/src/SearchVehiclesRav4pluginhybrid_config.yaml
 !/src/zipCodesToCheck.txt
@@ -190,6 +193,10 @@ credentials.json
 !/src/waitForSeconds.py
 !/src/yotagrabber/data/dealers.csv
 !/src/yotagrabber/data/zipcodes.txt
+!/src/yotagrabber/graphql/models.graphql
+!/src/yotagrabber/graphql/vehicles.graphql
+!/src/yotagrabber/graphql/vehicleByVin.graphql
+
 
 !/src/test/4runnerhybridTest0_raw.parquet
 !/src/test/4runnerhybridTest0_StatusInfo.json

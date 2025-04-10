@@ -1,0 +1,89 @@
+      query {
+        getVehicleByVin(vin: "VINTOGETINFOFOR") {
+          vin
+          stockNum
+          brand
+          marketingSeries
+          year
+          isTempVin
+          dealerCd
+          dealerCategory
+          distributorCd
+          holdStatus
+          weightRating
+          isPreSold
+          dealerMarketingName
+          dealerWebsite
+          isSmartPath
+          transmission {
+            transmissionType
+          }
+          price {
+            advertizedPrice
+            nonSpAdvertizedPrice
+            totalMsrp
+            sellingPrice
+            dph
+            dioTotalMsrp
+            dioTotalDealerSellingPrice
+            dealerCashApplied
+            baseMsrp
+          }
+          options {
+            optionCd
+            marketingName
+            marketingLongName
+            optionType
+            packageInd
+          }
+          mpg {
+            city
+            highway
+            combined
+          }
+          model {
+            modelCd
+            marketingName
+            marketingTitle
+          }
+          intColor {
+            colorCd
+            colorSwatch
+            marketingName
+            nvsName
+          }
+          extColor {
+            colorCd
+            colorSwatch
+            marketingName
+            colorHexCd
+            nvsName
+          }
+          eta {
+            currFromDate
+            currToDate
+          }
+          engine {
+            engineCd
+            name
+          }
+          drivetrain {
+            code
+            title
+            bulletlist
+          }
+          family
+          cab {
+            code
+            title
+            bulletlist
+          }
+          bed {
+            code
+            title
+            bulletlist
+          }
+        }
+      }      
+      
+      

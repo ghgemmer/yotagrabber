@@ -4,6 +4,7 @@ import json
 import os
 import sys
 from pathlib import Path
+from pprint import pprint
 import re
 import uuid
 import random
@@ -42,6 +43,91 @@ columnsForEmptyDfFinalCsv = ["Year", "Model", "Color", "Int Color", "Base MSRP",
 
 
 @cache
+
+def getVehicleByVinWithBypass(vin):
+    print("Bypassing WAF")
+    headers = wafbypass.WAFBypass().run()
+    result = getVehicleByVin(vin, headers)
+    return result
+
+def getVehicleByVin(vin, headers):
+    global forceQueryRspFailureTest
+    # queries the vehicle information by the VIN  from the website using the passed bypass request headers and returns it.
+    # The information is the same as what vehicles.graphql returns excluding the fields
+    # colorFamilies, distance, isUnlockPriceDealer
+    # vehicleByVin.graphql is the same as vehicles.graphql with colorFamilies, distance, isUnlockPriceDealer removed
+    # from vehicles.graphql as the getVehicleByVin query to the website does not work with those in them.
+    # Note that the full set of fields that can be in a getVehicleByVin is shown in vehicleByVinFullSetOfQueryItems.graphq
+    # and is has many more fields than vehicles.graphql.
+    #
+    #print("Entered getVehicleByVin")
+    #print(headers)
+    with open(f"{config.BASE_DIRECTORY}/graphql/vehicleByVin.graphql", "r") as fileh:
+        query = fileh.read()
+    query = query.replace("VINTOGETINFOFOR", vin)
+    #print("query is ", query)
+    #print("Bypassing WAF")
+    #headers = wafbypass.WAFBypass().run()
+    tryCount = 3
+    result = None
+    resp = None
+    while tryCount:
+        # Make request.
+        json_post = {"query": query}
+        url = "https://api.search-inventory.toyota.com/graphql"
+        try:
+            resp = None
+            resp = requests.post(
+                url,
+                json=json_post,
+                headers=headers,
+                timeout=20,
+            )
+            if DEBUG_ENABLED:
+                if resp is None:
+                    print("query resp is None")
+                else:
+                    print("query request headers: ", repr(resp.request.headers))
+                    print("query request.body: " + str(resp.request.body))
+                    print("query resp", repr (resp.headers), repr(resp))
+            try:
+                result = resp.json()["data"]["getVehicleByVin"]
+                if result and ("vin" in result):
+                    print(result["vin"])
+                    if (forceQueryRspFailureTest > 0) and (forceQueryRspFailureTest < 20):
+                        forceFail = False
+                        if forceQueryRspFailureTest in [2,3,10]:
+                            print("Test forcing query page response failure, forceQueryRspFailureTest = ", forceQueryRspFailureTest)
+                            forceFail = True
+                        forceQueryRspFailureTest += 1
+                        if not forceFail:
+                            break
+                    else:
+                        break
+            except Exception as inst:
+                print ("query_toyota: Exception occurred with accessing json response:", str(type(inst)) + " "  + str(inst))
+                print("resp.status_code", resp.status_code)
+                print("resp.headers", resp.headers)
+                #print("resp.text", resp.text)
+                #print("resp.content", resp.content)
+                #return None
+        except Exception as inst:
+            print ("query_toyota: Exception occurred :", str(type(inst)) + " "  + str(inst))
+        tryCount -= 1
+        tm = 7 + (6 * random.random())
+        print("sleeping", tm, " secs")
+        sleep(tm)
+        if tryCount:
+            print("Trying VIN query again", "tryCount = " + str(tryCount))
+    if not result or "vin" not in result:
+        print("getVehicleByVin: Result is None, or vin field not present in results")
+        if resp is not None:
+            print("resp.text", resp.text)
+        result = None
+    #print("type of result is", type(result))
+    #pprint(result, indent=4)
+    return result
+
 def get_vehicle_query_Objects():
     """Read vehicle query from a file and create the query objects."""
     vehicleQueryObjects = {}

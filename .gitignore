@@ -164,17 +164,18 @@ credentials.json
 *credentials.json
 *.token.json
 *_token.json
-/src/output/*
+#/src/output/*
 /output/*
 !/output/Readme.txt
 !/output/rav4pluginhybrid_StatusInfo.json
 /src/Edit*
+# Exclude the contents of the src directory including all files and subdirectories on down
+# Will reinclude only those subdirectories, files etc that we want.
+# Doing this as I leave alot of attempts at new versions of files around instead of using git branches and a python
+# development virtual environment (just a single user me), so as to not affect any existing golden files that are currently 
+# being used in active runs.
 /src/*
-!src/test/
-/src/test/*
-!src/yotagrabber/
-/src/yotagrabber/graphql/*
-/src/yotagrabber/data/*
+# reinclude these files in the /src directory
 !/src/SearchVehicles-Example_config.yaml
 !/src/SearchVehiclesRav4pluginhybrid_config.yaml
 !/src/zipCodesToCheck.txt
@@ -191,13 +192,43 @@ credentials.json
 !/src/createTestParquetFiles.py
 !/src/RunUserVehicleSearchesExample.bat
 !/src/waitForSeconds.py
-!/src/yotagrabber/data/dealers.csv
-!/src/yotagrabber/data/zipcodes.txt
+
+# reinclude this immediate subdirectory in the /src directory.
+# Must do this as git ignores that subdirectory (and anything in it on down) 
+# in the immediate parent excluded directory until you reinclude it
+# That is git will ignore any include of a file in that immediate subdirectory or anywhere on down until you do this. 
+!/src/yotagrabber/
+# exclude all files and subdirectories in this /src/yotagrabber directory
+/src/yotagrabber/*
+# reinclude specific files in this /src/yotagrabber directory
+!/src/yotagrabber/models.py
+!/src/yotagrabber/vehicles.py
+!/src/yotagrabber/config.py
+!/src/yotagrabber/wafbypass.py
+
+# reinclude this immediate child directory in /src/yotagrabber/  (gitignore rule)
+!/src/yotagrabber/graphql/
+# exclude all files and subdirectories in this
+/src/yotagrabber/graphql/*
+# reinclude specific immediate files in this subdirectory
 !/src/yotagrabber/graphql/models.graphql
 !/src/yotagrabber/graphql/vehicles.graphql
 !/src/yotagrabber/graphql/vehicleByVin.graphql
 
+# reinclude this immediate child directory in /src/yotagrabber/ (gitignore rule)
+!/src/yotagrabber/data/
+# exclude all files and subdirectories in this
+/src/yotagrabber/data/*
+# reinclude specific immediate files in this subdirectory
+!/src/yotagrabber/data/dealers.csv
+!/src/yotagrabber/data/zipcodes.txt
 
+
+# reinclude this immediate child directory in /src/ (gitignore rule)
+!src/test/
+# exclude all files and subdirectories in this
+/src/test/*
+# reinclude specific immediate files in this subdirectory
 !/src/test/4runnerhybridTest0_raw.parquet
 !/src/test/4runnerhybridTest0_StatusInfo.json
 !/src/test/4runnerhybridTest1_raw.parquet

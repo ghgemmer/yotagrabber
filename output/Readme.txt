@@ -1,9 +1,9 @@
-Readme.txt updated 4/8/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 4/10/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US (including Alaska, but currently excluding Hawaii).
-The inventory is obtained from the same place the Toyota Inventory search (https://www.toyota.com/search-inventory/)
-gets its data.  The folder also contains the sold inventory  (inventory that no longer appears in the inventory gotten from the 
-website)
+The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
+gets its data from (which is https://api.search-inventory.toyota.com/graphql ).  The folder also contains the sold inventory 
+(inventory that no longer appears in the inventory gotten from the website)
 
 Folder updates typically show up each day around 5am CDT, although once a week it might not show up until 1pm.
 Each model's inventory is placed in a .csv file.  A raw  (filename <model>_Lastraw.parquet)

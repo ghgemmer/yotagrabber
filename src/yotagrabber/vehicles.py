@@ -37,8 +37,8 @@ forceQueryRspFailureTest = 0 # set to > 0 to perform tests related to forcing a 
 totalPageRetries= 0
 MAX_TOTAL_PAGE_RETIRES_FOR_MODEL = 2 * 3 * 30 # say on avg 3 groups of 2 retries per page (10 sec avg per retry) over 30 pages  giving 30 minutes extra worst case per model
 
-columnsForEmptyDfParquet = ["vin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', 'cab.code', 'cab', 'bed.code', 'bed', "FirstAddedDate", "infoDateTime", "options"]
-columnsForEmptyDfFinalCsv = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", "infoDateTime", "Options"]
+columnsForEmptyDfParquet = ["vin", "isTempVin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', 'cab.code', 'cab', 'bed.code', 'bed', "FirstAddedDate", "infoDateTime", "options"]
+columnsForEmptyDfFinalCsv = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", "infoDateTime", "Options"]
 
 
 
@@ -590,6 +590,7 @@ def transformRawDfToCsvStyleDf ( inputDf):
             df[
                 [
                     "vin",
+                    "isTempVin",
                     "dealerCategory",
                     "price.baseMsrp",
                     "price.totalMsrp",
@@ -717,6 +718,7 @@ def transformRawDfToCsvStyleDf ( inputDf):
                 "eta.currFromDate",
                 "eta.currToDate",
                 "VIN",
+                "isTempVin",
                 "Dealer",
                 "Dealer Website",
                 "Dealer State",
@@ -748,7 +750,7 @@ def transformRawDfToCsvStyleDf ( inputDf):
         # Add the distance From Center formula to DistanceFromCenter column in the first cell only
         # to keep size of csv decent and convienient to look at with a text editor.  User can easily do copy down of this cell
         # once it is open in Excel
-        df["DistanceFromCenter"] = df["DistanceFromCenter"].where(df["DistanceFromCenter"].index != 0, "= ACOS(COS(RADIANS(90-V2))*COS(RADIANS(90-X2))+SIN(RADIANS(90-V2))*SIN(RADIANS(90-X2))*COS(RADIANS(W2-Y2)))*6371*0.621371")
+        df["DistanceFromCenter"] = df["DistanceFromCenter"].where(df["DistanceFromCenter"].index != 0, "= ACOS(COS(RADIANS(90-W2))*COS(RADIANS(90-Y2))+SIN(RADIANS(90-W2))*SIN(RADIANS(90-Y2))*COS(RADIANS(X2-Z2)))*6371*0.621371")
     else:
         df = pd.DataFrame(columns = columnsForEmptyDfFinalCsv)
     return df
@@ -1034,12 +1036,12 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         useLocalDatastr = sys.argv[1:][0]
         #print("useLocalDatastr:" + useLocalDatastr + ":")
-        if useLocalDatastr ==  "useLocalData":
+        if useLocalDatastr.upper() ==  "USELOCALDATA":
             useLocalData = True
     if len(sys.argv) > 2:
         testModeOnstr = sys.argv[1:][1]
         #print("testModeOnstr:" + testModeOnstr + ":")
-        if testModeOnstr ==  "testmodeon":
+        if testModeOnstr.upper() ==  "TESTMODEON":
             testModeOn = True
     
     #print("useLocalData", useLocalData, "type", str(type(useLocalData)))

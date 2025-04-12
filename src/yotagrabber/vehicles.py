@@ -555,6 +555,15 @@ def transformRawDfToCsvStyleDf ( inputDf):
         if not ('bed.code' in df.columns):
             df['bed.code'] = None
             
+        # The mirai model does not return these columns, probably due to it being a Fuel Cell,
+        # so add empty empty columns for them.
+        if not ('mpg.combined' in df.columns):
+            df['mpg.combined'] = None
+        if not ('mpg.city' in df.columns):
+            df['mpg.city'] = None
+        if not ('mpg.highway' in df.columns):
+            df['mpg.highway'] = None
+            
         renames = {
             "vin": "VIN",
             "price.baseMsrp": "Base MSRP",

@@ -205,6 +205,7 @@ credentials.json
 !/src/yotagrabber/vehicles.py
 !/src/yotagrabber/config.py
 !/src/yotagrabber/wafbypass.py
+!/src/yotagrabber/vehiclesTestWithChangeHistoryIndividualColumns.py
 
 # reinclude this immediate child directory in /src/yotagrabber/  (gitignore rule)
 !/src/yotagrabber/graphql/

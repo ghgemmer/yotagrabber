@@ -12,6 +12,8 @@ from functools import cache
 from secrets import randbelow
 from time import sleep
 from timeit import default_timer as timer
+import numpy as np
+
 
 import pandas as pd
 import csv
@@ -31,6 +33,8 @@ MODEL = os.environ.get("MODEL")
 # optional search parameters to use when want a single location search
 MODEL_SEARCH_ZIPCODE = os.environ.get("MODEL_SEARCH_ZIPCODE")
 MODEL_SEARCH_RADIUS = os.environ.get("MODEL_SEARCH_RADIUS")
+
+changeHistoryUseThisAsTodaysDateForTesting = None # for testing change to a string yyyy-mm-dd hh:mm:ss, otherwise set as None 
 
 forceQueryRspFailureTest = 0 # set to > 0 to perform tests related to forcing a query response failure to test query request retry
 
@@ -918,6 +922,28 @@ def writeLastParquetAndAssociatedFiles(inputDf):
     df = df.drop(["Sold"], axis=1)
     df.to_parquet(rawParquetFileName, index=False)
 
+def debugCheckingDf(df, msg= "", vin= ""):
+    # Used to check various aspect of the dataframe at various points to see if something is or is not present
+    # for debugging puposes.
+    return
+    if "vin" in df.columns:
+        vinColumnName = "vin"
+    elif "VIN" in df.columns:
+        vinColumnName = "VIN"
+    else:
+        vinColumnName = ""
+    if not vin:
+        vinLookingFor = "3TMKB5FN0RM015921"
+    else:
+        vinLookingFor = vin
+    if vinColumnName:
+        if not (len(df[df[vinColumnName] == vinLookingFor])):
+            print("debugCheckingDf: At point", msg, ": vin/VIN",vinLookingFor, "not found in the df" )
+        else:
+            print("debugCheckingDf: At point", msg, ": vin/VIN",vinLookingFor, "was found in the df" )
+    else:
+        print("debugCheckingDf: At point", msg, ": df has no vin or VIN column name")
+
 def getChangeHistoryMergedColumnRenames(originalColumnsInOld, originalColumnsInNew, mergeSuffixRight):
     # returns a list of column renames we want to apply to the merged df columns.
     # This includes the renames of the mergeSuffixRight suffixed old values column
@@ -1003,7 +1029,10 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     # All passed data frames must be df raw to csv style generated dataframes
     #
     global columnsForEmptyChangeHistoryCsvDf
-    print("getChangeHistory: Entered")
+    global changeHistoryUseThisAsTodaysDateForTesting
+    #print(datetime.datetime.now(), "getChangeHistory: Entered")
+    print("Determining change history by analyzing ", len(newDf), " entries. Warning: This could take up to 30 seconds for approx 40000 entries")
+    #print("len(oldDf)", len(oldDf), "len(newDf)", len(newDf))
     maxDaysOldToKeep = 14  # 2 weeks
     # make copies of the oldDf and newDf to avoid modifying them.
     dfOld = oldDf.copy(deep=True)
@@ -1037,11 +1066,12 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     dfNewMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
     dfOldMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
     
+    
     # Update the RowChangeType column for those merged dfs.
     # The WhoDidMergeComeFrom_ is used to determine if the row was in left only, both.  right only is not possible because 
     # the merge how is 'left'. Thus we can determine if the row was added to new or removed from old 
     dfNewMerged[rowChangeTypeColumnName] = dfNewMerged[rowChangeTypeColumnName].where(dfNewMerged["WhoDidMergeComeFrom_"] != 'left_only', rowAddedNewVINIndicator )
-    dfOldMerged[rowChangeTypeColumnName] = dfOldMerged[rowChangeTypeColumnName].where(dfNewMerged["WhoDidMergeComeFrom_"] != 'left_only', rowRemovedVINIndicator )
+    dfOldMerged[rowChangeTypeColumnName] = dfOldMerged[rowChangeTypeColumnName].where(dfOldMerged["WhoDidMergeComeFrom_"] != 'left_only', rowRemovedVINIndicator )
     
     # From dfNewMerged and WhoDidMergeComeFrom_, and the old and new values in a row we can determine if any new value changed
     # from the old value, and thus if the ROW is modified or if nothing changed.  We ignore certain columns in this
@@ -1067,6 +1097,7 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     dfNewMergeOnlyCommonVins = dfNewMerged[dfNewMerged["WhoDidMergeComeFrom_"] == 'both'].copy(deep=True)
     dfNewMergeOnlyCommonVins = dfNewMergeOnlyCommonVins.apply(determineRowDifferences, axis=1, args= (columnsToIgnoreForComparison, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight))
     
+    
     # TODO how hard is it to make the added and removed entries put the columnValueNotChangedIndicator also in the 
     # old value cell to blank it out.  Otherwise I think it turns out to be left as None or Null, or Nan  which is probably
     # ok anyway, as that is essentially the same.
@@ -1081,8 +1112,10 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     dfChangeHistory = pd.concat([
         dfNewMerged[dfNewMerged[rowChangeTypeColumnName] == rowAddedNewVINIndicator],
         dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName] == rowModifiedVINContentsIndicator],
-        dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator]])
+        dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator] 
+        ])
         
+    
     # get the merged columns renames list, which includes the renames of the mergeSuffixRight suffixed old values column
     # and do the renames
     # TODO we could probably just do this with a fixed list defined up where columnsForEmptyChangeHistoryCsvDf
@@ -1103,9 +1136,14 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     dfChangeHistory = pd.concat([lastChangeHistorydf, dfChangeHistory])
     # Now filter these to only keep the ones that were at most maxDaysOldToKeep days old (infoDateTime within the last maxDaysOldToKeep).
     # infoDateTime is in the format  yyyy-mm-dd hh:mm:ss
-    today = datetime.date.today()
+    if not (changeHistoryUseThisAsTodaysDateForTesting is None):
+        print("!!!!!!!! Warning: getChangeHistory:  Using a test date in place of Todays Date for testing purposes. Test date is:", changeHistoryUseThisAsTodaysDateForTesting)
+        format_string = "%Y-%m-%d %H:%M:%S"
+        today = datetime.datetime.strptime(changeHistoryUseThisAsTodaysDateForTesting, format_string)
+    else:
+        today = datetime.date.today()
     lowerKeepDate = today - datetime.timedelta(days=maxDaysOldToKeep)
-    lowerKeepDateStr = lowerKeepDate.strftime("%Y-%m-%d")
+    lowerKeepDateStr = lowerKeepDate.strftime("%Y-%m-%d %H:%M:%S")
     dfChangeHistory = dfChangeHistory[dfChangeHistory["infoDateTime"] >= lowerKeepDateStr ]
     
     # select which columns we want to keep and their order
@@ -1117,7 +1155,7 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
         finalColumnsSelect
     ].copy(deep=True)
     
-    print("getChangeHistory: Exited")
+    #print(datetime.datetime.now(), "getChangeHistory: Exited")
     return dfChangeHistory
 
 def getEnvVariableTestMode():
@@ -1296,6 +1334,7 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     # and we have increased the space on the google drive as well.
     #last_year = datetime.date.today().year - 2
     #df.drop(df[df["Year"] < last_year].index, inplace=True)
+    
     
     # Read in the change history file to get the last change history
     lastChangeHistorydf = readChangeHistoryParquetDf()

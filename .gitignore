@@ -223,6 +223,7 @@ credentials.json
 # reinclude specific immediate files in this subdirectory
 !/src/yotagrabber/data/dealers.csv
 !/src/yotagrabber/data/zipcodes.txt
+!/src/yotagrabber/data/dealers_Adders.json
 
 
 # reinclude this immediate child directory in /src/ (gitignore rule)

@@ -1,27 +1,11 @@
 code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 20148,20148,Ira Toyota of Orleans,https://www.iratoyotaoforleans.com,17,MA,41.775415,-70.001471,16 O'Connor Road,Orleans,02653,(774) 801-7100
 20147,20147,Ira Toyota of Hyannis,https://www.iratoyotaofhyannis.com,17,MA,41.672575,-70.303282,1020 Iyannough Road,Hyannis,02601,(508) 775-1230
-20125,20125,Route 44 Toyota,https://www.route44toyota.com,17,MA,41.905368,-71.022978,1154 New State Highway,Raynham,02767,(508) 824-4044
-20051,20051,Copeland Toyota,https://www.copelandtoyota.com,17,MA,42.054088,-71.056056,970 West Chestnut Street,Brockton,02301,(508) 584-2440
-20128,20128,Toyota of Dartmouth,https://www.toyotaofdartmouth.com,17,MA,41.648664,-70.986674,100 Old Faunce Corner Road,North Dartmouth,02747,(508) 993-2616
 20111,20111,Sullivan Brothers Toyota,https://www.sullivanbrotherstoyota.com,17,MA,41.97686,-70.71249,5 Gallen Road,Kingston,02364,(781) 585-1300
 20096,20096,Falmouth Toyota,https://www.falmouthtoyota.com,17,MA,41.72191,-70.585018,290 Mac Arthur Blvd.,Bourne,02532,(508) 759-1900
-20152,20152,Tasca Toyota Boston,https://www.tascatoyotaboston.com,17,MA,42.298738,-71.049101,700 Morrissey Blvd.,Dorchester,02122,(617) 265-4321
-20149,20149,Parkway Toyota of Boston,https://www.parkwaytoyotaboston.com,17,MA,42.265918,-71.168648,1605 VFW Parkway,Boston,02132,(617) 469-1000
-20141,20141,Nucar Toyota of Norwood,https://www.nucartoyotanorwood.com,17,MA,42.201833,-71.18773,277 Providence Highway,Norwood,02062,(866) 632-4792
-20122,20122,Tufankjian Toyota of Braintree,https://www.toyotaofbraintree.com,17,MA,42.211329,-70.998285,210 Union Street,Braintree,02184,(781) 848-9300
-20145,20145,Imperial Toyota,https://www.imperialtoyotama.com,17,MA,42.159,-71.4955,300 Fortune Blvd.,Milford,01757,(508) 478-0500
 20063,20063,McGee Toyota,https://www.mcgeetoyota.com,17,MA,42.1289,-70.8326,860-880 Washington St,Hanover,02339,(781) 826-8333
-20019,20019,Toyota of Watertown,https://www.toyotaofwatertown.com,17,MA,42.364367,-71.177262,149 Arsenal St,Watertown,02472,(617) 926-5200
-20126,20126,Herb Chambers Toyota of Boston,https://www.herbchamberstoyotaofboston.com,17,MA,42.352217,-71.126462,32 Brighton Avenue,Boston,02134,(617) 787-1700
-20113,20113,Toyota of Wellesley,https://www.wellesleytoyota.com,17,MA,42.315054,-71.249542,234 Worcester Street,Wellesley,02481,(781) 237-2970
-20109,20109,Bernardi Toyota,https://www.bernarditoyota.com,17,MA,42.2957,-71.4713,1626 Worcester Road,Framingham,01702,(508) 879-1520
-20058,20058,"Westboro Toyota, Inc.",https://www.westborotoyota.com,17,MA,42.2835,-71.645,271 Turnpike Road,Westborough,01581,(508) 366-1741
-20150,20150,Koch Route 2 Toyota,https://www.kochrt2toyota.com,17,MA,42.518608,-71.69445,700 Old Union Turnpike,Lancaster,01523,(978) 353-1700
-20146,20146,Acton Toyota of Littleton,https://www.actontoyota.com,17,MA,42.543493,-71.465528,221 Great Road,Littleton,01460,(978) 263-1500
 28037,28037,Berlin City Toyota,https://www.berlincitytoyotanh.com,17,NH,44.41326,-71.195554,485 Main Street,Gorham,03581,(603) 752-6644
 20153,20153,Atlantic Toyota,https://www.atlantictoyota.com,17,MA,42.452469,-70.962777,671 Lynnway,Lynn,01905,(781) 599-4922
-20102,20102,Lexington Toyota,https://www.lexingtontoyota.com,17,MA,42.427817,-71.20111,409 Massachusetts Avenue,Lexington,02420,(781) 861-7400
 20127,20127,Ira Toyota,https://www.toyotaofdanvers.com,17,MA,42.554821,-70.962188,99B Andover Street,Danvers,01923,(978) 739-8300
 20087,20087,Woburn Toyota,https://www.woburntoyota.com,17,MA,42.5015,-71.1277,394 Washington Street,Woburn,01801,(781) 933-1100
 28036,28036,Ira Toyota of Manchester,https://www.toyotaofmanchesternh.com,17,NH,42.952,-71.4383,33 Autocenter Road,Manchester,03103,(603) 624-1800
@@ -50,19 +34,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 44024,44024,Faith's Toyota Ford,https://www.faithstoyota.com,17,VT,43.1088,-72.4416,6896 Route 5 South,Westminster,05158,(802) 463-3300
 44022,44022,802 Toyota,https://www.802toyota.com,17,VT,44.220376,-72.563585,30 Berlin Mall Road,Berlin,05602,(802) 229-9117
 20134,20134,Toyota of Greenfield,https://www.toyotaofgreenfield.com,17,MA,42.586759,-72.609309,One Main Street,Greenfield,01301,(413) 773-5455
-20101,20101,Harr Toyota,https://www.harrtoyota.com,17,MA,42.2901,-71.8034,100 Gold Star Boulevard,Worcester,01606,(508) 471-2500
-38031,38031,Langway Toyota of Newport,https://www.langwaytoyotaofnewport.com,17,RI,41.519263,-71.291446,285 East Main Road,Middletown,02842,(401) 619-5400
-38029,38029,Toyota of Smithfield,https://www.toyotaofsmithfield.com,17,RI,41.935296,-71.491401,550 George Washington Hwy,Smithfield,02917,(401) 723-0972
-38030,38030,Grieco Toyota,https://www.griecotoyota.com,17,RI,41.820453,-71.362443,415 Taunton Avenue,East Providence,02914,(401) 438-0350
-20140,20140,"Bristol Toyota, Inc.",https://www.bristoltoyota.com,17,MA,41.768517,-71.262656,2283 Grand Army Highway,Swansea,02777,(401) 253-2100
-20144,20144,Nucar Toyota of North Attleboro,https://www.nucartoyotanorthattleboro.com,17,MA,41.95932,-71.341372,620 South Washington St.,North Attleboro,02760,(866) 660-4426
 20142,20142,McGee Toyota of Dudley,https://www.mcgeetoyotaofdudley.com,17,MA,42.040488,-71.91146,191 West Main Street,Dudley,01571,(508) 943-7474
-38032,38032,Nucar Toyota of North Kingstown,https://www.nucartoyotanorthkingstown.com,17,RI,41.600766,-71.497203,3671 Quaker Lane,North Kingstown,02852,(401) 884-5438
-38026,38026,Balise Toyota of Warwick,https://www.balisetoyotaofwarwick.com,17,RI,41.742346,-71.429872,1400 Post Road,Warwick,02888,(401) 785-8900
-20117,20117,Herb Chambers Toyota of Auburn,https://www.herbchamberstoyotaofauburn.com,17,MA,42.180687,-71.863999,809 Washington Street,Auburn,01501,(508) 832-8000
-38025,38025,Valenti Toyota,https://www.valentitoyota.com,17,RI,41.350573,-71.768238,6 Langworthy Road,Westerly,02891,(401) 322-7200
-20123,20123,Lia Toyota,https://www.liatoyotaofwilbraham.com,17,MA,42.150448,-72.46717,2145 Boston Road,Wilbraham,01095,(413) 596-2000
-20133,20133,Lia Toyota of Northampton,https://www.liatoyotaofnorthampton.com,17,MA,42.331217,-72.634626,280 King Street,Northampton,01060,(413) 586-8922
 31039,31039,Queensboro Toyota,https://www.queensborotoyota.com,16,NY,40.753871,-73.899891,62-10 Northern Boulevard,Woodside,11377,(718) 335-8600
 31156,31156,Plaza Toyota,https://www.plazatoyota.com,16,NY,40.61816,-73.945086,2721 Nostrand Avenue,Brooklyn,11210,(718) 253-8400
 31162,31162,Toyota of Manhattan,https://www.toyotaofmanhattan.com,16,NY,40.76514,-73.99528,677-681 11th Avenue,New York,10019,(212) 399-9600
@@ -70,8 +42,6 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 29090,29090,Hudson Toyota,https://www.hudsontoyota.com,16,NJ,40.717188,-74.095409,599 Route 440,Jersey City,07304,(201) 862-7579
 31186,31186,Island Toyota,https://www.islandtoyota.com,16,NY,40.589859,-74.089501,1591 Hylan Boulevard,Staten Island,10305,(718) 874-8888
 29083,29083,Route 22 Toyota,https://www.route22toyota.com,16,NJ,40.697248,-74.221547,109 Route 22 West,Hillside,07205,(973) 705-9400
-06015,06015,Girard Toyota-BMW,https://www.girardtoyota.com,16,CT,41.36469,-72.115931,543 Colman Street,New London,06320,(860) 447-3141
-06037,06037,Charles Toyota,https://www.charlestoyota.com,16,CT,41.503778,-72.091477,500 West Thames Street,Norwich,06360,(860) 889-8375
 31190,31190,Sunrise Toyota North,https://www.sunrisetoyotanorth.com,16,NY,40.88373,-72.938763,910 Middle Country Road,Middle Island,11953,(631) 924-8100
 31105,31105,Smithtown Toyota,https://www.smithtowntoyota.com,16,NY,40.85579,-73.170657,360 East Jericho Turnpike,Smithtown,11787,(631) 724-3300
 31178,31178,Sunrise Toyota,https://www.sunrisetoyota.com,16,NY,40.748152,-73.141489,3984 Sunrise Highway,Oakdale,11769,(631) 589-9000
@@ -1175,19 +1145,13 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 06032,06032,Greentree Toyota,https://www.greentreetoyota.com,16,CT,41.424973,-73.419459,87 Federal Road,Danbury,06810,(203) 730-4040
 06042,06042,Hoffman Toyota,https://www.hoffmantoyota.com,16,CT,41.81845,-72.868437,"36 Albany Turnpike, Rt 44",West Simsbury,06092,(860) 651-3725
 06002,06002,A-1 Toyota,https://www.a1toyota.com,16,CT,41.335911,-72.978339,50 Amity Road,New Haven,06515,(203) 389-1521
-06036,06036,Middletown Toyota,https://www.middletowntoyota.com,16,CT,41.576516,-72.671736,634 Newfield Street,Middletown,06457,(860) 347-7294
 06040,06040,Colonial Toyota,https://www.colonialtoyotact.com,16,CT,41.228373,-73.069176,470 Boston Post Road,Milford,06460,(203) 878-7401
-06050,06050,Hartford Toyota,https://www.hartfordtoyota.com,16,CT,41.789824,-72.657709,135 West Service Road,Hartford,06120,(860) 278-5411
 06051,06051,New Country Toyota of Westport,https://www.newcountrywestporttoyota.com,16,CT,41.138034,-73.339284,777 Post Road East,Westport,06880,(203) 222-3300
-06025,06025,Lynch Toyota,https://www.lynchtoyota.com,16,CT,41.811798,-72.514958,179 Tolland Turnpike,Manchester,06040,(860) 646-4321
-06026,06026,"Gale Toyota, Inc.",https://www.galetoyota.com,16,CT,41.994767,-72.573431,50 Palomba Drive,Enfield,06082,(860) 741-3761
 31183,31183,DCH Wappingers Falls Toyota,https://www.dchwappingerstoyota.com,16,NY,41.580834,-73.90942,1349 Route 9,Wappingers Falls,12590,(845) 298-8880
-06049,06049,Toyota of Colchester,https://www.toyotaofcolchester.com,16,CT,41.579941,-72.341886,100 Old Hartford Road,Colchester,06415,(860) 537-2468
 31185,31185,Rivera Toyota of Mt. Kisco,https://www.riveratoyota.com,16,NY,41.219275,-73.717433,325 N. Bedford Road,Mt. Kisco,10549,(914) 666-5181
 06043,06043,Westbrook Toyota,https://www.westbrooktoyota.com,16,CT,41.29035,-72.442205,80 Flat Rock Place,Westbrook,06498,(860) 388-6991
 06052,06052,Toyota of Stamford,https://www.toyotaofstamford.com,16,CT,41.055215,-73.523747,909 East Main Street,Stamford,06902,(203) 348-3751
 31172,31172,Curry Toyota,https://www.currytoyota.com,16,NY,41.308003,-73.877117,3026 E. Main Street,Cortlandt Manor,10567,(914) 528-4347
-20016,20016,Balise Toyota,https://www.balisetoyota.com/,17,MA,42.142538,-72.62707,1399 Riverdale Street,West Springfield,01089,(413) 734-8795
 06029,06029,Toyota of Greenwich,https://www.toyotaofgreenwich.com,16,CT,41.036442,-73.60276,"75 E. Putnam Ave, Box 402",Cos Cob,06807,(203) 661-5055
 04154,04154,Toyota of North Hollywood,https://www.northhollywoodtoyota.com,11,CA,34.153856,-118.367637,4606 Lankershim Boulevard,North Hollywood,91602,(818) 508-2900
 04772,04772,Culver City Toyota,https://www.culvercitytoyota.com,11,CA,34.025498,-118.39131,9077 Washington Blvd.,Culver City,90232,(310) 559-3777
@@ -1242,3 +1206,40 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 13058,13058,Ed Martin Toyota,https://www.edmartintoyota.com,21,IN,39.993489,-86.006232,9230 E. 141 Street,Noblesville,46060,(317) 764-2700
 13066,13066,Carver Toyota of Columbus,https://www.carvertoyota.com,21,IN,39.297169,-85.95684,10255 N. U.S. Highway 31,Taylorsville,47280,(812) 526-7700
 13045,13045,Royal South Toyota,https://www.royalsouthtoyota.com,21,IN,39.128388,-86.530914,3115 S. Walnut Street,Bloomington,47401,(812) 331-1100
+06055,06055,Mcgee Toyota of Putnam,https://www.mcgeetoyotaofputnam.com/,16,CT,41.92526,-71.874733,88 Providence Pike,Putnam,06260,(877)-404-0878
+20117,20117,Herb Chambers Toyota of Auburn,https://www.herbchamberstoyotaofauburn.com,17,MA,42.180687,-71.863999,809 Washington Street,Auburn,01501,(508) 832-8000
+38029,38029,Toyota of Smithfield,https://www.toyotaofsmithfield.com,17,RI,41.935296,-71.491401,550 George Washington Hwy,Smithfield,02917,(401) 723-0972
+38026,38026,Balise Toyota of Warwick,https://www.balisetoyotaofwarwick.com,17,RI,41.742346,-71.429872,1400 Post Road,Warwick,02888,(401) 785-8900
+20145,20145,Imperial Toyota,https://www.imperialtoyotama.com,17,MA,42.159,-71.4955,300 Fortune Blvd.,Milford,01757,(508) 478-0500
+38030,38030,Grieco Toyota,https://www.griecotoyota.com,17,RI,41.820453,-71.362443,415 Taunton Avenue,East Providence,02914,(401) 438-0350
+20101,20101,Harr Toyota,https://www.harrtoyota.com,17,MA,42.2901,-71.8034,100 Gold Star Boulevard,Worcester,01606,(508) 471-2500
+20144,20144,Nucar Toyota of North Attleboro,https://www.nucartoyotanorthattleboro.com,17,MA,41.95932,-71.341372,620 South Washington St.,North Attleboro,02760,(866) 660-4426
+20058,20058,"Westboro Toyota, Inc.",https://www.westborotoyota.com,17,MA,42.2835,-71.645,271 Turnpike Road,Westborough,01581,(508) 366-1741
+38032,38032,Nucar Toyota of North Kingstown,https://www.nucartoyotanorthkingstown.com,17,RI,41.600766,-71.497203,3671 Quaker Lane,North Kingstown,02852,(401) 884-5438
+06037,06037,Charles Toyota,https://www.charlestoyota.com,16,CT,41.503778,-72.091477,500 West Thames Street,Norwich,06360,(860) 889-8375
+20140,20140,"Bristol Toyota, Inc.",https://www.bristoltoyota.com,17,MA,41.768517,-71.262656,2283 Grand Army Highway,Swansea,02777,(401) 253-2100
+06049,06049,Toyota of Colchester,https://www.toyotaofcolchester.com,16,CT,41.579941,-72.341886,100 Old Hartford Road,Colchester,06415,(860) 537-2468
+20109,20109,Bernardi Toyota,https://www.bernarditoyota.com,17,MA,42.2957,-71.4713,1626 Worcester Road,Framingham,01702,(508) 879-1520
+06025,06025,Lynch Toyota,https://www.lynchtoyota.com,16,CT,41.811798,-72.514958,179 Tolland Turnpike,Manchester,06040,(860) 646-4321
+20123,20123,Lia Toyota,https://www.liatoyotaofwilbraham.com,17,MA,42.150448,-72.46717,2145 Boston Road,Wilbraham,01095,(413) 596-2000
+06026,06026,"Gale Toyota, Inc.",https://www.galetoyota.com,16,CT,41.994767,-72.573431,50 Palomba Drive,Enfield,06082,(860) 741-3761
+38025,38025,Valenti Toyota,https://www.valentitoyota.com,17,RI,41.350573,-71.768238,6 Langworthy Road,Westerly,02891,(401) 322-7200
+06015,06015,Girard Toyota-BMW,https://www.girardtoyota.com,16,CT,41.36469,-72.115931,543 Colman Street,New London,06320,(860) 447-3141
+38031,38031,Langway Toyota of Newport,https://www.langwaytoyotaofnewport.com,17,RI,41.519263,-71.291446,285 East Main Road,Middletown,02842,(401) 619-5400
+20141,20141,Nucar Toyota of Norwood,https://www.nucartoyotanorwood.com,17,MA,42.201833,-71.18773,277 Providence Highway,Norwood,02062,(866) 632-4792
+06050,06050,Hartford Toyota,https://www.hartfordtoyota.com,16,CT,41.789824,-72.657709,135 West Service Road,Hartford,06120,(860) 278-5411
+20016,20016,Balise Toyota,https://www.balisetoyota.com/,17,MA,42.142538,-72.62707,1399 Riverdale Street,West Springfield,01089,(413) 734-8795
+20113,20113,Toyota of Wellesley,https://www.wellesleytoyota.com,17,MA,42.315054,-71.249542,234 Worcester Street,Wellesley,02481,(781) 237-2970
+20051,20051,Copeland Toyota,https://www.copelandtoyota.com,17,MA,42.054088,-71.056056,970 West Chestnut Street,Brockton,02301,(508) 584-2440
+20150,20150,Koch Route 2 Toyota,https://www.kochrt2toyota.com,17,MA,42.518608,-71.69445,700 Old Union Turnpike,Lancaster,01523,(978) 353-1700
+20125,20125,Route 44 Toyota,https://www.route44toyota.com,17,MA,41.905368,-71.022978,1154 New State Highway,Raynham,02767,(508) 824-4044
+20149,20149,Parkway Toyota of Boston,https://www.parkwaytoyotaboston.com,17,MA,42.265918,-71.168648,1605 VFW Parkway,Boston,02132,(617) 469-1000
+06036,06036,Middletown Toyota,https://www.middletowntoyota.com,16,CT,41.576516,-72.671736,634 Newfield Street,Middletown,06457,(860) 347-7294
+20019,20019,Toyota of Watertown,https://www.toyotaofwatertown.com,17,MA,42.364367,-71.177262,149 Arsenal St,Watertown,02472,(617) 926-5200
+20146,20146,Acton Toyota of Littleton,https://www.actontoyota.com,17,MA,42.543493,-71.465528,221 Great Road,Littleton,01460,(978) 263-1500
+20128,20128,Toyota of Dartmouth,https://www.toyotaofdartmouth.com,17,MA,41.648664,-70.986674,100 Old Faunce Corner Road,North Dartmouth,02747,(508) 993-2616
+20126,20126,Herb Chambers Toyota of Boston,https://www.herbchamberstoyotaofboston.com,17,MA,42.352217,-71.126462,32 Brighton Avenue,Boston,02134,(617) 787-1700
+20133,20133,Lia Toyota of Northampton,https://www.liatoyotaofnorthampton.com,17,MA,42.331217,-72.634626,280 King Street,Northampton,01060,(413) 586-8922
+20122,20122,Tufankjian Toyota of Braintree,https://www.toyotaofbraintree.com,17,MA,42.211329,-70.998285,210 Union Street,Braintree,02184,(781) 848-9300
+20102,20102,Lexington Toyota,https://www.lexingtontoyota.com,17,MA,42.427817,-71.20111,409 Massachusetts Avenue,Lexington,02420,(781) 861-7400
+20152,20152,Tasca Toyota Boston,https://www.tascatoyotaboston.com,17,MA,42.298738,-71.049101,700 Morrissey Blvd.,Dorchester,02122,(617) 265-4321

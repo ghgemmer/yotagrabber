@@ -51,10 +51,11 @@ def writeZipCodes(zipCodes, startIndex, fileName):
             fileh.write(str(zipCodes[indx])+ "\n")
             indx += 1
 
-def updateDealers(dealerFileName, zipCodeFileName):
+def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""):
     print("This program updates the passed dealer file (or creates that file if not present)") 
     print("with any dealers found (new or update of existing), during the search ")
-    print("of the remaining zip codes to look for dealers for, out of the zip code file")
+    print("of the remaining zip codes to look for dealers for, out of the zip code file,")
+    print("and with the optional dealers Adders json file which contains dealers which for some reason the website does not return")
     print("The remaining zip codes to search are in file <zipCodeFileName>.remainingToSearch.txt",)
     print("and that is an intermediate file the program creates and periodically updates to tell it what")
     print("remaining zip codes it needs to search for (out of the zip code file) in case the program is prematurely terminated")
@@ -68,6 +69,14 @@ def updateDealers(dealerFileName, zipCodeFileName):
     print("When the set of zipcodes is very large, (possibly 42,000), this program will take a long time to run")
     print("The program takes approx 4 seconds for each zipcode and every 100 zip codes an additional 30 seconds")
     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    dealerAddersDf = pd.DataFrame()
+    if dealerAddersJsonFileName:
+        if Path(dealerAddersJsonFileName).is_file():
+            print("Reading in Dealers Adders json file", dealerAddersJsonFileName)
+            dealerAddersDf = pd.read_json(dealerAddersJsonFileName, dtype = { 'code': 'str', 'dealerId': 'str', 'zip': 'str', 'address1': 'str', 'phone': 'str'})
+        else:
+            print("Error: Dealer Adders json file does not exist", dealerAddersJsonFileName)
+            return
     remainingZipCodeFileName = zipCodeFileName + ".remainingToSearch.txt"
     if Path(remainingZipCodeFileName).is_file():
         print("Reading in REMAINING zip codes from file:", remainingZipCodeFileName)
@@ -143,6 +152,11 @@ def updateDealers(dealerFileName, zipCodeFileName):
         # and we don't want to swamp the toyota website otherwise our connection could be closed/denied or worse
         # we could be blacklisted for some period of time
         interruptibleSleep(4)
+        
+    # Now concatenate the dealers adders file onto the dealers and keep only the first duplicate if any
+    dealers = pd.concat([dealers, dealerAddersDf])
+    dealers.drop_duplicates(subset=["code"], keep='first', inplace=True)
+    # Write out to the results ot the csv file.
     dealers.to_csv(dealerFileName, index=False)
     # delete the remaining zip codes file.
     Path(remainingZipCodeFileName).unlink(missing_ok=True)
@@ -152,4 +166,7 @@ if __name__ == "__main__":
     # pass dealer file name
     dealerFileName = sys.argv[1:][0]
     zipCodeFileName = sys.argv[1:][1]
-    updateDealers(dealerFileName, zipCodeFileName)
+    dealerAddersJsonFileName = ""
+    if len(sys.argv[1:]) >= 3:
+        dealerAddersJsonFileName = sys.argv[1:][2]
+    updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName)

@@ -1,12 +1,14 @@
-Readme.txt updated 4/10/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 4/16/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
-This folder contains the inventory for all Toyota vehicle models in the US (including Alaska, but currently excluding Hawaii).
+This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
 gets its data from (which is https://api.search-inventory.toyota.com/graphql ).  The folder also contains the sold inventory 
-(inventory that no longer appears in the inventory gotten from the website)
+(inventory that no longer appears in the inventory gotten from the website), as well as Change History event files for the
+last 14 days which contain added VINs, modified contents of existing VINs, or removed VINs between runs of the inventory 
+collection over that time period.
 
 Folder updates typically show up each day around 5am CDT, although once a week it might not show up until 1pm.
-Each model's inventory is placed in a .csv file.  A raw  (filename <model>_Lastraw.parquet)
+Each model's current inventory is placed in a <model>.csv file.  A raw  (filename <model>_Lastraw.parquet)
 python pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model
 before various filtering/modification is applied for the csv file, such as removal of many fields we don't use or 
 want to show in the .csv file, some field names and content are modified for readability,  etc. 
@@ -17,12 +19,25 @@ how many vehicles found, how many vehicles were missing, date and time of the ge
 Note that the .parquet and .csv file also include an infoDateTime column which indicates when the information for
 that row was updated from the toyota website, as well as a FirstAddedDate for the date the VIN first appeared in 
 the inventory.
+
+The sold inventory files are for VINs that no longer appear in the current inventory (were seen at one time 
+by the inventory run but have since disappered).
+These files are named  <model>_<year>_Sold.csv with the associated raw parquet in <model>_<year>_Sold_raw.parquet
 Also note that currently if a temp VIN is turned into a real VIN, and thus the temp VIN disappears, 
-the temp VIN is treated as Sold and is placed in the associated Sold file. I may get around to
-not putting temp VINs in the Sold, although the current way allows temp VINs to still be seen and you
+the temp VIN is treated as Sold, because it disappeared from current inventory, and is placed in the associated Sold file. 
+This currently allows temp VINs to still be seen and you
 know when it was turned into a real VIN by the infoDateTime field (not necessarily what the real VIN is).
 
-These files are read only view on my google drive.  Thus if you wish to do filtering, etc you need to either 
+Change History events are in the  <model>_ChangeHistory.csv and .parquet files.
+They contains all changes between runs of the inventory collection,
+which are any added VINs, modified contents of existing VINs, or removed VINs. 
+This allows a user to see the changes that occurred from run to run.
+Additional columns in these files, which are described later on below, are as follows:
+RowChangeType, 
+Event DateTime,
+List of Changes
+
+All files are read only view on my google drive.  Thus if you wish to do filtering, etc you need to either 
 download the file and open it,  or click on the file's More Actions --> Open With --> Excel Desktop.
 
 A log file InventoryRunlog.txt is also provided which indicates when the inventory search started, log of
@@ -63,7 +78,7 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                     Usually From and To Date will now appear.
                     "At dealer" - The car is at the dealer
                     The above "Shipping Status" defintions were copied and pasted from another developers spreadsheet
-"FirstAddedDate" - Date the VIN first appeared in inventory retrieved from the website.
+"FirstAddedDate" - Date the VIN first appeared in inventory retrieved from the website (or reappeared afte disappearing).
 "infoDateTime" -  the date and time that the row was updated from the inventory website.
 "Dealer Lat" -  Dealer Latitude
 "Dealer Long" - Dealer Longitude.  
@@ -86,8 +101,21 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                         The formula is the Haversine formula for the distance.
                         =ACOS(COS(RADIANS(90-DealerLat))*COS(RADIANS(90-CenterLat))+SIN(RADIANS(90-DealerLat))*SIN(RADIANS(90-CenterLat))*COS(RADIANS(DealerLong-CenterLong)))*6371*0.621371
 
-Note that sometimes a "Dealer State" column cell may be blank.  I will automatically be alerted of this and this will be corrected
-typically within a day or two. This is because the dealer state information is currently maintained in a separate
+
+Additional columns in the Change History files are:
+"RowChangeType"  - Indicates if this VIN row was an ADDED, MODED, or REMOVED row from the prior inventory run.
+                   For MODED rows any changes between the old data and the new data of any column for that row
+                   are in the "List of Changes" column.  Only columns that changed are shown so that a user can easily
+                   see what has changed  (for example, Sellingprice, ETAs, Options, Hold Status, Shipping Status, etc)
+                    
+"Event DateTime" - The datetime that the Change was determined on.  For a given inventory run these are all the same
+                   date and time for all the events added during that inventory run.
+"List of Changes" - The list of columns that changed value and the old and new value.  Options are handled by 
+                    showing all the options which were added, followed by all those removed, followed by all those
+                    that stayed the same.  
+
+Note that sometimes a "Dealer State" column cell may be blank.  I will automatically be alerted of this and this will be 
+corrected typically within a day or two. This is because the dealer state information is currently maintained in a separate
 database and changes only infrequently, so is not dynamically extracted from the website when the inventory is extracted
 to reduce the time it takes to get the inventory.
 

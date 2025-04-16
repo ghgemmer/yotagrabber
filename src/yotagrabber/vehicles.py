@@ -12,6 +12,8 @@ from functools import cache
 from secrets import randbelow
 from time import sleep
 from timeit import default_timer as timer
+import numpy as np
+
 
 import pandas as pd
 import csv
@@ -32,6 +34,8 @@ MODEL = os.environ.get("MODEL")
 MODEL_SEARCH_ZIPCODE = os.environ.get("MODEL_SEARCH_ZIPCODE")
 MODEL_SEARCH_RADIUS = os.environ.get("MODEL_SEARCH_RADIUS")
 
+changeHistoryUseThisAsTodaysDateForTesting = None # for testing change to a string yyyy-mm-dd hh:mm:ss, otherwise set as None 
+
 forceQueryRspFailureTest = 0 # set to > 0 to perform tests related to forcing a query response failure to test query request retry
 
 totalPageRetries= 0
@@ -39,7 +43,19 @@ MAX_TOTAL_PAGE_RETIRES_FOR_MODEL = 2 * 3 * 30 # say on avg 3 groups of 2 retries
 
 columnsForEmptyDfParquet = ["vin", "isTempVin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', 'cab.code', 'cab', 'bed.code', 'bed', "FirstAddedDate", "infoDateTime", "options"]
 columnsForEmptyDfFinalCsv = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", "infoDateTime", "Options"]
+# TODO should be able to construct the below from the columnsForEmptyDfFinalCsv
+# columns need to be in the order we want.
+rowModificationsColumnName = "List of Changes"
+rowChangeTypeColumnName = "RowChangeType"
+rowChangeDateTime = "Event DateTime"
+columnsForEmptyChangeHistoryCsvDf = [rowChangeTypeColumnName, rowChangeDateTime, "Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", "infoDateTime", rowModificationsColumnName, "Options"]
 
+columnValueChangedIndicator =  "----->"
+columnValueNotChangedIndicator = "_"
+rowAddedNewVINIndicator = "ADDED"
+rowModifiedVINContentsIndicator = "MODED"
+rowRemovedVINIndicator = "REMOVED"
+rowSameVINContentsIndicator = ""
 
 
 @cache
@@ -194,6 +210,14 @@ def get_vehicle_query_Objects():
 
     return vehicleQueryObjects
     
+def getChangeHistoryParquetFileName():
+    parquetFileName = f"output/{MODEL}_ChangeHistory.parquet"
+    return parquetFileName
+
+def getChangeHistoryCsvFileName():
+    parquetFileName = f"output/{MODEL}_ChangeHistory.csv"
+    return parquetFileName
+
 def getLastRawParquetFileName():
     parquetFileName = f"output/{MODEL}_Lastraw.parquet"
     return parquetFileName
@@ -211,6 +235,21 @@ def getInventoryTestStatusFileName():
     # The status Info file associated with the last raw parque file named getLastParquetFileName
     statusFileName = f"output/{MODEL}_StatusInfo.json"
     return statusFileName
+    
+def readChangeHistoryParquetDf():
+    # Reads the change history file containing the last change history dataframe and returns the dataframe
+    # If there is no such parquet file an empty dataframe with default columns is returned
+    global columnsForEmptyChangeHistoryCsvDf
+    
+    df = pd.DataFrame(columns = columnsForEmptyChangeHistoryCsvDf)
+    parquetFileName = getChangeHistoryParquetFileName()
+    # TODO do we need to convert fields that are int strings to ints, and what about booleans?
+    if Path(parquetFileName).exists():
+        df = pd.read_parquet(parquetFileName)
+    else:
+        print("readChangeHistoryParquetDf: Change history parquet file does not exist", parquetFileName, " . Using emtpy dataframe for it")
+    return df
+    
     
 def readLastParquetDf():
     # Reads the last parquet file containing the last inventory extracted and returns the dataframe for it
@@ -307,7 +346,7 @@ def query_toyota(page_number, query, headers):
     tryCount = 3
     result = None
     resp = None
-    # TODO: still getting many query failures even with this retry method (goes through all retires withuot success)
+    # TODO: still getting many query failures even with this retry method (when retries usually goes through all the retires without success but sometimes does not)
     # and not sure why?  Printed resp.text does not seem to contain any readable ascii text.
     while tryCount:
         # Make request.
@@ -506,6 +545,7 @@ def sanitizeStr(strng):
     sanitizedString = strng
     if isinstance(sanitizedString, str):
         sanitizedString = sanitizedString.replace('&nbsp;', ' ')
+        sanitizedString = sanitizedString.replace('<br>', ' ')
         rePattern = r'[^\u0000-\u007F]'  # only allow ascii chars represented by hex value 0 -7F.  Pattern is the negation of htis (ie finds anything not this()
         sanitizedString = re.sub(rePattern, ' ', sanitizedString)
         rePattern = r'[\u0009]'
@@ -563,7 +603,11 @@ def transformRawDfToCsvStyleDf ( inputDf):
             df['mpg.city'] = None
         if not ('mpg.highway' in df.columns):
             df['mpg.highway'] = None
-            
+        if not ('FirstAddedDate' in df.columns):
+            # This can happen if the passed df is the originalLastParquet before the
+            # FirstAddedDate column has ever been added to it such as when the last parquet file did not exist
+            df['FirstAddedDate'] = None
+        
         renames = {
             "vin": "VIN",
             "price.baseMsrp": "Base MSRP",
@@ -838,6 +882,308 @@ def writeLastParquetAndAssociatedFiles(inputDf):
     df = df.drop(["Sold"], axis=1)
     df.to_parquet(rawParquetFileName, index=False)
 
+def debugCheckingDf(df, msg= "", vin= ""):
+    # Used to check various aspect of the dataframe at various points to see if something is or is not present
+    # for debugging puposes.
+    return
+    if "vin" in df.columns:
+        vinColumnName = "vin"
+    elif "VIN" in df.columns:
+        vinColumnName = "VIN"
+    else:
+        vinColumnName = ""
+    if not vin:
+        vinLookingFor = "3TMKB5FN0RM015921"
+    else:
+        vinLookingFor = vin
+    if vinColumnName:
+        if not (len(df[df[vinColumnName] == vinLookingFor])):
+            print("debugCheckingDf: At point", msg, ": vin/VIN",vinLookingFor, "not found in the df" )
+        else:
+            print("debugCheckingDf: At point", msg, ": vin/VIN",vinLookingFor, "was found in the df" )
+    else:
+        print("debugCheckingDf: At point", msg, ": df has no vin or VIN column name")
+
+def getChangeHistoryFinalColumnsSelect(originalColumnsInOld, originalColumnsInNew):
+    # returns an ordered list of columns for the final columns we want in the change history
+    # The original columns passed are are in order we want for the dataframes.
+    # It is assumed that the selection are for dfChangeHistory in getChangeHistory right before
+    # it returns it to the caller. 
+    #nonHistoryCsvFinalColumns = columnsForEmptyDfFinalCsv  # this is an ordered list of how we want the column names to be ordered
+    finalColumnsSelect = []
+    # new column in the change history dataframe indicating the type of change for that row (added, modified, removed, nothing changed)
+    finalColumnsSelect.append(rowChangeTypeColumnName)
+    finalColumnsSelect.append(rowChangeDateTime)
+    for column in originalColumnsInNew:
+        if column == "Options":
+            # insert this one right before Options
+            finalColumnsSelect.append(rowModificationsColumnName)
+        finalColumnsSelect.append(column)
+    return finalColumnsSelect
+
+def valueIsNanNoneNull(value):
+    return (value is None) or (isinstance(value, float) and np.isnan(value))
+    
+def getOptionDifferences(oldOptions, newOptions):
+    # returns a string of the differences between the old and new options.  If null is returned then there are no differences.
+    diffs = ""
+    removedOptionsStr = ""
+    addedOptionsStr = ""
+    sameOptionsStr = ""
+    oldOptionsIsStrType = isinstance(oldOptions, str)
+    newOptionsIsStrType = isinstance(newOptions, str)
+    if (not oldOptionsIsStrType) or (not newOptionsIsStrType):
+        removedOptionsStr = str(oldOptions)
+        addedOptionsStr = str(newOptions)
+    else: # both are strings
+        # split up the Options into each individual option using the options separator "|" and strip of any leading
+        # or trailing white spaces.
+        oldOptionsSplit = []
+        for option in oldOptions.split("|"):
+            oldOptionsSplit.append(option.rstrip().lstrip())
+        newOptionsSplit = []
+        for option in newOptions.split("|"):
+            newOptionsSplit.append(option.rstrip().lstrip())
+        # now get same and added
+        oldIndiciesOfOldIsSameAsNew = []
+        newIndex = 0
+        for newOption in newOptionsSplit:
+            newOptionForCompare = newOption.lower().rstrip(":")
+            # newOptionForCompare = newOption.replace("  ", " ")
+            newOptionForCompare = newOptionForCompare.replace("[installed_msrp]", "").rstrip().rstrip(":")
+            wasInOld = False
+            oldIndex = 0
+            for oldOption in oldOptionsSplit:
+                oldOptionForCompare = oldOption.lower().rstrip(":").rstrip()
+                # oldOptionForCompare = oldOption.replace("  ", " ")
+                oldOptionForCompare = oldOptionForCompare.replace("[installed_msrp]", "").rstrip().rstrip(":")
+                if newOptionForCompare == oldOptionForCompare:
+                    sameOptionsStr += newOption + " | "
+                    wasInOld = True
+                    oldIndiciesOfOldIsSameAsNew.append(oldIndex)
+                    break
+                oldIndex += 1
+            if not wasInOld:
+                # then must be an added one from new
+                addedOptionsStr += newOption + " | "
+            newIndex += 1
+        # now process removed ones
+        for oldIndex in range(len(oldOptionsSplit)):
+            if not (oldIndex in oldIndiciesOfOldIsSameAsNew):
+                # must be removed
+                removedOptionsStr += oldOptionsSplit[oldIndex] + " | "
+        
+    if sameOptionsStr:
+        sameOptionsStr = " :Same---> " + sameOptionsStr
+    if removedOptionsStr:
+        removedOptionsStr = " :Removed---> " + removedOptionsStr
+    if addedOptionsStr:
+        addedOptionsStr = " :Added---> " + addedOptionsStr
+    if (not removedOptionsStr) and (not addedOptionsStr):
+        # They are all the same Options
+        diffs = ""
+    else:
+        diffs =  addedOptionsStr + removedOptionsStr + sameOptionsStr
+    return diffs
+
+def determineRowDifferences( row, columnsToIgnore, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight):
+    # Determines if there are any differences between the row's new values and the row's old values for each
+    # column name in row that is not in columnsToIgnore and updates the row's rowChangeTypeColumnName column, and 
+    # rowModificationsColumnName column values.
+    # Assumes any such column name, not in columnsToIgnore, must be guaranteed to be in either originalColumnsInNew, or originalColumnsInOld
+    # If the row has a column name say for example "Color" and that name is not in columnsToIgnore, 
+    # and in both originalColumnsInNew And originalColumnsInOld
+    # then the new value is row["Color"], and the old value is row["Color" + mergeSuffixRight].
+    # If there are columns only in originalColumnsInNew, or only in originalColumnsInOld, and not in columnsToIgnore
+    # then that is also considred a difference although this probably cannot happen if 
+    # the row was created from a merge of old to new and old and new were csv style dfs (which must have the same columns)
+    # and any other columns added in for processing are to be ignored via the columnsToIgnore. 
+    # If there are any differences the row's rowModificationsColumnName column value (a str type column)
+    # is set with the name of each column that was different along with the old and new values. 
+    # For columns only in one or the other there is an indication of that and 
+    # only one value is shown.  
+    # Also the row's rowChangeTypeColumnName column value is to be updated with an indication if there was any difference or not
+    #
+    global debugEnabled
+    namesOfModifiedFieldsString = ""
+    rowIsTheSame = True
+    columns1 = []
+    for column1 in originalColumnsInNew:
+        if not (column1 in columnsToIgnore):
+            columns1.append(column1)
+    columns1.sort()
+    columns2 = []
+    for column2 in originalColumnsInOld:
+        if not (column2 in columnsToIgnore):
+            columns2.append(column2)
+    columns2.sort()
+    if columns1 == columns2:
+        # both have all the exact same column labels (assumed to be unique)
+        for column in columns1:
+            oldValue = row[column+mergeSuffixRight]  # this column must exist due to the merge of old to new as the old has a new column created as the common column name +  
+            newValue = row[column]
+            oldValueForCompare = oldValue
+            newValueForCompare = newValue
+            if column == "Options":
+                diffs = getOptionDifferences(oldValue, newValue)
+                if diffs:
+                    rowIsTheSame = False
+                    namesOfModifiedFieldsString += column + " :: " + diffs + " || "
+            elif (oldValueForCompare != newValueForCompare):
+                if not (valueIsNanNoneNull(newValueForCompare) and valueIsNanNoneNull(oldValueForCompare)):
+                    rowIsTheSame = False
+                    namesOfModifiedFieldsString += column + " :: " + str(oldValue) + " --> " +  str(newValue) + " || "
+    else:
+        # Not sure if this case can actually occur if both are csv style dfs from a merge
+        print("Warning: determineRowDifferences: columns names in old orginal and new original were not all the same.  Handling this.")
+        columnsTemp = columns1 + columns2
+        columnsCombined = []
+        for column in columnsTemp:
+            if column not in columnsCombined:
+                columnsCombined.append(column)
+        columnsCombined.sort()
+        for column in columnsCombined:
+            if (column in columns2) and (column in columns1):
+                # column in both
+                oldValue = row[column+mergeSuffixRight]  # this column must exist due to the merge of old to new as the old has a new column created as the common column name +  
+                newValue = row[column]
+                oldValueForCompare = oldValue
+                newValueForCompare = newValue
+                if column == "Options":
+                    diffs = getOptionDifferences(oldValue, newValue)
+                    if diffs:
+                        rowIsTheSame = False
+                        namesOfModifiedFieldsString += column + " :: " + diffs + " || "
+                elif (oldValueForCompare != newValueForCompare):
+                    if not (valueIsNanNoneNull(newValueForCompare) and valueIsNanNoneNull(oldValueForCompare)):
+                        rowIsTheSame = False
+                        namesOfModifiedFieldsString += column + " :: " + str(oldValue) + " --> " +  str(newValue) + " || "
+                        #if debugEnabled:
+                        #    print("getNamesOfModifiedFieldsIntoString index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1]", index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1])
+            elif (column not in columns2):
+                # column not in column2 so a column was added as originalColumnsInNew has the new  and  originalColumnsInOld has the old
+                rowIsTheSame = False
+                newValue = row[column]
+                namesOfModifiedFieldsString += column + " :: " + "-" + " --Added-> " +  str(newValue) + " || "
+            else:
+                # column must not be in columns1 as combined has only columns in 1 and or 2
+                # column not in column1 so a column was removed as originalColumnsInNew has the current and  originalColumnsInOld has the old
+                rowIsTheSame = False
+                oldValue = row[column]  # Since the column name does not overlap the old one does not have the mergeSuffixRight appended to it.
+                namesOfModifiedFieldsString += column + " :: " + str(oldValue) + " --Removed-> " + "-"  + " || "        
+    if rowIsTheSame:
+        row[rowChangeTypeColumnName] = rowSameVINContentsIndicator
+        row[rowModificationsColumnName] = None
+    else:
+        row[rowChangeTypeColumnName] = rowModifiedVINContentsIndicator
+        row[rowModificationsColumnName] = namesOfModifiedFieldsString
+        
+    return row
+
+def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
+    # returns a data frame  that is the concatenation of the lastChangeHistorydf
+    # and the added, modified, removed entries between the passed old df and the new df with 
+    # an indicator if the old and new value in the row was different and the old value as well, and
+    # then limits the result to only the last 2 weeks of entries (infoDateTime field is not older than 2 weeks) 
+    # All passed data frames must be df raw to csv style generated dataframes
+    #
+    global columnsForEmptyChangeHistoryCsvDf
+    global changeHistoryUseThisAsTodaysDateForTesting
+    #print(datetime.datetime.now(), "getChangeHistory: Entered")
+    print("Determining change history by analyzing ", len(newDf), " entries. Warning: This could take up to 30 seconds for approx 40000 entries")
+    #print("len(oldDf)", len(oldDf), "len(newDf)", len(newDf))
+    maxDaysOldToKeep = 14  # 2 weeks
+    # make copies of the oldDf and newDf to avoid modifying them.
+    dfOld = oldDf.copy(deep=True)
+    dfNew = newDf.copy(deep=True)
+    
+    # initialize the return dataframe
+    dfChangeHistory = pd.DataFrame(columns = columnsForEmptyChangeHistoryCsvDf)
+    
+    # Save off the original column names in both to make operations later easier since duplicate column names with
+    # suffixes will be added.
+    originalColumnsInOld = dfOld.columns
+    originalColumnsInNew = dfNew.columns
+    # Set the right merge suffix that will be appended to the right df column names in a merge that are the same as the left
+    # column names
+    mergeSuffixRight = "_y"
+    
+    # create a new merged df so that for any common VIN (in both old and new) we tack on new columns to dfNew 
+    # that are the existing column names (from dfOld) with the mergeSuffixRight and those new columns contain the values from
+    # the old df.
+    # It also adds a column WhoDidMergeComeFrom_ so we can tell if the row was only in dfNew or in both 
+    dfNewMerged = dfNew.merge(dfOld, left_on="VIN", right_on="VIN", how='left', suffixes = (None, mergeSuffixRight), indicator = "WhoDidMergeComeFrom_")
+    
+    # The next merge does the same thing but in the opposite direction. In this one we only care to know which VINs
+    # in the old one were not in the new one and can get this from WhoDidMergeComeFrom_  
+    
+    dfNewMergeColumnsToUse = dfNew[["VIN"]]
+    dfOldMerged = dfOld.merge(dfNewMergeColumnsToUse, left_on="VIN", right_on="VIN", how='left', indicator = "WhoDidMergeComeFrom_")
+    
+    #Now add a RowChangeType column to both dfNewMerged, and dfOldMerged and initialize to indicate the 
+    # the row previously existed and did not change (i.e the VIN is in both and all the data associated with it is the same).
+    # Also add a rowModificationsColumnName and initialize it to None for no modifications.
+    dfNewMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
+    dfNewMerged[rowModificationsColumnName] = None
+    dfOldMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
+    dfOldMerged[rowModificationsColumnName] = None
+    
+    
+    # Update the RowChangeType column for those merged dfs.
+    # The WhoDidMergeComeFrom_ is used to determine if the row was in left only, both.  right only is not possible because 
+    # the merge how is 'left'. Thus we can determine if the row was added to new or removed from old 
+    dfNewMerged[rowChangeTypeColumnName] = dfNewMerged[rowChangeTypeColumnName].where(dfNewMerged["WhoDidMergeComeFrom_"] != 'left_only', rowAddedNewVINIndicator )
+    dfOldMerged[rowChangeTypeColumnName] = dfOldMerged[rowChangeTypeColumnName].where(dfOldMerged["WhoDidMergeComeFrom_"] != 'left_only', rowRemovedVINIndicator )
+    
+    columnsToIgnoreForComparison = ["WhoDidMergeComeFrom_", rowChangeTypeColumnName, rowModificationsColumnName, "VIN", "CenterLat", "CenterLong", "DistanceFromCenter", "infoDateTime", "FirstAddedDate"]
+    # Now do the determination on just the rows that were in both.  We can create a slice of just those rows with common VINs
+    # and run the determination on then and then the result is what gets concatenated later on for that.
+    dfNewMergeOnlyCommonVins = dfNewMerged[dfNewMerged["WhoDidMergeComeFrom_"] == 'both'].copy(deep=True)
+    dfNewMergeOnlyCommonVins = dfNewMergeOnlyCommonVins.apply(determineRowDifferences, axis=1, args= (columnsToIgnoreForComparison, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight))
+    
+    # Concatenate just the new and old merged dfs together first since will need to do renames
+    # of mergeSuffixRight suffixed old values columns which lastChangeHistorydf already has these renamed columns in them
+    # and would cause that to fail if it was also included as can't rename to a column name that already exists.
+    # Also before this need to reset the index in the dfs as the concat can fail without that.
+    #dfNewMerged.reset_index(drop=True, inplace=True)
+    #dfNewMergeOnlyCommonVins.reset_index(drop=True, inplace=True)
+    #dfOldMerged.reset_index(drop=True, inplace=True)    
+    dfChangeHistory = pd.concat([
+        dfNewMerged[dfNewMerged[rowChangeTypeColumnName] == rowAddedNewVINIndicator],
+        dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName] == rowModifiedVINContentsIndicator],
+        dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator] 
+        ])
+        
+    
+    # Add the Change DateTime column with the current datetime
+    today = datetime.datetime.today()
+    format_time_string = "%Y-%m-%d %H:%M:%S"
+    dfChangeHistory[rowChangeDateTime] = today.strftime(format_time_string)
+    
+    # Now concatenate the new change history to the last change history with the last change history first
+    dfChangeHistory = pd.concat([lastChangeHistorydf, dfChangeHistory])
+    # Now filter these to only keep the ones that were at most maxDaysOldToKeep days old (rowChangeDateTime within the last maxDaysOldToKeep).
+    if not (changeHistoryUseThisAsTodaysDateForTesting is None):
+        print("!!!!!!!! Warning: getChangeHistory:  Using a test date in place of Todays Date for testing date filtering. Test date is:", changeHistoryUseThisAsTodaysDateForTesting)
+        # override the actual current today gotten above with this test date.
+        # This allows us to include none, some, or all entries in lastChangeHistorydf for testing purposes of the days to keep filtering
+        today = datetime.datetime.strptime(changeHistoryUseThisAsTodaysDateForTesting, format_time_string)
+    lowerKeepDate = today - datetime.timedelta(days=maxDaysOldToKeep)
+    lowerKeepDateStr = lowerKeepDate.strftime(format_time_string)
+    dfChangeHistory = dfChangeHistory[dfChangeHistory[rowChangeDateTime] >= lowerKeepDateStr ]
+    
+    # select which columns we want to keep and their order
+    # TODO we could probably just do this with a fixed list defined up where columnsForEmptyChangeHistoryCsvDf
+    # since we know what columns must be in the csv styled old and new dfs.
+    # although calculating them keeps us from having to remember to update additional fixed lists 
+    finalColumnsSelect = getChangeHistoryFinalColumnsSelect(originalColumnsInOld, originalColumnsInNew)
+    dfChangeHistory = dfChangeHistory[
+        finalColumnsSelect
+    ].copy(deep=True)
+    
+    #print(datetime.datetime.now(), "getChangeHistory: Exited")
+    return dfChangeHistory
+
 def getEnvVariableTestMode():
     # returns a tuple that indicates if the environement variable indicates test mode is enabled
     # testModeEnvOn is boolean and the other values are strings.
@@ -891,6 +1237,10 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     # Read in the last inventory gotten (last parquet file) and associated status file.
     lastRawParquetFileExists, lastRawStatusOfGetAllPagesFileExists, lastParquetDf, statusOfGetAllPagesLastParquet = readLastParquetDf()
 
+    # Save off the original last parquet for use later on in getting change history as the lastParquetDf will be modfied
+    # below.
+    originalLastParquetDF = lastParquetDf.copy(deep=True)
+    
     if (USE_LOCAL_DATA_ONLY or useLocalData or testModeEnabled):
         if testModeEnabled:
             print("Using Local Test Data")
@@ -950,7 +1300,7 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
         if len(lastParquetDf):
             # it is not empty
             if not("FirstAddedDate" in lastParquetDf.columns):
-                # use None for unknown TODO is this what we want or a blank string?
+                # use None
                 lastParquetDf["FirstAddedDate"] = None
             lastParquetMergeColumnsOnlyDf = lastParquetDf[["vin", "FirstAddedDate"]]
             if "FirstAddedDate" in df.columns:
@@ -993,7 +1343,7 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
         # and make lastParquetDf same as df in this case
         df["FirstAddedDate"] = None
         lastParquetDf = df.copy(deep=True)
-
+        
     # drop Sold column in current inventory (df), as no longer needed
     df = df.drop(["Sold"], axis=1)
     
@@ -1005,11 +1355,17 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     df.sort_values("vin", inplace=True)
     df = transformRawDfToCsvStyleDf(df)
     
-    # Remove any old models that might still be there.
-    # TODO.  Believe we can now just leave all entries in as eventually old entries will go away at some point just naturally
-    # and we have increased the space on the google drive as well.
-    #last_year = datetime.date.today().year - 2
-    #df.drop(df[df["Year"] < last_year].index, inplace=True)
+    
+    # Read in the change history file to get the last change history
+    lastChangeHistorydf = readChangeHistoryParquetDf()
+    # Get new change history using the original last parquet in a csv style data frame as the old df
+    #  and the df (already in csv style) as the new df
+    originalLastParquetInCsvStyleDf = transformRawDfToCsvStyleDf(originalLastParquetDF)
+    changeHistoryDf = getChangeHistory(originalLastParquetInCsvStyleDf, df, lastChangeHistorydf)
+    # write out the change history to its associated files
+    changeHistoryDf.to_parquet(getChangeHistoryParquetFileName(), index=False)
+    changeHistoryDf.to_csv(getChangeHistoryCsvFileName(), index=False)
+    #  
     
     # reset the index as the returned df assumes it. 
     df.reset_index(drop=True, inplace=True)  # drop keeps from inserting current index as a column in dataframe
@@ -1030,13 +1386,31 @@ def extract_marketing_long_names(options_raw):
     options = set()
     if isinstance(options_raw, Iterable):
         for item in options_raw:
+            gotIt = False
+            option = ""
             if item.get("marketingName"):
-                options.add(item.get("marketingName"))
+                gotIt = True
+                option = item.get("marketingName")
             elif item.get("marketingLongName"):
-                options.add(item.get("marketingLongName"))
+                gotIt = True
+                option = item.get("marketingLongName")
             else:
-                continue
-    return " | ".join(sorted(options))
+                pass
+            if gotIt:
+                # Remove certain slight differences so as to standardize some options to make searching for or
+                # seeing actual differences easier later on.
+                # Note that use of re for case insensitive search does add about 2 secs over case insenitive search
+                # for 40000 processed entries for the just one string replacement.  If this time starts to increase as more strings are added to be replaced
+                # may just do a case insenitive search for some of these as they are usually the same case when present.
+                replacementStrings = { "All-Weather": "All Weather"}  # !!!!! must be unique keys for the string to be replaced
+                # "[installed_msrp]": "",
+                for stringToBeReplaced in replacementStrings:
+                    compileObj = re.compile(re.escape(stringToBeReplaced), re.IGNORECASE)
+                    option = compileObj.sub(replacementStrings[stringToBeReplaced], option)
+                    #option = option.replace(stringToBeReplaced, replacementStrings[stringToBeReplaced])
+                option = sanitizeStr(option)
+                options.add(option)
+    return " | ".join(sorted(options, key=str.lower))  # sort case insensitive to make it easy to find options
 
 if __name__ == "__main__":
     import sys

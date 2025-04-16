@@ -45,58 +45,17 @@ columnsForEmptyDfParquet = ["vin", "isTempVin", "dealerCd", "dealerCategory", "p
 columnsForEmptyDfFinalCsv = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", "infoDateTime", "Options"]
 # TODO should be able to construct the below from the columnsForEmptyDfFinalCsv
 #TODO columns need to be in the order we want.
-columnsForEmptyChangeHistoryCsvDf = [
-"Year",                       "Year: Changed",                      "Year: Old Value",                      
-"Model",                      "Model: Changed",                     "Model: Old Value",                     
-"Color",                      "Color: Changed",                     "Color: Old Value",                     
-"Int Color",                  "Int Color: Changed",                 "Int Color: Old Value",                 
-"Base MSRP",                  "Base MSRP: Changed",                 "Base MSRP: Old Value",                 
-"Total MSRP",                 "Total MSRP: Changed",                "Total MSRP: Old Value",                
-"Selling Price",              "Selling Price: Changed",             "Selling Price: Old Value",             
-"Selling Price Incomplete",   "Selling Price Incomplete: Changed",  "Selling Price Incomplete: Old Value",  
-"Markup",                     "Markup: Changed",                    "Markup: Old Value",                    
-"TMSRP plus DIO",             "TMSRP plus DIO: Changed",            "TMSRP plus DIO: Old Value",            
-"Shipping Status",            "Shipping Status: Changed",           "Shipping Status: Old Value",           
-"Pre-Sold",                   "Pre-Sold: Changed",                  "Pre-Sold: Old Value",                  
-"Hold Status",                "Hold Status: Changed",               "Hold Status: Old Value",               
-"eta.currFromDate",           "eta.currFromDate: Changed",          "eta.currFromDate: Old Value",          
-"eta.currToDate",             "eta.currToDate: Changed",            "eta.currToDate: Old Value",            
-"VIN",                        "VIN: Changed",                       "VIN: Old Value",                       
-"isTempVin",                  "isTempVin: Changed",                 "isTempVin: Old Value",                 
-"Dealer",                     "Dealer: Changed",                    "Dealer: Old Value",                    
-"Dealer Website",             "Dealer Website: Changed",            "Dealer Website: Old Value",            
-"Dealer State",               "Dealer State: Changed",              "Dealer State: Old Value",              
-"Dealer City",                "Dealer City: Changed",               "Dealer City: Old Value",               
-"Dealer Zip",                 "Dealer Zip: Changed",                "Dealer Zip: Old Value",                
-"Dealer Lat",                 "Dealer Lat: Changed",                "Dealer Lat: Old Value",                
-"Dealer Long",                "Dealer Long: Changed",               "Dealer Long: Old Value",               
-"CenterLat",                  "CenterLat: Changed",                 "CenterLat: Old Value",                 
-"CenterLong",                 "CenterLong: Changed",                "CenterLong: Old Value",                
-"DistanceFromCenter",         "DistanceFromCenter: Changed",        "DistanceFromCenter: Old Value",        
-"Transmission",               "Transmission: Changed",              "Transmission: Old Value",              
-"MPG Combined",               "MPG Combined: Changed",              "MPG Combined: Old Value",              
-"MPG City",                   "MPG City: Changed",                  "MPG City: Old Value",                  
-"MPG Highway",                "MPG Highway: Changed",               "MPG Highway: Old Value",               
-"Engine Code",                "Engine Code: Changed",               "Engine Code: Old Value",               
-"Engine Name",                "Engine Name: Changed",               "Engine Name: Old Value",               
-"Cab Code",                   "Cab Code: Changed",                  "Cab Code: Old Value",                  
-"Cab",                        "Cab: Changed",                       "Cab: Old Value",                       
-"Bed Code",                   "Bed Code: Changed",                  "Bed Code: Old Value",                  
-"Bed",                        "Bed: Changed",                       "Bed: Old Value",                       
-"FirstAddedDate",             "FirstAddedDate: Changed",            "FirstAddedDate: Old Value",            
-"infoDateTime",               "infoDateTime: Changed",              "infoDateTime: Old Value",              
-"Options",                    "Options: Changed",                   "Options: Old Value",                   
-]
+rowModificationsColumnName = "List of Changes"
+rowChangeTypeColumnName = "RowChangeType"
+rowChangeDateTime = "Event DateTime"
+columnsForEmptyChangeHistoryCsvDf = [rowChangeTypeColumnName, rowChangeDateTime, "Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", "infoDateTime", rowModificationsColumnName, "Options"]
 
-columnValueChangedIndicator =  "<-----"
+columnValueChangedIndicator =  "----->"
 columnValueNotChangedIndicator = "_"
 rowAddedNewVINIndicator = "ADDED"
 rowModifiedVINContentsIndicator = "MODED"
 rowRemovedVINIndicator = "REMOVED"
 rowSameVINContentsIndicator = ""
-rowChangeTypeColumnName = "RowChangeType"
-valueChangedColumnNameSuffix = ": Changed"
-oldValueColumnNameSuffix = ": Old Value"
 
 
 @cache
@@ -944,24 +903,6 @@ def debugCheckingDf(df, msg= "", vin= ""):
     else:
         print("debugCheckingDf: At point", msg, ": df has no vin or VIN column name")
 
-def getChangeHistoryMergedColumnRenames(originalColumnsInOld, originalColumnsInNew, mergeSuffixRight):
-    # returns a list of column renames we want to apply to the merged df columns.
-    # This includes the renames of the mergeSuffixRight suffixed old values column
-    mergedColumnRenames = {}
-    for column in originalColumnsInNew:
-        if column in originalColumnsInOld:
-            # It should be as the transformRawDfToCsvStyleDf produces the dfs the passed orignal columns above come from
-            # and thus should have all the same columns. 
-            # if the original columns is in old then when the merge occured it 
-            mergedColumnRenames[column + mergeSuffixRight] = column + oldValueColumnNameSuffix
-        else:
-            print("Error: getChangeHistoryMergedColumnRenames: original new df column", column , " not in original old df columns ")
-    for column in originalColumnsInOld:
-        if not column in originalColumnsInNew:
-            print("Error: getChangeHistoryMergedColumnRenames: original old df column", column , " not in original new df columns ")
-            
-    return mergedColumnRenames
-
 def getChangeHistoryFinalColumnsSelect(originalColumnsInOld, originalColumnsInNew):
     # returns an ordered list of columns for the final columns we want in the change history
     # The original columns passed are are in order we want for the dataframes.
@@ -971,54 +912,95 @@ def getChangeHistoryFinalColumnsSelect(originalColumnsInOld, originalColumnsInNe
     finalColumnsSelect = []
     # new column in the change history dataframe indicating the type of change for that row (added, modified, removed, nothing changed)
     finalColumnsSelect.append(rowChangeTypeColumnName)
+    finalColumnsSelect.append(rowChangeDateTime)
     for column in originalColumnsInNew:
+        if column == "Options":
+            # insert this one right before Options
+            finalColumnsSelect.append(rowModificationsColumnName)
         finalColumnsSelect.append(column)
-        finalColumnsSelect.append(column + valueChangedColumnNameSuffix)
-        if column in originalColumnsInOld:
-            finalColumnsSelect.append(column + oldValueColumnNameSuffix)
-        else:
-            print("Error: getChangeHistoryFinalColumnsSelect: original new df column", column , " not in original old df columns ")
-    for column in originalColumnsInOld:
-        if not column in originalColumnsInNew:
-            print("Error: getChangeHistoryFinalColumnsSelect: original old df column", column , " not in original new df columns ")
-            
     return finalColumnsSelect
 
 def valueIsNanNoneNull(value):
     return (value is None) or (isinstance(value, float) and np.isnan(value))
 
-def determineRowDifferences( row, columnsToIgnoreForComparison, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight):
-    # Determine the differences  between the value in the row for each column in originalColumnsInNew , and the value in 
-    # in the row for the same column name that has a mergeSuffixRight appened to its name.
-    # Assume row is a row series from a merged old df onto a new df in getChangeHistory 
-    # If the appened name does  exist as a column in the row and the value is different then
-    # set the row column with same column name but with valueChangedColumnNameSuffix appended to it to the string value to columnValueChangedIndicator
-    # else set that changed indicator column to columnValueNotChangedIndicator  
-    # Additionally sets the rowChangeTypeColumnName column (i.e. index name) value in the row to rowModifiedVINContentsIndicator
-    # if any values were different otherwise it is set to rowSameVINContentsIndicator
+def determineRowDifferences( row, columnsToIgnore, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight):
+    # Determines if there are any differences between the row's new values and the row's old values for each
+    # column name in row that is not in columnsToIgnore and updates the row's rowChangeTypeColumnName column, and 
+    # rowModificationsColumnName column values.
+    # Assumes any such column name, not in columnsToIgnore, must be guaranteed to be in either originalColumnsInNew, or originalColumnsInOld
+    # If the row has a column name say for example "Color" and that name is not in columnsToIgnore, 
+    # and in both originalColumnsInNew And originalColumnsInOld
+    # then the new value is row["Color"], and the old value is row["Color" + mergeSuffixRight].
+    # If there are columns only in originalColumnsInNew, or only in originalColumnsInOld, and not in columnsToIgnore
+    # then that is also considred a difference although this probably cannot happen if 
+    # the row was created from a merge of old to new and old and new were csv style dfs (which must have the same columns)
+    # and any other columns added in for processing are to be ignored via the columnsToIgnore. 
+    # If there are any differences the row's rowModificationsColumnName column value (a str type column)
+    # is set with the name of each column that was different along with the old and new values. 
+    # For columns only in one or the other there is an indication of that and 
+    # only one value is shown.  
+    # Also the row's rowChangeTypeColumnName column value is to be updated with an indication if there was any difference or not
+    #
+    global debugEnabled
+    namesOfModifiedFieldsString = ""
     rowIsTheSame = True
-    for column in originalColumnsInNew:
-        if not (column in columnsToIgnoreForComparison):
-            if column in row.index:
-                if column in originalColumnsInOld:
-                    newValue = row[column]
-                    oldValue = row[column+mergeSuffixRight]
-                    # TODO may not need row[column + valueChangedColumnNameSuffix] = columnValueNotChangedIndicator
-                    # if that row already is guaranteed to have tha initialized that way alreasdy 
-                    row[column + valueChangedColumnNameSuffix] = columnValueNotChangedIndicator
-                    if newValue != oldValue:
-                        if not (valueIsNanNoneNull(newValue) and valueIsNanNoneNull(oldValue)):
-                            rowIsTheSame = False
-                            row[column + valueChangedColumnNameSuffix] = columnValueChangedIndicator
-                else:
-                    print("Error: determineRowDifferences: column", column, "not in originalColumnsInOld")
+    columns1 = []
+    for column1 in originalColumnsInNew:
+        if not (column1 in columnsToIgnore):
+            columns1.append(column1)
+    columns1.sort()
+    columns2 = []
+    for column2 in originalColumnsInOld:
+        if not (column2 in columnsToIgnore):
+            columns2.append(column2)
+    columns2.sort()
+    if columns1 == columns2:
+        # both have all the exact same column labels (assumed to be unique)
+        for column in columns1:
+            oldValue = row[column+mergeSuffixRight]  # this column must exist due to the merge of old to new as the old has a new column created as the common column name +  
+            newValue = row[column]
+            if (oldValue != newValue):
+                if not (valueIsNanNoneNull(newValue) and valueIsNanNoneNull(oldValue)):
+                    rowIsTheSame = False
+                    namesOfModifiedFieldsString += column + " :: " + str(oldValue) + " --> " +  str(newValue) + " || "
+    else:
+        # Not sure if this case can actually occur if both are csv style dfs from a merge
+        print("Warning: determineRowDifferences: columns names in old orginal and new original were not all the same.  Handling this.")
+        columnsTemp = columns1 + columns2
+        columnsCombined = []
+        for column in columnsTemp:
+            if column not in columnsCombined:
+                columnsCombined.append(column)
+        columnsCombined.sort()
+        for column in columnsCombined:
+            if (column in columns2) and (column in columns1):
+                # column in both
+                oldValue = row[column+mergeSuffixRight]  # this column must exist due to the merge of old to new as the old has a new column created as the common column name +  
+                newValue = row[column]
+                if (oldValue != newValue):
+                    if not (valueIsNanNoneNull(newValue) and valueIsNanNoneNull(oldValue)):
+                        rowIsTheSame = False
+                        namesOfModifiedFieldsString += column + " :: " + str(oldValue) + " --> " +  str(newValue) + " || "
+                        #if debugEnabled:
+                        #    print("getNamesOfModifiedFieldsIntoString index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1]", index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1])
+            elif (column not in columns2):
+                # column not in column2 so a column was added as originalColumnsInNew has the new  and  originalColumnsInOld has the old
+                rowIsTheSame = False
+                newValue = row[column]
+                namesOfModifiedFieldsString += column + " :: " + "-" + " --Added-> " +  str(newValue) + " || "
             else:
-                print("Error: determineRowDifferences: column", column, "not in row series")
-        #TODO finish the implementation here.
+                # column must not be in columns1 as combined has only columns in 1 and or 2
+                # column not in column1 so a column was removed as originalColumnsInNew has the current and  originalColumnsInOld has the old
+                rowIsTheSame = False
+                oldValue = row[column]  # Since the column name does not overlap the old one does not have the mergeSuffixRight appended to it.
+                namesOfModifiedFieldsString += column + " :: " + str(oldValue) + " --Removed-> " + "-"  + " || "        
     if rowIsTheSame:
         row[rowChangeTypeColumnName] = rowSameVINContentsIndicator
+        row[rowModificationsColumnName] = None
     else:
         row[rowChangeTypeColumnName] = rowModifiedVINContentsIndicator
+        row[rowModificationsColumnName] = namesOfModifiedFieldsString
+        
     return row
 
 def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
@@ -1063,8 +1045,11 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     
     #Now add a RowChangeType column to both dfNewMerged, and dfOldMerged and initialize to indicate the 
     # the row previously existed and did not change (i.e the VIN is in both and all the data associated with it is the same).
+    # Also add a rowModificationsColumnName and initialize it to None for no modifications.
     dfNewMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
+    dfNewMerged[rowModificationsColumnName] = None
     dfOldMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
+    dfOldMerged[rowModificationsColumnName] = None
     
     
     # Update the RowChangeType column for those merged dfs.
@@ -1073,34 +1058,11 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     dfNewMerged[rowChangeTypeColumnName] = dfNewMerged[rowChangeTypeColumnName].where(dfNewMerged["WhoDidMergeComeFrom_"] != 'left_only', rowAddedNewVINIndicator )
     dfOldMerged[rowChangeTypeColumnName] = dfOldMerged[rowChangeTypeColumnName].where(dfOldMerged["WhoDidMergeComeFrom_"] != 'left_only', rowRemovedVINIndicator )
     
-    # From dfNewMerged and WhoDidMergeComeFrom_, and the old and new values in a row we can determine if any new value changed
-    # from the old value, and thus if the ROW is modified or if nothing changed.  We ignore certain columns in this
-    # comparison that would falsely indicate the row was changed (like any infoDateTime, FirstTimeAdded, DistanceToCenter, etc
-    # that can change but are not columns we want to compare)
-    # To do this first add the <existing column name from dfNew>: Changed columns to dfNewMerge the not changed indication 
-    # Note that due to the early merge the olddf value are in existing suffixed column names
-    for column in originalColumnsInNew:
-        name = column + valueChangedColumnNameSuffix
-        dfNewMerged[name] = columnValueNotChangedIndicator
-        
-    for column in originalColumnsInOld:
-        # since dfOldMerged is only for removed entries we make the changed indicator not changed to keep it consistent
-        # with the other merges (i.e. added or removed use the not changed indicator so if you were visually scanning this
-        # in excel you would not see it indicate a change even if you did not look at the rowChangeTypeColumnName column
-        # to see if it was an added or removed row.
-        name = column + valueChangedColumnNameSuffix
-        dfOldMerged[name] = columnValueNotChangedIndicator
-        
-    columnsToIgnoreForComparison = ["WhoDidMergeComeFrom_", "VIN", "CenterLat", "CenterLong", "DistanceFromCenter", "infoDateTime", "FirstAddedDate"]
+    columnsToIgnoreForComparison = ["WhoDidMergeComeFrom_", rowChangeTypeColumnName, rowModificationsColumnName, "VIN", "CenterLat", "CenterLong", "DistanceFromCenter", "infoDateTime", "FirstAddedDate"]
     # Now do the determination on just the rows that were in both.  We can create a slice of just those rows with common VINs
     # and run the determination on then and then the result is what gets concatenated later on for that.
     dfNewMergeOnlyCommonVins = dfNewMerged[dfNewMerged["WhoDidMergeComeFrom_"] == 'both'].copy(deep=True)
     dfNewMergeOnlyCommonVins = dfNewMergeOnlyCommonVins.apply(determineRowDifferences, axis=1, args= (columnsToIgnoreForComparison, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight))
-    
-    
-    # TODO how hard is it to make the added and removed entries put the columnValueNotChangedIndicator also in the 
-    # old value cell to blank it out.  Otherwise I think it turns out to be left as None or Null, or Nan  which is probably
-    # ok anyway, as that is essentially the same.
     
     # Concatenate just the new and old merged dfs together first since will need to do renames
     # of mergeSuffixRight suffixed old values columns which lastChangeHistorydf already has these renamed columns in them
@@ -1116,35 +1078,22 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
         ])
         
     
-    # get the merged columns renames list, which includes the renames of the mergeSuffixRight suffixed old values column
-    # and do the renames
-    # TODO we could probably just do this with a fixed list defined up where columnsForEmptyChangeHistoryCsvDf
-    # since we know what columns must be in the csv styled old and new dfs .
-    # although calculating them keeps us from having to remember to update additional fixed lists
-    # Note that even if the merge yields an empty df or we are merging in an empty df 
-    # it still has the merged column names in it 
-    mergedColumnRenames = getChangeHistoryMergedColumnRenames(originalColumnsInOld, originalColumnsInNew, mergeSuffixRight)
-    dfChangeHistory.rename(columns= mergedColumnRenames, inplace=True)
+    # Add the Change DateTime column with the current datetime
+    today = datetime.datetime.today()
+    format_time_string = "%Y-%m-%d %H:%M:%S"
+    dfChangeHistory[rowChangeDateTime] = today.strftime(format_time_string)
     
     # Now concatenate the new change history to the last change history with the last change history first
-    # ignore_index is needed to reset the index in the dfs as the concat can fail without that.
-    #lastChangeHistorydf.reset_index(drop=True, inplace=True)  # drop keeps from inserting current index as a column in dataframe
-    #dfChangeHistory.reset_index(drop=True, inplace=True)  # drop keeps from inserting current index as a column in dataframe
-    #print("lastChangeHistorydf", lastChangeHistorydf)
-    #print("dfChangeHistory", dfChangeHistory)
-    #if len(lastChangeHistorydf) or len(dfChangeHistory):
     dfChangeHistory = pd.concat([lastChangeHistorydf, dfChangeHistory])
-    # Now filter these to only keep the ones that were at most maxDaysOldToKeep days old (infoDateTime within the last maxDaysOldToKeep).
-    # infoDateTime is in the format  yyyy-mm-dd hh:mm:ss
+    # Now filter these to only keep the ones that were at most maxDaysOldToKeep days old (rowChangeDateTime within the last maxDaysOldToKeep).
     if not (changeHistoryUseThisAsTodaysDateForTesting is None):
-        print("!!!!!!!! Warning: getChangeHistory:  Using a test date in place of Todays Date for testing purposes. Test date is:", changeHistoryUseThisAsTodaysDateForTesting)
-        format_string = "%Y-%m-%d %H:%M:%S"
-        today = datetime.datetime.strptime(changeHistoryUseThisAsTodaysDateForTesting, format_string)
-    else:
-        today = datetime.date.today()
+        print("!!!!!!!! Warning: getChangeHistory:  Using a test date in place of Todays Date for testing date filtering. Test date is:", changeHistoryUseThisAsTodaysDateForTesting)
+        # override the actual current today gotten above with this test date.
+        # This allows us to include none, some, or all entries in lastChangeHistorydf for testing purposes of the days to keep filtering
+        today = datetime.datetime.strptime(changeHistoryUseThisAsTodaysDateForTesting, format_time_string)
     lowerKeepDate = today - datetime.timedelta(days=maxDaysOldToKeep)
-    lowerKeepDateStr = lowerKeepDate.strftime("%Y-%m-%d %H:%M:%S")
-    dfChangeHistory = dfChangeHistory[dfChangeHistory["infoDateTime"] >= lowerKeepDateStr ]
+    lowerKeepDateStr = lowerKeepDate.strftime(format_time_string)
+    dfChangeHistory = dfChangeHistory[dfChangeHistory[rowChangeDateTime] >= lowerKeepDateStr ]
     
     # select which columns we want to keep and their order
     # TODO we could probably just do this with a fixed list defined up where columnsForEmptyChangeHistoryCsvDf

@@ -106,6 +106,7 @@ def upload_inventory_files(directory, googleDriveFolderName, credentialsFileName
                    filename.endswith("_Lastraw.parquet") or 
                    filename.endswith("_Sold_raw.parquet") or
                    filename.endswith("_LastStatusInfo.json") or 
+                   filename.endswith("_ChangeHistory.parquet") or 
                    (filename in ["InventoryRunlog.txt", "models.json", "models_raw.json"] )
                 )
               ) 
@@ -113,7 +114,9 @@ def upload_inventory_files(directory, googleDriveFolderName, credentialsFileName
               ( (onlyForModel != "") and (os.path.isfile(Path(directory + "/" + filename))) and 
                 (  (filename.endswith("_Sold.csv") and filename.startswith(onlyForModel + "_")  ) or 
                    (filename.endswith("_Sold_raw.parquet")  and filename.startswith(onlyForModel + "_")) or 
-                   (filename in [onlyForModel + ".csv", onlyForModel + "_Lastraw.parquet", onlyForModel + "_LastStatusInfo.json"] )
+                   (filename in [onlyForModel + ".csv", onlyForModel + "_Lastraw.parquet", onlyForModel + "_LastStatusInfo.json", 
+                                 onlyForModel + "_ChangeHistory.csv", onlyForModel + "_ChangeHistory.parquet"]
+                   )
                 )
               ) 
             ):

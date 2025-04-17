@@ -21,7 +21,12 @@ date the row was upgdated from the inventory website)
 
 - Added automatically creating files that contain the Sold inventory for a given model year (i.e.
 inventory that no longer appears in the inventory gotten from the website)
-These files are <model>_<year>_Sold.csv and <model>_<year>_Sold_raw.parquet files 
+These files are <model>_<year>_Sold.csv and <model>_<year>_Sold_raw.parquet files
+
+- Change History event file <model>_ChangeHistory.csv, .parquet for the
+last 14 days which contain added VINs, modified contents of existing VINs, or removed VINs between runs of the inventory 
+collection over that time period.  New columns added for this file were RowChangeType  (ADDED, MODED, REMOVDE)
+, Event DateTime, and List of Changes (text of any column that changed value and its old and new value)
 
 
 Also added a dealers.py program that can generate the dealers.csv file that is used to lookup the dealer Id to

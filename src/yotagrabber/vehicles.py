@@ -941,9 +941,13 @@ def getOptionDifferences(oldOptions, newOptions):
         oldOptionsSplit = []
         for option in oldOptions.split("|"):
             oldOptionsSplit.append(option.rstrip().lstrip())
+        oldOptionsSplit.sort(key=str.lower) # sort case insensitive to make it easy to visually look through the changed options
+        oldOptionsSplit = list(dict.fromkeys(oldOptionsSplit)) # remove duplicates (keeping order) as sometimes these do occur for some unknown reason
         newOptionsSplit = []
         for option in newOptions.split("|"):
             newOptionsSplit.append(option.rstrip().lstrip())
+        newOptionsSplit.sort(key=str.lower) # sort case insensitive to make it easy to visually look through the changed options
+        newOptionsSplit = list(dict.fromkeys(newOptionsSplit)) # remove duplicates (keeping order) as sometimes these do occur for some unknown reason
         # now get same and added
         oldIndiciesOfOldIsSameAsNew = []
         newIndex = 0
@@ -1018,7 +1022,10 @@ def determineRowDifferences( row, columnsToIgnore, originalColumnsInOld, origina
             columns2.append(column2)
     columns2.sort()
     if columns1 == columns2:
-        # both have all the exact same column labels (assumed to be unique)
+        # Both have all the exact same column labels (assumed to be unique)
+        # At this point we can sort case insensitive since operations below do not depend on the order.  
+        # This makes it visually easy to find the column in a line of changed columns. 
+        columns1.sort(key=str.lower)
         for column in columns1:
             oldValue = row[column+mergeSuffixRight]  # this column must exist due to the merge of old to new as the old has a new column created as the common column name +  
             newValue = row[column]
@@ -1041,7 +1048,9 @@ def determineRowDifferences( row, columnsToIgnore, originalColumnsInOld, origina
         for column in columnsTemp:
             if column not in columnsCombined:
                 columnsCombined.append(column)
-        columnsCombined.sort()
+        # At this point we can sort case insensitive since operations below do not depend on the order.  
+        # This makes it visually easy to find the column in a line of changed columns. 
+        columnsCombined.sort(key=str.lower)
         for column in columnsCombined:
             if (column in columns2) and (column in columns1):
                 # column in both

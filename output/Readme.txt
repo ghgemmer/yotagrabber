@@ -25,15 +25,22 @@ by the inventory run but have since disappered).
 These files are named  <model>_<year>_Sold.csv with the associated raw parquet in <model>_<year>_Sold_raw.parquet
 Also note that currently if a temp VIN is turned into a real VIN, and thus the temp VIN disappears, 
 the temp VIN is treated as Sold, because it disappeared from current inventory, and is placed in the associated Sold file. 
-This currently allows temp VINs to still be seen and you
+This currently allows temp VINs to still be seen and you to
 know when it was turned into a real VIN by the infoDateTime field (not necessarily what the real VIN is).
 Older model year sold files will be archived at some point, when it appears there is no longer any inventory of that year left.
 
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.
 They contains all changes between runs of the inventory collection,
-which are any added VINs, modified contents of existing VINs, or removed VINs. 
+which are any added (new or reappeared) VINs, modified contents of existing VINs, or removed VINs. 
 This allows a user to see the changes that occurred from run to run.
-Additional columns in these files, which are described later on below, are as follows:
+Only the last 14 days of changes are kept.
+A typical use of this file is to watch for changes to the column values of a specific VIN  (filter by VIN and find the specific
+VIN).
+A user would typically note the last time they viewed that VIN info in this file and then be sure to 
+view the file at least every 14 days to see all changes to the column values for that VIN after the last time it
+was viewed.
+
+Additional columns in these Change History files, which are described later on below, are as follows:
 RowChangeType, 
 Event DateTime,
 List of Changes
@@ -79,8 +86,8 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                     Usually From and To Date will now appear.
                     "At dealer" - The car is at the dealer
                     The above "Shipping Status" defintions were copied and pasted from another developers spreadsheet
-"FirstAddedDate" - Date the VIN first appeared in inventory retrieved from the website (or reappeared afte disappearing).
-"infoDateTime" -  the date and time that the row was updated from the inventory website.
+"FirstAddedDate" - Date and time the VIN first appeared in inventory retrieved from the website (or reappeared after disappearing).
+"infoDateTime" -  Date and time that the row was updated from the inventory website.
 "Dealer Lat" -  Dealer Latitude
 "Dealer Long" - Dealer Longitude.  
 "CenterLat" -  Latitude of a user desired Center location. User manually fills in this desired location in the spreadsheet
@@ -99,25 +106,22 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                         The Excel spreadsheet can be saved to a .xlsx file if desired to retain this.
                         The CenterLat and CenterLong columns can be updated as desired and the calculated distance automatically
                         shows up then.
-                        The formula is the Haversine formula for the distance.
+                        The formula for the distance is the Haversine formula which is as follows:
                         =ACOS(COS(RADIANS(90-DealerLat))*COS(RADIANS(90-CenterLat))+SIN(RADIANS(90-DealerLat))*SIN(RADIANS(90-CenterLat))*COS(RADIANS(DealerLong-CenterLong)))*6371*0.621371
 
 
 Additional columns in the Change History files are:
 "RowChangeType"  - Indicates if this VIN row was an ADDED, MODED, or REMOVED row from the prior inventory run.
                    For MODED rows any changes between the old data and the new data of any column for that row
-                   are in the "List of Changes" column.  Only names of columns that changed value are shown so that a 
-                   user can easily see what has changed 
-                   (for example, Sellingprice, ETAs, Options, Hold Status, Shipping Status, etc)
-                   The changes listed in a row are sorted, case insensitive, ascending order, by column name, and for the Options
-                   column name the changes are listed for it in order of Added, Removed, Same, and the options shown are sorted, case
-                   insensitive, ascending order. This sorting makes it easier to visually find if a column changed value.
+                   are in the "List of Changes" column.
                     
-"Event DateTime" - The datetime that the Change was determined on.  For a given inventory run these are all the same
-                   date and time for all the events added during that inventory run.
-"List of Changes" - The list of columns that changed value and the old and new value.  Options are handled by 
-                    showing all the options which were added, followed by all those removed, followed by all those
-                    that stayed the same.  
+"Event DateTime" - The datetime that the Change was determined on.  For a given inventory run for a given model
+                   these are all the same date and time for all the events added during that inventory run.
+                   
+"List of Changes" - A list of the names of only the columns for that row that changed value and the old and new value.  
+                    Options are handled by showing all the options which were added, followed by all those removed, followed by
+                    all those that stayed the same.  Column names and Options are sorted, case insensitive , ascending order
+                    to make it easier to find out if a given column or option changed.
 
 Note that sometimes a "Dealer State" column cell may be blank.  I will automatically be alerted of this and this will be 
 corrected typically within a day or two. This is because the dealer state information is currently maintained in a separate

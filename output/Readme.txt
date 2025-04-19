@@ -1,4 +1,4 @@
-Readme.txt updated 4/16/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 4/19/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -27,6 +27,7 @@ Also note that currently if a temp VIN is turned into a real VIN, and thus the t
 the temp VIN is treated as Sold, because it disappeared from current inventory, and is placed in the associated Sold file. 
 This currently allows temp VINs to still be seen and you
 know when it was turned into a real VIN by the infoDateTime field (not necessarily what the real VIN is).
+Older model year sold files will be archived at some point, when it appears there is no longer any inventory of that year left.
 
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.
 They contains all changes between runs of the inventory collection,
@@ -105,8 +106,12 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
 Additional columns in the Change History files are:
 "RowChangeType"  - Indicates if this VIN row was an ADDED, MODED, or REMOVED row from the prior inventory run.
                    For MODED rows any changes between the old data and the new data of any column for that row
-                   are in the "List of Changes" column.  Only columns that changed are shown so that a user can easily
-                   see what has changed  (for example, Sellingprice, ETAs, Options, Hold Status, Shipping Status, etc)
+                   are in the "List of Changes" column.  Only names of columns that changed value are shown so that a 
+                   user can easily see what has changed 
+                   (for example, Sellingprice, ETAs, Options, Hold Status, Shipping Status, etc)
+                   The changes listed in a row are sorted, case insensitive, ascending order, by column name, and for the Options
+                   column name the changes are listed for it in order of Added, Removed, Same, and the options shown are sorted, case
+                   insensitive, ascending order. This sorting makes it easier to visually find if a column changed value.
                     
 "Event DateTime" - The datetime that the Change was determined on.  For a given inventory run these are all the same
                    date and time for all the events added during that inventory run.

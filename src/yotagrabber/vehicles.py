@@ -1356,14 +1356,8 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     # drop Sold column in current inventory (df), as no longer needed
     df = df.drop(["Sold"], axis=1)
     
-    # Write out the sorted Last parquet data and associated files.
-    lastParquetDf.sort_values("vin", inplace=True)
-    writeLastParquetAndAssociatedFiles(lastParquetDf)
-    writeCompletionStatusToFile(statusOfGetAllPages)
-    
     df.sort_values("vin", inplace=True)
-    df = transformRawDfToCsvStyleDf(df)
-    
+    df = transformRawDfToCsvStyleDf(df)        
     
     # Read in the change history file to get the last change history
     lastChangeHistorydf = readChangeHistoryParquetDf()
@@ -1375,10 +1369,16 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     changeHistoryDf.to_parquet(getChangeHistoryParquetFileName(), index=False)
     changeHistoryDf.to_csv(getChangeHistoryCsvFileName(), index=False)
     #  
+    # Write out the sorted Last parquet data and associated files.
+    # Do this after all the above in case an exception occurs so that all the above has completed before
+    # we write out what is now the last inventory that the next run of this program bases change history on.
+    lastParquetDf.sort_values("vin", inplace=True)
+    writeLastParquetAndAssociatedFiles(lastParquetDf)
+    writeCompletionStatusToFile(statusOfGetAllPages)
     
     # reset the index as the returned df assumes it. 
     df.reset_index(drop=True, inplace=True)  # drop keeps from inserting current index as a column in dataframe
-
+    
     # Write the data out to its corresponding file.
     df.to_csv(f"output/{MODEL}.csv", index=False)
     return (df, statusOfGetAllPages )

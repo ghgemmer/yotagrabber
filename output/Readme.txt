@@ -1,4 +1,4 @@
-Readme.txt updated 4/19/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 4/20/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -60,6 +60,8 @@ the latest is at the bottom of the file.
 
 
 Column definitions that are not obvious or to remove any ambiguity are as follows:
+"Model" -  This actually contains just the Trim + Drivetrain code (for example XLE FWD, TRD Sport RWD, SR5 4WD).
+           The top level model name is left off (Camry, 4Runner, etc) as the file name implies it.
 "Color" - Exterior color
 "Int Color" - Interior color
 "Base MSRP" -  Is as shown on the cars window sticker and is the Base manufacturer retail price 

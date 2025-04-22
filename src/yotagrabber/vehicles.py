@@ -13,6 +13,7 @@ from secrets import randbelow
 from time import sleep
 from timeit import default_timer as timer
 import numpy as np
+import glob
 
 
 import pandas as pd
@@ -34,7 +35,7 @@ MODEL = os.environ.get("MODEL")
 MODEL_SEARCH_ZIPCODE = os.environ.get("MODEL_SEARCH_ZIPCODE")
 MODEL_SEARCH_RADIUS = os.environ.get("MODEL_SEARCH_RADIUS")
 
-changeHistoryUseThisAsTodaysDateForTesting = None # for testing change to a string yyyy-mm-dd hh:mm:ss, otherwise set as None 
+changeHistoryUseThisAsTodaysDateForTesting = None # for testing change the environment variable string to yyyy-mm-dd hh:mm:ss, otherwise leave env variable not defined. 
 
 forceQueryRspFailureTest = 0 # set to > 0 to perform tests related to forcing a query response failure to test query request retry
 
@@ -57,6 +58,8 @@ rowModifiedVINContentsIndicator = "MODED"
 rowRemovedVINIndicator = "REMOVED"
 rowSameVINContentsIndicator = ""
 
+maxDaysOldToKeep = 14  # 2 weeks for change history entries
+maxDaysToKeepTempVinSold = 7 * 12 #12 weeks for temp VIN in sold files.
 
 @cache
 
@@ -817,6 +820,55 @@ def getFileNameForSoldCsv(model, year):
     # model is a str, and year is a number
     # returns output/<model>_<year>_Sold.csv
     return f"output/" + model + "_" + "{:04d}".format(year) + "_Sold.csv"
+    
+def valueIsStrType(value):
+    isStrType = False
+    if isinstance(value, str):
+        isStrType = True
+    return isStrType
+
+def pruneSoldFiles(model):
+    # Prunes the models Sold files of Temp VIN entries whose infoDateTime is older than 12 weeks.
+    # The assumption is by that time they have been turned into a real VINs with production starting.
+    global changeHistoryUseThisAsTodaysDateForTesting
+    global maxDaysToKeepTempVinSold
+    # Get the sold raw parquet file names for the model
+    searchPathAndPatterns = os.path.join("output/", model + "_????_Sold_raw.parquet")
+    fileNamesWithPath = glob.glob(searchPathAndPatterns)
+    #print("Pruning Sold files of old temp VINs")
+    for fileNameWithPath in fileNamesWithPath:
+        if os.path.isfile(Path(fileNameWithPath)):
+            #print("Pruning file", fileNameWithPath, "of old temp VINs")
+            df = pd.read_parquet(fileNameWithPath)
+            today = datetime.datetime.today()
+            format_time_string = "%Y-%m-%d %H:%M:%S"
+            # Now filter these to only keep the ones that were at most maxDaysTempVinSold
+            if not (changeHistoryUseThisAsTodaysDateForTesting is None):
+                print("!!!!!!!! Warning: pruneSoldFiles:  Using a test date in place of Todays Date for testing date filtering. Test date is:", changeHistoryUseThisAsTodaysDateForTesting)
+                # override the actual current today gotten above with this test date.
+                # This allows us to include none, some, or all entries in lastChangeHistorydf for testing purposes of the days to keep filtering
+                today = datetime.datetime.strptime(changeHistoryUseThisAsTodaysDateForTesting, format_time_string)
+            lowerKeepDate = today - datetime.timedelta(days=maxDaysToKeepTempVinSold)
+            lowerKeepDateStr = lowerKeepDate.strftime(format_time_string)
+            #print("lowerKeepDateStr", lowerKeepDateStr)
+            if "infoDateTime" in df.columns:
+                lenDfOld = len(df)
+                df = df[(df["infoDateTime"].apply(valueIsStrType) == False) | (df["infoDateTime"] >= lowerKeepDateStr)]
+                if (lenDfOld - len(df)) > 0:
+                    print ("Pruning Sold File", fileNameWithPath, "of", lenDfOld - len(df), "old Temp VINs")
+                if True: #len(df) < lenDfOld:
+                    # write out parquet
+                    df.to_parquet(fileNameWithPath, index=False)
+                    # transform df to cvs style and write out to cvs file.
+                    cvsStyleDf = transformRawDfToCsvStyleDf(df)
+                    lenSuffix = len("_raw.parquet")
+                    fileNameWithPathCsv = fileNameWithPath[:-lenSuffix] + ".csv"
+                    cvsStyleDf.to_csv(fileNameWithPathCsv, index=False)
+                else:
+                    # leave files untouched.
+                    pass
+            else:
+                print("Error: pruneSoldFiles : dataframe does not contain infoDateTime column. Leaving sold file unchanged")
 
 def writeLastParquetAndAssociatedFiles(inputDf):
     # Updates the <model>_<year>_Sold_raw.parquet, and <model>_<year>_Sold.csv files with the inputDf, by appending the
@@ -1098,10 +1150,10 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     #
     global columnsForEmptyChangeHistoryCsvDf
     global changeHistoryUseThisAsTodaysDateForTesting
+    global maxDaysOldToKeep
     #print(datetime.datetime.now(), "getChangeHistory: Entered")
     print("Determining change history by analyzing ", len(newDf), " entries. Warning: This could take up to 30 seconds for approx 40000 entries")
     #print("len(oldDf)", len(oldDf), "len(newDf)", len(newDf))
-    maxDaysOldToKeep = 14  # 2 weeks
     # make copies of the oldDf and newDf to avoid modifying them.
     dfOld = oldDf.copy(deep=True)
     dfNew = newDf.copy(deep=True)
@@ -1203,6 +1255,15 @@ def getEnvVariableTestMode():
     if (testModeEnvValue is not None) and (testModeEnvValue.upper() == "ON"):
         testModeEnvOn = True
     return (testModeEnvOn, testModeEnvVarName, testModeEnvValue)
+    
+def getEnvVariableTestModeTodayDate():
+    # returns a tuple that indicates if the environement variable indicates the todays date to use for some testing.
+    # testModeEnvOn is boolean and the other values are strings.
+    # (testModeTodayDateEnvVarName, testModeTodayDateEnvValue) 
+    testModeTodayDateEnvVarName = "MODEL_UPDATE_VEHICLES_TEST_MODE_TODAY_DATE"
+    testModeTodayDateEnvValue = os.environ.get(testModeTodayDateEnvVarName)
+    return (testModeTodayDateEnvVarName, testModeTodayDateEnvValue)
+    
 
 def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     """Generate a curated database file for the given vehicle model environment variable, as well as
@@ -1225,11 +1286,14 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     """
     global columnsForEmptyDfParquet
     global columnsForEmptyDfFinalCsv
+    global changeHistoryUseThisAsTodaysDateForTesting
     
     if not MODEL:
         sys.exit("Set the MODEL environment variable first")
     print("update_vehicles: Getting inventory for model", MODEL)
     testModeEnvOn , testModeEnvVarName,  testModeEnvValue = getEnvVariableTestMode()
+    testModeTodayDateEnvVarName, testModeTodayDateEnvValue = getEnvVariableTestModeTodayDate()
+    print("Enviroment variable",testModeTodayDateEnvVarName, " = ",  testModeTodayDateEnvValue)
     print("Enviroment variable", testModeEnvVarName, " = ",  testModeEnvValue)
     print("Passed parameter testModeOn is", testModeOn)
     print("Passed parameter useLocalData is", useLocalData)
@@ -1238,6 +1302,9 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     if (testModeEnvOn or testModeOn):
         testModeEnabled = True
         print("Running in Test Mode")
+    if (not(testModeTodayDateEnvValue is None)) and testModeEnabled:
+        # only use test today date if test mode enabled
+        changeHistoryUseThisAsTodaysDateForTesting = testModeTodayDateEnvValue
     rawParquetFileExists = False
     statusOfGetAllPagesFileExists = False
     df = pd.DataFrame()
@@ -1375,6 +1442,9 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     lastParquetDf.sort_values("vin", inplace=True)
     writeLastParquetAndAssociatedFiles(lastParquetDf)
     writeCompletionStatusToFile(statusOfGetAllPages)
+    
+    # Prune the Sold files (of old temp VIN entries, etc)
+    pruneSoldFiles(MODEL)
     
     # reset the index as the returned df assumes it. 
     df.reset_index(drop=True, inplace=True)  # drop keeps from inserting current index as a column in dataframe

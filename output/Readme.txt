@@ -1,4 +1,4 @@
-Readme.txt updated 4/20/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 4/21/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -25,8 +25,10 @@ by the inventory run but have since disappered).
 These files are named  <model>_<year>_Sold.csv with the associated raw parquet in <model>_<year>_Sold_raw.parquet
 Also note that currently if a temp VIN is turned into a real VIN, and thus the temp VIN disappears, 
 the temp VIN is treated as Sold, because it disappeared from current inventory, and is placed in the associated Sold file. 
-This currently allows temp VINs to still be seen and you to
+This currently allows temp VINs to still be seen and a person to
 know when it was turned into a real VIN by the infoDateTime field (not necessarily what the real VIN is).
+Once a temp VIN in the sold file is older than 12 weeks it is assumed it has been replaced with a real VIN by that time
+and is removed from the sold files.
 Older model year sold files will be archived at some point, when it appears there is no longer any inventory of that year left.
 
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.

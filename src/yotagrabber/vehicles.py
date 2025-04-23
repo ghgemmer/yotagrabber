@@ -63,6 +63,39 @@ maxDaysToKeepTempVinSold = 7 * 12 #12 weeks for temp VIN in sold files.
 
 @cache
 
+def getExcelDistanceFormulaForCsv(dfColumns, excelRowIndex = 2):
+    # gets the Excel formula to put in row excelRowIndex in the DistanceFromCenter column
+    # dfColumns is a tuple of the column names of a df in the order the df has them in, and unique.
+    dealerLatColName = "Dealer Lat"
+    dealerLongColName = "Dealer Long"
+    centerLatColName = "CenterLat"
+    centerLongColName ="CenterLong"
+    colNameToColCsvIndex = {dealerLatColName: None, dealerLongColName: None, centerLatColName: None, centerLongColName: None}
+    for colName in colNameToColCsvIndex:
+        if colName in dfColumns:
+            colNameToColCsvIndex[colName] = dfColumns.index(colName)
+        else:
+            print("Error: getExcelDistanceFormulaForCsv: name", colName, "not in dfColumns. Returning formula as blank")
+            return ""
+    colNameToExcelCellRef = {}
+    for colName in colNameToColCsvIndex:
+        excelColIndex = colNameToColCsvIndex[colName]
+        excelColRef = ""
+        remainder = excelColIndex
+        alphabetSize = 26
+        if remainder == 0:
+            excelColRef = "A"
+        else:
+            while remainder >= 0:
+                modulo = remainder % alphabetSize
+                excelColRef = chr(ord("A") + modulo) + excelColRef
+                remainder = (remainder // alphabetSize) - 1
+        colNameToExcelCellRef[colName] = excelColRef + str(excelRowIndex)
+    
+    formula = f'=ACOS(COS(RADIANS(90-{colNameToExcelCellRef[dealerLatColName]}))*COS(RADIANS(90-{colNameToExcelCellRef[centerLatColName]}))+SIN(RADIANS(90-{colNameToExcelCellRef[dealerLatColName]}))*SIN(RADIANS(90-{colNameToExcelCellRef[centerLatColName]}))*COS(RADIANS({colNameToExcelCellRef[dealerLongColName]}-{colNameToExcelCellRef[centerLongColName]})))*6371*0.621371'
+    # 
+    return formula
+
 def getVehicleByVinWithBypass(vin):
     print("Bypassing WAF")
     headers = wafbypass.WAFBypass().run()
@@ -746,7 +779,7 @@ def transformRawDfToCsvStyleDf ( inputDf):
         # Add columns for CenterLat, CenterLong, DistanceFromCenter
         df["CenterLat"] = 41.978382
         df["CenterLong"] = -91.668626
-        df["DistanceFromCenter"] = ""
+        df["DistanceFromCenter"] = None
     
     
         df = df[
@@ -806,7 +839,14 @@ def transformRawDfToCsvStyleDf ( inputDf):
         # Add the distance From Center formula to DistanceFromCenter column in the first cell only
         # to keep size of csv decent and convienient to look at with a text editor.  User can easily do copy down of this cell
         # once it is open in Excel
-        df["DistanceFromCenter"] = df["DistanceFromCenter"].where(df["DistanceFromCenter"].index != 0, "= ACOS(COS(RADIANS(90-W2))*COS(RADIANS(90-Y2))+SIN(RADIANS(90-W2))*SIN(RADIANS(90-Y2))*COS(RADIANS(X2-Z2)))*6371*0.621371")
+        #print("type df.columns", type(df.columns))
+        #print("df.columns", df.columns)
+        #print("df", df)
+        if len(df):
+            # tuple is needed below to make passed item be hashable otherwise python throws an error.
+            distanceFormula = getExcelDistanceFormulaForCsv(tuple(df.columns), 2)
+            #print("transformRawDfToCsvStyleDf distanceFormula", distanceFormula)
+            df.at[0,"DistanceFromCenter"] =  distanceFormula
     else:
         df = pd.DataFrame(columns = columnsForEmptyDfFinalCsv)
     return df
@@ -924,9 +964,16 @@ def writeLastParquetAndAssociatedFiles(inputDf):
                 modelYearSoldRawParquetDf.drop(columns=["WhoDidMergeComeFrom_"], axis=1, inplace=True)
             # Write the sorted by VIN sold model year parquet df to its corresponding file.  Remove the Sold column
             modelYearSoldRawParquetDf.sort_values(by=["vin"], inplace=True)
+            modelYearSoldRawParquetDf.drop(["Sold"], axis=1)
             modelYearSoldRawParquetDf.to_parquet(modelYearSoldFileName, index=False)
             # Write out the csv style transformed sold model year df to the csv file
             cvsStyleDf = transformRawDfToCsvStyleDf(modelYearSoldRawParquetDf)
+            cvsStyleDf.reset_index(drop=True, inplace=True) 
+            if len(cvsStyleDf) and ("DistanceFromCenter" in cvsStyleDf.columns):
+                distanceFormula = getExcelDistanceFormulaForCsv(tuple(cvsStyleDf.columns), 2)
+                cvsStyleDf["DistanceFromCenter"] = None
+                #print("Sold file distanceFormula", distanceFormula)
+                cvsStyleDf.at[0,"DistanceFromCenter"] =  distanceFormula
             cvsStyleDf.to_csv(modelYearSoldCsvFileName, index=False)
         
     # Now remove the sold entries from the df as the Last Parquet file it is written to should only contain non sold entries.
@@ -1241,7 +1288,12 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     dfChangeHistory = dfChangeHistory[
         finalColumnsSelect
     ].copy(deep=True)
-    
+    dfChangeHistory.reset_index(drop=True, inplace=True) 
+    if len(dfChangeHistory) and ("DistanceFromCenter" in dfChangeHistory.columns):
+        distanceFormula = getExcelDistanceFormulaForCsv(tuple(dfChangeHistory.columns), 2)
+        dfChangeHistory["DistanceFromCenter"] = None
+        #print("Change History file distanceFormula", distanceFormula)
+        dfChangeHistory.at[0,"DistanceFromCenter"] =  distanceFormula
     #print(datetime.datetime.now(), "getChangeHistory: Exited")
     return dfChangeHistory
 

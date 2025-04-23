@@ -7,6 +7,9 @@ gets its data from (which is https://api.search-inventory.toyota.com/graphql ). 
 last 14 days which contain added VINs, modified contents of existing VINs, or removed VINs between runs of the inventory 
 collection over that time period.
 
+All files are read only view on my google drive.  Thus if you wish to do filtering, etc you need to either 
+download the file and open it,  or click on the file's More Actions --> Open With --> Excel Desktop.
+
 Folder updates typically show up each day around 5am CDT, although once a week it might not show up until 1pm.
 Each model's current inventory is placed in a <model>.csv file.  A raw  (filename <model>_Lastraw.parquet)
 python pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model
@@ -25,10 +28,11 @@ by the inventory run but have since disappered).
 These files are named  <model>_<year>_Sold.csv with the associated raw parquet in <model>_<year>_Sold_raw.parquet
 Also note that currently if a temp VIN is turned into a real VIN, and thus the temp VIN disappears, 
 the temp VIN is treated as Sold, because it disappeared from current inventory, and is placed in the associated Sold file. 
-This currently allows temp VINs to still be seen and a person to
+This currently allows temp VINs to still be seen for a period of time and a user to
 know when it was turned into a real VIN by the infoDateTime field (not necessarily what the real VIN is).
-Once a temp VIN in the sold file is older than 12 weeks it is assumed it has been replaced with a real VIN by that time
-and is removed from the sold files.
+A user can determine the real VIN that has replaced a temp VIN by using the Change History file (see below).
+Once a temp VIN in the sold file is older than 12 weeks it is assumed it has been replaced with a real VIN by that time,
+and the user no longer needs use of the temp VIN, and it is removed from the sold files.
 Older model year sold files will be archived at some point, when it appears there is no longer any inventory of that year left.
 
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.
@@ -41,14 +45,26 @@ VIN).
 A user would typically note the last time they viewed that VIN info in this file and then be sure to 
 view the file at least every 14 days to see all changes to the column values for that VIN after the last time it
 was viewed.
-
 Additional columns in these Change History files, which are described later on below, are as follows:
 RowChangeType, 
 Event DateTime,
 List of Changes
 
-All files are read only view on my google drive.  Thus if you wish to do filtering, etc you need to either 
-download the file and open it,  or click on the file's More Actions --> Open With --> Excel Desktop.
+A user can determine, with reasonable certainty, the real VIN that has replaced a temp VIN by using the Change History file,
+assuming this is done before 14 days after the temp VIN disappeared from the inventory.
+Open the Change History .csv file in Excel and sort ascending by "Dealer Website".  
+Insert a blank column to the right of the "isTempVin" column.
+Turn on data filtering.
+Add the following formula to row 2 of that new blank column
+=OR(AND(S2=FALSE, S3=TRUE,U2=U3, A2="ADDED", A3="REMOVED", B2=B3,I2=I3, AR2=AR3), AND(S1=FALSE, S2=TRUE,U1=U2, A1="ADDED", A2="REMOVED", B1=B2, I1=I2, AR1=AR2))
+then copy and paste that cell to all the other cells below in that column
+Now filter on the value TRUE for that new column.
+You should see pairs of rows, were each pair is ADDED followed by REMOVED. The ADDED one contains the real VIN 
+and the REMVOED contains the temp VIN and all the other columns should match between the two (excluding obvious ones that
+will be different).  The above formula doesn't check that all columns match, just that the Selling Price, Options and
+Event DateTime match between the columns which in general if they do then the others probably match as well, but you 
+need to visually verify the other columns just to make sure.
+
 
 A log file InventoryRunlog.txt is also provided which indicates when the inventory search started, log of
 progress on getting each model (graphql inventory page number on , number of pages, number of records, i.e. vehicles, 

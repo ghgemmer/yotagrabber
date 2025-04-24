@@ -968,12 +968,6 @@ def writeLastParquetAndAssociatedFiles(inputDf):
             modelYearSoldRawParquetDf.to_parquet(modelYearSoldFileName, index=False)
             # Write out the csv style transformed sold model year df to the csv file
             cvsStyleDf = transformRawDfToCsvStyleDf(modelYearSoldRawParquetDf)
-            cvsStyleDf.reset_index(drop=True, inplace=True) 
-            if len(cvsStyleDf) and ("DistanceFromCenter" in cvsStyleDf.columns):
-                distanceFormula = getExcelDistanceFormulaForCsv(tuple(cvsStyleDf.columns), 2)
-                cvsStyleDf["DistanceFromCenter"] = None
-                #print("Sold file distanceFormula", distanceFormula)
-                cvsStyleDf.at[0,"DistanceFromCenter"] =  distanceFormula
             cvsStyleDf.to_csv(modelYearSoldCsvFileName, index=False)
         
     # Now remove the sold entries from the df as the Last Parquet file it is written to should only contain non sold entries.

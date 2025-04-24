@@ -1397,14 +1397,27 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     #
     # The following code section updates the df and lastParquetDf appropriately as follows:
     '''
+    We want to update the df (current inventory) with the FirstAddedDates from the lastParquetDf for VINs in both, 
+    and set the FirstAddedDates to infoDateTime in the df for those new entries (VIN entries not in the lastParquetDf).
+    At that point the df is completely updated for use later on.
+    Then we want to update the lastParquetDf with everthing in the df  (existing VINs and new VINs) and 
+    for VINs in the lastParquetDf that are not in the df (i.e. removed) we mark them as Sold, otherwise we mark an entry
+    as not Sold
+    At this point the lastParquetDf update is complete and can be used to update sold files later on below and
+    once that occurs the sold entries can be removed from the lastParquetDf and the lastParquetDf can be written out.
+    
+    The above is accomplishes by doing the following:
     A FirstAddedDate column is added to the df (current inventory), and its value is set to the the df infoDateTime for df VINs not in 
     lastParquetDf  (i.e  for VINs that are new or have gone away and reappeared use date of when that entry was gotten from inventory website), 
     otherwise it is set to the FirstAddedDate of the lastParquetDf for the matching VIN  (an exisiting VIN for which
-    we have already determined the FirstAddedDate and it is what is in the lastParquetDf.
+    we have already determined the FirstAddedDate and it is what is in the lastParquetDf).
     A Sold column is added to the lastParquetDf, and its value is set to True 
     A Sold column is added to the df and its value is set to False
     Then any VIN in both lastParquetDf and df has the df row replacing the lastParquetDf row so the lastParquetDf
-    is updated with the information from the df (current inventory).  Thus the Sold field in those is False, and then 
+    is updated with the information from the df (current inventory), and any new VIN entries from 
+    the df are added to the last lastParquetDf (all done by concatenting the df to the end of the lastParquetDf
+    and then removing duplicate VINs keeping only the last one in the concatenation). 
+    Thus the Sold field in those is False, and then 
     any VIN in the lastParquetDf that was not updated, which are those not in the df (current inventory), 
     has the Sold field remaining as True since that VIN has disappered from the df (current inventory) and thus is sold. 
     

@@ -1,4 +1,4 @@
-Readme.txt updated 4/23/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 4/26/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -40,8 +40,11 @@ They contains all changes between runs of the inventory collection,
 which are any added (new or reappeared) VINs, modified contents of existing VINs, or removed VINs. 
 This allows a user to see the changes that occurred from run to run.
 Only the last 14 days of changes are kept.
-A typical use of this file is to watch for changes to the column values of a specific VIN  (filter by VIN and find the specific
-VIN).
+A typical use of this file is to watch for changes to the column values of a specific VIN  (sort by VIN and find the specific
+VIN).  The user can visually scan for changes between values in the rows for that VIN or look at the
+List of Changes column (for change types of MODED) to see a concise list only the changes that occured between the current row
+and the previous row.
+
 A user would typically note the last time they viewed that VIN info in this file and then be sure to 
 view the file at least every 14 days to see all changes to the column values for that VIN after the last time it
 was viewed.

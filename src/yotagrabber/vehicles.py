@@ -964,7 +964,10 @@ def writeLastParquetAndAssociatedFiles(inputDf):
                 modelYearSoldRawParquetDf.drop(columns=["WhoDidMergeComeFrom_"], axis=1, inplace=True)
             # Write the sorted by VIN sold model year parquet df to its corresponding file.  Remove the Sold column
             modelYearSoldRawParquetDf.sort_values(by=["vin"], inplace=True)
-            modelYearSoldRawParquetDf.drop(["Sold"], axis=1)
+            if "Sold" in modelYearSoldRawParquetDf.columns:
+                # It's possible that "Sold" might not be in the modelYearSoldRawParquetDf if the year was not in  modelYearsSold
+                # as we would not concatenate with a df that has a Sold column.
+                modelYearSoldRawParquetDf.drop(["Sold"], axis=1, inplace=True)
             modelYearSoldRawParquetDf.to_parquet(modelYearSoldFileName, index=False)
             # Write out the csv style transformed sold model year df to the csv file
             cvsStyleDf = transformRawDfToCsvStyleDf(modelYearSoldRawParquetDf)

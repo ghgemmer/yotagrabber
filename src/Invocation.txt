@@ -122,7 +122,7 @@ optional $credentialsFileName = the full path file name of the google credential
 
 To just run the script
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
-C:\Users\GregG\Documents\GitHub\yotagrabber\Get-ToyotaInventory.ps1 $DirectoryToRunIn $PythonVENVPowershellActivateScript -uploadInventory $uploadInventory  -credentialsFileName $credentialsFileName
+C:\Users\GregG\Documents\GitHub\yotagrabber\Get-ToyotaInventory.ps1 $DirectoryToRunIn $PythonVENVPowershellActivateScript $uploadInventory  $credentialsFileName
 
 To schedule this script to be run as a job use the following in a PowerShell adjusted to whatever schedule you want.
 Keep in mind that too much traffic to the toyota website could cause the website to block you or throttle you so 

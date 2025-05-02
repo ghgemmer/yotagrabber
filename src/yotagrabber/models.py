@@ -124,3 +124,7 @@ def update_models():
     models.loc[models["modelCode"] == "grsupra", "modelCode"] = "supra"
 
     models.to_json("output/models.json", orient="records", indent=2)
+    
+if __name__ == "__main__":
+    update_models()
+

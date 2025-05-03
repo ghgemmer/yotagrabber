@@ -1,4 +1,5 @@
-Readme.txt updated 4/26/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 5/3/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Updates delayed until 5/4/2025 due to computer issues.
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -109,6 +110,8 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                     Usually From and To Date will now appear.
                     "At dealer" - The car is at the dealer
                     The above "Shipping Status" defintions were copied and pasted from another developers spreadsheet
+"eta.currFromDate" - Estimate To Arrival at dealer earliest date estimate.
+"eta.currToDate" -   Estimate To Arrival at dealer latest date estimate.
 "FirstAddedDate" - Date and time the VIN first appeared in inventory retrieved from the website (or reappeared after disappearing).
 "infoDateTime" -  Date and time that the row was updated from the inventory website.
 "Dealer Lat" -  Dealer Latitude

@@ -564,19 +564,8 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 34092,34092,Thayer Toyota,https://www.thayertoyota.com,22,OH,41.3973,-83.65111,1225 North Main Street,Bowling Green,43402,(419) 353-5751
 34026,34026,Jim White Toyota,https://www.jimwhitetoyota.com,22,OH,41.6754,-83.687922,6123 West Central Avenue,Toledo,43615,(419) 841-6681
 21127,21127,Germain Toyota of Dundee,https://www.germaintoyotaofdundee.com,22,MI,41.961534,-83.681864,16490 Tecumseh Street,Dundee,48131,(734) 242-3900
-21116,21116,Szott M-59 Toyota,https://www.szottm59toyota.com,22,MI,42.651228,-83.368323,4178 Highland Road,Waterford,48328,(248) 333-3300
-21112,21112,Fox Toyota,https://www.toyotabyfox.com,22,MI,42.669895,-83.132828,773 South Rochester Road,Rochester Hills,48307,(248) 656-0400
-21123,21123,Suburban Toyota of Farmington Hills,https://www.suburbantoyotaoffarmingtonhills.com,22,MI,42.4753,-83.43518,25000 Haggerty Road,Farmington Hills,48335,(248) 699-7100
-21122,21122,Suburban Toyota of Troy,https://www.suburbantoyotaoftroy.com,22,MI,42.54792,-83.17905,2100 W. Maple Road,Troy,48084,(248) 643-8500
-21039,21039,Page Toyota,https://www.pagetoyota.com,22,MI,42.447013,-83.277678,21262 Telegraph Road,Southfield,48033,(248) 352-8580
-21121,21121,Golling Toyota of Warren,https://www.gollingtoyota.com,22,MI,42.4927,-83.0278,27100 Van Dyke Avenue,Warren,48093,(586) 758-2000
-21117,21117,Matick Toyota,https://www.maticktoyota.com,22,MI,42.630845,-82.870923,23405 Hall Road,Macomb,48042,(586) 463-9000
-21110,21110,Victory Toyota,https://www.victorytoyotacanton.com,22,MI,42.270113,-83.495548,46352 Michigan Avenue,Canton,48188,(734) 495-3500
-21061,21061,LaFontaine Toyota,https://www.lafontainetoyota.com,22,MI,42.296405,-83.27093,2027 S. Telegraph Road,Dearborn,48124,(313) 561-6600
 21107,21107,Labadie Toyota,https://www.labadietoyota.com,22,MI,43.61337,-83.91515,909 N. Euclid Avenue,Bay City,48706,(989) 684-2222
 21119,21119,Serra Toyota of Saginaw,https://www.serratoyotasaginaw.com,22,MI,43.4697,-83.9745,4320 Bay Road,Saginaw,48603,(989) 790-0800
-21124,21124,Toyota of Ann Arbor,https://www.toyotaofannarbor.com,22,MI,42.28435,-83.805212,3745 Jackson Road,Ann Arbor,48103,(734) 997-7600
-21125,21125,Randy Wise Toyota,https://www.randywisetoyota.com,22,MI,42.900514,-83.630058,9099 Holly Road,Grand Blanc,48439,(810) 695-4400
 21120,21120,Signature Toyota,https://www.signaturetoyota.com,22,MI,42.086655,-86.442173,680 East Napier,Benton Harbor,49022,(269) 926-0031
 13075,13075,Jordan Toyota,https://www.jordantoyota.com,21,IN,41.673504,-86.170507,920 E. Jefferson Blvd.,Mishawaka,46545,(574) 259-1981
 13046,13046,Gates Toyota,https://www.gatestoyota.com,21,IN,41.628129,-86.257303,640 W. Ireland Road,South Bend,46614,(574) 299-7400
@@ -1243,3 +1232,15 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 20122,20122,Tufankjian Toyota of Braintree,https://www.toyotaofbraintree.com,17,MA,42.211329,-70.998285,210 Union Street,Braintree,02184,(781) 848-9300
 20102,20102,Lexington Toyota,https://www.lexingtontoyota.com,17,MA,42.427817,-71.20111,409 Massachusetts Avenue,Lexington,02420,(781) 861-7400
 20152,20152,Tasca Toyota Boston,https://www.tascatoyotaboston.com,17,MA,42.298738,-71.049101,700 Morrissey Blvd.,Dorchester,02122,(617) 265-4321
+21121,21121,Golling Toyota of Warren,https://www.gollingtoyota.com,22,MI,42.4927,-83.0278,27100 Van Dyke Avenue,Warren,48093,(586) 758-2000
+21122,21122,Suburban Toyota of Troy,https://www.suburbantoyotaoftroy.com,22,MI,42.54792,-83.17905,2100 W. Maple Road,Troy,48084,(248) 643-8500
+21117,21117,Matick Toyota,https://www.maticktoyota.com,22,MI,42.630845,-82.870923,23405 Hall Road,Macomb,48042,(586) 463-9000
+21112,21112,Fox Toyota,https://www.toyotabyfox.com,22,MI,42.669895,-83.132828,773 South Rochester Road,Rochester Hills,48307,(248) 656-0400
+21039,21039,Page Toyota,https://www.pagetoyota.com,22,MI,42.447013,-83.277678,21262 Telegraph Road,Southfield,48033,(248) 352-8580
+21061,21061,LaFontaine Toyota,https://www.lafontainetoyota.com,22,MI,42.296405,-83.27093,2027 S. Telegraph Road,Dearborn,48124,(313) 561-6600
+21116,21116,Szott M-59 Toyota,https://www.szottm59toyota.com,22,MI,42.651228,-83.368323,4178 Highland Road,Waterford,48328,(248) 333-3300
+21123,21123,Suburban Toyota of Farmington Hills,https://www.suburbantoyotaoffarmingtonhills.com,22,MI,42.4753,-83.43518,25000 Haggerty Road,Farmington Hills,48335,(248) 699-7100
+21110,21110,Victory Toyota,https://www.victorytoyotacanton.com,22,MI,42.270113,-83.495548,46352 Michigan Avenue,Canton,48188,(734) 495-3500
+21125,21125,Randy Wise Toyota,https://www.randywisetoyota.com,22,MI,42.900514,-83.630058,8420 Holly Road,Grand Blanc,48439,(810) 695-4400
+21124,21124,Toyota of Ann Arbor,https://www.toyotaofannarbor.com,22,MI,42.28435,-83.805212,3745 Jackson Road,Ann Arbor,48103,(734) 997-7600
+34143,34143,TOYOTA OF WARREN i.e. Golling Toyota,https://www.gollingtoyota.com,22,MI,42.4927,-83.0278,27100 Van Dyke Avenue,Warren,48093,(586) 758-2000

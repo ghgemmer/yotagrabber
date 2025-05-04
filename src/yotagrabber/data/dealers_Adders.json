@@ -1,4 +1,18 @@
 [ {
+    "code" : "34143",
+    "dealerId" : "34143",
+    "name" : "TOYOTA OF WARREN i.e. Golling Toyota",
+    "address1" : "27100 Van Dyke Avenue",
+    "city" : "Warren",
+    "state" : "MI",
+    "zip" : "48093",
+    "phone" : "(586) 758-2000",
+    "lat" : 42.4927,
+    "long" : -83.0278,
+    "url" : "https://www.gollingtoyota.com",
+    "regionId" : "22"
+    },
+  {
     "code" : "06055",
     "dealerId" : "06055",
     "name" : "Mcgee Toyota of Putnam",

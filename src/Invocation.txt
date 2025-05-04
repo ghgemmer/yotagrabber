@@ -8,6 +8,15 @@ model code to model title).
 Run models.py update_models() to create this file once or when you believe new models exist or the model 
 you are looking for is not in that file.  You can also update that by hand to add your model if desired if you know the title. 
 
+You should also setup the PYTHONPATH environment variable to point to the parent directory of
+yotagrabber (the one under the src directory) so that the "import" and "from" statements in the python files 
+in src\yotagrabber\*.py can find the specified modules to import.
+In a windows command window it would lool like 
+set PYTHONPATH=.....\yotagrabber\src
+This is definitely needed when running things from directories outside the normal ones indicated below.
+When a python file is executed if you get a "cannot find module x" type error message you need to setup this
+path.
+
 C:\Users\GregG\AppData\Local\Programs\yotagrabber_venv\Scripts\activate
 cd C:\Users\GregG\Documents\GitHub\yotagrabber\src
 set MODEL=rav4prime

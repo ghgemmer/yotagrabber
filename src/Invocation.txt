@@ -190,7 +190,11 @@ you must use google developers to enable your google drive to be accessed via th
 for that access.  This is the same as what must be done if you use gmail as the sender source for the email option when running searchForVehicles.py
 upload-files.py takes 3 command line parameters which are directory where the inventory files are, googleDriveFolderName where
 the inventory files are to be placed on the google drive, and the credentialsFileName for accessing the google drive.
-
+!!!Warning: The Google drive sync program can cause problems with this upload so if you are using it you must keep
+it from syncing files with this google drive folder (disable syncing on that directory on your computer and that
+drive folder) . It can also cause the google drive folder to not associated the
+google spreadsheets app with .csv files which also keeps copied links to those google drive files from being
+able to open as a spreadsheet (get a non accessible at this time type error message).
 
 --------------------------------------------------------
 For updating the dealers.csv that vehicles.py uses to find the state a dealerId is in (the graphql only has the dealerId

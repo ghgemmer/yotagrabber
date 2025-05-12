@@ -245,7 +245,7 @@ credentials.json
 !/src/test/SearchVehicles4runnerhybridTestCnfg1_config.yaml
 !/src/test/Test_UserMatchCriteriaFilter.py
 !/src/test/4runner_Test*_raw.parquet
-!/src/test/4runner_Test*_StatusInfo.parquet
+!/src/test/4runner_Test*_StatusInfo.json
 !/src/test/4runner_Tests_LastChangeDate.txt
 !/src/test/4runnerLastChangeDateTest.bat
 !/src/test/modelsTest0.json

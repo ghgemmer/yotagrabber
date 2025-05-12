@@ -42,8 +42,9 @@ forceQueryRspFailureTest = 0 # set to > 0 to perform tests related to forcing a 
 totalPageRetries= 0
 MAX_TOTAL_PAGE_RETIRES_FOR_MODEL = 2 * 3 * 30 # say on avg 3 groups of 2 retries per page (10 sec avg per retry) over 30 pages  giving 30 minutes extra worst case per model
 
-columnsForEmptyDfParquet = ["vin", "isTempVin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', 'cab.code', 'cab', 'bed.code', 'bed', "FirstAddedDate", "infoDateTime", "options"]
-columnsForEmptyDfFinalCsv = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", "infoDateTime", "Options"]
+LastChangedDateTimeColName = "LastChangedDateTime"
+columnsForEmptyDfParquet = ["vin", "isTempVin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', 'cab.code', 'cab', 'bed.code', 'bed', "FirstAddedDate", LastChangedDateTimeColName, "infoDateTime", "options"]
+columnsForEmptyDfFinalCsv = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", LastChangedDateTimeColName, "infoDateTime", "Options"]
 # TODO should be able to construct the below from the columnsForEmptyDfFinalCsv
 # columns need to be in the order we want.
 rowModificationsColumnName = "List of Changes"
@@ -314,10 +315,13 @@ def readLastParquetDf():
         print("readLastParquetDf: Last Raw Status Info file associated with the last raw parquet file does not exist", statusFileName, " . Using status with CompletedOk as False")
     if "Sold" in df.columns:
         # remove it as it is not needed in this file.
-        df = df.drop(["Sold"], axis=1)
+        df.drop(["Sold"], axis=1, inplace=True)
     if not("FirstAddedDate" in df.columns):
         # add the column in
         df["FirstAddedDate"] = None
+    if not(LastChangedDateTimeColName in df.columns):
+        # add the column in
+        df[LastChangedDateTimeColName] = None
     return (rawParquetFileExists, statusOfGetAllPagesFileExists, df , statusOfGetAllPages )
      
 
@@ -359,10 +363,13 @@ def read_local_data(testModeOn = False):
         print("read_local_data: Local Status Info file does not exist", statusFileName)
     if "Sold" in df.columns:
         # remove it as the inventory website does not have this.
-        df = df.drop(["Sold"], axis=1)
+        df.drop(["Sold"], axis=1, inplace=True)
     if "FirstAddedDate" in df.columns:
         # remove it as the inventory website does not have this.
-        df = df.drop(["FirstAddedDate"], axis=1)
+        df.drop(["FirstAddedDate"], axis=1, inplace=True)
+    if LastChangedDateTimeColName in df.columns:
+        # remove it as the inventory website does not have this.
+        df.drop([LastChangedDateTimeColName], axis=1, inplace=True)
     return (rawParquetFileExists, statusOfGetAllPagesFileExists, df , statusOfGetAllPages )
 
 
@@ -568,10 +575,10 @@ def get_all_pages():
         df = pd.DataFrame(columns = columnsForEmptyDfParquet)
     if "Sold" in df.columns:
         # remove it as the inventory website does not have this, and if it does we don't want to include it anyway
-        df = df.drop(["Sold"], axis=1)
+        df.drop(["Sold"], axis=1, inplace=True)
     if "FirstAddedDate" in df.columns:
         # remove it as the inventory website does not have this, and if it does we don't want to include it anyway
-        df = df.drop(["FirstAddedDate"], axis=1)
+        df.drop(["FirstAddedDate"], axis=1, inplace=True)
     return (df, statusInfo )
 
 def sanitizeStr(strng):
@@ -643,6 +650,10 @@ def transformRawDfToCsvStyleDf ( inputDf):
             # This can happen if the passed df is the originalLastParquet before the
             # FirstAddedDate column has ever been added to it such as when the last parquet file did not exist
             df['FirstAddedDate'] = None
+        if not (LastChangedDateTimeColName in df.columns):
+            # This can happen if the passed df is the originalLastParquet before the
+            # LastChangedDateTimeColName column has ever been added to it such as when the last parquet file did not exist
+            df[LastChangedDateTimeColName] = None
         
         renames = {
             "vin": "VIN",
@@ -719,6 +730,7 @@ def transformRawDfToCsvStyleDf ( inputDf):
                     'bed.code',
                     'bed',
                     "FirstAddedDate",
+                    LastChangedDateTimeColName,
                     "infoDateTime",
                 ]
             ]
@@ -829,6 +841,7 @@ def transformRawDfToCsvStyleDf ( inputDf):
                 "Bed Code",
                 "Bed",
                 "FirstAddedDate",
+                LastChangedDateTimeColName,
                 "infoDateTime",
                 # "Image",
                 "Options",
@@ -919,6 +932,7 @@ def writeLastParquetAndAssociatedFiles(inputDf):
     # Each model year raw parquet df is then transformed into a cvs style df and written to the corresponding cvs model year file
     # inputDf is assumed to be the raw parquet df with Sold column info indicating which entries have been sold or not.
     df = inputDf.copy(deep=True)
+    #print("writeLastParquetAndAssociatedFiles: Input df contains Sold column:", "Sold" in df.columns)
     rawParquetFileName = getLastRawParquetFileName()
     if not df.empty:
         modelSoldDf = df[df["Sold"] == True]
@@ -945,8 +959,9 @@ def writeLastParquetAndAssociatedFiles(inputDf):
             if Path(modelYearSoldFileName).exists():
                 modelYearSoldRawParquetDf = pd.read_parquet(modelYearSoldFileName)
             else:
-                print(modelYearSoldFileName, "does not exist. Using empty dataframe with the appropriate columns")
+                print("writeLastParquetAndAssociatedFiles: ", modelYearSoldFileName, "does not exist. Using empty dataframe with the appropriate columns")
                 modelYearSoldRawParquetDf = pd.DataFrame(columns = df.columns)
+            #print("writeLastParquetAndAssociatedFiles: Gotten modelYearSoldRawParquetDf contains Sold column:", "Sold" in modelYearSoldRawParquetDf.columns)
             if year in modelYearsSold:
                 # append the Sold entries from the raw parquet df for that model year to the Sold model year raw parquet df
                 # and drop any duplicates
@@ -975,7 +990,7 @@ def writeLastParquetAndAssociatedFiles(inputDf):
         
     # Now remove the sold entries from the df as the Last Parquet file it is written to should only contain non sold entries.
     df = df[df["Sold"] != True]
-    df = df.drop(["Sold"], axis=1)
+    df.drop(["Sold"], axis=1, inplace=True)
     df.to_parquet(rawParquetFileName, index=False)
 
 def debugCheckingDf(df, msg= "", vin= ""):
@@ -999,6 +1014,35 @@ def debugCheckingDf(df, msg= "", vin= ""):
             print("debugCheckingDf: At point", msg, ": vin/VIN",vinLookingFor, "was found in the df" )
     else:
         print("debugCheckingDf: At point", msg, ": df has no vin or VIN column name")
+        
+
+def updateDfsLastChangedDateTimeUsingChangeHistory(df, lastParquetDf, changeHistoryCurrentOnlyDf):
+    # Updates copies of the df (a passed CSV style df), and lastParquetDf (a passed raw parquet df) LastChangedDateTimeColName 
+    # values using the infoDateTime field of the changeHistoryCurrentOnlyDf for VINs in those dataframes with MODED in changeHistoryCurrentOnlyDf, 
+    # and returns them as a tuple (df, lastParquetDf)
+    # Thus only current changes (between the current and prior dataframe) have the LastChangeDate
+    # changeHistoryCurrentOnlyDf can be empty but must have the normal column names for a change history.
+    #
+    df = df.copy(deep=True)
+    lastParquetDf = lastParquetDf.copy(deep=True)
+    changeHistoryOnlyMergeColsDf = changeHistoryCurrentOnlyDf[["VIN", rowChangeTypeColumnName]].copy(deep=True)
+    changeHistoryOnlyMergeColsWithModedDf = changeHistoryOnlyMergeColsDf[changeHistoryOnlyMergeColsDf[rowChangeTypeColumnName] == rowModifiedVINContentsIndicator]
+    dfMerged = df.merge(changeHistoryOnlyMergeColsWithModedDf, left_on="VIN", right_on="VIN", how='left', indicator = "WhoDidMergeComeFrom_")
+    # if MODED VIN in both then set the LastChangedDateTimeColName value with the infoDateTime  value from that row.
+    dfMerged[LastChangedDateTimeColName] = dfMerged[LastChangedDateTimeColName].where(dfMerged["WhoDidMergeComeFrom_"] != "both", dfMerged["infoDateTime"])
+    # Note that when different left_on and right_on columns names used for merge the right_on column name is also added as a column to the merge result in 
+    # addition to any other columns in the right df, possibly with suffixes.  This occurs even if both dfs are empty (i.e. no rows) but have
+    # column names.
+    dfLastParquetMerged = lastParquetDf.merge(changeHistoryOnlyMergeColsWithModedDf, left_on="vin", right_on="VIN", how='left', indicator = "WhoDidMergeComeFrom_")
+    # if MODED VIN in both then set the LastChangedDateTimeColName value with the infoDateTime  value from that row.
+    dfLastParquetMerged[LastChangedDateTimeColName] = dfLastParquetMerged[LastChangedDateTimeColName].where(dfLastParquetMerged["WhoDidMergeComeFrom_"] != "both", dfLastParquetMerged["infoDateTime"])
+    
+    # Remove the temporary columns "WhoDidMergeComeFrom_", and rowChangeTypeColumnName column from both dfs and
+    # VIN from the dfLastParquetMerged before returning them
+    dfMerged.drop(["WhoDidMergeComeFrom_", rowChangeTypeColumnName], axis=1, inplace=True)
+    dfLastParquetMerged.drop(["WhoDidMergeComeFrom_", rowChangeTypeColumnName, "VIN"], axis=1, inplace=True)
+    return (dfMerged, dfLastParquetMerged)
+    
 
 def getChangeHistoryFinalColumnsSelect(originalColumnsInOld, originalColumnsInNew):
     # returns an ordered list of columns for the final columns we want in the change history
@@ -1037,7 +1081,9 @@ def getOptionDifferences(oldOptions, newOptions):
         oldOptionsSplit = []
         for option in oldOptions.split("|"):
             oldOptionsSplit.append(option.rstrip().lstrip())
+        # Note that the list(dict.fromkeys(oldOptionsSplit)) only removes case sensitive duplicates which the above are not (different case)
         oldOptionsSplit.sort(key=str.lower) # sort case insensitive to make it easy to visually look through the changed options
+        # See below for TODO on how to resolve this.
         oldOptionsSplit = list(dict.fromkeys(oldOptionsSplit)) # remove duplicates (keeping order) as sometimes these do occur for some unknown reason
         newOptionsSplit = []
         for option in newOptions.split("|"):
@@ -1058,10 +1104,17 @@ def getOptionDifferences(oldOptions, newOptions):
                 # oldOptionForCompare = oldOption.replace("  ", " ")
                 oldOptionForCompare = oldOptionForCompare.replace("[installed_msrp]", "").rstrip().rstrip(":")
                 if newOptionForCompare == oldOptionForCompare:
-                    sameOptionsStr += newOption + " | "
+                    if not (oldIndex in oldIndiciesOfOldIsSameAsNew):
+                        sameOptionsStr += newOption + " | "
                     wasInOld = True
                     oldIndiciesOfOldIsSameAsNew.append(oldIndex)
-                    break
+                    # Note that going through all the entries to find duplicates increases the time it takes to run through this but hopefully it is still acceptable.
+                    # TODO An alternative to the above to decrease execution time 
+                    # is to just initially remove case insenstive massaged (trimmed, installed_msrp removed, etc)
+                    # duplicates from the newOptionsSplit
+                    # and the oldOptionsSplit, keeping only the first one, before running through these for loops.
+                    # But then you have an issue if different cases mean something different as mentioned above.
+                    #break
                 oldIndex += 1
             if not wasInOld:
                 # then must be an added one from new
@@ -1189,8 +1242,10 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     # returns a data frame  that is the concatenation of the lastChangeHistorydf
     # and the added, modified, removed entries between the passed old df and the new df with 
     # an indicator if the old and new value in the row was different and the old value as well, and
-    # then limits the result to only the last 2 weeks of entries (infoDateTime field is not older than 2 weeks) 
-    # All passed data frames must be df raw to csv style generated dataframes
+    # then limits the result to only the last 2 weeks of entries (infoDateTime field is not older than 2 weeks)
+    # and also returns a dataframe that does not include the lastChangeHistorydf.
+    # The tuple returned is  (changeHistoryWithLastDf,  changeHistoryCurrentOnlyDf)
+    # All passed data frames must be df raw to csv style generated dataframes 
     #
     global columnsForEmptyChangeHistoryCsvDf
     global changeHistoryUseThisAsTodaysDateForTesting
@@ -1240,7 +1295,7 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     dfNewMerged[rowChangeTypeColumnName] = dfNewMerged[rowChangeTypeColumnName].where(dfNewMerged["WhoDidMergeComeFrom_"] != 'left_only', rowAddedNewVINIndicator )
     dfOldMerged[rowChangeTypeColumnName] = dfOldMerged[rowChangeTypeColumnName].where(dfOldMerged["WhoDidMergeComeFrom_"] != 'left_only', rowRemovedVINIndicator )
     
-    columnsToIgnoreForComparison = ["WhoDidMergeComeFrom_", rowChangeTypeColumnName, rowModificationsColumnName, "VIN", "CenterLat", "CenterLong", "DistanceFromCenter", "infoDateTime", "FirstAddedDate"]
+    columnsToIgnoreForComparison = ["WhoDidMergeComeFrom_", rowChangeTypeColumnName, rowModificationsColumnName, "VIN", "CenterLat", "CenterLong", "DistanceFromCenter", LastChangedDateTimeColName, "infoDateTime", "FirstAddedDate"]
     # Now do the determination on just the rows that were in both.  We can create a slice of just those rows with common VINs
     # and run the determination on then and then the result is what gets concatenated later on for that.
     dfNewMergeOnlyCommonVins = dfNewMerged[dfNewMerged["WhoDidMergeComeFrom_"] == 'both'].copy(deep=True)
@@ -1252,18 +1307,21 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     # Also before this need to reset the index in the dfs as the concat can fail without that.
     #dfNewMerged.reset_index(drop=True, inplace=True)
     #dfNewMergeOnlyCommonVins.reset_index(drop=True, inplace=True)
-    #dfOldMerged.reset_index(drop=True, inplace=True)    
+    #dfOldMerged.reset_index(drop=True, inplace=True)
     dfChangeHistory = pd.concat([
         dfNewMerged[dfNewMerged[rowChangeTypeColumnName] == rowAddedNewVINIndicator],
         dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName] == rowModifiedVINContentsIndicator],
         dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator] 
         ])
-        
     
+    # Updated the LastChangedDateTimeColName for MODED entries with the infoDateTime column
+    dfChangeHistory[LastChangedDateTimeColName] = dfChangeHistory[LastChangedDateTimeColName].where(dfChangeHistory[rowChangeTypeColumnName] != rowModifiedVINContentsIndicator, dfChangeHistory["infoDateTime"])
     # Add the Change DateTime column with the current datetime
     today = datetime.datetime.today()
     format_time_string = "%Y-%m-%d %H:%M:%S"
     dfChangeHistory[rowChangeDateTime] = today.strftime(format_time_string)
+    
+    changeHistoryCurrentOnlyDf = dfChangeHistory.copy(deep=True)
     
     # Now concatenate the new change history to the last change history with the last change history first
     dfChangeHistory = pd.concat([lastChangeHistorydf, dfChangeHistory])
@@ -1292,7 +1350,7 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
         #print("Change History file distanceFormula", distanceFormula)
         dfChangeHistory.at[0,"DistanceFromCenter"] =  distanceFormula
     #print(datetime.datetime.now(), "getChangeHistory: Exited")
-    return dfChangeHistory
+    return (dfChangeHistory, changeHistoryCurrentOnlyDf)
 
 def getEnvVariableTestMode():
     # returns a tuple that indicates if the environement variable indicates test mode is enabled
@@ -1336,7 +1394,7 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     global columnsForEmptyDfParquet
     global columnsForEmptyDfFinalCsv
     global changeHistoryUseThisAsTodaysDateForTesting
-    
+    print("Vehicles Program Version 5.0 4-20-2025")
     if not MODEL:
         sys.exit("Set the MODEL environment variable first")
     print("update_vehicles: Getting inventory for model", MODEL)
@@ -1400,8 +1458,8 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     #
     # The following code section updates the df and lastParquetDf appropriately as follows:
     '''
-    We want to update the df (current inventory) with the FirstAddedDates from the lastParquetDf for VINs in both, 
-    and set the FirstAddedDates to infoDateTime in the df for those new entries (VIN entries not in the lastParquetDf).
+    We want to update the df (current inventory) with the FirstAddedDates, and LastChangedDateTimeColName from the lastParquetDf for VINs in both, 
+    and set the FirstAddedDates and LastChangedDateTimeColName to infoDateTime in the df for those new entries (VIN entries not in the lastParquetDf).
     At that point the df is completely updated for use later on.
     Then we want to update the lastParquetDf with everthing in the df  (existing VINs and new VINs) and 
     for VINs in the lastParquetDf that are not in the df (i.e. removed) we mark them as Sold, otherwise we mark an entry
@@ -1414,6 +1472,8 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     lastParquetDf  (i.e  for VINs that are new or have gone away and reappeared use date of when that entry was gotten from inventory website), 
     otherwise it is set to the FirstAddedDate of the lastParquetDf for the matching VIN  (an exisiting VIN for which
     we have already determined the FirstAddedDate and it is what is in the lastParquetDf).
+    LastChangedDateTimeColName is added to the df and its value is set to what is in the lastParquetDf for VINs in both,
+    and for VINs only in df it is set to the df infoDateTime.
     A Sold column is added to the lastParquetDf, and its value is set to True 
     A Sold column is added to the df and its value is set to False
     Then any VIN in both lastParquetDf and df has the df row replacing the lastParquetDf row so the lastParquetDf
@@ -1440,27 +1500,35 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
             if not("FirstAddedDate" in lastParquetDf.columns):
                 # use None
                 lastParquetDf["FirstAddedDate"] = None
-            lastParquetMergeColumnsOnlyDf = lastParquetDf[["vin", "FirstAddedDate"]]
+            if not(LastChangedDateTimeColName in lastParquetDf.columns):
+                # use None
+                lastParquetDf[LastChangedDateTimeColName] = None
+            lastParquetMergeColumnsOnlyDf = lastParquetDf[["vin", "FirstAddedDate", LastChangedDateTimeColName]]
             if "FirstAddedDate" in df.columns:
                 # if for some reason that df gotten from the inventory website or local file has a FirstAddedDate, remove it (it shouldn't)
-                df = df.drop(['FirstAddedDate'], axis=1)
+                df.drop(['FirstAddedDate'], axis=1, inplace=True)
+            if LastChangedDateTimeColName in df.columns:
+                # if for some reason that df gotten from the inventory website or local file has a LastChangedDateTimeColName, remove it (it shouldn't)
+                df.drop([LastChangedDateTimeColName], axis=1, inplace=True)
             if "WhoDidMergeComeFrom_" in df.columns:
                 # if for some reason that df has this which it shouldn't, remove it
-                df = df.drop(['WhoDidMergeComeFrom_'], axis=1)
+                df.drop(['WhoDidMergeComeFrom_'], axis=1, inplace=True)
             # Set all entries in lastParquetDf to initially sold. This will later on be overriden if there is a matching VIN in the new raw df, 
             # otherwise it must be sold if it no longer appears in the new raw df which was obtained from the inventory website.
             lastParquetDf["Sold"] = True
-            # Note that the merge below will add a FirstAddedDate, and WhoDidMergeComeFrom_ to df even if
+            # Note that the merge below will add a FirstAddedDate, LastChangedDateTimeColName, and WhoDidMergeComeFrom_ to df even if
             # there are no VINs in common between df and lastParquetMergeColumnsOnlyDf, those not matching VINs in df
-            # will have either None or NaN in the FirstAddedDate column
+            # will have either None or NaN in the FirstAddedDate and LastChangedDateTimeColName column
             # how = 'left' will keep vehicle entry in df even if can't find vin for it in lastParquetMergeColumnsOnlyDf, so FirstAddedDate will show up as blank or NAN for those.
             # Without the how = 'left' any row we can't find the matching vin would be removed from df which we don't want.
             df = df.merge(lastParquetMergeColumnsOnlyDf, left_on="vin", right_on="vin", how='left', indicator = "WhoDidMergeComeFrom_")
             #df["FirstAddedDate"] = df["FirstAddedDate"].where(df["WhoDidMergeComeFrom_"] == "both", firstAddedDate)
             # for those entries that were not in both, it was a new VIN in df so use the infoDateTime value for that row also as the FirstAddedDate
+            # and LastChangedDateTimeColName
             df["FirstAddedDate"] = df["FirstAddedDate"].where(df["WhoDidMergeComeFrom_"] != "left_only", df["infoDateTime"])
+            df[LastChangedDateTimeColName] = df[LastChangedDateTimeColName].where(df["WhoDidMergeComeFrom_"] != "left_only", df["infoDateTime"])
             # drop the merge info column from the df as no longer need it.
-            df = df.drop(["WhoDidMergeComeFrom_"], axis=1)
+            df.drop(["WhoDidMergeComeFrom_"], axis=1, inplace=True)
             # append the df to the last raw parquet
             lastParquetDf = pd.concat([lastParquetDf, df])
             # drop duplicate VINs keeping the last one encountered as when there are common VINs then the df is the one we want to keep
@@ -1474,29 +1542,34 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
             # In this case all VINs in df are first time added so use the date when they were found, 
             # and make lastParquetDf the same as df
             df["FirstAddedDate"] = df["infoDateTime"]
+            df[LastChangedDateTimeColName] = df["infoDateTime"]
             lastParquetDf = df.copy(deep=True)
     else:
         # lastParquetDf file does not exist
         # Make all df FirstAddedDate None for unknown to alert us of this, 
         # and make lastParquetDf same as df in this case
         df["FirstAddedDate"] = None
+        df[LastChangedDateTimeColName] = None
         lastParquetDf = df.copy(deep=True)
         
     # drop Sold column in current inventory (df), as no longer needed
-    df = df.drop(["Sold"], axis=1)
+    df.drop(["Sold"], axis=1, inplace=True)
     
     df.sort_values("vin", inplace=True)
-    df = transformRawDfToCsvStyleDf(df)        
+    df = transformRawDfToCsvStyleDf(df)
     
     # Read in the change history file to get the last change history
     lastChangeHistorydf = readChangeHistoryParquetDf()
     # Get new change history using the original last parquet in a csv style data frame as the old df
     #  and the df (already in csv style) as the new df
     originalLastParquetInCsvStyleDf = transformRawDfToCsvStyleDf(originalLastParquetDF)
-    changeHistoryDf = getChangeHistory(originalLastParquetInCsvStyleDf, df, lastChangeHistorydf)
+    changeHistoryDf, changeHistoryCurrentOnlyDf = getChangeHistory(originalLastParquetInCsvStyleDf, df, lastChangeHistorydf)
     # write out the change history to its associated files
     changeHistoryDf.to_parquet(getChangeHistoryParquetFileName(), index=False)
     changeHistoryDf.to_csv(getChangeHistoryCsvFileName(), index=False)
+    
+    # Update the df and lastParquetDf LastChangedDateTimeColName values using the MODED entries from changeHistoryCurrentOnlyDf
+    df, lastParquetDf = updateDfsLastChangedDateTimeUsingChangeHistory(df, lastParquetDf, changeHistoryCurrentOnlyDf)
     #  
     # Write out the sorted Last parquet data and associated files.
     # Do this after all the above in case an exception occurs so that all the above has completed before

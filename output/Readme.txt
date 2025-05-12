@@ -1,4 +1,4 @@
-Readme.txt updated 5/3/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 5/12/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -21,7 +21,7 @@ did the inventory get work (got valid inventory responses although may be missin
 how many vehicles found, how many vehicles were missing, date and time of the get.
 Note that the .parquet and .csv file also include an infoDateTime column which indicates when the information for
 that row was updated from the toyota website, as well as a FirstAddedDate for the date the VIN first appeared in 
-the inventory.
+the inventory, and a LastChangedDateTime which indicates the last date and time any information for that VIN changed.
 
 The sold inventory files are for VINs that no longer appear in the current inventory (were seen at one time 
 by the inventory run but have since disappered).
@@ -48,6 +48,7 @@ and the previous row.
 A user would typically note the last time they viewed that VIN info in this file and then be sure to 
 view the file at least every 14 days to see all changes to the column values for that VIN after the last time it
 was viewed.
+
 Additional columns in these Change History files, which are described later on below, are as follows:
 RowChangeType, 
 Event DateTime,
@@ -112,6 +113,13 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
 "eta.currFromDate" - Estimate To Arrival at dealer earliest date estimate.
 "eta.currToDate" -   Estimate To Arrival at dealer latest date estimate.
 "FirstAddedDate" - Date and time the VIN first appeared in inventory retrieved from the website (or reappeared after disappearing).
+"LastChangedDateTime" -  Indicates the last date and time any column information for that VIN changed. Note that when a new VIN
+                         is added the LastChangedDateTime is set to the FirstAddedDate.
+                         LastChangedDateTime can be used to know if anything has changed in the row for that VIN since a certain date.
+                         Thus a user can simply remember the last time the VIN row info was viewed and then just look at the 
+                         LastChangedDateTime to know if anything has changed since then.  At that point the user can then scan the
+                         row visually to see what changed or go to the Change History file, assuming the change
+                         occurred in the last 14 days,  to get an exact list of what changed.
 "infoDateTime" -  Date and time that the row was updated from the inventory website.
 "Dealer Lat" -  Dealer Latitude
 "Dealer Long" - Dealer Longitude.  

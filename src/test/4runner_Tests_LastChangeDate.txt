@@ -1,0 +1,268 @@
+4runner parquet test files to test LastChangeDateTime
+
+Baseline starting point.
+4runner_Test0_raw.parquet
+4runner_Test0_StatusInfo.json
+>>> df
+                    vin stockNum   brand marketingSeries  year  isTempVin  ... drivetrain.code         drivetrain.title drivetrain.bulletlist          eta.currFromDate            eta.currToDate         infoDateTime
+0     JTEEU5JR9R5314455     None  TOYOTA         4Runner  2024      False  ...             4x2            2-Wheel Drive                  None  2025-03-26T00:00:00.000Z  2025-03-30T00:00:00.000Z  2025-03-31 21:06:00
+1     JTEKU5JR4R6223168    31752  TOYOTA         4Runner  2024      False  ...           4x4FT  Full-time 4-Wheel Drive                  None                      None  2023-12-08T00:00:00.000Z  2025-03-31 21:06:00
+2     JTERU5JR4R6285099    34650  TOYOTA         4Runner  2024      False  ...             4x4  Part-time 4-Wheel Drive                  None  2025-03-21T00:00:00.000Z  2025-03-25T00:00:00.000Z  2025-03-31 21:06:00
+3     JTEVA5AR0S5000188     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-02-26T00:00:00.000Z  2025-03-02T00:00:00.000Z  2025-03-31 21:06:44
+4     JTEVA5AR0S5000269     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-03-13T00:00:00.000Z  2025-03-17T00:00:00.000Z  2025-03-31 21:05:37
+...                 ...      ...     ...             ...   ...        ...  ...             ...                      ...                   ...                       ...                       ...                  ...
+6002  JTEVA5BRXS5019054     None  TOYOTA         4Runner  2025      False  ...           FT4WD  Full-time 4-Wheel Drive                  None                2025-04-29                2025-05-14  2025-03-31 21:06:41
+6003  JTEVA5BRXS5019068     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12  2025-03-31 21:05:35
+6004  JTEVA5BRXS5019104     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12  2025-03-31 21:05:35
+6005  JTEVA5BRXS5019135     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-10                2025-05-28  2025-03-31 21:08:59
+6006  JTEVA5BRXS5019166     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-03                2025-05-29  2025-03-31 21:05:57
+
+[6007 rows x 57 columns]
+--------------------------------------------------------------------
+4runner_Test1_raw.parquet
+4runner_Test1_StatusInfo.json
+Changes the following things from 4runner_Test0 by changing df.loc[0] and removes a vin and adds a new one by changing df.at[1, "vin"]
+
+>>> df.columns
+Index(['vin', 'stockNum', 'brand', 'marketingSeries', 'year', 'isTempVin',
+       'dealerCd', 'dealerCategory', 'distributorCd', 'holdStatus',
+       'weightRating', 'isPreSold', 'dealerMarketingName', 'dealerWebsite',
+       'isSmartPath', 'distance', 'isUnlockPriceDealer', 'options', 'eta',
+       'family', 'cab', 'bed', 'transmission.transmissionType',
+       'price.advertizedPrice', 'price.nonSpAdvertizedPrice',
+       'price.totalMsrp', 'price.sellingPrice', 'price.dph',
+       'price.dioTotalMsrp', 'price.dioTotalDealerSellingPrice',
+       'price.dealerCashApplied', 'price.baseMsrp', 'mpg.city', 'mpg.highway',
+       'mpg.combined', 'model.modelCd', 'model.marketingName',
+       'model.marketingTitle', 'intColor.colorCd', 'intColor.colorSwatch',
+       'intColor.marketingName', 'intColor.nvsName', 'intColor.colorFamilies',
+       'extColor.colorCd', 'extColor.colorSwatch', 'extColor.marketingName',
+       'extColor.colorHexCd', 'extColor.nvsName', 'extColor.colorFamilies',
+       'engine.engineCd', 'engine.name', 'drivetrain.code', 'drivetrain.title',
+       'drivetrain.bulletlist', 'eta.currFromDate', 'eta.currToDate',
+       'infoDateTime'],
+      dtype='object')
+>>> df.at[0, "year"]
+2024
+>>> df.at[0, "year"] =  2026
+>>> df.at[0, "price.sellingPrice"]
+45870.0
+>>> df.at[0, "price.sellingPrice"] =  46000.0
+>>> df["infoDateTime"] = '2025-04-01'
+>>> df.at[0, "eta.currFromDate"]
+'2025-03-26T00:00:00.000Z'
+>>> df.at[0, "eta.currFromDate"] = '2025-04-03 00:00:00'
+>>> df.at[0, "eta.currToDate"]
+'2025-03-30T00:00:00.000Z'
+>>> df.at[0, "eta.currToDate"] = '2025-04-10'
+
+>>> df.at[1, "vin"]
+'JTEKU5JR4R6223168'
+>>> df.at[1, "vin"] = 'JTEKU5JR4R622Add1'
+
+>>> df.loc[4]
+vin                                                                 JTEVA5AR0S5000269
+.............
+
+>>> df.at[4, "options"]
+array([{'marketingLongName': '50 State Emissions', 'marketingName': '50 State Emissions', 'optionCd': 'FE', 'optionType': 'F', 'packageInd': True},
+       {'marketingLongName': None, 'marketingName': 'TRD SPORT', 'optionCd': 'RD', 'optionType': 'F', 'packageInd': True},
+       {'marketingLongName': None, 'marketingName': '** Port Installed (TRD Sprt)', 'optionCd': '93', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': '** Port Installed (First Aid Kit)', 'optionCd': '96', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': '** Port Installed (CN)', 'optionCd': '97', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': '** Port Installed (Pin)', 'optionCd': '98', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Cargo Lights, Interior D-Pillar', 'marketingName': 'Cargo Lights, Interior D-Pillar', 'optionCd': '43', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': "Ball Mounts are made specifically for use with Toyota tow hitches and help complete the connection between the vehicle's tow hitch and trailer.<br>Crafted of cold-forged steel for superior strength, the trailer balls include built-in wrench flats for easy installation and torquing and meet or exceed all industry towing standards.<br>", 'marketingName': 'Ball Mount', 'optionCd': 'BM', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Roof Rack Cross Bars', 'marketingName': 'Roof Rack Cross Bars', 'optionCd': 'CB', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Cargo Cover is a retractable cargo area tonneau cover concealing the cargo area from view for added peace of mind.<br>UV-resistant material helps protect items from sun damage and fading.<br>Removes easily to make room for larger items.<br>Stores conveniently in the subfloor compartment designed for the cargo cover.<br>', 'marketingName': 'Retractable Cargo Cover', 'optionCd': 'CG', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Connectivity Kit includes 4 main components. Kit includes 4 high quality 3 - ft charging cables to assist in the connectivity and charging needs of your devices.<br>1. USB – C to Lightning<br>2. USB – A to Lightning<br>3. USB – C to USB – C<br>4. USB – A to USB – C', 'marketingName': 'Connectivity Kit', 'optionCd': 'CK', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'The Integrated Toyota Dashcam is designed to reliably capture video, images, sound and location data while you operate your vehicle. It is designed to being recording upon ignition to capture the drive, or on impact whether moving or while parked. Features include:<br>•Play back or video download is available via the Smartphone App or PC Tool<br>• Once downloaded, you can also share these videos on your social media channels<br>• Includes a 16GB, Industrial Grade Micro SD memory card<br><br>', 'marketingName': 'Dash Cam', 'optionCd': 'DC', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Mud Guards', 'marketingName': 'Mud Guards', 'optionCd': 'MF', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'The Vehicle Protection Package includes:<br><br>Paint Renewer Cleaner<br>Paint Sealant<br>Fabric Guard<br>', 'marketingName': 'Vehicle Protection Package', 'optionCd': 'P2', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Predator  Steps are made for the off-road look.<br>Heavy black bars<br>Perforated metal pad loop by each door.<br>Rugged and functional<br>Providing assistance when entering and exiting the vehicle, and enhance the aggressive look of the vehicle.<br>', 'marketingName': 'Predator Step', 'optionCd': 'R4', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': 'Rear Carpet Cargo Mat', 'optionCd': 'RM', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Rear Cargo Organizer features one large and one small solid-sided covered bin that accommodates items in a variety of shapes and sizes.<br>Remove easily for maximum versatility and cleaning ease<br>Fits easily and securely in the cargo well behind third-row rear seats.', 'marketingName': 'Rear Cargo Orgaizer', 'optionCd': 'RO', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': 'Vehicle Fueling', 'optionCd': 'G1', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': 'PDS - Pre Delivery Services', 'optionCd': 'I1', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': "Owner's Portfolio", 'optionCd': 'PO', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Connected Car Experience provides family safety and peace of mind, Locate your vehicle 24/7, Shareable data with Law enforcement for stolen vehicle recovery, Geofencing Alert Setup provides speed monitoring, Trip Alerts, Low Battery Alerts, Trip History, Service Reminders, Insurance discounts, all that with no monthly fee,&nbsp;', 'marketingName': 'BOB HOWARD CONNECT', 'optionCd': 'BHT49-IKON', 'optionType': 'D', 'packageInd': False},
+       {'marketingLongName': '<span style="color: rgba(27, 37, 50, 0.8); font-family: Toyota-Regular, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 14px; text-transform: capitalize; background-color: rgb(255, 255, 255);">Resistall 360 Offers A Complete Environmental Protection For The Entire Vehicle. Its An Advanced Graphene And Ceramic Technology Creates A Durable Surface That Provides A Strong Barrier Between The Paint And The Environment For The Exterior And Interior.</span>', 'marketingName': 'Resist All', 'optionCd': 'RS1', 'optionType': 'D', 'packageInd': False},
+       {'marketingLongName': '<span style="font-size: 14px; background-color: rgb(255, 255, 255); color: rgba(27, 37, 50, 0.8); font-family: Toyota-Regular, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, sans-serif; text-transform: capitalize;">High Definition Extreme (Hdx) Advanced Paint Protection Film&nbsp; - Door Edge Guards A Door Cup Guards - Protects Against Paint Chipping From Small Road Debris - Self Healing Property Against Mild To Medium Cuts Or Scratches * Ceramic Tint - Blocks Over 99% Of The Sun\'s Damaging Ultraviolet Rays - Helps Minimize Wavelengths That Crack Your Cars Interior - Slows Heat Gain Inside Cabin Of Vehicle - Reduces Glare, Relieving Painful Eye Strain On Bright Days, Door Cups Film Protects Paint Under The Door Handles And Behind The Side Mirrors</span><br><div style="font-size: 14px;"><span style="font-size: 14px; background-color: rgb(255, 255, 255);"><span style="font-size: 14px; color: rgba(27, 37, 50, 0.8); font-family: Toyota-Regular, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, sans-serif; text-transform: capitalize;">Wheel Locks Protects Wheels From Theft. Nitrogen In Tires Responds To Temperature&nbsp;Change Better Than Air</span></span></div>', 'marketingName': 'Bob Howard Protection 24', 'optionCd': 'BHTPKG', 'optionType': 'D', 'packageInd': False}],
+      dtype=object)
+>>> options = df.at[4, "options"]
+>>> options[8]
+{'marketingLongName': 'Roof Rack Cross Bars', 'marketingName': 'Roof Rack Cross Bars', 'optionCd': 'CB', 'optionType': 'L', 'packageInd': False}
+>>> options[8]['marketingLongName'] = 'Silly Option 1'
+>>> options[8]['marketingName'] = 'Silly Option 1'
+>>> options[16]
+{'marketingLongName': 'Rear Cargo Organizer features one large and one small solid-sided covered bin that accommodates items in a variety of shapes and sizes.<br>Remove easily for maximum versatility and cleaning ease<br>Fits easily and securely in the cargo well behind third-row rear seats.', 'marketingName': 'Rear Cargo Orgaizer', 'optionCd': 'RO', 'optionType': 'L', 'packageInd': False}
+>>> options[16]['marketingLongName'] = 'SILLY OPTION 1'
+>>> options[16]['marketingName'] = 'SILLY OPTION 1'
+>>> df.at[4, "options"] = options
+>>> df.at[4, "options"]
+array([{'marketingLongName': '50 State Emissions', 'marketingName': '50 State Emissions', 'optionCd': 'FE', 'optionType': 'F', 'packageInd': True},
+       {'marketingLongName': None, 'marketingName': 'TRD SPORT', 'optionCd': 'RD', 'optionType': 'F', 'packageInd': True},
+       {'marketingLongName': None, 'marketingName': '** Port Installed (TRD Sprt)', 'optionCd': '93', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': '** Port Installed (First Aid Kit)', 'optionCd': '96', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': '** Port Installed (CN)', 'optionCd': '97', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': '** Port Installed (Pin)', 'optionCd': '98', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Cargo Lights, Interior D-Pillar', 'marketingName': 'Cargo Lights, Interior D-Pillar', 'optionCd': '43', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': "Ball Mounts are made specifically for use with Toyota tow hitches and help complete the connection between the vehicle's tow hitch and trailer.<br>Crafted of cold-forged steel for superior strength, the trailer balls include built-in wrench flats for easy installation and torquing and meet or exceed all industry towing standards.<br>", 'marketingName': 'Ball Mount', 'optionCd': 'BM', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Silly Option 1', 'marketingName': 'Silly Option 1', 'optionCd': 'CB', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Cargo Cover is a retractable cargo area tonneau cover concealing the cargo area from view for added peace of mind.<br>UV-resistant material helps protect items from sun damage and fading.<br>Removes easily to make room for larger items.<br>Stores conveniently in the subfloor compartment designed for the cargo cover.<br>', 'marketingName': 'Retractable Cargo Cover', 'optionCd': 'CG', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Connectivity Kit includes 4 main components. Kit includes 4 high quality 3 - ft charging cables to assist in the connectivity and charging needs of your devices.<br>1. USB – C to Lightning<br>2. USB – A to Lightning<br>3. USB – C to USB – C<br>4. USB – A to USB – C', 'marketingName': 'Connectivity Kit', 'optionCd': 'CK', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'The Integrated Toyota Dashcam is designed to reliably capture video, images, sound and location data while you operate your vehicle. It is designed to being recording upon ignition to capture the drive, or on impact whether moving or while parked. Features include:<br>•Play back or video download is available via the Smartphone App or PC Tool<br>• Once downloaded, you can also share these videos on your social media channels<br>• Includes a 16GB, Industrial Grade Micro SD memory card<br><br>', 'marketingName': 'Dash Cam', 'optionCd': 'DC', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Mud Guards', 'marketingName': 'Mud Guards', 'optionCd': 'MF', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'The Vehicle Protection Package includes:<br><br>Paint Renewer Cleaner<br>Paint Sealant<br>Fabric Guard<br>', 'marketingName': 'Vehicle Protection Package', 'optionCd': 'P2', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Predator  Steps are made for the off-road look.<br>Heavy black bars<br>Perforated metal pad loop by each door.<br>Rugged and functional<br>Providing assistance when entering and exiting the vehicle, and enhance the aggressive look of the vehicle.<br>', 'marketingName': 'Predator Step', 'optionCd': 'R4', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': 'Rear Carpet Cargo Mat', 'optionCd': 'RM', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'SILLY OPTION 1', 'marketingName': 'SILLY OPTION 1', 'optionCd': 'RO', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': 'Vehicle Fueling', 'optionCd': 'G1', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': 'PDS - Pre Delivery Services', 'optionCd': 'I1', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': None, 'marketingName': "Owner's Portfolio", 'optionCd': 'PO', 'optionType': 'L', 'packageInd': False},
+       {'marketingLongName': 'Connected Car Experience provides family safety and peace of mind, Locate your vehicle 24/7, Shareable data with Law enforcement for stolen vehicle recovery, Geofencing Alert Setup provides speed monitoring, Trip Alerts, Low Battery Alerts, Trip History, Service Reminders, Insurance discounts, all that with no monthly fee,&nbsp;', 'marketingName': 'BOB HOWARD CONNECT', 'optionCd': 'BHT49-IKON', 'optionType': 'D', 'packageInd': False},
+       {'marketingLongName': '<span style="color: rgba(27, 37, 50, 0.8); font-family: Toyota-Regular, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 14px; text-transform: capitalize; background-color: rgb(255, 255, 255);">Resistall 360 Offers A Complete Environmental Protection For The Entire Vehicle. Its An Advanced Graphene And Ceramic Technology Creates A Durable Surface That Provides A Strong Barrier Between The Paint And The Environment For The Exterior And Interior.</span>', 'marketingName': 'Resist All', 'optionCd': 'RS1', 'optionType': 'D', 'packageInd': False},
+       {'marketingLongName': '<span style="font-size: 14px; background-color: rgb(255, 255, 255); color: rgba(27, 37, 50, 0.8); font-family: Toyota-Regular, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, sans-serif; text-transform: capitalize;">High Definition Extreme (Hdx) Advanced Paint Protection Film&nbsp; - Door Edge Guards A Door Cup Guards - Protects Against Paint Chipping From Small Road Debris - Self Healing Property Against Mild To Medium Cuts Or Scratches * Ceramic Tint - Blocks Over 99% Of The Sun\'s Damaging Ultraviolet Rays - Helps Minimize Wavelengths That Crack Your Cars Interior - Slows Heat Gain Inside Cabin Of Vehicle - Reduces Glare, Relieving Painful Eye Strain On Bright Days, Door Cups Film Protects Paint Under The Door Handles And Behind The Side Mirrors</span><br><div style="font-size: 14px;"><span style="font-size: 14px; background-color: rgb(255, 255, 255);"><span style="font-size: 14px; color: rgba(27, 37, 50, 0.8); font-family: Toyota-Regular, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, sans-serif; text-transform: capitalize;">Wheel Locks Protects Wheels From Theft. Nitrogen In Tires Responds To Temperature&nbsp;Change Better Than Air</span></span></div>', 'marketingName': 'Bob Howard Protection 24', 'optionCd': 'BHTPKG', 'optionType': 'D', 'packageInd': False}],
+      dtype=object)
+
+
+>>> df
+                    vin stockNum   brand marketingSeries  year  isTempVin  ... drivetrain.code         drivetrain.title drivetrain.bulletlist          eta.currFromDate            eta.currToDate  infoDateTime
+0     JTEEU5JR9R5314455     None  TOYOTA         4Runner  2026      False  ...             4x2            2-Wheel Drive                  None       2025-04-03 00:00:00                2025-04-10    2025-04-01
+1     JTEKU5JR4R622Add1    31752  TOYOTA         4Runner  2024      False  ...           4x4FT  Full-time 4-Wheel Drive                  None                      None  2023-12-08T00:00:00.000Z    2025-04-01
+2     JTERU5JR4R6285099    34650  TOYOTA         4Runner  2024      False  ...             4x4  Part-time 4-Wheel Drive                  None  2025-03-21T00:00:00.000Z  2025-03-25T00:00:00.000Z    2025-04-01
+3     JTEVA5AR0S5000188     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-02-26T00:00:00.000Z  2025-03-02T00:00:00.000Z    2025-04-01
+4     JTEVA5AR0S5000269     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-03-13T00:00:00.000Z  2025-03-17T00:00:00.000Z    2025-04-01
+...                 ...      ...     ...             ...   ...        ...  ...             ...                      ...                   ...                       ...                       ...           ...
+6002  JTEVA5BRXS5019054     None  TOYOTA         4Runner  2025      False  ...           FT4WD  Full-time 4-Wheel Drive                  None                2025-04-29                2025-05-14    2025-04-01
+6003  JTEVA5BRXS5019068     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-01
+6004  JTEVA5BRXS5019104     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-01
+6005  JTEVA5BRXS5019135     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-10                2025-05-28    2025-04-01
+6006  JTEVA5BRXS5019166     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-03                2025-05-29    2025-04-01
+
+[6007 rows x 57 columns]
+---------------------------------------------------------------
+
+4runner_Test2_raw.parquet
+4runner_Test2_StatusInfo.json
+Changes the following things from 4runner_Test0 by changing the following
+>>> df["infoDateTime"] = '2025-04-03'
+>>> df.at[3,"eta.currToDate"]
+'2025-03-02T00:00:00.000Z'
+>>> df.at[3,"eta.currToDate"] = '2025-04-15'
+>>> df.at[3,"engine.name"]
+'i-FORCE 2.4L 4-Cyl. Turbo Engine'
+>>> df.at[3,"engine.name"] = 'Silly Engine'
+>>> df.at[3,"price.baseMsrp"]
+47250
+>>> df.at[3,"price.baseMsrp"] = 47555
+>>> df
+                    vin stockNum   brand marketingSeries  year  isTempVin  ... drivetrain.code         drivetrain.title drivetrain.bulletlist          eta.currFromDate            eta.currToDate  infoDateTime
+0     JTEEU5JR9R5314455     None  TOYOTA         4Runner  2026      False  ...             4x2            2-Wheel Drive                  None       2025-04-03 00:00:00                2025-04-10    2025-04-03
+1     JTEKU5JR4R622Add1    31752  TOYOTA         4Runner  2024      False  ...           4x4FT  Full-time 4-Wheel Drive                  None                      None  2023-12-08T00:00:00.000Z    2025-04-03
+2     JTERU5JR4R6285099    34650  TOYOTA         4Runner  2024      False  ...             4x4  Part-time 4-Wheel Drive                  None  2025-03-21T00:00:00.000Z  2025-03-25T00:00:00.000Z    2025-04-03
+3     JTEVA5AR0S5000188     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-02-26T00:00:00.000Z                2025-04-15    2025-04-03
+4     JTEVA5AR0S5000269     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-03-13T00:00:00.000Z  2025-03-17T00:00:00.000Z    2025-04-03
+...                 ...      ...     ...             ...   ...        ...  ...             ...                      ...                   ...                       ...                       ...           ...
+6002  JTEVA5BRXS5019054     None  TOYOTA         4Runner  2025      False  ...           FT4WD  Full-time 4-Wheel Drive                  None                2025-04-29                2025-05-14    2025-04-03
+6003  JTEVA5BRXS5019068     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-03
+6004  JTEVA5BRXS5019104     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-03
+6005  JTEVA5BRXS5019135     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-10                2025-05-28    2025-04-03
+6006  JTEVA5BRXS5019166     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-03                2025-05-29    2025-04-03
+
+[6007 rows x 57 columns]
+>>>
+-------------------------------------------------------------------------------
+4runner_Test3_raw.parquet
+4runner_Test3_StatusInfo.json
+>>> df["infoDateTime"] = '2025-04-06'
+>>> df.at[1,"eta.currFromDate"]
+>>> df.at[1,"eta.currFromDate"] = '2025-04-12'
+>>> df.at[1,"eta.currToDate"]
+'2023-12-08T00:00:00.000Z'
+>>> df.at[1,"eta.currToDate"] = '2025-04-20'
+>>> df.to_parquet("output/4runner_Test3_raw.parquet")
+>>> df
+                    vin stockNum   brand marketingSeries  year  isTempVin  ... drivetrain.code         drivetrain.title drivetrain.bulletlist          eta.currFromDate            eta.currToDate  infoDateTime
+0     JTEEU5JR9R5314455     None  TOYOTA         4Runner  2026      False  ...             4x2            2-Wheel Drive                  None       2025-04-03 00:00:00                2025-04-10    2025-04-06
+1     JTEKU5JR4R622Add1    31752  TOYOTA         4Runner  2024      False  ...           4x4FT  Full-time 4-Wheel Drive                  None                2025-04-12                2025-04-20    2025-04-06
+2     JTERU5JR4R6285099    34650  TOYOTA         4Runner  2024      False  ...             4x4  Part-time 4-Wheel Drive                  None  2025-03-21T00:00:00.000Z  2025-03-25T00:00:00.000Z    2025-04-06
+3     JTEVA5AR0S5000188     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-02-26T00:00:00.000Z                2025-04-15    2025-04-06
+4     JTEVA5AR0S5000269     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-03-13T00:00:00.000Z  2025-03-17T00:00:00.000Z    2025-04-06
+...                 ...      ...     ...             ...   ...        ...  ...             ...                      ...                   ...                       ...                       ...           ...
+6002  JTEVA5BRXS5019054     None  TOYOTA         4Runner  2025      False  ...           FT4WD  Full-time 4-Wheel Drive                  None                2025-04-29                2025-05-14    2025-04-06
+6003  JTEVA5BRXS5019068     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-06
+6004  JTEVA5BRXS5019104     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-06
+6005  JTEVA5BRXS5019135     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-10                2025-05-28    2025-04-06
+6006  JTEVA5BRXS5019166     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-03                2025-05-29    2025-04-06
+
+[6007 rows x 57 columns]
+
+----------------------------------------------------------------
+4runner_Test4_raw.parquet
+4runner_Test4_StatusInfo.json
+
+>>> df["infoDateTime"] = '2025-04-07'
+>>> df
+                    vin stockNum   brand marketingSeries  year  isTempVin  ... drivetrain.code         drivetrain.title drivetrain.bulletlist          eta.currFromDate            eta.currToDate  infoDateTime
+0     JTEEU5JR9R5314455     None  TOYOTA         4Runner  2026      False  ...             4x2            2-Wheel Drive                  None       2025-04-03 00:00:00                2025-04-10    2025-04-07
+1     JTEKU5JR4R622Add1    31752  TOYOTA         4Runner  2024      False  ...           4x4FT  Full-time 4-Wheel Drive                  None                2025-04-12                2025-04-20    2025-04-07
+2     JTERU5JR4R6285099    34650  TOYOTA         4Runner  2024      False  ...             4x4  Part-time 4-Wheel Drive                  None  2025-03-21T00:00:00.000Z  2025-03-25T00:00:00.000Z    2025-04-07
+3     JTEVA5AR0S5000188     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-02-26T00:00:00.000Z                2025-04-15    2025-04-07
+4     JTEVA5AR0S5000269     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-03-13T00:00:00.000Z  2025-03-17T00:00:00.000Z    2025-04-07
+...                 ...      ...     ...             ...   ...        ...  ...             ...                      ...                   ...                       ...                       ...           ...
+6002  JTEVA5BRXS5019054     None  TOYOTA         4Runner  2025      False  ...           FT4WD  Full-time 4-Wheel Drive                  None                2025-04-29                2025-05-14    2025-04-07
+6003  JTEVA5BRXS5019068     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-07
+6004  JTEVA5BRXS5019104     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-07
+6005  JTEVA5BRXS5019135     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-10                2025-05-28    2025-04-07
+6006  JTEVA5BRXS5019166     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-03                2025-05-29    2025-04-07
+
+[6007 rows x 57 columns]
+
+-------------------------------------------------------------------------------------------------
+4runner_Test5_raw.parquet
+4runner_Test5_StatusInfo.json
+
+>>> df["infoDateTime"] = '2025-04-08'
+>>> df.at[0,"eta.currToDate"]
+'2025-04-10'
+>>> df.at[0,"eta.currToDate"] = '2025-04-22'
+>>> df
+                    vin stockNum   brand marketingSeries  year  isTempVin  ... drivetrain.code         drivetrain.title drivetrain.bulletlist          eta.currFromDate            eta.currToDate  infoDateTime
+0     JTEEU5JR9R5314455     None  TOYOTA         4Runner  2026      False  ...             4x2            2-Wheel Drive                  None       2025-04-03 00:00:00                2025-04-22    2025-04-08
+1     JTEKU5JR4R622Add1    31752  TOYOTA         4Runner  2024      False  ...           4x4FT  Full-time 4-Wheel Drive                  None                2025-04-12                2025-04-20    2025-04-08
+2     JTERU5JR4R6285099    34650  TOYOTA         4Runner  2024      False  ...             4x4  Part-time 4-Wheel Drive                  None  2025-03-21T00:00:00.000Z  2025-03-25T00:00:00.000Z    2025-04-08
+3     JTEVA5AR0S5000188     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-02-26T00:00:00.000Z                2025-04-15    2025-04-08
+4     JTEVA5AR0S5000269     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-03-13T00:00:00.000Z  2025-03-17T00:00:00.000Z    2025-04-08
+...                 ...      ...     ...             ...   ...        ...  ...             ...                      ...                   ...                       ...                       ...           ...
+6002  JTEVA5BRXS5019054     None  TOYOTA         4Runner  2025      False  ...           FT4WD  Full-time 4-Wheel Drive                  None                2025-04-29                2025-05-14    2025-04-08
+6003  JTEVA5BRXS5019068     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-08
+6004  JTEVA5BRXS5019104     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-08
+6005  JTEVA5BRXS5019135     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-10                2025-05-28    2025-04-08
+6006  JTEVA5BRXS5019166     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-03                2025-05-29    2025-04-08
+
+[6007 rows x 57 columns]
+
+----------------------------------------------------
+4runner_Test6_raw.parquet
+4runner_Test6_StatusInfo.json
+
+>>> df.at[0,"vin"]
+'JTEEU5JR9R5314455'
+>>> df.at[0,"vin"] = 'JTEEU5JR9R531Add2'
+>>> df["infoDateTime"] = '2025-04-09'
+>>> df
+                    vin stockNum   brand marketingSeries  year  isTempVin  ... drivetrain.code         drivetrain.title drivetrain.bulletlist          eta.currFromDate            eta.currToDate  infoDateTime
+0     JTEEU5JR9R531Add2     None  TOYOTA         4Runner  2026      False  ...             4x2            2-Wheel Drive                  None       2025-04-03 00:00:00                2025-04-22    2025-04-09
+1     JTEKU5JR4R622Add1    31752  TOYOTA         4Runner  2024      False  ...           4x4FT  Full-time 4-Wheel Drive                  None                2025-04-12                2025-04-20    2025-04-09
+2     JTERU5JR4R6285099    34650  TOYOTA         4Runner  2024      False  ...             4x4  Part-time 4-Wheel Drive                  None  2025-03-21T00:00:00.000Z  2025-03-25T00:00:00.000Z    2025-04-09
+3     JTEVA5AR0S5000188     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-02-26T00:00:00.000Z                2025-04-15    2025-04-09
+4     JTEVA5AR0S5000269     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-03-13T00:00:00.000Z  2025-03-17T00:00:00.000Z    2025-04-09
+...                 ...      ...     ...             ...   ...        ...  ...             ...                      ...                   ...                       ...                       ...           ...
+6002  JTEVA5BRXS5019054     None  TOYOTA         4Runner  2025      False  ...           FT4WD  Full-time 4-Wheel Drive                  None                2025-04-29                2025-05-14    2025-04-09
+6003  JTEVA5BRXS5019068     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-09
+6004  JTEVA5BRXS5019104     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12    2025-04-09
+6005  JTEVA5BRXS5019135     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-10                2025-05-28    2025-04-09
+6006  JTEVA5BRXS5019166     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-03                2025-05-29    2025-04-09
+
+[6007 rows x 57 columns]

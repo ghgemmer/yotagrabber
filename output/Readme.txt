@@ -1,4 +1,4 @@
-Readme.txt updated 5/12/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 5/13/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -7,8 +7,8 @@ gets its data from (which is https://api.search-inventory.toyota.com/graphql ). 
 last 14 days which contain added VINs, modified contents of existing VINs, or removed VINs between runs of the inventory 
 collection over that time period.
 
-All files are read only view on my google drive.  Thus if you wish to do filtering, etc you need to either 
-download the file and open it,  or click on the file's More Actions --> Open With --> Excel Desktop.
+All files are read only view on my google drive.  Thus if you wish to do filtering, etc you need 
+download the file and open it.
 
 Folder updates typically show up each day around 5am CDT, although once a week it might not show up until 1pm.
 Each model's current inventory is placed in a <model>.csv file.  A raw  (filename <model>_Lastraw.parquet)
@@ -21,7 +21,8 @@ did the inventory get work (got valid inventory responses although may be missin
 how many vehicles found, how many vehicles were missing, date and time of the get.
 Note that the .parquet and .csv file also include an infoDateTime column which indicates when the information for
 that row was updated from the toyota website, as well as a FirstAddedDate for the date the VIN first appeared in 
-the inventory, and a LastChangedDateTime which indicates the last date and time any information for that VIN changed.
+the inventory (or reappeared after disappearing), and a LastChangedDateTime which indicates the last date and time 
+any information for that VIN changed.
 
 The sold inventory files are for VINs that no longer appear in the current inventory (were seen at one time 
 by the inventory run but have since disappered).

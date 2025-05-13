@@ -266,3 +266,25 @@ Changes the following things from 4runner_Test0 by changing the following
 6006  JTEVA5BRXS5019166     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-03                2025-05-29    2025-04-09
 
 [6007 rows x 57 columns]
+
+------------------------------------------------------------
+4runner_Test7_raw.parquet
+4runner_Test7_StatusInfo.json
+
+>>> df.at[0, "vin"]
+'JTEEU5JR9R531Add2'
+>>> df.at[0,"vin"] = 'JTEEU5JR9R5314455'
+>>> df["infoDateTime"] = "2025-04-10 00:00:00"
+>>> df
+                    vin stockNum   brand marketingSeries  year  isTempVin  ... drivetrain.code         drivetrain.title drivetrain.bulletlist          eta.currFromDate            eta.currToDate         infoDateTime
+0     JTEEU5JR9R5314455     None  TOYOTA         4Runner  2026      False  ...             4x2            2-Wheel Drive                  None       2025-04-03 00:00:00                2025-04-22  2025-04-10 00:00:00
+1     JTEKU5JR4R622Add1    31752  TOYOTA         4Runner  2024      False  ...           4x4FT  Full-time 4-Wheel Drive                  None                2025-04-12                2025-04-20  2025-04-10 00:00:00
+2     JTERU5JR4R6285099    34650  TOYOTA         4Runner  2024      False  ...             4x4  Part-time 4-Wheel Drive                  None  2025-03-21T00:00:00.000Z  2025-03-25T00:00:00.000Z  2025-04-10 00:00:00
+3     JTEVA5AR0S5000188     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-02-26T00:00:00.000Z                2025-04-15  2025-04-10 00:00:00
+4     JTEVA5AR0S5000269     None  TOYOTA         4Runner  2025      False  ...             RWD         Rear-Wheel Drive                  None  2025-03-13T00:00:00.000Z  2025-03-17T00:00:00.000Z  2025-04-10 00:00:00
+...                 ...      ...     ...             ...   ...        ...  ...             ...                      ...                   ...                       ...                       ...                  ...
+6002  JTEVA5BRXS5019054     None  TOYOTA         4Runner  2025      False  ...           FT4WD  Full-time 4-Wheel Drive                  None                2025-04-29                2025-05-14  2025-04-10 00:00:00
+6003  JTEVA5BRXS5019068     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12  2025-04-10 00:00:00
+6004  JTEVA5BRXS5019104     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-04-22                2025-05-12  2025-04-10 00:00:00
+6005  JTEVA5BRXS5019135     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-10                2025-05-28  2025-04-10 00:00:00
+6006  JTEVA5BRXS5019166     None  TOYOTA         4Runner  2025      False  ...           PT4WD  Part-time 4-Wheel Drive                  None                2025-05-03                2025-05-29  2025-04-10 00:00:00

@@ -180,4 +180,24 @@ echo off
 echo Step 15: Verify the changes detailed in the previous step.
 echo Hit return to continue
 pause
+echo Step 16: Will run next test where 
+echo infoDateTime is changed to '2025-04-10' for all inventory entries gotten
+echo Add sold vin JTEEU5JR9R5314455 by changing existing vin entry 'JTEEU5JR9R531Add2' to that vin number,
+echo and thus at the same time removing vin JTEEU5JR9R531Add2
+echo So with those changes the new data should match those in 4runner.csv and
+echo the LastChangedDateTime, and FirstAddedDate for vin JTEEU5JR9R5314455
+echo should be the same as infoDateTime which is '2025-04-10'.
+echo The 2026 4runner sold file should have the JTEEU5JR9R531Add2 entry in it now with all fields unchanged
+echo The Change History file should have an entry for the added vin, and the removed vin, 
+echo and the added vin having the FirstAddedDate and LastChangedDateTime being '2025-04-10'
+echo Hit return to run the test
+pause
+echo on
+copy 4runner_Test7_raw.parquet output\4runner_raw.parquet
+copy 4runner_Test7_StatusInfo.json output\4runner_StatusInfo.json
+py %SEARCHFORVEHICLESPATH%\vehiclesTest2LastChangedDate.py
+echo off
+echo Step 17: Verify the changes detailed in the previous step.
+echo Hit return to continue
+pause
 echo  Completed Testing

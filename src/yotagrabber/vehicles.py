@@ -1394,7 +1394,7 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     global columnsForEmptyDfParquet
     global columnsForEmptyDfFinalCsv
     global changeHistoryUseThisAsTodaysDateForTesting
-    print("Vehicles Program Version 5.0 4-20-2025")
+    print("Vehicles Program Version 6.0 05-15-2025")
     if not MODEL:
         sys.exit("Set the MODEL environment variable first")
     print("update_vehicles: Getting inventory for model", MODEL)

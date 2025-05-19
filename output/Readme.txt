@@ -32,8 +32,9 @@ the temp VIN is treated as Sold, because it disappeared from current inventory, 
 This currently allows temp VINs to still be seen for a period of time and a user to
 know when it was turned into a real VIN by the infoDateTime field (not necessarily what the real VIN is).
 A user can determine the real VIN that has replaced a temp VIN by using the Change History file (see below).
-Once a temp VIN in the sold file is older than 12 weeks it is assumed it has been replaced with a real VIN by that time,
-and the user no longer needs use of the temp VIN, and it is removed from the sold files.
+Once a temp VIN in the sold file is older than 16 weeks it is assumed it has been replaced with a real VIN 
+and/or the user no longer needs use of the temp VIN, and it is removed from the sold files.  This period of
+time also allows some statistics to be run on the day of the month allocations appear.
 Older model year sold files will be archived at some point, when it appears there is no longer any inventory of that year left.
 
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.

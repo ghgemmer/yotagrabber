@@ -22,6 +22,8 @@ import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass
 
+PROGRAM_VERSION = "Vehicles Program Version 6.1 05-18-2025"
+
 # Set to True to use local data and skip requests to the Toyota website.
 USE_LOCAL_DATA_ONLY = False
 
@@ -60,7 +62,7 @@ rowRemovedVINIndicator = "REMOVED"
 rowSameVINContentsIndicator = ""
 
 maxDaysOldToKeep = 14  # 2 weeks for change history entries
-maxDaysToKeepTempVinSold = 7 * 12 #12 weeks for temp VIN in sold files.
+maxDaysToKeepTempVinSold = 7 * 16 #16 weeks for temp VIN in sold files.
 
 @cache
 
@@ -1394,7 +1396,8 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     global columnsForEmptyDfParquet
     global columnsForEmptyDfFinalCsv
     global changeHistoryUseThisAsTodaysDateForTesting
-    print("Vehicles Program Version 6.0 05-15-2025")
+    global PROGRAM_VERSION
+    print(PROGRAM_VERSION)
     if not MODEL:
         sys.exit("Set the MODEL environment variable first")
     print("update_vehicles: Getting inventory for model", MODEL)

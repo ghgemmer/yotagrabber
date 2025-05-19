@@ -62,7 +62,7 @@ Open the Change History .csv file in Excel and sort ascending by "Dealer Website
 Insert a blank column to the right of the "isTempVin" column.
 Turn on data filtering.
 Add the following formula to row 2 of that new blank column
-=OR(AND(S2=FALSE, S3=TRUE,U2=U3, A2="ADDED", A3="REMOVED", B2=B3,I2=I3, AR2=AR3), AND(S1=FALSE, S2=TRUE,U1=U2, A1="ADDED", A2="REMOVED", B1=B2, I1=I2, AR1=AR2))
+=OR(AND(S2=FALSE, S3=TRUE,U2=U3, A2="ADDED", A3="REMOVED", B2=B3,I2=I3, AS2=AS3), AND(S1=FALSE, S2=TRUE,U1=U2, A1="ADDED", A2="REMOVED", B1=B2, I1=I2, AS1=AS2))
 then copy and paste that cell to all the other cells below in that column
 Now filter on the value TRUE for that new column.
 You should see pairs of rows, were each pair is ADDED followed by REMOVED. The ADDED one contains the real VIN 

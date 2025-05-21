@@ -11,6 +11,7 @@ import ssl
 import requests.exceptions
 import requests
 import pandas as pd
+import re
 
 forceRspFailureTest = 0 # set to > 0 to perform tests related to forcing a response failure to test request retry
 
@@ -50,7 +51,40 @@ def writeZipCodes(zipCodes, startIndex, fileName):
             # write out to file
             fileh.write(str(zipCodes[indx])+ "\n")
             indx += 1
+            
+def getAddressComponents(address):
+    # Takes the full address which is in the form <street address>,<0 or more spaces><city>,<0 or more spaces>state<1 or more spaces>zipcode<0 or more spaces>
+    # (streetAddressOnly, city, state, zipcode)
+    streetAddressOnly = ""
+    city = ""
+    state = ""
+    zipcode = ""
+    rePattern = r'(^.*), *([^,]+), *([^ ]+) +([^ ]+) *$'
+    match = re.search(rePattern, address)
+    if match:
+        streetAddressOnly = match[1]
+        city = match[2]
+        state  = match[3]
+        zipcode  = match[4]
+    else:
+        print("getAddressComponents: Could not parse Address into streetAddressOnly, city, state, zipcode", address)
+    return (streetAddressOnly, city, state, zipcode)
 
+def updateAddressComponentsIn(rowSeries):
+    # takes a dataframe rowSeries with at least columns "state", "address", "address1", "city", "zip"
+    # where address contains the full address including city, state, zipcode and updates the columns 
+    # "state", "address1" (i.e. street address only), "city", "zip" with the corresponding information.
+    streetAddressOnly, city, state, zipcode = getAddressComponents(rowSeries["address"])
+    rowSeries["address1"] = streetAddressOnly
+    rowSeries["city"] = city
+    rowSeries["state"] = state
+    rowSeries["zip"] = zipcode
+    return rowSeries
+
+def formatPhoneNumber(phoneNumberStr):
+    formattedPhoneNumberStr = "(" + phoneNumberStr[:3] + ") " + phoneNumberStr[3:6] + "-" + phoneNumberStr[6:]
+    return formattedPhoneNumberStr 
+    
 def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""):
     print("This program updates the passed dealer file (or creates that file if not present)") 
     print("with any dealers found (new or update of existing), during the search ")
@@ -103,8 +137,14 @@ def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""
         result = None
         while True:
             try:
+                # Could not get url "https://dealers.prod.webservices.toyota.com/v1/dealers/?zipcode=" + zipCodeWithLeadingZeroes, to work
+                # as it kept giving an resp.status_code 403 for not authorized, even when set host and authority to dealers.prod.webservices.toyota.com
+                # , and even trying the wafpypass, so there is something that requires more authorization to access that.
+                # That is what the inventory get uses to get the dealers for that zip code but could not get it to work.
+                # So had to use the url below which is accessed when on the https://www.toyota.com/connected-services/toyota-app/ page
+                # and  click on the Find Dealer https://www.toyota.com/dealers/#default link on that page which pops up a map window
                 resp = requests.get(
-                        "https://www.toyota.com/service/tcom/locateDealer/zipCode/" + zipCodeWithLeadingZeroes,
+                        "https://api.ws.dpcmaps.toyota.com/v1/dealers?attributeKey=&searchMode=pmaProximityLayered&zipcode=" + zipCodeWithLeadingZeroes,
                         timeout=20,
                 )
                 result = resp.json()
@@ -125,7 +165,50 @@ def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""
             #df = pd.DataFrame.from_dict(result["dealers"])
             df = pd.json_normalize(result["dealers"])
             #print ("df is", df)
-            df = df[["code", "dealerId", "name", "url", "regionId", "state", "lat", "long", "address1", "city", "zip", "phone"]]
+            #address column includes street address, city, state zipcode
+            df = df[["code", "label", "details.uriWebsite", "position.lat", "position.lng", "address", "phone"]]
+            #legacy format columns are "code", "dealerId", "name", "url", "regionId", "state", "lat", "long", "address1", "city", "zip", "phone"
+            # Add dealerId to match legacy format which is the same as the code field
+            df["dealerId"] = df["code"]
+            # add other columns to match legacy format
+            df["regionId"] = 9999  # use dummy value as this url data does not have region ID and other processing fortunately doesn't need it currently.
+            df["state"] = ""
+            df["address1"] = ""
+            df["city"] = ""
+            df["zip"] = ""
+            
+            # perform renames to match legacy format
+            renames = {
+                "label": "name",
+                "details.uriWebsite": "url",
+                "position.lat": "lat",
+                "position.lng": "long"
+            }
+            df = (
+                df[
+                    ["code",
+                    "dealerId",
+                    "label", 
+                    "details.uriWebsite",
+                    "regionId",
+                    "state",
+                    "position.lat", 
+                    "position.lng", 
+                    "address",
+                    "address1", 
+                    "city",
+                    "zip",
+                    "phone"]
+                    ]
+                .copy(deep=True)
+                .rename(columns=renames)
+            )
+            # updated address1, city, state, zipcode from the address to match legacy format
+            df = df.apply(updateAddressComponentsIn, axis=1)
+            # format phone number
+            df["phone"] = df["phone"].apply(formatPhoneNumber)
+            # remove address field as it has been split into other fields
+            df.drop(columns=["address"], inplace=True)
             if False:
                 # force the code and dealerId fields to ints as the vehicles.py expects that type (i.e. leading 0s are removed)
                 df["code"] = df["code"].apply(pd.to_numeric)
@@ -156,6 +239,7 @@ def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""
     # Now concatenate the dealers adders file onto the dealers and keep only the first duplicate if any
     dealers = pd.concat([dealers, dealerAddersDf])
     dealers.drop_duplicates(subset=["code"], keep='first', inplace=True)
+    dealers.sort_values(by=["code"], inplace=True)
     # Write out to the results ot the csv file.
     dealers.to_csv(dealerFileName, index=False)
     # delete the remaining zip codes file.

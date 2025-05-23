@@ -202,6 +202,7 @@ credentials.json
 /src/yotagrabber/*
 # reinclude specific files in this /src/yotagrabber directory
 !/src/yotagrabber/models.py
+!/src/yotagrabber/models-FirstRefactorAttemptToMakeIntoClassesForExtending.py
 !/src/yotagrabber/vehicles.py
 !/src/yotagrabber/config.py
 !/src/yotagrabber/wafbypass.py

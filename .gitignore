@@ -216,6 +216,8 @@ credentials.json
 !/src/yotagrabber/graphql/models.graphql
 !/src/yotagrabber/graphql/vehicles.graphql
 !/src/yotagrabber/graphql/vehicleByVin.graphql
+!/src/yotagrabber/graphql/modelsWithVehicleMake.graphql
+!/src/yotagrabber/graphql/vehiclesWithVehicleMake.graphql
 
 # reinclude this immediate child directory in /src/yotagrabber/ (gitignore rule)
 !/src/yotagrabber/data/

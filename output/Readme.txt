@@ -107,10 +107,12 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                              does not include the Dealer Markup/Discount as it was unknown.
 "Markup" - Dealer installed options plus Dealer Markup/Discount/adjustments (i.e everything above the Total MSRP to get to the Selling Price)
 "TMSRP plus DIO" -  Total MSRP plus Dealer installed options
-"Hold Status" - Indicates the degree to which that vehicle is available/spoken for.  Generally you want to contact dealers where the
-                hold status is blank first, then those where it is "Available",  then lastly where it is "Dealer hold".  
-                Dealer hold generally indicates the vehicle is spoken for although sometimes people have been able to get a vehicle
-                with this status.
+"Hold Status" - There is uncertainty as to what exactly this field indicates. One opinion is it 
+                indicates the degree to which that vehicle is available/spoken for.  Generally, when looking for a vehicle,
+                you want to contact dealers where the hold status is blank first, then those where it is "Available",  then lastly where it is "Dealer hold".  
+                Dealer hold possibly means the vehicle is spoken for or possibly it indicates the vehicle will not be offered to other dealers
+                for swapping?
+                .
 "Shipping Status" - "Factory to port" -  Allocated, or in production, or on the ship, or sitting at the port
                     "Port to dealer" -  Checked in at the port and in the process of moving from the port to the dealership lot.
                     Usually From and To Date will now appear.

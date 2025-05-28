@@ -110,9 +110,11 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
 "Hold Status" - There is uncertainty as to what exactly this field indicates. One opinion is it 
                 indicates the degree to which that vehicle is available/spoken for.  Generally, when looking for a vehicle,
                 you want to first contact dealers where PreSold is False and the hold status is blank , then those where it is "Available",  
-                then lastly where it is "Dealer hold".  
-                Dealer hold possibly means the vehicle is spoken for or possibly it indicates the vehicle will not be offered to other dealers
-                for swapping?
+                then lastly where it is "Dealer hold".
+                In this interpretation "Dealer hold" means the vehicle is spoken for already, and Available or blank means it is not.
+                Another opinion is hold status indicates whether a dealer would offer the vehicle to another dealer for a swap or sale.
+                In this intepretation "Dealer hold" indicates the vehicle will not be offered to other dealers
+                for swapping or sale,  and blank of Available indicates they would.
                 .
 "Shipping Status" - "Factory to port" -  Allocated, or in production, or on the ship, or sitting at the port
                     "Port to dealer" -  Checked in at the port and in the process of moving from the port to the dealership lot.

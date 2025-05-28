@@ -1,4 +1,4 @@
-Readme.txt updated 5/13/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 5/28/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -107,6 +107,10 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                              does not include the Dealer Markup/Discount as it was unknown.
 "Markup" - Dealer installed options plus Dealer Markup/Discount/adjustments (i.e everything above the Total MSRP to get to the Selling Price)
 "TMSRP plus DIO" -  Total MSRP plus Dealer installed options
+"Hold Status" - Indicates the degree to which that vehicle is available/spoken for.  Generally you want to contact dealers where the
+                hold status is blank first, then those where it is "Available",  then lastly where it is "Dealer hold".  
+                Dealer hold generally indicates the vehicle is spoken for although sometimes people have been able to get a vehicle
+                with this status.
 "Shipping Status" - "Factory to port" -  Allocated, or in production, or on the ship, or sitting at the port
                     "Port to dealer" -  Checked in at the port and in the process of moving from the port to the dealership lot.
                     Usually From and To Date will now appear.

@@ -1,4 +1,4 @@
-Readme.txt updated 5/28/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 6/9/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -10,7 +10,7 @@ collection over that time period.
 All files are read only view on my google drive.  Thus if you wish to do filtering, etc you need 
 download the file and open it.
 
-Folder updates typically show up each day around 5am CDT, although once a week it might not show up until 1pm.
+Folder updates typically show up each day around 5am CDT.
 Each model's current inventory is placed in a <model>.csv file.  A raw  (filename <model>_Lastraw.parquet)
 python pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model
 before various filtering/modification is applied for the csv file, such as removal of many fields we don't use or 

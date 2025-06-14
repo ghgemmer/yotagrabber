@@ -1,4 +1,4 @@
-Readme.txt updated 6/9/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 6/13/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -114,7 +114,8 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                 In this interpretation "Dealer hold" means the vehicle is spoken for already, and Available or blank means it is not.
                 Another opinion is hold status indicates whether a dealer would offer the vehicle to another dealer for a swap or sale.
                 In this intepretation "Dealer hold" indicates the vehicle will not be offered to other dealers
-                for swapping or sale,  and blank of Available indicates they would.
+                for swapping or sale (which, among other reasons, might possibly be because it is in high demand or being held for someone or there is a waiting list for it)
+                ,  and blank of Available indicates they would.
                 .
 "Shipping Status" - "Factory to port" -  Allocated, or in production, or on the ship, or sitting at the port
                     "Port to dealer" -  Checked in at the port and in the process of moving from the port to the dealership lot.

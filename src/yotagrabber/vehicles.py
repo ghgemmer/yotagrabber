@@ -22,7 +22,7 @@ import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass
 
-PROGRAM_VERSION = "Vehicles Program Version 6.1 05-18-2025"
+PROGRAM_VERSION = "Vehicles Program Version 6.2 06-16-2025"
 
 # Set to True to use local data and skip requests to the Toyota website.
 USE_LOCAL_DATA_ONLY = False
@@ -597,6 +597,34 @@ def sanitizeStr(strng):
         sanitizedString = re.sub(rePattern, ' ', sanitizedString)
     return sanitizedString
 
+# Save the following as example of how could have done all the selling price calcs with a pandas apply    
+#def calcSellingPrice(rowSeries):
+#    # Returns the row series with the updated Selling Price and Selling Price Incomplete from the df row series
+#    # Selling price is the TMSRP + Dealer installed options + Dealer discounts/markups with the exception when Selling Price Incomplete is True
+#    # From analyzing several graphql returned inventories (see rav4pluginhybrid_Lastraw_VerifySellingPriceMethod.xlsx, and 4runner_Lastraw_VerifySellingPriceMethod.xlsx)
+#    # with all the graphql prices in them
+#    # and the corresponding dealer websites to look at final bottom line prices listed by dealers,
+#    # it was determined that the Selling price we want to use  (bottom line final price shown by dealers) from the graphql is
+#    # the raw Selling Price if present and not 0
+#    # else use advertizedPrice if present and not 0
+#    # else use nonSpAdvertizedPrice if present and not 0
+#    # else use  TMSRP + DIO price and indicate Selling price is incomplete 
+#    sellingPrice = rowSeries["Selling Price"]
+#    nonSpAdvertizedPrice = rowSeries["price.nonSpAdvertizedPrice"]
+#    advertizedPrice = rowSeries["price.advertizedPrice"]
+#    rowSeries["Selling Price Incomplete"] = False
+#    if not(valueIsNanNoneNull(sellingPrice) or (sellingPrice == 0)):
+#        pass
+#    elif not(valueIsNanNoneNull(advertizedPrice) or (advertizedPrice == 0)):
+#        sellingPrice = advertizedPrice
+#    elif not(valueIsNanNoneNull(nonSpAdvertizedPrice) or (nonSpAdvertizedPrice == 0)):
+#        sellingPrice = nonSpAdvertizedPrice
+#    else:
+#        sellingPrice = rowSeries["TMSRP plus DIO"]
+#        rowSeries["Selling Price Incomplete"] = True
+#    rowSeries["Selling Price"] = sellingPrice
+#    return rowSeries
+
 def transformRawDfToCsvStyleDf ( inputDf):
     # transforms the input raw df (one that has all the raw parquet fields) into an output df for a csv file.
     # Note that year range is not limited in the return and must be done outside of this.
@@ -752,16 +780,20 @@ def transformRawDfToCsvStyleDf ( inputDf):
         df["TMSRP plus DIO"] = df["Total MSRP"] + df["price.dioTotalDealerSellingPrice"]
         df["TMSRP plus DIO"] = df["TMSRP plus DIO"].fillna(df["Total MSRP"])
         # Selling price is the TMSRP + Dealer installed options + Dealer discounts/markups with the exception when Selling Price Incomplete is True
-        # From analyzing several graphql returned inventories with all the graphql prices in them
-        # and the corresponding dealer websites to look at final bottom line prices listed by dealers,
-        # it was determined that the Selling price we want to use  (bottom line final price shown by dealers) from the graphql is
+        # From analyzing several graphql returned inventories (see rav4pluginhybrid_Lastraw_VerifySellingPriceMethod.xlsx, and 4runner_Lastraw_VerifySellingPriceMethod.xlsx)
+        # with all the graphql prices in them
+        # and a few corresponding dealer websites to look at final bottom line prices listed by dealers,
+        # it was arrived at by experiment that the Selling price we want to use  (bottom line final price shown by dealers) from the graphql is
         # the raw Selling Price if present and not 0
-        # else use nonSpAdvertizedPrice if present and not 0
         # else use advertizedPrice if present and not 0
-        # else use  TMSRP + DIO price  and indicate Selling price is incomplete
+        # else use nonSpAdvertizedPrice if present and not 0
+        # else use  TMSRP + DIO price and indicate Selling price is incomplete
+        # Note that was not able to find any webpage code that shows this logic (lots of source code files pulled in by the inventory webpage so did not look at everything yet)
+        # and also if the webpage accessed the byVIN graphql did not want to take up extra time to do that at this time.
+        # Further investigation will be required. 
         df["Raw Selling Price"] = df["Selling Price"]
-        df["Selling Price"] = df["Selling Price"].where((df["Selling Price"].isnull() == False) & (df["Selling Price"] != 0), df["price.nonSpAdvertizedPrice"] )
         df["Selling Price"] = df["Selling Price"].where((df["Selling Price"].isnull() == False) & (df["Selling Price"] != 0), df["price.advertizedPrice"] )
+        df["Selling Price"] = df["Selling Price"].where((df["Selling Price"].isnull() == False) & (df["Selling Price"] != 0), df["price.nonSpAdvertizedPrice"] )
         df["Selling Price Incomplete"] = False
         df["Selling Price Incomplete"] = df["Selling Price Incomplete"].where((df["Selling Price"].isnull() == False) & (df["Selling Price"] != 0), True)
         df["Selling Price"] = df["Selling Price"].where(df["Selling Price Incomplete"] != True, df["TMSRP plus DIO"] )
@@ -994,6 +1026,8 @@ def writeLastParquetAndAssociatedFiles(inputDf):
     df = df[df["Sold"] != True]
     df.drop(["Sold"], axis=1, inplace=True)
     df.to_parquet(rawParquetFileName, index=False)
+    # For debugging only comment out when done
+    #df.to_csv(rawParquetFileName[:-7] + "csv", index=False)
 
 def debugCheckingDf(df, msg= "", vin= ""):
     # Used to check various aspect of the dataframe at various points to see if something is or is not present

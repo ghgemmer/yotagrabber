@@ -193,6 +193,19 @@ credentials.json
 !/src/RunUserVehicleSearchesExample.bat
 !/src/waitForSeconds.py
 
+# reinclude files in /src/ouput
+# Must do this as git ignores that subdirectory (and anything in it on down) 
+# in the immediate parent excluded directory until you reinclude it
+# That is git will ignore any include of a file in that immediate subdirectory or anywhere on down until you do this. 
+!/src/output/
+# exclude all files and subdirectories in this /src/output directory
+/src/output/*
+# reinclude specific files in this /src/output directory
+!/src/output/4runner_Lastraw_VerifySellingPriceMethod.xlsx
+!/src/output/4runner_NewMethodComparedToOLd.xlsx
+!/src/output/rav4pluginhybrid_Lastraw_VerifySellingPriceMethod.xlsx
+!/src/output/rav4pluginhybrid_NewMethodComparedToOld.xlsx
+
 # reinclude this immediate subdirectory in the /src directory.
 # Must do this as git ignores that subdirectory (and anything in it on down) 
 # in the immediate parent excluded directory until you reinclude it

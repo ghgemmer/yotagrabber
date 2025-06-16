@@ -1,4 +1,4 @@
-Readme.txt updated 6/13/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 6/16/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -95,12 +95,12 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
 "Selling Price" -  is the total dealer price (excluding taxes, fees) = Total MSRP + Dealer installed options + Dealer Markup/Discount/adjustments
                    It is the bottom line final price the dealers show on their website.
                    Note: This is calculated from the several raw prices the toyota graphql website returns and was arrived at 
-                   by comparing those to the dealer websites final price numbers listed for many vehicles.
+                   by experiment by comparing those to a few dealer websites final price numbers listed for many vehicles.
                    The logic used to determine the Selling Price from the price fields obtained from the toyota inventory 
                    website is:
                     the price.sellingPrice if present and not 0
-                    else use price.nonSpAdvertizedPrice if present and not 0
                     else use price.advertizedPrice if present and not 0
+                    else use price.nonSpAdvertizedPrice if present and not 0
                     else use  TMSRP + DIO price  and indicate Selling price is incomplete 
                    
 "Selling Price Incomplete" - Indicates if the Selling Price is incomplete. When incomplete the price 

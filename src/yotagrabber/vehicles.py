@@ -22,7 +22,7 @@ import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass
 
-PROGRAM_VERSION = "Vehicles Program Version 6.2 06-16-2025"
+PROGRAM_VERSION = "Vehicles Program Version 6.2.1 06-17-2025"
 
 # Set to True to use local data and skip requests to the Toyota website.
 USE_LOCAL_DATA_ONLY = False
@@ -1026,8 +1026,13 @@ def writeLastParquetAndAssociatedFiles(inputDf):
     df = df[df["Sold"] != True]
     df.drop(["Sold"], axis=1, inplace=True)
     df.to_parquet(rawParquetFileName, index=False)
-    # For debugging only comment out when done
-    #df.to_csv(rawParquetFileName[:-7] + "csv", index=False)
+    # For debugging only comment out when done.
+    # Note that certain columns cannot be written out as it can cause issues when the .csv is opened in EXCEL and then saved in
+    # .xlsx format and then the .xlsx hangs when it is opened.  Seems like the columns that have dictionaries, or lists in them cause issues.
+    # So raw columns like options, families, etc cause issues and cannot be written out as is so are skipped as not needed for debug
+    # at this point.  If needed would need to process them like in the model csv file.
+    #debugCols = ["vin", "isTempVin", 'isSmartPath', 'isUnlockPriceDealer', "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', "FirstAddedDate", "LastChangedDateTime", "infoDateTime"]
+    #df.to_csv(rawParquetFileName[:-7] + "csv", columns= debugCols, index=False)
 
 def debugCheckingDf(df, msg= "", vin= ""):
     # Used to check various aspect of the dataframe at various points to see if something is or is not present

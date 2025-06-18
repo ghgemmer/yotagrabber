@@ -1,10 +1,10 @@
-Readme.txt updated 6/16/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 6/19/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
 gets its data from (which is https://api.search-inventory.toyota.com/graphql ).  The folder also contains the sold inventory 
-(inventory that no longer appears in the inventory gotten from the website), as well as Change History event files for the
-last 14 days which contain added VINs, modified contents of existing VINs, or removed VINs between runs of the inventory 
+(inventory that appeard at one time in a run, but no longer appears in the inventory gotten from the website), as well as Change History 
+event files for the last 14 days which contain added VINs, modified contents of existing VINs, or removed VINs between runs of the inventory 
 collection over that time period.
 
 All files are read only view on my google drive.  Thus if you wish to do filtering, etc you need 
@@ -36,6 +36,10 @@ Once a temp VIN in the sold file is older than 16 weeks it is assumed it has bee
 and/or the user no longer needs use of the temp VIN, and it is removed from the sold files.  This period of
 time also allows some statistics to be run on the day of the month allocations appear.
 Older model year sold files will be archived at some point, when it appears there is no longer any inventory of that year left.
+
+Note that the contents of the VIN entries in the sold inventory files do not update after being placed in that file because there is no data 
+to update them with from the Toyota search inventory website anymore. I.E, the website no longer returns that VIN and contents for it,
+and that is the only website that the vehicle information is obtained from by the program.
 
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.
 They contains all changes between runs of the inventory collection,

@@ -1,4 +1,4 @@
-Readme.txt updated 6/19/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 6/23/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -8,7 +8,7 @@ event files for the last 14 days which contain added VINs, modified contents of 
 collection over that time period.
 
 All files are read only view on my google drive.  Thus if you wish to do filtering, etc you need 
-download the file and open it.
+download the file and open it or save it to your own google drive.
 
 Folder updates typically show up each day around 5am CDT.
 Each model's current inventory is placed in a <model>.csv file.  A raw  (filename <model>_Lastraw.parquet)

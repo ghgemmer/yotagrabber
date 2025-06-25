@@ -181,11 +181,11 @@ echo and calculated Markup changing from 4297.0 to 3151.0
 echo The config file is the same as in the prior step, however 
 echo the match criteria filter file Test_UserMatchCriteriaFilter1.py is used by copying it to 
 echo Test_UserMatchCriteriaFilter.py which is called out by the config file. 
-echo This filter is vin != "JTEVB5BR0S111BE87" or  Selling Price less than 70000)
+echo This filter is vin != "JTEVB5BR0S111BE87" or  Selling Price is less than 70000)
 echo to show that the VIN JTEVB5BR0S111BE87 shows up with a ***REMOVED prefix
 echo and List of Changes sentence at the last tabbed field of that VINs line showing the Selling Price, and Markup as changing
 echo and as indicated above to show the changes when the VIN is in inventory but the does not meet the match criteria fitler. 
-echo All other 101 entries should have a blank prefix and have values as in the prior step results and no List Of Changes.
+echo All other 100 entries should have a blank prefix and have values as in the prior step results and no List Of Changes.
 echo SearchVehicles4runnerhybridTestCnfg1_config.yaml is the config file with all the normal settings and modifications of
 echo outputResultsMethod: "outputAllSearchResultsOnChange"
 echo alsoNotifyOnOnlyRemovals: True
@@ -203,7 +203,7 @@ echo off
 echo Step 15: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
 echo a "The following list of matching units was found on:" line somewhere below and then below that line a section 
-echo containing exactly 102 inventory lines with the values and prefixes indicated in the prior Step  
+echo containing exactly 101 inventory lines with the values and prefixes indicated in the prior Step  
 echo AND that an email was sent with subject line "4runnerhybridTestSrchRslt: Vehicle Match Found"
 echo and the contents of that email's attached file has a that same section of entries as indicated above 
 echo Hit return to continue

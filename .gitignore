@@ -255,11 +255,16 @@ credentials.json
 !/src/test/4runnerhybridTest2Empty_StatusInfo.json
 !/src/test/4runnerhybridTest3HalfEmpty_raw.parquet
 !/src/test/4runnerhybridTest3HalfEmpty_StatusInfo.json
+!/src/test/4runnerhybridTest8_raw.parquet
+!/src/test/4runnerhybridTest8_StatusInfo.json
 !/src/test/ConfigItemOutputResultsMethodTest.bat
+!/src/test/ConfigItemOutputResultsMethodTest_Test2.bat
 !/src/test/SearchVehicles4runnerhybridTest.bat
 !/src/test/SearchVehicles4runnerhybridTestCnfg0_config.yaml
 !/src/test/SearchVehicles4runnerhybridTestCnfg1_config.yaml
 !/src/test/Test_UserMatchCriteriaFilter.py
+!/src/test/Test_UserMatchCriteriaFilter0.py
+!/src/test/Test_UserMatchCriteriaFilter1.py
 !/src/test/4runner_Test*_raw.parquet
 !/src/test/4runner_Test*_StatusInfo.json
 !/src/test/4runner_Tests_LastChangeDate.txt

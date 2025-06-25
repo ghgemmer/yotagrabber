@@ -5,9 +5,9 @@ echo !!!! Currently we only have tests for when outputResultsMethod == outputAll
 echo more test to be added in the future for the other values outputResultsMethod can take on.
 echo.
 echo Step 1: Ensure you are in test directory (an output subdirectory will be made off of it)
-echo Set up the PYTHONPATH environment variable if needed (to point to where  searchForVehicles.py and associated python modules
+echo Set up the PYTHONPATH environment variable if needed (to point to where  searchForVehiclesTest.py and associated python modules
 echo as needed)
-echo Set up the SEARCHFORVEHICLESPATH to point to the directory where  searchForVehicles.py you want to test
+echo Set up the SEARCHFORVEHICLESPATH to point to the directory where  searchForVehiclesTest.py you want to test
 echo is (no ending slash)
 echo Get the gmail credentials.json file and place it in the test directory.
 echo Warning!!!! SearchVehicles4runnerhybridTest.txt will be deleted in the current directory so if you want to save it
@@ -49,7 +49,7 @@ copy modelsTest0_raw.json output\models_raw.json
 copy 4runnerhybridTest0_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest0_StatusInfo.json output\4runnerhybrid_StatusInfo.json
 copy Test_UserMatchCriteriaFilter0.py Test_UserMatchCriteriaFilter.py
-py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml 
+py %SEARCHFORVEHICLESPATH%\searchForVehiclesTest.py SearchVehicles4runnerhybridTestCnfg0_config.yaml 
 echo off
 echo Step 3: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -65,7 +65,7 @@ echo config item settings are in SearchVehicles4runnerhybridTestCnfg0_config.yam
 echo Hit return to run the test
 pause
 echo on
-py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehiclesTest.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
 echo off
 echo Step 5: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -87,7 +87,7 @@ pause
 echo on
 copy 4runnerhybridTest3HalfEmpty_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest3HalfEmpty_StatusInfo.json output\4runnerhybrid_StatusInfo.json
-py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehiclesTest.py SearchVehicles4runnerhybridTestCnfg0_config.yaml
 echo off
 echo Step 7: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -108,7 +108,7 @@ pause
 echo on
 copy 4runnerhybridTest2Empty_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest2Empty_StatusInfo.json output\4runnerhybrid_StatusInfo.json
-py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehiclesTest.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
 echo off
 echo Step 9: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -131,7 +131,7 @@ pause
 echo on
 copy 4runnerhybridTest0_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest0_StatusInfo.json output\4runnerhybrid_StatusInfo.json
-py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehiclesTest.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
 echo off
 echo Step 11: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -164,7 +164,7 @@ pause
 echo on
 copy 4runnerhybridTest1_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest1_StatusInfo.json output\4runnerhybrid_StatusInfo.json
-py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehiclesTest.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
 echo off
 echo Step 13: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file
@@ -181,7 +181,7 @@ echo and calculated Markup changing from 4297.0 to 3151.0
 echo The config file is the same as in the prior step, however 
 echo the match criteria filter file Test_UserMatchCriteriaFilter1.py is used by copying it to 
 echo Test_UserMatchCriteriaFilter.py which is called out by the config file. 
-echo This filter is vin != "JTEVB5BR0S111BE87" or  Selling Price is less than 70000)
+echo This filter is vin != "JTEVB5BR0S111BE87" or  Selling Price less than 70000)
 echo to show that the VIN JTEVB5BR0S111BE87 shows up with a ***REMOVED prefix
 echo and List of Changes sentence at the last tabbed field of that VINs line showing the Selling Price, and Markup as changing
 echo and as indicated above to show the changes when the VIN is in inventory but the does not meet the match criteria fitler. 
@@ -198,7 +198,7 @@ echo on
 copy 4runnerhybridTest8_raw.parquet output\4runnerhybrid_raw.parquet
 copy 4runnerhybridTest8_StatusInfo.json output\4runnerhybrid_StatusInfo.json
 copy Test_UserMatchCriteriaFilter1.py Test_UserMatchCriteriaFilter.py
-py %SEARCHFORVEHICLESPATH%\searchForVehicles.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
+py %SEARCHFORVEHICLESPATH%\searchForVehiclesTest.py SearchVehicles4runnerhybridTestCnfg1_config.yaml
 echo off
 echo Step 15: Verify that SearchVehicles4runnerhybridTest.txt result file has after the last
 echo "<timestamp of when started is close to when started> Started Up Search For Vehicles program ..."  line in the file

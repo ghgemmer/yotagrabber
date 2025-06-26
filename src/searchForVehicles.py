@@ -41,7 +41,7 @@ from timeit import default_timer as timer
 from yotagrabber import vehicles
 
 # Version
-searchForVehiclesVersionStr = "Ver 1.20 Apr 1 2025"  #
+searchForVehiclesVersionStr = "Ver 2.1 June 26 2025"  #
 
 class userMatchCriteria:
     def __init__(self):
@@ -101,6 +101,24 @@ outputChangedSearchResultsOnChange = 1
 outputAddedSearchResultsOnChange = 2
 
 unitDetailsDelimiter = chr(9) #tab char to easily separate fields of information as no field should contain a tab char in it.
+
+LastChangedDateTimeColName = "LastChangedDateTime"
+columnsForEmptyDfParquet = ["vin", "isTempVin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', 'cab.code', 'cab', 'bed.code', 'bed', "FirstAddedDate", LastChangedDateTimeColName, "infoDateTime", "options"]
+columnsForEmptyDfFinalCsv = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", LastChangedDateTimeColName, "infoDateTime", "Options"]
+# TODO should be able to construct the below from the columnsForEmptyDfFinalCsv
+# columns need to be in the order we want.
+rowModificationsColumnName = "List of Changes"
+rowChangeTypeColumnName = "RowChangeType"
+rowChangeDateTime = "Event DateTime"
+columnsForEmptyChangeHistoryCsvDf = [rowChangeTypeColumnName, rowChangeDateTime, "Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", "infoDateTime", rowModificationsColumnName, "Options"]
+
+columnValueChangedIndicator =  "----->"
+columnValueNotChangedIndicator = "_"
+rowAddedNewVINIndicator = "ADDED"
+rowModifiedVINContentsIndicator = "MODED"
+rowRemovedVINIndicator = "REMOVED"
+rowSameVINContentsIndicator = ""
+
 
 
 # -----------------------------------------------------------------------
@@ -857,22 +875,34 @@ def getUserInput(promptStr, sleepTime):
         timedOut = True
     return (timedOut, userInput)
     
-def printUnitDetails(prefix, details, columnsToIgnore, fileHandle = 0, printIt = True, suppressFixedUnitDetailsPrefix = False, sanitizeStrings = True, namesOfModifiedFieldsString = ""):
-    # details is a DataFrame of exactly 1 row
-    global unitDetailsDelimiter
+    
+def printUnitDetailsUsingChangeType(rowSeries, prefix, unitDetailsDelimiter, printColumnsToUse, fileHandle = 0, printIt = True, suppressFixedUnitDetailsPrefix = False, sanitizeStrings = True):
+    # prints to display and or writes to a file(or does neither) the indicated rowSeries columns printColumnsToUse using the unitDetailsDelimiter.
+    # Returns the string that would be/was printed/written regardless of whether it was actually printed/written.
+    # suppressFixedUnitDetailsPrefix suppresses the " Unit Details ->" prefix text
+    # if rowSeries contains the rowChangeTypeColumnName then one of ADDED, REMOVED, SAME is appened to the prefix, otherwise blanks are added in that place.
+    # 
+    #print("printUnitDetailsUsingChangeType: prefix ", prefix, "unitDetailsDelimiter" , unitDetailsDelimiter, "printColumnsToUse", printColumnsToUse, "fileHandle", fileHandle, "printIt", printIt, "suppressFixedUnitDetailsPrefix", suppressFixedUnitDetailsPrefix, "sanitizeStrings", sanitizeStrings)
     detailsStr = ""
     if suppressFixedUnitDetailsPrefix:
         fixedUnitDetailsPrefix = ""
     else:
         fixedUnitDetailsPrefix = " Unit Details ->"
+    changeTypeStr = ":,         "
+    if rowChangeTypeColumnName in rowSeries:
+        if rowSeries[rowChangeTypeColumnName] == rowAddedNewVINIndicator:
+            changeTypeStr = ":, ***ADDED"
+        elif rowSeries[rowChangeTypeColumnName] == rowModifiedVINContentsIndicator:
+            changeTypeStr = ":, ***MODED"
+        elif rowSeries[rowChangeTypeColumnName] == rowRemovedVINIndicator:
+            changeTypeStr = ":, ***REMOVED"
+    detailsStr = prefix  + unitDetailsDelimiter + changeTypeStr + fixedUnitDetailsPrefix
     # Output is field delimited by unitDetailsDelimiter
-    detailsStr = prefix  + fixedUnitDetailsPrefix
-    for index1 in details.index:
-        for column1 in details:
-            if not (column1 in columnsToIgnore):
-                detailsStr += unitDetailsDelimiter + str(column1) + ": " + unitDetailsDelimiter + str(details.at[index1,column1])
-    if namesOfModifiedFieldsString:
-        detailsStr += unitDetailsDelimiter + "Names Of Modified Fields: " + namesOfModifiedFieldsString
+    for column in rowSeries.index:
+        if (column != rowChangeTypeColumnName) and (column in printColumnsToUse):
+            value = rowSeries[column]
+            if not( (column == rowModificationsColumnName) and (valueIsNanNoneNull(value))):
+                detailsStr += unitDetailsDelimiter + str(column) + ": " + unitDetailsDelimiter + str(value)
     if printIt:
         print(detailsStr)
     if fileHandle:
@@ -902,13 +932,14 @@ def outputSearchingInfoToUser(matchCriteria):
     matchCriteria.print("", toConsole = True)
     print("Username:", username)
 
-def getSearchResultsColumnsLabelsStr(dfMatchesCopy , columnsToIgnore):
+def getSearchResultsColumnsLabelsStr(columns , columnsToIgnore):
     # returns the column lables string that is output to match the search results lines 
     # Can be used when open text file with Excel and specifying to use the delimiter to read it in.
+    # columns and columnsToIgnore is either a pandas Index type object or a list.
     global unitDetailsDelimiter
     labelsStr = ""
     labelsStr += "Found Date" + unitDetailsDelimiter + "Diff Prefix" + unitDetailsDelimiter 
-    for column in dfMatchesCopy:
+    for column in columns:
         if not (column in columnsToIgnore):
             # Add a dummy blank column label and then the actual column label to match how the
             # search results outputs a label name + delimiter + value + delimiter  for each column in the dataframe
@@ -918,85 +949,7 @@ def getSearchResultsColumnsLabelsStr(dfMatchesCopy , columnsToIgnore):
 def valueIsNanNoneNull(value):
     return (value is None) or (isinstance(value, float) and np.isnan(value))
 
-def getNamesOfModifiedFieldsIntoString (details1, details2, columnsToIgnore):
-    # returns the names of the modified fields (fields whose value changed between details1 and details) as well as the 
-    # the current value and prior value of the field
-    # details1 has the current values and details2 has the prior values
-    global debugEnabled
-    #if debugEnabled:
-    #    print("detailsAreTheSame details1", details1)
-    #    print("detailsAreTheSame details2", details2)
-    namesOfModifiedFieldsString = ""
-    theSame = False
-    columns1 = []
-    for column1 in details1:
-        if not (column1 in columnsToIgnore):
-            columns1.append(column1)
-    columns1.sort()
-    columns2 = []
-    for column2 in details2:
-        if not (column2 in columnsToIgnore):
-            columns2.append(column2)
-    columns2.sort()
-    #print("detailsAreTheSame columns1 == columns2, columns1, columns2", columns1 == columns2, columns1, columns2)
-    if columns1 == columns2:
-        # both have all the exact same column labels (assumed to be unique)
-        #print("getNamesOfModifiedFieldsIntoString details1.shape[0], details2.shape[0]", details1.shape[0], details2.shape[0])
-        if  details1.shape[0] == details2.shape[0]:
-            # both have same number of rows which should be 0 or 1.  We only compare the first row anyway
-            for index1 in details1.index:
-                for index2 in details2.index:
-                    for column1 in columns1:
-                        details1Value = details1.at[index1, column1]
-                        details2Value = details2.at[index2, column1]
-                        if (details1Value != details2Value):
-                            if not (valueIsNanNoneNull(details1Value) and valueIsNanNoneNull(details2Value)):
-                                namesOfModifiedFieldsString += column1 + " :: " + str(details2Value) + " --> " +  str(details1Value) + " || "
-                                #if debugEnabled:
-                                #    print("getNamesOfModifiedFieldsIntoString index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1]", index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1])
-                    break
-                break
-    else:
-        # This case typically only happens when we add new columns to the vehicles.py program going forward and thus
-        # usually happens just once when they are added as the new columns are now present going forward.
-        # Append the columns in details2 to the columns in details1 in a new list and remove duplicates
-        columnsTemp = columns1 + columns2
-        columnsCombined = []
-        for column in columnsTemp:
-            if column not in columnsCombined:
-                columnsCombined.append(column)
-        columnsCombined.sort()
-        if details1.shape[0] == details2.shape[0]:
-            # both have same number of rows which should be 0 or 1.  We only compare the first row anyway
-            for index1 in details1.index:
-                for index2 in details2.index:
-                    for column in columnsCombined:
-                        if (column in columns2) and (column in columns1):
-                            # column in both
-                            details1Value = details1.at[index1, column]
-                            details2Value = details2.at[index2, column]
-                            if (details1Value != details2Value):
-                                if not (valueIsNanNoneNull(details1Value) and valueIsNanNoneNull(details2Value)):
-                                    namesOfModifiedFieldsString += column + " :: " + str(details2Value) + " --> " +  str(details1Value) + " || "
-                                    #if debugEnabled:
-                                    #    print("getNamesOfModifiedFieldsIntoString index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1]", index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1])
-                        elif (column not in columns2):
-                            # column not in column2 so a column was added as details1 has the current and  details2 has the old
-                            details1Value = details1.at[index1, column]
-                            namesOfModifiedFieldsString += column + " :: " + "-" + " --Added-> " +  str(details1Value) + " || "
-                        else:
-                            # column must not in columns1 as combined has only columns in 1 and or 2
-                            # column not in column1 so a column was removed as details1 has the current and  details2 has the old
-                            details2Value = details2.at[index2, column]
-                            namesOfModifiedFieldsString += column + " :: " + str(details2Value) + " --Removed-> " + "-"  + " || "
-                            
-                    break
-                break
-        
-    #if debugEnabled:
-    #    print("getNamesOfModifiedFieldsIntoString returning namesOfModifiedFieldsString as", namesOfModifiedFieldsString)
-    return namesOfModifiedFieldsString
-    
+
 
 def vinNumberIsTheSame(details1, details2):
     # Determines if the single row or empty panda.dataframe details1 and single row or empty panda.dataframe details2 have
@@ -1030,45 +983,6 @@ def vinNumberIsTheSame(details1, details2):
     #print("Elapsed time", timer() - timer_start )
     return theSame
   
-def detailsAreTheSame(details1, details2, columnsToIgnore):
-    # Determines if the single rows series are the same (same value in same column name is the same in each) ignoring the indicated column names
-    # !!!!!Assumes nan has been replaced with None in the passed DataFrames.
-    global debugEnabled
-    #if debugEnabled:
-    #   print("detailsAreTheSame details1 type and contents", type(details1), details1)
-    #   print("detailsAreTheSame details2 type and contents", type(details2), details2)
-    #   print("detailsAreTheSame columnsToIgnore", columnsToIgnore)
-    theSame = False
-    columns1 = []
-    for column1 in details1.index:
-        if not (column1 in columnsToIgnore):
-            columns1.append(column1)
-    columns1.sort()
-    #if debugEnabled:
-    #   print("detailsAreTheSame columns in details1 sorted excluding ignores", columns1)
-    columns2 = []
-    for column2 in details2.index:
-        if not (column2 in columnsToIgnore):
-            columns2.append(column2)
-    columns2.sort()
-    #if debugEnabled:
-    #   print("detailsAreTheSame columns in details2 sorted excluding ignores", columns2)
-    #   print("detailsAreTheSame columns1 == columns2, columns1, columns2", columns1 == columns2, columns1, columns2)
-    if columns1 == columns2:
-        # both have all the exact same column labels (assumed to be unique)
-        theSame = True
-        for column1 in columns1:
-            details1Value = details1[column1]
-            details2Value = details2[column1]
-            if (details1Value != details2Value):
-                if not (valueIsNanNoneNull(details1Value) and valueIsNanNoneNull(details2Value)):
-                    theSame = False
-                    #if debugEnabled:
-                    #    print("detailsAreTheSame index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1]", index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1])
-                    break
-    #if debugEnabled:
-    #    print("detailsAreTheSame returning theSame as", theSame)
-    return theSame
 
 
 def getTimeZoneStr(dt, getFullString = False):
@@ -1145,17 +1059,6 @@ def notifyWithSound(computerSoundFile = "", playCount = 5, playInBackground = Fa
     else:
         print("Error: notifyWithSound: sound file does not exist", str(Path(computerSoundFile)))
         
-def updateMatchingVinIndex(rowSeries, lastUserMatchesDfCopy, columnsToIgnore):
-    if rowSeries["VinIsInLast"] == True:
-        vin = rowSeries["VIN"]
-        rowLastDf = lastUserMatchesDfCopy[lastUserMatchesDfCopy["VIN"] == vin]
-        rowLastIndex = rowLastDf.index[0]
-        rowLastSeries = rowLastDf.loc[rowLastIndex]
-        rowSeries["VinLastRowLoc"] = rowLastIndex
-        detailsSame = detailsAreTheSame(rowSeries, rowLastSeries, columnsToIgnore)  #TODO fix ignoring added columns
-        rowSeries["VinLastRowModified"] = not detailsSame
-    return rowSeries
-
 def calcDistanceFromCenter(rowSeries, CenterLat, CenterLong):
     # rowSeries is a row of df
     radiansPerdegree =  math.pi/180
@@ -1174,11 +1077,202 @@ def calculateDistanceFromCenter(df, CenterLatLong):
     CenterLong = CenterLatLong[1]
     dfNew = df
     if not (valueIsNanNoneNull(CenterLat) or valueIsNanNoneNull(CenterLong)):
-        dfNew = dfNew.apply(calcDistanceFromCenter, axis=1, args= (CenterLat, CenterLong ))
+        if len(dfNew):
+            dfNew = dfNew.apply(calcDistanceFromCenter, axis=1, args= (CenterLat, CenterLong ))
     else:
         dfNew["DistanceFromCenter"] =  None
     return dfNew
+
+def getChangeHistoryFinalColumnsSelect(originalColumnsInOld, originalColumnsInNew):
+    # returns an ordered list of columns for the final columns we want in the change history
+    # The original columns passed are are in order we want for the dataframes.
+    # It is assumed that the selection are for dfChangeHistory in getChangeHistory right before
+    # it returns it to the caller. 
+    #nonHistoryCsvFinalColumns = columnsForEmptyDfFinalCsv  # this is an ordered list of how we want the column names to be ordered
+    finalColumnsSelect = []
+    # new column in the change history dataframe indicating the type of change for that row (added, modified, removed, nothing changed)
+    finalColumnsSelect.append(rowChangeTypeColumnName)
+    for column in originalColumnsInNew:
+        if column == "Options":
+            # insert this one right before Options
+            finalColumnsSelect.append(rowModificationsColumnName)
+        finalColumnsSelect.append(column)
+    return finalColumnsSelect
     
+def getOptionDifferences(oldOptions, newOptions):
+    # returns a string of the differences between the old and new options.  If null is returned then there are no differences.
+    diffs = ""
+    removedOptionsStr = ""
+    addedOptionsStr = ""
+    sameOptionsStr = ""
+    oldOptionsIsStrType = isinstance(oldOptions, str)
+    newOptionsIsStrType = isinstance(newOptions, str)
+    if (not oldOptionsIsStrType) or (not newOptionsIsStrType):
+        removedOptionsStr = str(oldOptions)
+        addedOptionsStr = str(newOptions)
+    else: # both are strings
+        # split up the Options into each individual option using the options separator "|" and strip of any leading
+        # or trailing white spaces.
+        oldOptionsSplit = []
+        for option in oldOptions.split("|"):
+            oldOptionsSplit.append(option.rstrip().lstrip())
+        # Note that the list(dict.fromkeys(oldOptionsSplit)) only removes case sensitive duplicates which the above are not (different case)
+        oldOptionsSplit.sort(key=str.lower) # sort case insensitive to make it easy to visually look through the changed options
+        # See below for TODO on how to resolve this.
+        oldOptionsSplit = list(dict.fromkeys(oldOptionsSplit)) # remove duplicates (keeping order) as sometimes these do occur for some unknown reason
+        newOptionsSplit = []
+        for option in newOptions.split("|"):
+            newOptionsSplit.append(option.rstrip().lstrip())
+        newOptionsSplit.sort(key=str.lower) # sort case insensitive to make it easy to visually look through the changed options
+        newOptionsSplit = list(dict.fromkeys(newOptionsSplit)) # remove duplicates (keeping order) as sometimes these do occur for some unknown reason
+        # now get same and added
+        oldIndiciesOfOldIsSameAsNew = []
+        newIndex = 0
+        for newOption in newOptionsSplit:
+            newOptionForCompare = newOption.lower().rstrip(":")
+            # newOptionForCompare = newOption.replace("  ", " ")
+            newOptionForCompare = newOptionForCompare.replace("[installed_msrp]", "").rstrip().rstrip(":")
+            wasInOld = False
+            oldIndex = 0
+            for oldOption in oldOptionsSplit:
+                oldOptionForCompare = oldOption.lower().rstrip(":").rstrip()
+                # oldOptionForCompare = oldOption.replace("  ", " ")
+                oldOptionForCompare = oldOptionForCompare.replace("[installed_msrp]", "").rstrip().rstrip(":")
+                if newOptionForCompare == oldOptionForCompare:
+                    if not (oldIndex in oldIndiciesOfOldIsSameAsNew):
+                        sameOptionsStr += newOption + " | "
+                    wasInOld = True
+                    oldIndiciesOfOldIsSameAsNew.append(oldIndex)
+                    # Note that going through all the entries to find duplicates increases the time it takes to run through this but hopefully it is still acceptable.
+                    # TODO An alternative to the above to decrease execution time 
+                    # is to just initially remove case insenstive massaged (trimmed, installed_msrp removed, etc)
+                    # duplicates from the newOptionsSplit
+                    # and the oldOptionsSplit, keeping only the first one, before running through these for loops.
+                    # But then you have an issue if different cases mean something different as mentioned above.
+                    #break
+                oldIndex += 1
+            if not wasInOld:
+                # then must be an added one from new
+                addedOptionsStr += newOption + " | "
+            newIndex += 1
+        # now process removed ones
+        for oldIndex in range(len(oldOptionsSplit)):
+            if not (oldIndex in oldIndiciesOfOldIsSameAsNew):
+                # must be removed
+                removedOptionsStr += oldOptionsSplit[oldIndex] + " | "
+        
+    if sameOptionsStr:
+        sameOptionsStr = " :Same---> " + sameOptionsStr
+    if removedOptionsStr:
+        removedOptionsStr = " :Removed---> " + removedOptionsStr
+    if addedOptionsStr:
+        addedOptionsStr = " :Added---> " + addedOptionsStr
+    if (not removedOptionsStr) and (not addedOptionsStr):
+        # They are all the same Options
+        diffs = ""
+    else:
+        diffs =  addedOptionsStr + removedOptionsStr + sameOptionsStr
+    return diffs
+
+def determineRowDifferences( row, columnsToIgnore, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight):
+    # Determines if there are any differences between the row's new values and the row's old values for each
+    # column name in row that is not in columnsToIgnore and updates the row's rowChangeTypeColumnName column, and 
+    # rowModificationsColumnName column values.
+    # Assumes any such column name, not in columnsToIgnore, must be guaranteed to be in either originalColumnsInNew, or originalColumnsInOld
+    # If the row has a column name say for example "Color" and that name is not in columnsToIgnore, 
+    # and in both originalColumnsInNew And originalColumnsInOld
+    # then the new value is row["Color"], and the old value is row["Color" + mergeSuffixRight].
+    # If there are columns only in originalColumnsInNew, or only in originalColumnsInOld, and not in columnsToIgnore
+    # then that is also considred a difference although this probably cannot happen if 
+    # the row was created from a merge of old to new and old and new were csv style dfs (which must have the same columns)
+    # and any other columns added in for processing are to be ignored via the columnsToIgnore. 
+    # If there are any differences the row's rowModificationsColumnName column value (a str type column)
+    # is set with the name of each column that was different along with the old and new values. 
+    # For columns only in one or the other there is an indication of that and 
+    # only one value is shown.  
+    # Also the row's rowChangeTypeColumnName column value is to be updated with an indication if there was any difference or not
+    #
+    global debugEnabled
+    namesOfModifiedFieldsString = ""
+    rowIsTheSame = True
+    columns1 = []
+    for column1 in originalColumnsInNew:
+        if not (column1 in columnsToIgnore):
+            columns1.append(column1)
+    columns1.sort()
+    columns2 = []
+    for column2 in originalColumnsInOld:
+        if not (column2 in columnsToIgnore):
+            columns2.append(column2)
+    columns2.sort()
+    if columns1 == columns2:
+        # Both have all the exact same column labels (assumed to be unique)
+        # At this point we can sort case insensitive since operations below do not depend on the order.  
+        # This makes it visually easy to find the column in a line of changed columns. 
+        columns1.sort(key=str.lower)
+        for column in columns1:
+            oldValue = row[column+mergeSuffixRight]  # this column must exist due to the merge of old to new as the old has a new column created as the common column name +  
+            newValue = row[column]
+            oldValueForCompare = oldValue
+            newValueForCompare = newValue
+            if column == "Options":
+                diffs = getOptionDifferences(oldValue, newValue)
+                if diffs:
+                    rowIsTheSame = False
+                    namesOfModifiedFieldsString += column + " :: " + diffs + " || "
+            elif (oldValueForCompare != newValueForCompare):
+                if not (valueIsNanNoneNull(newValueForCompare) and valueIsNanNoneNull(oldValueForCompare)):
+                    rowIsTheSame = False
+                    namesOfModifiedFieldsString += column + " :: " + str(oldValue) + " --> " +  str(newValue) + " || "
+    else:
+        # Not sure if this case can actually occur if both are csv style dfs from a merge
+        print("Warning: determineRowDifferences: columns names in old orginal and new original were not all the same.  Handling this.")
+        columnsTemp = columns1 + columns2
+        columnsCombined = []
+        for column in columnsTemp:
+            if column not in columnsCombined:
+                columnsCombined.append(column)
+        # At this point we can sort case insensitive since operations below do not depend on the order.  
+        # This makes it visually easy to find the column in a line of changed columns. 
+        columnsCombined.sort(key=str.lower)
+        for column in columnsCombined:
+            if (column in columns2) and (column in columns1):
+                # column in both
+                oldValue = row[column+mergeSuffixRight]  # this column must exist due to the merge of old to new as the old has a new column created as the common column name +  
+                newValue = row[column]
+                oldValueForCompare = oldValue
+                newValueForCompare = newValue
+                if column == "Options":
+                    diffs = getOptionDifferences(oldValue, newValue)
+                    if diffs:
+                        rowIsTheSame = False
+                        namesOfModifiedFieldsString += column + " :: " + diffs + " || "
+                elif (oldValueForCompare != newValueForCompare):
+                    if not (valueIsNanNoneNull(newValueForCompare) and valueIsNanNoneNull(oldValueForCompare)):
+                        rowIsTheSame = False
+                        namesOfModifiedFieldsString += column + " :: " + str(oldValue) + " --> " +  str(newValue) + " || "
+                        #if debugEnabled:
+                        #    print("getNamesOfModifiedFieldsIntoString index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1]", index1, column1, index2, details1.at[index1, column1], details2.at[index2, column1])
+            elif (column not in columns2):
+                # column not in column2 so a column was added as originalColumnsInNew has the new  and  originalColumnsInOld has the old
+                rowIsTheSame = False
+                newValue = row[column]
+                namesOfModifiedFieldsString += column + " :: " + "-" + " --Added-> " +  str(newValue) + " || "
+            else:
+                # column must not be in columns1 as combined has only columns in 1 and or 2
+                # column not in column1 so a column was removed as originalColumnsInNew has the current and  originalColumnsInOld has the old
+                rowIsTheSame = False
+                oldValue = row[column]  # Since the column name does not overlap the old one does not have the mergeSuffixRight appended to it.
+                namesOfModifiedFieldsString += column + " :: " + str(oldValue) + " --Removed-> " + "-"  + " || "        
+    if rowIsTheSame:
+        row[rowChangeTypeColumnName] = rowSameVINContentsIndicator
+        row[rowModificationsColumnName] = None
+    else:
+        row[rowChangeTypeColumnName] = rowModifiedVINContentsIndicator
+        row[rowModificationsColumnName] = namesOfModifiedFieldsString
+        
+    return row
+
 def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, dfUnfilteredInventory, updateVehiclesStatusMsg = ""):
     global outputResultsMethod
     global alsoNotifyOnOnlyRemovals
@@ -1197,45 +1291,85 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, dfUnf
     # next we determine additions (new VIN number not in last results),
     # modifications where same VIN number in last results but any other field is different between current and last,
     # and removals (VIN number is now gone) compared to last results
-    dfMatchesCopyEmpty = True
-    lastUserMatchesDfCopyEmpty = True
-    dfMatchesCopy = dfMatches.copy()
-    dfMatchesCopy.reset_index()
-    lastUserMatchesDfCopy = lastUserMatchesDf.copy()
-    lastUserMatchesDfCopy.reset_index()  #So save off the unique index value of the item to reference it as needed and have it match the iloc value.
-    if len(dfMatchesCopy) and ("VIN" in dfMatchesCopy):
-        dfMatchesCopyEmpty = False
-        if len(lastUserMatchesDfCopy) and ("VIN" in lastUserMatchesDfCopy):
-            dfMatchesCopy["VinIsInLast"] = dfMatchesCopy["VIN"].isin(lastUserMatchesDfCopy["VIN"])
-        else:
-            dfMatchesCopy["VinIsInLast"] = False
-        dfMatchesCopy["VinLastRowLoc"] = -1
-        dfMatchesCopy["VinLastRowModified"] = False
-    if len(lastUserMatchesDf) and ("VIN" in lastUserMatchesDf):
-        lastUserMatchesDfCopyEmpty = False
-        if len(dfMatchesCopy) and ("VIN" in dfMatchesCopy):
-            lastUserMatchesDfCopy["VinIsInCurrent"] = lastUserMatchesDfCopy["VIN"].isin(dfMatchesCopy["VIN"])
-        else:
-            lastUserMatchesDfCopy["VinIsInCurrent"] = False
-    # !!!! Update the Ignore columns below if add any columns to dfMatchesCopy or lastUserMatchesDfCopy that are not in the non copies
-    detailsSameColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent", "infoDateTime", "CenterLat", "CenterLong", "DistanceFromCenter"]
-    printColumnsToIgnore = ["VinIsInLast", "VinLastRowLoc", "VinLastRowModified", "VinIsInCurrent" ]
+    dfOld = lastUserMatchesDf.copy(deep=True)
+    dfNew = dfMatches.copy(deep=True)
+    # comment out when done debugging
+    #print("Debug outputSearchResultsToUser len(dfNew), len(dfOld)", len(dfNew), len(dfOld))
+    # Add minimal columns needed to reduce conditional testing in operations below.
+    if (len(dfOld) == 0) and (not ("VIN" in dfOld.columns)):
+        dfOld["VIN"] = None
+    if (len(dfNew) == 0) and (not ("VIN" in dfNew.columns)):
+        dfNew["VIN"] = None
+    if not (LastChangedDateTimeColName in dfOld.columns):
+        dfOld[LastChangedDateTimeColName] = None
+    if not (LastChangedDateTimeColName in dfNew.columns):
+        dfNew[LastChangedDateTimeColName] = None
+    
+    if not ("VIN" in dfOld.columns):
+        print("Error: outputSearchResultsToUser: dfOld did not contain VIN column ")
+    if not ("VIN" in dfOld.columns):
+        print("Error: outputSearchResultsToUser: dfNew did not contain VIN column ")
+    
+    # Save off the original column names in both to make operations later easier since duplicate column names with
+    # suffixes will be added.
+    originalColumnsInOld = dfOld.columns
+    originalColumnsInNew = dfNew.columns
+    # Set the right merge suffix that will be appended to the right df column names in a merge that are the same as the left
+    # column names
+    mergeSuffixRight = "_y"
+    
+    # create a new merged df so that for any common VIN (in both old and new) we tack on new columns to dfNew 
+    # that are the existing column names (from dfOld) with the mergeSuffixRight and those new columns contain the values from
+    # the old df.
+    # It also adds a column WhoDidMergeComeFrom_ so we can tell if the row was only in dfNew or in both 
+    dfNewMerged = dfNew.merge(dfOld, left_on="VIN", right_on="VIN", how='left', suffixes = (None, mergeSuffixRight), indicator = "WhoDidMergeComeFrom_")
+    
+    # The next merge does the same thing but in the opposite direction. In this one we only care to know which VINs
+    # in the old one were not in the new one and can get this from WhoDidMergeComeFrom_  
+    
+    dfNewMergeColumnsToUse = dfNew[["VIN"]]
+    dfOldMerged = dfOld.merge(dfNewMergeColumnsToUse, left_on="VIN", right_on="VIN", how='left', indicator = "WhoDidMergeComeFrom_")
+    
+    #Now add a RowChangeType column to both dfNewMerged, and dfOldMerged and initialize to indicate the 
+    # the row previously existed and did not change (i.e the VIN is in both and all the data associated with it is the same).
+    # Also add a rowModificationsColumnName and initialize it to None for no modifications.
+    dfNewMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
+    dfNewMerged[rowModificationsColumnName] = None
+    dfOldMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
+    dfOldMerged[rowModificationsColumnName] = None
+    
+    
+    # Update the RowChangeType column for those merged dfs.
+    # The WhoDidMergeComeFrom_ is used to determine if the row was in left only, both.  right only is not possible because 
+    # the merge how is 'left'. Thus we can determine if the row was added to new or removed from old 
+    dfNewMerged[rowChangeTypeColumnName] = dfNewMerged[rowChangeTypeColumnName].where(dfNewMerged["WhoDidMergeComeFrom_"] != 'left_only', rowAddedNewVINIndicator )
+    dfOldMerged[rowChangeTypeColumnName] = dfOldMerged[rowChangeTypeColumnName].where(dfOldMerged["WhoDidMergeComeFrom_"] != 'left_only', rowRemovedVINIndicator )
+    
+    columnsToIgnoreForComparison = ["WhoDidMergeComeFrom_", rowChangeTypeColumnName, rowModificationsColumnName, "VIN", "CenterLat", "CenterLong", "DistanceFromCenter", LastChangedDateTimeColName, "infoDateTime", "FirstAddedDate"]
+    # Now do the determination on just the rows that were in both.  We can create a slice of just those rows with common VINs
+    # and run the determination on then and then the result is what gets concatenated later on for that.
+    dfNewMergeOnlyCommonVins = dfNewMerged[dfNewMerged["WhoDidMergeComeFrom_"] == 'both'].copy(deep=True)
+    if len(dfNewMergeOnlyCommonVins):
+        # Ensure the dataframe is not empty otherwise if it was empty the apply function would be called once by pandas with an empty series which we dont want. !!!!
+        dfNewMergeOnlyCommonVins = dfNewMergeOnlyCommonVins.apply(determineRowDifferences, axis=1, args= (columnsToIgnoreForComparison, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight))
     
     addedUnitTo = False
-    if (not dfMatchesCopyEmpty) and (not dfMatchesCopy["VinIsInLast"].all()):
-        addedUnitTo = True
-    
-    removedUnitFrom = False
-    if (not lastUserMatchesDfCopyEmpty) and (not lastUserMatchesDfCopy["VinIsInCurrent"].all()):
-        removedUnitFrom = True
-    
     modifiedUnitTo = False
-    if (not dfMatchesCopyEmpty):
-        # TODO can we do the apply to a slice of the dfMatchesCopy and then copy it to the dfMatchesCopy?? (overwritting the same indexes) would that be faster (i.e ony entires we know are inboth)
-        dfMatchesCopy = dfMatchesCopy.apply(updateMatchingVinIndex, axis=1, args= (lastUserMatchesDfCopy, detailsSameColumnsToIgnore ))
-        if dfMatchesCopy["VinLastRowModified"].any():
-            modifiedUnitTo = True
-        
+    removedUnitFrom = False
+    
+    if len(dfNewMerged[dfNewMerged[rowChangeTypeColumnName] == rowAddedNewVINIndicator]):
+        addedUnitTo = True
+    if len(dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator]):
+        removedUnitFrom = True
+    if len(dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName] == rowModifiedVINContentsIndicator]):
+        modifiedUnitTo = True
+    
+    finalColumnsSelect = getChangeHistoryFinalColumnsSelect(originalColumnsInOld, originalColumnsInNew)
+    # comment out when done
+    #print("Debug outputSearchResultsToUser: len(dfNewMerged), dfNewMerged.columns", len(dfNewMerged), dfNewMerged.columns)
+    #print("Debug outputSearchResultsToUser: len(dfOldMerged), dfOldMerged.columns", len(dfOldMerged), dfOldMerged.columns)
+    #print("Debug outputSearchResultsToUser: addedUnitTo, modifiedUnitTo, removedUnitFrom", addedUnitTo, modifiedUnitTo, removedUnitFrom)
+    # TODO modify below to use above changes.
     if addedUnitTo or (modifiedUnitTo and (outputResultsMethod != outputAddedSearchResultsOnChange))  or (removedUnitFrom and (outputResultsMethod in [outputAllSearchResultsOnChange, outputChangedSearchResultsOnChange])):
         # This section is only for log file and user text/email notifications.  We only update those when something has changed
         # This keeps from flooding text/email notifications when nothing changed and we have a small between searches delay
@@ -1256,46 +1390,69 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, dfUnf
         else:
             resultsHeaderStr =  "The following list of matching units was found on: " + dateTimeWithTimeZoneStr
         f.write(resultsHeaderStr + "\n")
-        f.write(getSearchResultsColumnsLabelsStr(dfMatchesCopy , printColumnsToIgnore) +"\n")
-        for detailsCurIndex in dfMatchesCopy.index:
-            curRowSeries = dfMatchesCopy.loc[detailsCurIndex]
-            addedUnit = False
-            if not curRowSeries["VinIsInLast"]:
-                addedUnit = True
-            modedUnit = False
-            if not addedUnit:
-                # no need to check for modified if it was an added unit, as these are mutually exclusive
-                if curRowSeries["VinLastRowModified"]:
-                    modedUnit = True
-            if (outputResultsMethod == outputAllSearchResultsOnChange) or addedUnit or (modedUnit and (outputResultsMethod != outputAddedSearchResultsOnChange)):
-                addedString = ":,           "
-                namesOfModifiedFieldsString = ""
-                if addedUnit:
-                    addedString = ":,   ***ADDED"  # Use word Added to easily see what was added out of all the matches
-                elif modedUnit:
-                    addedString = ":,   ***MODED"  # Use word Moded to easily see what was modified out of all the matches
-                    namesOfModifiedFieldsString = getNamesOfModifiedFieldsIntoString(dfMatchesCopy.loc[[detailsCurIndex]], lastUserMatchesDfCopy.loc[[curRowSeries["VinLastRowLoc"]]], detailsSameColumnsToIgnore) 
-                printUnitDetails(dateTimeWithTimeZoneStr + unitDetailsDelimiter + addedString, dfMatchesCopy.loc[[detailsCurIndex]], printColumnsToIgnore, f, printIt = False, suppressFixedUnitDetailsPrefix = False, sanitizeStrings = True, namesOfModifiedFieldsString = namesOfModifiedFieldsString)  #  use ":, " to make ultra edit filtering of non Went Unavailable strings easier
-        if (outputResultsMethod == outputChangedSearchResultsOnChange) or ((outputResultsMethod == outputAllSearchResultsOnChange) and showRemovalsWhenOutputStatusIsAll):
-            # also print units that disappeared
-            removedUnit = False
-            if not lastUserMatchesDfCopyEmpty:
-                for detailsPreviousIndex in lastUserMatchesDfCopy.index:
-                    if not lastUserMatchesDfCopy.loc[detailsPreviousIndex]["VinIsInCurrent"]:
-                        removedUnit = True
-                        removedVin = lastUserMatchesDfCopy.loc[detailsPreviousIndex]["VIN"]
-                        dfVinInUnfilteredInventory = dfUnfilteredInventory[dfUnfilteredInventory["VIN"] == removedVin]
-                        if len(dfVinInUnfilteredInventory):
-                            # VIN is also in the current unfiltered inventory so it was removed due to the match filtering
-                            # and not because it disappeared from the current unfiltered Inventory
-                            # In this case we want treat it the same as if the VIN data was modified
-                            # from the last match to the current unfiltered inventory
-                            # so the user can see why the match filtering removed it,
-                            # but we use the REMOVED prefix in this case instead of MODED
-                            namesOfModifiedFieldsString = getNamesOfModifiedFieldsIntoString(dfVinInUnfilteredInventory, lastUserMatchesDfCopy.loc[[detailsPreviousIndex]], detailsSameColumnsToIgnore) 
-                            printUnitDetails(dateTimeWithTimeZoneStr + unitDetailsDelimiter +  ":, ***REMOVED", dfVinInUnfilteredInventory, printColumnsToIgnore, f, printIt = False, suppressFixedUnitDetailsPrefix = False, sanitizeStrings = True, namesOfModifiedFieldsString = namesOfModifiedFieldsString)
-                        else:
-                            printUnitDetails(dateTimeWithTimeZoneStr + unitDetailsDelimiter +  ":, ***REMOVED", lastUserMatchesDfCopy.loc[[detailsPreviousIndex]], printColumnsToIgnore, f, printIt = False)
+        printColumnsToIgnore = ["WhoDidMergeComeFrom_", rowChangeTypeColumnName]
+        columnsForLabels = originalColumnsInNew.tolist()
+        columnsForLabels.append(rowModificationsColumnName)
+        f.write(getSearchResultsColumnsLabelsStr(columnsForLabels , "") +"\n")
+        printIt = False
+        suppressFixedUnitDetailsPrefix = False
+        sanitizeStrings = True
+        printColumnsToUse = finalColumnsSelect
+        if addedUnitTo and (outputResultsMethod in [outputAllSearchResultsOnChange, outputChangedSearchResultsOnChange, outputAddedSearchResultsOnChange]):
+            # above test of addedUnitTo guarantees the dataframe is not empty otherwise if it was empty and .apply used, the apply function would be called once by pandas with an empty series which we dont want. !!!!
+            dfNewMerged[dfNewMerged[rowChangeTypeColumnName].isin([rowAddedNewVINIndicator])].apply(printUnitDetailsUsingChangeType, axis= 1, args=[dateTimeWithTimeZoneStr, unitDetailsDelimiter, printColumnsToUse, f, printIt, suppressFixedUnitDetailsPrefix, sanitizeStrings])
+        if modifiedUnitTo and ((outputResultsMethod == outputAllSearchResultsOnChange) or (outputResultsMethod != outputAddedSearchResultsOnChange)):
+            # above test of modifiedUnitTo guarantees the dataframe is not empty otherwise if it was empty and .apply used, the apply function would be called once by pandas with an empty series which we dont want. !!!!
+            dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName].isin([rowModifiedVINContentsIndicator])].apply(printUnitDetailsUsingChangeType, axis= 1, args=[dateTimeWithTimeZoneStr, unitDetailsDelimiter, printColumnsToUse, f, printIt, suppressFixedUnitDetailsPrefix, sanitizeStrings])
+        if (outputResultsMethod == outputAllSearchResultsOnChange):
+            if len(dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName].isin([rowSameVINContentsIndicator])]):
+                # guarantees the dataframe is not empty otherwise if it was empty and .apply used, the apply function would be called once by pandas with an empty series which we dont want. !!!!
+                dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName].isin([rowSameVINContentsIndicator])].apply(printUnitDetailsUsingChangeType, axis= 1, args=[dateTimeWithTimeZoneStr, unitDetailsDelimiter, printColumnsToUse, f, printIt, suppressFixedUnitDetailsPrefix, sanitizeStrings])
+        if removedUnitFrom and ((outputResultsMethod == outputChangedSearchResultsOnChange) or ((outputResultsMethod == outputAllSearchResultsOnChange) and showRemovalsWhenOutputStatusIsAll)):
+            # For this condtion we want to print all the removed VIN row entries  (dfOld rows for VINs that are not in dfNew)
+            # Also out of those VINs where the VIN was also in the unfiltered new, but not in the match criteria filtered new (i.e. dfNew) the changes
+            # from dfOld to unfiltered New,  put in the rowModificationsColumnName, so we could see what caused the match criteria to go away in
+            # that case.
+            dfUnfilteredCopy = dfUnfilteredInventory.copy(deep=True)
+            # Add minimal columns needed to reduce conditional testing in operations below.
+            if (len(dfUnfilteredCopy) == 0) and (not ("VIN" in dfUnfilteredCopy.columns)):
+                dfUnfilteredCopy["VIN"] = None
+            if not (LastChangedDateTimeColName in dfUnfilteredCopy.columns):
+                dfUnfilteredCopy[LastChangedDateTimeColName] = None
+            if not ("VIN" in dfUnfilteredCopy.columns):
+                print("Error: outputSearchResultsToUser: dfUnfilteredCopy did not contain VIN column ")
+            if not ("VIN" in dfUnfilteredCopy.columns):
+                print("Error: outputSearchResultsToUser: dfUnfilteredCopy did not contain VIN column ")
+                
+            #print("Debug outputSearchResultsToUser: len(dfUnfilteredInventory), len(dfUnfilteredCopy)", len(dfUnfilteredInventory), len(dfUnfilteredCopy) )
+            
+            # Save off the original column names in unfiltered for later use
+            originalColumnsInUnfiltered = dfUnfilteredCopy.columns
+            # Merge with dfOld to get old (filtered) and new unfiltered values for contents of common VINS only.  These are  VINs
+            # that could be either be in Dfnew (and thus dfUnfilteredCopy) and DfOld,  and/or just in dfUnfilteredCopy and DfOld
+            dfUnfilteredMergedWithOldOnlyCommon = dfUnfilteredCopy.merge(dfOld, left_on="VIN", right_on="VIN", how='inner', suffixes = (None, mergeSuffixRight), indicator = "WhoDidMergeComeFrom_")
+            # Add change type and modifications columns with defaults
+            dfUnfilteredMergedWithOldOnlyCommon[rowChangeTypeColumnName] = rowSameVINContentsIndicator
+            dfUnfilteredMergedWithOldOnlyCommon[rowModificationsColumnName] = None
+            # Filter dfUnfilteredMergedWithOldOnlyCommon for only rows whose VIN is also in dfOldMerged rows with change type of rowRemovedVINIndicator  (i.e. for only VINs that were in dfOld but not in DfNew,  i.e. removed VINs)
+            dfUnfilteredMergedWithOldOnlyCommon = dfUnfilteredMergedWithOldOnlyCommon.merge(dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator][["VIN"]], left_on="VIN", right_on="VIN", how='inner', suffixes = (None, mergeSuffixRight), indicator = "WhoDidMergeComeFrom_A")
+            dfUnfilteredMergedWithOldOnlyCommon.drop(columns= ["WhoDidMergeComeFrom_A"], inplace= True)
+            # determine and update the change type and modifications columns  (dfOld contenst are the suffixed columns which is the old values and dfUnfilteredMergedWithOldOnlyCommon is the new in this comparison)
+            # That is we want to see differences for items that are not in dfNew but in dfOld due to match filtering compared to the unfiltered new.
+            if len(dfUnfilteredMergedWithOldOnlyCommon):
+                # guarantees the dataframe is not empty otherwise if it was empty and .apply used, the apply function would be called once by pandas with an empty series which we dont want. !!!!
+                dfUnfilteredMergedWithOldOnlyCommon = dfUnfilteredMergedWithOldOnlyCommon.apply(determineRowDifferences, axis=1, args= (columnsToIgnoreForComparison, originalColumnsInOld, originalColumnsInUnfiltered, mergeSuffixRight))
+            
+            # Create a df that is dfOldMerged but only contains VIN rows where the VIN is marked removed in dfOldMerged and add the row modifications column from dfUnfilteredMergedWithOldOnlyCommon for those VINs.
+            # So now we have modifications for VINs that were not in dfNew due to match criteria not matching them (but in inventory and dfOld) , 
+            # and also have VINs that no longer appeared in inventory (not in unfiltered new) but in dfOld
+            dfOldMergedRemovedOnlyWithLastChange = dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator].merge(dfUnfilteredMergedWithOldOnlyCommon[["VIN", rowModificationsColumnName]], left_on="VIN", right_on="VIN", how='left', suffixes = (None, mergeSuffixRight), indicator = "WhoDidMergeComeFrom_A").copy(deep=True)
+            dfOldMergedRemovedOnlyWithLastChange[rowModificationsColumnName] = dfOldMergedRemovedOnlyWithLastChange[rowModificationsColumnName + mergeSuffixRight]
+            # Note that at this point rowChangeTypeColumnName column has rowRemovedVINIndicator for all its values.
+            if len(dfOldMergedRemovedOnlyWithLastChange):
+                # guarantees the dataframe is not empty otherwise if it was empty and .apply used, the apply function would be called once by pandas with an empty series which we dont want. !!!!
+                dfOldMergedRemovedOnlyWithLastChange.apply(printUnitDetailsUsingChangeType, axis= 1, args=[dateTimeWithTimeZoneStr, unitDetailsDelimiter, printColumnsToUse, f, printIt, suppressFixedUnitDetailsPrefix, sanitizeStrings])
+        
         f.close()
         # Append this file to the cumulative match history file
         with open(Path(resultsFileName), 'a+') as f1:
@@ -1304,28 +1461,22 @@ def outputSearchResultsToUser(matchCriteria, dfMatches, lastUserMatchesDf, dfUnf
         if addedUnitTo or (modifiedUnitTo and (outputResultsMethod != outputAddedSearchResultsOnChange)) or (removedUnitFrom and ((outputResultsMethod == outputChangedSearchResultsOnChange) or ((outputResultsMethod == outputAllSearchResultsOnChange) and alsoNotifyOnOnlyRemovals))):
             # only notify user via text and emails if we added/(modified with conditions/(removed with conditions) something to the list compared to the prior list
             notifyRemoteUserOfMatches(currentMatchesFileName)
-    if not dfMatchesCopy.empty:
+    if not (dfNewMerged.empty):
         # This section is for terminal output and sounding the computer alarm for matches
         resultsHeaderStr =  "The following list of matching units was found on " + dateTimeWithTimeZoneStr
         print(resultsHeaderStr)
-        for detailsCurIndex in dfMatchesCopy.index:
-            curRowSeries = dfMatchesCopy.loc[detailsCurIndex]
-            addedUnit = False
-            if not curRowSeries["VinIsInLast"]:
-                addedUnit = True
-            modedUnit = False
-            if not addedUnit:
-                # no need to check for modified if it was an added unit, as these are mutually exclusive
-                if curRowSeries["VinLastRowModified"]:
-                    modedUnit = True
-            addedString = ":,         "
-            namesOfModifiedFieldsString = ""
-            if addedUnit:
-                addedString = ":, ***ADDED"  # Use word Added to easily see what was added out of all the matches
-            elif modedUnit:
-                addedString = ":, ***MODED"  # Use word Moded to easily see what was modified out of all the matches
-                namesOfModifiedFieldsString = getNamesOfModifiedFieldsIntoString(dfMatchesCopy.loc[[detailsCurIndex]], lastUserMatchesDfCopy.loc[[curRowSeries["VinLastRowLoc"]]], detailsSameColumnsToIgnore) 
-            printUnitDetails(dateTimeWithTimeZoneStr + unitDetailsDelimiter + addedString, dfMatchesCopy.loc[[detailsCurIndex]], printColumnsToIgnore, fileHandle = 0 , printIt = True, suppressFixedUnitDetailsPrefix = False, sanitizeStrings = True, namesOfModifiedFieldsString = namesOfModifiedFieldsString )  #  use ":, " to make ultra edit filtering of non Went Unavailable strings easier
+        printIt = True
+        suppressFixedUnitDetailsPrefix = False
+        sanitizeStrings = True
+        printColumnsToUse = finalColumnsSelect
+        f= 0
+        if addedUnitTo:
+            dfNewMerged[dfNewMerged[rowChangeTypeColumnName].isin([rowAddedNewVINIndicator])].apply(printUnitDetailsUsingChangeType, axis= 1, args=[dateTimeWithTimeZoneStr, unitDetailsDelimiter, printColumnsToUse, f, printIt, suppressFixedUnitDetailsPrefix, sanitizeStrings])
+        if modifiedUnitTo:
+            dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName].isin([rowModifiedVINContentsIndicator])].apply(printUnitDetailsUsingChangeType, axis= 1, args=[dateTimeWithTimeZoneStr, unitDetailsDelimiter, printColumnsToUse, f, printIt, suppressFixedUnitDetailsPrefix, sanitizeStrings])
+        if len(dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName].isin([rowSameVINContentsIndicator])]):
+            # guarantees the dataframe is not empty otherwise if it was empty and .apply used, the apply function would be called once by pandas with an empty series which we dont want. !!!!
+            dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName].isin([rowSameVINContentsIndicator])].apply(printUnitDetailsUsingChangeType, axis= 1, args=[dateTimeWithTimeZoneStr, unitDetailsDelimiter, printColumnsToUse, f, printIt, suppressFixedUnitDetailsPrefix, sanitizeStrings])
         if computerSoundNotificationFileName and (matchesFoundEvent in soundNotificationEvents) and (addedUnitTo or (modifiedUnitTo and (outputResultsMethod != outputAddedSearchResultsOnChange))):
             notifyWithSound()
     else:

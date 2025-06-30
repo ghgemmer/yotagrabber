@@ -1,4 +1,4 @@
-Readme.txt updated 6/23/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 6/29/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
 This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -97,20 +97,41 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
                 Base MSRP + all the factory and Port installed options/packages + delivery/handling fees  
                 (excludes taxes and other fees like Doc fee, registration fees, etc)
 "Selling Price" -  is the total dealer price (excluding taxes, fees) = Total MSRP + Dealer installed options + Dealer Markup/Discount/adjustments
-                   It is the bottom line final price the dealers show on their website.
-                   Note: This is calculated from the several raw prices the toyota graphql website returns and was arrived at 
-                   by experiment by comparing those to a few dealer websites final price numbers listed for many vehicles.
-                   The logic used to determine the Selling Price from the price fields obtained from the toyota inventory 
-                   website is:
-                    the price.sellingPrice if present and not 0
-                    else use price.advertizedPrice if present and not 0
-                    else use price.nonSpAdvertizedPrice if present and not 0
-                    else use  TMSRP + DIO price  and indicate Selling price is incomplete 
-                   
+                   It is the bottom line final price the Toyota Search Inventory website shows with the exeptions indicated below.
+                   Note that this value in general matches the dealer website value but can be different if the dealer website 
+                   has additional adjustments it does not reflect back to the Toyota Search Inventory database or has not correctly updated those
+                   values in the database. 
+                   This is calculated logically equivalent to what the Toyota Search Inventory website Java Script code does with the noted exceptions. 
+                   The logic used for calculating the Selling Price is as follows:
+                   sellingPriceIncomplete = False
+                   if sellingPrice is present and (sellingPrice >= 10000):
+                       # selling price ok as is
+                   else:
+                       if isSmartPathPresentAndTrue:
+                           if advertizedPrice is present:
+                               sellingPrice = advertizedPrice
+                           else:
+                               sellingPrice = 0
+                       else:
+                           if nonSpAdvertizedPrice is present:
+                               sellingPrice = nonSpAdvertizedPrice
+                           else:
+                               sellingPrice = 0
+                       if sellingPrice is present and (sellingPrice >= 10000):
+                           # selling price ok as is
+                       else:
+                           if tMsrpPlusDio is present and (tMsrpPlusDio >= 10000): # (!!!!The actual website java script code uses the Total MSRP column instead.  Decided to use the TMSRP plus DIO to show worst case price)
+                               sellingPriceIncomplete = True
+                               sellingPrice = tMsrpPlusDio
+                           else:
+                               sellingPriceIncomplete = True
+                               sellingPrice = totalMsrp
+                               
 "Selling Price Incomplete" - Indicates if the Selling Price is incomplete. When incomplete the price 
                              does not include the Dealer Markup/Discount as it was unknown.
 "Markup" - Dealer installed options plus Dealer Markup/Discount/adjustments (i.e everything above the Total MSRP to get to the Selling Price)
-"TMSRP plus DIO" -  Total MSRP plus Dealer installed options
+"TMSRP plus DIO" -  Total MSRP plus Dealer installed options.  This is calculated as "Total MSRP" + price.dioTotalDealerSellingPrice if present 
+                otherwise just "Total MSRP".  This is based on observation from dealer websites so may not be exactly correct in all cases.
 "Hold Status" - There is uncertainty as to what exactly this field indicates. One opinion is it 
                 indicates the degree to which that vehicle is available/spoken for.  Generally, when looking for a vehicle,
                 you want to first contact dealers where PreSold is False and the hold status is blank , then those where it is "Available",  

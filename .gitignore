@@ -206,6 +206,21 @@ credentials.json
 !/src/output/rav4pluginhybrid_Lastraw_VerifySellingPriceMethod.xlsx
 !/src/output/rav4pluginhybrid_NewMethodComparedToOld.xlsx
 
+# reinclude files in /src/ToyotaSearchInventoryWebSourcePages
+# Must do this as git ignores that subdirectory (and anything in it on down) 
+# in the immediate parent excluded directory until you reinclude it
+# That is git will ignore any include of a file in that immediate subdirectory or anywhere on down until you do this. 
+!/src/ToyotaSearchInventoryWebSourcePages/
+# exclude all files and subdirectories in this /src/ToyotaSearchInventoryWebSourcePages directory
+src/ToyotaSearchInventoryWebSourcePages/*
+# reinclude specific files in this /src/ToyotaSearchInventoryWebSourcePages directory
+!/src/ToyotaSearchInventoryWebSourcePages/SnippetWithPriceDetermination.js
+!/src/ToyotaSearchInventoryWebSourcePages/166.626a79eb.chunk.js
+!/src/ToyotaSearchInventoryWebSourcePages/166.626a79eb.chunk-Beautified.js
+!/src/ToyotaSearchInventoryWebSourcePages/topLevelSearchPageSource.html
+!/src/ToyotaSearchInventoryWebSourcePages/search-inventory-tool.js
+
+
 # reinclude this immediate subdirectory in the /src directory.
 # Must do this as git ignores that subdirectory (and anything in it on down) 
 # in the immediate parent excluded directory until you reinclude it

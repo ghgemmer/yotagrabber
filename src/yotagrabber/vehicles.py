@@ -14,6 +14,7 @@ from time import sleep
 from timeit import default_timer as timer
 import numpy as np
 import glob
+import numbers
 
 
 import pandas as pd
@@ -22,7 +23,7 @@ import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass
 
-PROGRAM_VERSION = "Vehicles Program Version 6.2.1 06-17-2025"
+PROGRAM_VERSION = "Vehicles Program Version 6.4.1 06-29-2025" #
 
 # Set to True to use local data and skip requests to the Toyota website.
 USE_LOCAL_DATA_ONLY = False
@@ -597,33 +598,101 @@ def sanitizeStr(strng):
         sanitizedString = re.sub(rePattern, ' ', sanitizedString)
     return sanitizedString
 
-# Save the following as example of how could have done all the selling price calcs with a pandas apply    
-#def calcSellingPrice(rowSeries):
-#    # Returns the row series with the updated Selling Price and Selling Price Incomplete from the df row series
-#    # Selling price is the TMSRP + Dealer installed options + Dealer discounts/markups with the exception when Selling Price Incomplete is True
-#    # From analyzing several graphql returned inventories (see rav4pluginhybrid_Lastraw_VerifySellingPriceMethod.xlsx, and 4runner_Lastraw_VerifySellingPriceMethod.xlsx)
-#    # with all the graphql prices in them
-#    # and the corresponding dealer websites to look at final bottom line prices listed by dealers,
-#    # it was determined that the Selling price we want to use  (bottom line final price shown by dealers) from the graphql is
-#    # the raw Selling Price if present and not 0
-#    # else use advertizedPrice if present and not 0
-#    # else use nonSpAdvertizedPrice if present and not 0
-#    # else use  TMSRP + DIO price and indicate Selling price is incomplete 
-#    sellingPrice = rowSeries["Selling Price"]
-#    nonSpAdvertizedPrice = rowSeries["price.nonSpAdvertizedPrice"]
-#    advertizedPrice = rowSeries["price.advertizedPrice"]
-#    rowSeries["Selling Price Incomplete"] = False
-#    if not(valueIsNanNoneNull(sellingPrice) or (sellingPrice == 0)):
-#        pass
-#    elif not(valueIsNanNoneNull(advertizedPrice) or (advertizedPrice == 0)):
-#        sellingPrice = advertizedPrice
-#    elif not(valueIsNanNoneNull(nonSpAdvertizedPrice) or (nonSpAdvertizedPrice == 0)):
-#        sellingPrice = nonSpAdvertizedPrice
-#    else:
-#        sellingPrice = rowSeries["TMSRP plus DIO"]
-#        rowSeries["Selling Price Incomplete"] = True
-#    rowSeries["Selling Price"] = sellingPrice
-#    return rowSeries
+def isNumber(value):
+    return ((isinstance(value, int)) or (isinstance(value, float)))
+    
+def calcPrices(rowSeries):
+    # Returns the row series with the updated prices and Selling Price Incomplete from the df row series
+    # Assumes the series has columns "Selling Price", "Selling Price Incomplete", "price.nonSpAdvertizedPrice", "price.advertizedPrice", 
+    # "price.dioTotalDealerSellingPrice", "TMSRP plus DIO", "Total MSRP", "Base MSRP", "Markup", "isSmartPath"
+    # Selling price is the TMSRP + Dealer installed options + Dealer discounts/markups with the exception when Selling Price Incomplete is True
+    # Markup is everything above the TMSRP to get to the Selling Price.
+    # Note that in the below, Markup and Selling Price Incomplete are columns I added and not something the website returns
+    # TMSRP plus DIO is calculated as "Total MSRP" + price.dioTotalDealerSellingPrice if present otherwise just "Total MSRP".  This is based on observation so may not be exactly correct.
+    # The selling price is calculated logically equivalent to the javascript source code from the Toyota search inventory website as follows with the noted modifications:
+    # See ToyotaSearchInventoryWebSourcePages\SnippetWithPriceDetermination.js for the exact javascript code from the website (the below is pretty much it but in python and with the noted exceptions)
+    # 
+    #    sellingPriceIncomplete = False
+    #    if sellingPrice is present and (sellingPrice >= 10000):
+    #        # selling price ok as is
+    #    else:
+    #        if isSmartPathPresentAndTrue:
+    #            if advertizedPrice is present:
+    #                sellingPrice = advertizedPrice
+    #            else:
+    #                sellingPrice = 0
+    #        else:
+    #            if nonSpAdvertizedPrice is present:
+    #                sellingPrice = nonSpAdvertizedPrice
+    #            else:
+    #                sellingPrice = 0
+    #        if sellingPrice is present and (sellingPrice >= 10000):
+    #            # selling price ok as is
+    #        else:
+    #            if tMsrpPlusDio is present and (tMsrpPlusDio >= 10000): (!!!!The actual website java script code uses the Total MSRP column instead.  Decided to use the TMSRP plus DIO to show worst case price)
+    #                sellingPriceIncomplete = True
+    #                sellingPrice = tMsrpPlusDio
+    #            else:
+    #                sellingPriceIncomplete = True
+    #                sellingPrice = totalMsrp
+    #
+    sellingPrice = rowSeries["Selling Price"]
+    sellingPriceIncomplete = False
+    isSmartPath = rowSeries["isSmartPath"]
+    nonSpAdvertizedPrice = rowSeries["price.nonSpAdvertizedPrice"]
+    advertizedPrice = rowSeries["price.advertizedPrice"]
+    dioTotalDealerSellingPrice = rowSeries["price.dioTotalDealerSellingPrice"]
+    tMsrpPlusDio = np.NaN
+    baseMsrp = rowSeries["Base MSRP"]
+    totalMsrp = rowSeries["Total MSRP"]
+    markup = np.NaN
+    
+    isSmartPathPresentAndTrue = isinstance(isSmartPath, bool) and isSmartPath
+    
+    if valueIsNanNoneNull(baseMsrp) or not(isinstance(baseMsrp, (int,float))):
+        baseMsrp = np.NaN
+    if valueIsNanNoneNull(totalMsrp) or not(isinstance(totalMsrp, (int,float))):
+        totalMsrp = baseMsrp
+    if valueIsNanNoneNull(dioTotalDealerSellingPrice):
+        tMsrpPlusDio = totalMsrp
+    else:
+        tMsrpPlusDio = totalMsrp + dioTotalDealerSellingPrice # yields NaN if either is NaN
+    
+    if not(valueIsNanNoneNull(sellingPrice)) and isinstance(sellingPrice, (int,float)) and  (sellingPrice >= 10000):
+        # selling price ok as is
+        pass        
+    else:
+        if isSmartPathPresentAndTrue:
+            if not(valueIsNanNoneNull(advertizedPrice)) and isinstance(advertizedPrice, (int,float)):
+                sellingPrice = advertizedPrice
+            else:
+                sellingPrice = 0
+        else:
+            if not(valueIsNanNoneNull(nonSpAdvertizedPrice)) and isinstance(nonSpAdvertizedPrice, (int,float)):
+                sellingPrice = nonSpAdvertizedPrice
+            else:
+                sellingPrice = 0
+        if not(valueIsNanNoneNull(sellingPrice)) and isinstance(sellingPrice, (int,float)) and (sellingPrice >= 10000):
+            # selling price ok as is
+            pass
+        else:
+            if not(valueIsNanNoneNull(tMsrpPlusDio)) and isinstance(tMsrpPlusDio, (int,float)) and (tMsrpPlusDio >= 10000):
+                sellingPriceIncomplete = True
+                sellingPrice = tMsrpPlusDio
+            else:
+                sellingPriceIncomplete = True
+                sellingPrice = totalMsrp
+                
+    markup = sellingPrice - totalMsrp # yields NaN if either is NaN
+    
+    rowSeries["Selling Price"]                     = sellingPrice
+    rowSeries["Selling Price Incomplete"]          = sellingPriceIncomplete
+    rowSeries["Base MSRP"]                         = baseMsrp
+    rowSeries["Total MSRP"]                        = totalMsrp
+    rowSeries["TMSRP plus DIO"]                    = tMsrpPlusDio
+    rowSeries["Markup"]                            = markup
+    
+    return rowSeries
 
 def transformRawDfToCsvStyleDf ( inputDf):
     # transforms the input raw df (one that has all the raw parquet fields) into an output df for a csv file.
@@ -741,6 +810,7 @@ def transformRawDfToCsvStyleDf ( inputDf):
                     "intColor.marketingName",
                     "dealerMarketingName",
                     "dealerWebsite",
+                    "isSmartPath",
                     "Dealer State",
                     "Dealer City",
                     "Dealer Zip",
@@ -775,36 +845,22 @@ def transformRawDfToCsvStyleDf ( inputDf):
         # df = df[df["Color"].notna()]  # don't remove entries with missing color as still want to see those vehicles.
         df["Color"] = df["Color"].str.replace(" [extra_cost_color]", "", regex=False)
         df["Int Color"] = df["Int Color"].apply(sanitizeStr)
-    
+        
         # Calculate the various prices.
-        df["TMSRP plus DIO"] = df["Total MSRP"] + df["price.dioTotalDealerSellingPrice"]
-        df["TMSRP plus DIO"] = df["TMSRP plus DIO"].fillna(df["Total MSRP"])
-        # Selling price is the TMSRP + Dealer installed options + Dealer discounts/markups with the exception when Selling Price Incomplete is True
-        # From analyzing several graphql returned inventories (see rav4pluginhybrid_Lastraw_VerifySellingPriceMethod.xlsx, and 4runner_Lastraw_VerifySellingPriceMethod.xlsx)
-        # with all the graphql prices in them
-        # and a few corresponding dealer websites to look at final bottom line prices listed by dealers,
-        # it was arrived at by experiment that the Selling price we want to use  (bottom line final price shown by dealers) from the graphql is
-        # the raw Selling Price if present and not 0
-        # else use advertizedPrice if present and not 0
-        # else use nonSpAdvertizedPrice if present and not 0
-        # else use  TMSRP + DIO price and indicate Selling price is incomplete
-        # Note that was not able to find any webpage code that shows this logic (lots of source code files pulled in by the inventory webpage so did not look at everything yet)
-        # and also if the webpage accessed the byVIN graphql did not want to take up extra time to do that at this time.
-        # Further investigation will be required. 
-        df["Raw Selling Price"] = df["Selling Price"]
-        df["Selling Price"] = df["Selling Price"].where((df["Selling Price"].isnull() == False) & (df["Selling Price"] != 0), df["price.advertizedPrice"] )
-        df["Selling Price"] = df["Selling Price"].where((df["Selling Price"].isnull() == False) & (df["Selling Price"] != 0), df["price.nonSpAdvertizedPrice"] )
-        df["Selling Price Incomplete"] = False
-        df["Selling Price Incomplete"] = df["Selling Price Incomplete"].where((df["Selling Price"].isnull() == False) & (df["Selling Price"] != 0), True)
-        df["Selling Price"] = df["Selling Price"].where(df["Selling Price Incomplete"] != True, df["TMSRP plus DIO"] )
-        # The Markup column is defined to show the cost of the Dealer Installed Options plus the actual dealer discount/markup
-        # i.e everything the dealer adds on to the TMSRP including discounts/markups
-        df["Markup"] = df["Selling Price"] - df["Total MSRP"]
+        df["Raw Selling Price"] = df["Selling Price"] # create column with default
+        df["Selling Price Incomplete"] = False  # create column with default
+        df["TMSRP plus DIO"] = np.NaN # create column with default
+        df["Markup"] = np.NaN # create column with default
+        if len(df):
+            # Note: Using a slice of the df that contains just the columns needed for the price calculation does not
+            # execute any faster than passing all columns to the apply.
+            df = df.apply(calcPrices, axis=1)
+        
         df.drop(columns=["price.dioTotalDealerSellingPrice"], inplace=True)
-    
+        
         statuses = {None: False, 1: True, 0: False}
         df.replace({"Pre-Sold": statuses}, inplace=True)
-    
+        
         statuses = {
             "A": "Factory to port",
             "F": "Port to dealer",
@@ -856,6 +912,7 @@ def transformRawDfToCsvStyleDf ( inputDf):
                 "isTempVin",
                 "Dealer",
                 "Dealer Website",
+                #"isSmartPath",
                 "Dealer State",
                 "Dealer City",
                 "Dealer Zip",
@@ -1292,7 +1349,7 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     global changeHistoryUseThisAsTodaysDateForTesting
     global maxDaysOldToKeep
     #print(datetime.datetime.now(), "getChangeHistory: Entered")
-    print("Determining change history by analyzing ", len(newDf), " entries. Warning: This could take up to 30 seconds for approx 40000 entries")
+    print("Determining change history by analyzing ", len(newDf), " entries. Warning: This could take up to 90 seconds for approx 40000 entries")
     #print("len(oldDf)", len(oldDf), "len(newDf)", len(newDf))
     # make copies of the oldDf and newDf to avoid modifying them.
     dfOld = oldDf.copy(deep=True)

@@ -23,7 +23,7 @@ import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass
 
-PROGRAM_VERSION = "Vehicles Program Version 6.4.1 06-29-2025" #
+PROGRAM_VERSION = "Vehicles Program Version 6.4.2 07-04-2025" #
 
 # Set to True to use local data and skip requests to the Toyota website.
 USE_LOCAL_DATA_ONLY = False
@@ -197,7 +197,7 @@ def get_vehicle_query_Objects():
         query = query.replace("LEADIDUUID", str(uuid.uuid4()))
         vehicleQueryObjects["SingleZipCode_" + MODEL_SEARCH_ZIPCODE + "_RadiusMiles_" + MODEL_SEARCH_RADIUS] = query
     else:
-        if MODEL in [ "camry", "tacoma", "tundra", "rav4hybrid", "rav4", "corolla"]:
+        if MODEL in [ "camry", "tacoma", "tundra", "rav4hybrid", "rav4", "corolla", "4runner"]:
             # note that the tacoma is the largest number of vehicles (some 44,000 for the last 2 years), followed by tundra, camry, rav4hybrid, rav4
             vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "midIllinois", "east", "atlanta", "topLeftCornerContlUS", "portlandOregon", "bottomLeftCornerContlUS", "midCalifornia", "upperCalifornia", "topRightCornerContlUS", "midPennsylvania", "rochesterNewYork", "albanyNewYork", "bostonMA", "midTennessee", "midOhio", "richmondVA", "bottomRightCornerContlUS", "panhandleFlorida", "midFlorida", "bottomCenterContlUS", "midTexas", "midArizona", "renoNevada", "topCenterContlUS" ]
         elif MODEL in ["grandhighlander" ]:

@@ -849,7 +849,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 34096,34096,Voss Toyota,https://www.vosstoyota.com,22,OH,39.70573,-84.01378,2110 Heller Drive,Beavercreek,45434,(937) 427-3700
 34098,34098,Team Toyota,https://www.teamtoyotaohio.com,22,OH,40.375672,-80.631053,905 Brady Avenue,Steubenville,43952,(740) 283-4131
 34099,34099,Nourse Toyota,https://www.noursetoyota.com,22,OH,39.34733,-82.97475,423 N. Bridge Street,Chillicothe,45601,(740) 773-7913
-34101,34101,Don Wood Toyota,https://www.donwoodtoyota.com,22,OH,39.337316,-82.070728,900 East State Street,Athens,45701,(740) 593-6641
+34101,34101,Don Wood Toyota,https://www.donwoodtoyota.com,9999,OH,39.337316,-82.070728,900 East State Street,Athens,45701,(740) 593-6641
 34102,34102,Coughlin Toyota,https://www.coughlintoyota.com,22,OH,39.991777,-82.476346,2360 Hebron Road,Heath,43056,(740) 929-9000
 34104,34104,Ferris Toyota,https://www.ferristoyota.com,22,OH,40.504293,-81.457155,"634 Wabash Avenue, N.W.",New Philadelphia,44663,(330) 343-7761
 34109,34109,Ken Ganley Toyota Akron,https://www.kenganleytoyotaakron.com,22,OH,41.063883,-81.477328,1395 East Market Street,Akron,44305,(330) 733-7511
@@ -872,7 +872,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 34136,34136,Victory Toyota of Ashtabula County,https://www.victorytoyota440.com,22,OH,41.752497,-80.768234,2972 GH Drive,Austinburg,44010,(440) 576-1010
 34137,34137,Toyota Cleveland Heights,https://www.toyotaclevelandheights.com,22,OH,41.513833,-81.573522,2950 Mayfield Road,Cleveland Hts,44118,(216) 321-9100
 34138,34138,Toyota of North Canton,https://www.toyotaofnorthcanton.com,22,OH,40.875699,-81.423805,6527 Whipple Avenue NW,North Canton,44720,(330) 494-8855
-34139,34139,Victory Toyota Marietta,https://www.victorytoyotamarietta.com,22,OH,39.397096,-81.406315,1305 Pike Street,Marietta,45750,(740) 373-2928
+34139,34139,Victory Toyota Marietta,https://www.victorytoyotamarietta.com,9999,OH,39.397096,-81.406315,1305 Pike Street,Marietta,45750,(740) 373-2928
 34140,34140,Firelands Toyota of Wooster,https://www.firelandstoyotawooster.com,22,OH,40.799856,-81.959863,1363 W. Old Lincoln Way,Wooster,44691,(330) 264-1113
 34141,34141,Victory Toyota of Brook Park,https://www.victorytoyotabrookpark.com,22,OH,41.418133,-81.787063,13775 Brookpark Road,Brook Park,44142,(216) 267-7000
 34142,34142,Premier Toyota of Amherst,https://www.premiertoyota.com,22,OH,41.41245,-82.233142,47190 Cooper Foster Park Road,Amherst,44001,(440) 985-6100
@@ -1210,6 +1210,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 47036,47036,Moses Toyota of Morgantown,https://www.mosestoyotaofmorgantown.com,80,WV,39.60773,-79.967852,60 Don Knotts Blvd.,Morgantown,26508,(304) 296-4401
 47037,47037,Victory Toyota Barboursville,https://www.victorytoyotabarboursville.com,80,WV,38.415122,-82.259474,1 Superior Way,Barboursville,25504,(304) 736-5400
 47038,47038,Victory Toyota Charleston,https://www.victorytoyotacharleston.com,80,WV,38.370629,-81.671648,1905 Patrick Street Plaza,Charleston,25387,(304) 513-3777
+47039,47039,Parkersburg Toyota,https://www.parkersburgtoyota.com,9999,WV,39.268278,-81.514403,3101 E 7th Street,Parkersburg,26101,(304) 424-5122
 48005,48005,Le Mieux & Son Toyota,https://www.lemieuxtoyota.com,21,WI,44.48136,-88.071172,2550 South Oneida Street,Green Bay,54304,(920) 496-2200
 48021,48021,Kari Toyota,https://www.karitoyota.com,21,WI,46.726434,-92.102988,1002 Tower Avenue,Superior,54880,(715) 394-4429
 48027,48027,Markquart Toyota,https://www.markquarttoyota.com,21,WI,44.870127,-91.425717,1844 Commercial Blvd.,Chippewa Falls,54729,(715) 834-4440

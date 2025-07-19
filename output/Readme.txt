@@ -1,9 +1,9 @@
-Readme.txt updated 7/8/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 7/18/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 
-This folder contains the inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
+This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
 gets its data from (which is https://api.search-inventory.toyota.com/graphql ).  The folder also contains the sold inventory 
-(inventory that appeard at one time in a run, but no longer appears in the inventory gotten from the website), as well as Change History 
+(inventory that appeard at one time in a run, but no longer appears in the inventory obtained from the website), as well as Change History 
 event files for the last 14 days which contain added VINs, modified contents of existing VINs, or removed VINs between runs of the inventory 
 collection over that time period.
 

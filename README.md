@@ -15,8 +15,9 @@ and to optionally allow searching for all vehicles within a specified distance f
 When searching with a specified zipcode you are limited to finding at most 10,000 vehicles for a given model
 where as with no specified zipcode you can find at least 40,000 vehicles for a given model.
 
-- Fix how the Selling Price (bottom line final price) is calculated to match the Toyota Search Inventory website javascript code.  
-Also how markup is calculated  (Selling Price - TMSRP).
+- Fix how the Selling Price (bottom line final dealer price) is calculated to match the Toyota Search Inventory website javascript code,
+and so that the Selling Price is always something (not blank) so a user can sort on it or the Markup column.
+Also updated how the Markup is calculated  (Selling Price - TMSRP).
 
 - Added other spreadsheet columns ( internal Color, cab, bed, transmission type, engine name, , city/highway/combined mpg , 
 Dealer city, zipcode, Dealer and Center latitude and longitude, Distance from Center, first date the VIN was added, 

@@ -17,6 +17,16 @@ This is definitely needed when running things from directories outside the norma
 When a python file is executed if you get a "cannot find module x" type error message you need to setup this
 path.
 
+Note: Sometimes if you reboot the computer and the dynamic local IP addresses are reassigned and you have programs that 
+are using fixed IP address assignements for some devices then you may need to either change those assignments in the apps/programs
+or make the IP addresses static in the router to guarantee they don't change.  I had a camera with an app that expected a fixed local IP address.
+Not sure if this was the issue but after replacing my Mediacom modem and then power cycling the Netgear wifi router attached to it, as well as
+the computer, the internet worked fine from google chrome browser,  and a program using google gmail workspace API worked fine (to automatically send emails),  
+but when attempted to do an upload of files to google drive using a program that accesses the google drive API, I kept getting a windows Timeout errors.
+Once I rebooted the computer and changed the local IP address (of a web camera) in the app using it to match what the router assigned it then everything
+worked fine.  So not sure if it was just the fact I rebooted the computer a second time after the router had been power cycled, 
+or a combination of that and fixing the mismatched local IP address.  Something to keep in mind if you have issues similar to this.
+
 C:\Users\GregG\AppData\Local\Programs\yotagrabber_venv\Scripts\activate
 cd C:\Users\GregG\Documents\GitHub\yotagrabber\src
 set MODEL=rav4prime

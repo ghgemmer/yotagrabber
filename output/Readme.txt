@@ -49,7 +49,7 @@ This allows a user to see the changes that occurred from run to run.
 Only the last 14 days of changes are kept.
 A typical use of this file is to watch for changes to the column values of a specific VIN  (sort by VIN and find the specific
 VIN).  The user can visually scan for changes between values in the rows for that VIN or look at the
-List of Changes column (for change types of MODED) to see a concise list only the changes that occured between the current row
+List of Changes column (for change types of MODED) to see a concise list of only the changes that occured between the current row
 and the previous row.
 
 A user would typically note the last time they viewed that VIN info in this file and then be sure to 
@@ -71,7 +71,7 @@ Add the following formula to row 2 of that new blank column
 then copy and paste that cell to all the other cells below in that column
 Now filter on the value TRUE for that new column.
 You should see pairs of rows, were each pair is ADDED followed by REMOVED. The ADDED one contains the real VIN 
-and the REMVOED contains the temp VIN and all the other columns should match between the two (excluding obvious ones that
+and the REMOVED contains the temp VIN and all the other columns should match between the two (excluding obvious ones that
 will be different).  The above formula doesn't check that all columns match, just that the Selling Price, Options and
 Event DateTime match between the columns which in general if they do then the others probably match as well, but you 
 need to visually verify the other columns just to make sure.

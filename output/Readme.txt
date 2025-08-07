@@ -1,5 +1,5 @@
-Readme.txt updated 8/6/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
-Alerts: 8-6-2025 Some model updates are delayed until 11:50am CDT, and the rest will be delayed until 8-7-2025 5am CDT
+Readme.txt updated 8/7/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+No Alerts.
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)

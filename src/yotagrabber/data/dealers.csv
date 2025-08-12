@@ -402,7 +402,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 13071,13071,Toyota of Muncie,https://www.toyotaofmuncie.com,21,IN,40.220003,-85.462035,3311 N. Nebo Road,Muncie,47304,(765) 289-0201
 13073,13073,Toyota of Warsaw,https://www.toyotawarsaw.com,21,IN,41.270501,-85.851492,448 W. 250 North,Warsaw,46582,(574) 267-4636
 13075,13075,Jordan Toyota,https://www.jordantoyota.com,9999,IN,41.673504,-86.170507,920 E. Jefferson Blvd.,Mishawaka,46545,(574) 259-1981
-13076,13076,Cronin Toyota of  Richmond,https://www.cronintoyotaofrichmond.com,21,IN,39.831126,-84.826102,5601 National Road East,Richmond,47374,(765) 966-4569
+13076,13076,Cronin Toyota of  Richmond,https://www.cronintoyotaofrichmond.com,9999,IN,39.831126,-84.826102,5601 National Road East,Richmond,47374,(765) 966-4569
 13077,13077,Bill Estes Toyota,https://www.billestestoyota.com,21,IN,39.924247,-86.11156,3232 Harper Road,Indianapolis,46240,(317) 846-9600
 13078,13078,Bosak Toyota of Chesterton,https://www.bosaktoyotachesterton.com,21,IN,41.6032,-87.11556,244 Melton Road,Burns Harbor,46304,(219) 787-8600
 13079,13079,Toyota of Madison,https://www.toyotaofmadison.net,21,IN,38.775447,-85.392542,258 Clifty Drive,Madison,47250,(812) 273-3135
@@ -447,12 +447,12 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 16046,16046,Toyota of Murray,https://www.toyotaofmurray.com,22,KY,36.593297,-88.314623,1301 South 12th Street,Murray,42071,(270) 753-4961
 16048,16048,Toyota of Somerset,https://www.toyotaofsomerset.com,22,KY,37.034487,-84.627729,4195 South Highway 27,Somerset,42503,(606) 679-1601
 16049,16049,Toyota South,https://www.toyotasouth.com,22,KY,37.759931,-84.275255,961 Four Mile Road,Richmond,40475,(859) 624-1313
-16050,16050,Kerry Toyota,https://www.kerrytoyota.com,22,KY,39.004467,-84.655455,6050 Hopeful Church Road,Florence,41042,(859) 371-3939
+16050,16050,Kerry Toyota,https://www.kerrytoyota.com,9999,KY,39.004467,-84.655455,6050 Hopeful Church Road,Florence,41042,(859) 371-3939
 16051,16051,Oxmoor Toyota,https://www.oxmoortoyota.com,22,KY,38.249817,-85.605553,8003 Shelbyville Road,Louisville,40222,(502) 426-1200
 16052,16052,Marshall Dry Ridge Toyota,https://www.marshalldryridgetoyota.com,22,KY,38.68267,-84.6039,9 Taft Highway,Dry Ridge,41035,(859) 824-9200
 16055,16055,Walters Toyota,https://www.walterstoyota.com,22,KY,37.5371,-82.599234,30 Walters Lane,Pikeville,41501,(606) 432-1451
 16056,16056,Toyota on Nicholasville,https://www.toyotaonnicholasville.com,22,KY,37.917449,-84.555907,2100 Lexington Road,Nicholasville,40356,(859) 887-4200
-16058,16058,Kerry Toyota Service Center,www.kerrytoyota.com,22,KY,39.0776,-84.5189,550 Pike Street,Covington,41011,(859) 581-0911
+16058,16058,Kerry Toyota Service Center,www.kerrytoyota.com,9999,KY,39.0776,-84.5189,550 Pike Street,Covington,41011,(859) 581-0911
 16059,16059,Don Moore Toyota,https://www.donmooretoyota.com,22,KY,37.730889,-87.122997,4216 Frederica Street,Owensboro,42301,(270) 926-2500
 16061,16061,Frankfort Toyota,https://www.frankforttoyota.com,22,KY,38.188104,-84.818523,1001 Leestown Road,Frankfort,40601,(502) 695-1500
 16062,16062,Mann Toyota,https://www.manntoyota.com,22,KY,37.644617,-82.777283,1811 U.S. Highway 23 North,Prestonsburg,41653,(606) 886-3861
@@ -835,20 +835,20 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 34025,34025,Tansky Sawmill Toyota,https://www.tanskysawmilltoyota.com,22,OH,40.09528,-83.09117,6300 Sawmill Road,Dublin,43017,(614) 766-4800
 34026,34026,Jim White Toyota,https://www.jimwhitetoyota.com,22,OH,41.6754,-83.687922,6123 West Central Avenue,Toledo,43615,(419) 841-6681
 34041,34041,Germain Toyota of Columbus,https://www.germaintoyota.net,22,OH,39.931883,-82.839501,5711 Scarborough Blvd.,Columbus,43232,(614) 868-0300
-34044,34044,Performance Toyota,https://www.performancetoyotastore.com,22,OH,39.332041,-84.52006,5676 Dixie Highway,Fairfield,45014,(513) 874-8797
+34044,34044,Performance Toyota,https://www.performancetoyotastore.com,9999,OH,39.332041,-84.52006,5676 Dixie Highway,Fairfield,45014,(513) 874-8797
 34050,34050,Graham Toyota,https://www.grahamtoyota.com,22,OH,40.767788,-82.564931,1515 West Fourth Street,Mansfield,44906,(419) 529-1800
 34064,34064,Glockner Toyota,https://www.glocknertoyota.com,22,OH,38.769468,-82.986238,2867 U.S. Route 23,Portsmouth,45662,(740) 354-3255
 34070,34070,Toyota Direct,https://www.toyotadirect.com,22,OH,40.057783,-82.897578,4248 Morse Road,Columbus,43230,(614) 476-1979
 34073,34073,Walker Toyota,https://www.walkertoyota.com,22,OH,39.627343,-84.226654,8457 Springboro Pike,Miamisburg,45342,(937) 433-4950
-34077,34077,Joseph Airport Toyota,https://www.josephairporttoyota.com,22,OH,39.888754,-84.22091,1180 W National Road,Vandalia,45377,(937) 898-8060
-34078,34078,Beechmont Toyota,https://www.beechmonttoyota.com,22,OH,39.071617,-84.314085,8667 Beechmont Avenue,Cincinnati,45255,(513) 388-3800
+34077,34077,Joseph Airport Toyota,https://www.josephairporttoyota.com,9999,OH,39.888754,-84.22091,1180 W National Road,Vandalia,45377,(937) 898-8060
+34078,34078,Beechmont Toyota,https://www.beechmonttoyota.com,9999,OH,39.071617,-84.314085,8667 Beechmont Avenue,Cincinnati,45255,(513) 388-3800
 34080,34080,McDaniel Toyota,https://www.mcdanieltoyota.com,22,OH,40.580669,-83.099695,1111 Mt. Vernon Avenue,Marion,43302,(740) 389-2355
-34085,34085,Kings Toyota,https://www.kingstoyota.com,22,OH,39.29334,-84.309744,4700 Fields Ertel Road,Cincinnati,45249,(513) 683-5440
-34089,34089,Joseph Toyota of Cincinnati,https://www.josephtoyota.com,22,OH,39.236883,-84.592682,9101 Colerain Avenue,Cincinnati,45251,(513) 385-1800
+34085,34085,Kings Toyota,https://www.kingstoyota.com,9999,OH,39.29334,-84.309744,4700 Fields Ertel Road,Cincinnati,45249,(513) 683-5440
+34089,34089,Joseph Toyota of Cincinnati,https://www.josephtoyota.com,9999,OH,39.236883,-84.592682,9101 Colerain Avenue,Cincinnati,45251,(513) 385-1800
 34090,34090,Brunswick Toyota,https://www.brunswickautomarttoyota.com,22,OH,41.23975,-81.797097,3041 Center Road,Brunswick,44212,(330) 273-3300
 34092,34092,Thayer Toyota,https://www.thayertoyota.com,22,OH,41.3973,-83.65111,1225 North Main Street,Bowling Green,43402,(419) 353-5751
 34093,34093,Classic Toyota,https://www.driveclassictoyota.com,22,OH,41.684417,-81.33458,8510 Tyler Blvd.,Mentor,44060,(440) 953-0910
-34096,34096,Voss Toyota,https://www.vosstoyota.com,22,OH,39.70573,-84.01378,2110 Heller Drive,Beavercreek,45434,(937) 427-3700
+34096,34096,Voss Toyota,https://www.vosstoyota.com,9999,OH,39.70573,-84.01378,2110 Heller Drive,Beavercreek,45434,(937) 427-3700
 34098,34098,Team Toyota,https://www.teamtoyotaohio.com,22,OH,40.375672,-80.631053,905 Brady Avenue,Steubenville,43952,(740) 283-4131
 34099,34099,Nourse Toyota,https://www.noursetoyota.com,22,OH,39.34733,-82.97475,423 N. Bridge Street,Chillicothe,45601,(740) 773-7913
 34101,34101,Don Wood Toyota,https://www.donwoodtoyota.com,9999,OH,39.337316,-82.070728,900 East State Street,Athens,45701,(740) 593-6641
@@ -856,14 +856,14 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 34104,34104,Ferris Toyota,https://www.ferristoyota.com,22,OH,40.504293,-81.457155,"634 Wabash Avenue, N.W.",New Philadelphia,44663,(330) 343-7761
 34109,34109,Ken Ganley Toyota Akron,https://www.kenganleytoyotaakron.com,22,OH,41.063883,-81.477328,1395 East Market Street,Akron,44305,(330) 733-7511
 34111,34111,Toyota of Warren,https://www.toyotaofwarren.com,22,OH,41.2071,-80.74,2657 Niles-Cortland Road,Warren,44484,(330) 369-1678
-34116,34116,Jeff Wyler Toyota of Springfield,https://jeffwylerspringfieldtoyota.net,22,OH,39.941271,-83.846295,2237 West First Street,Springfield,45504,(937) 325-4601
+34116,34116,Jeff Wyler Toyota of Springfield,https://jeffwylerspringfieldtoyota.net,9999,OH,39.941271,-83.846295,2237 West First Street,Springfield,45504,(937) 325-4601
 34118,34118,Toyota of Bedford,https://www.toyotaofbedford.com,22,OH,41.4042,-81.549432,18151 Rockside Road,Bedford,44146,(440) 439-8600
 34120,34120,Byers Toyota,https://www.byerstoyota.com,22,OH,40.270696,-83.070312,1599 Columbus Pike,Delaware,43015,(740) 368-7666
 34122,34122,Toyota of Boardman,https://www.toyotaofboardman.com,22,OH,40.99951,-80.66331,8250 Market Street,Boardman,44512,(330) 729-9080
 34124,34124,Summit Toyota of Akron,https://www.summittoyotaofakron.com,22,OH,41.063552,-81.576654,1535 Vernon Odom Blvd.,Akron,44320,(330) 836-2500
 34125,34125,Buckeye Toyota,https://www.mybuckeyetoyota.com,22,OH,39.736966,-82.632087,1903 Riverway Drive,Lancaster,43130,(740) 654-3943
 34126,34126,Yark Toyota,https://www.yarktoyota.com,22,OH,41.5782,-83.663162,1377 Conant Street,Maumee,43537,(419) 893-5000
-34127,34127,SVG Toyota,https://www.svgtoyota.com,22,OH,39.516324,-83.4443,1132 State Route 41 South,Washington Court House,43160,(740) 333-3860
+34127,34127,SVG Toyota,https://www.svgtoyota.com,9999,OH,39.516324,-83.4443,1132 State Route 41 South,Washington Court House,43160,(740) 333-3860
 34128,34128,Firelands Toyota,https://www.firelandstoyota.com,22,OH,41.42163,-82.67532,904 E. Strub Road,Sandusky,44870,(419) 621-0600
 34129,34129,Toyota West,https://www.toyotawest.com,22,OH,39.921996,-83.123183,1500 Auto Mall Drive,Columbus,43228,(614) 870-8200
 34130,34130,White's Toyota of Lima,https://www.whitestoyotalima.com,22,OH,40.773265,-84.169095,3500 Elida Road,Lima,45807,(419) 331-0381
@@ -879,6 +879,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 34141,34141,Victory Toyota of Brook Park,https://www.victorytoyotabrookpark.com,22,OH,41.418133,-81.787063,13775 Brookpark Road,Brook Park,44142,(216) 267-7000
 34142,34142,Premier Toyota of Amherst,https://www.premiertoyota.com,22,OH,41.41245,-82.233142,47190 Cooper Foster Park Road,Amherst,44001,(440) 985-6100
 34143,34143,TOYOTA OF WARREN i.e. Golling Toyota,https://www.gollingtoyota.com,22,MI,42.4927,-83.0278,27100 Van Dyke Avenue,Warren,48093,(586) 758-2000
+34144,34144,South Dayton Toyota,https://www.southdaytontoyota.com,9999,OH,39.627343,-84.226654,8457 Springboro Pike,Miamisburg,45342,(937) 433-4950
 35011,35011,Doenges Toyota,https://www.doengestoyota.com,60,OK,36.722952,-95.935925,1911 SE Washington Blvd,Bartlesville,74006,(918) 333-0900
 35025,35025,Fowler Toyota,https://www.fowlertoyota.com,60,OK,35.26835,-97.48708,4050 N. Interstate Drive,Norman,73072,(800) 375-9550
 35048,35048,Northcutt Toyota,https://www.northcutttoyota.com,60,OK,36.39007,-97.92097,3409 W. Owen K. Garriott Road,Enid,73703,(580) 234-5171

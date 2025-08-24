@@ -1,4 +1,4 @@
-Readme.txt updated 8/7/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 8/24/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts.
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
@@ -165,7 +165,10 @@ Column definitions that are not obvious or to remove any ambiguity are as follow
 "Dealer Long" - Dealer Longitude.  
 "CenterLat" -  Latitude of a user desired Center location. User manually fills in this desired location in the spreadsheet
                opened in Excel and uses the same value for each cell in this column.  Only needed if user want to do distance
-               calculations.
+               calculations.  Latitude and longitude for a location can be found by using google maps and right clicking on the
+               location on the map, and then left clicking on the latitude and longitude coordinates shown to copy them.
+               Then paste to the cell and delete text to only leave the appropriate value (Latitutde for the CenterLat cell and Longitude
+               for the CenterLong cell)
 "CenterLong" - Longitude of a user desired Center location. User manually fills in this desired location in the spreadsheet
                opened in Excel and uses the same value for each cell in this column. Only needed if user want to do distance
                calculations.

@@ -100,6 +100,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 04169,04169,Tracy Toyota,https://www.tracytoyota.com,12,CA,37.758071,-121.463299,2895 North Naglee Road,Tracy,95304,(209) 834-1111
 04176,04176,Concord Toyota,https://www.concordtoyota.com,12,CA,37.97845,-122.058917,1090 Concord Avenue,Concord,94520,(925) 682-7131
 04179,04179,Blackstone Toyota of Fresno,https://www.blackstonetoyota.com,12,CA,36.82311,-119.79148,50 W. Bullard Avenue,Fresno,93704,(559) 431-6000
+04180,04180,Toyota Certified Center Santee,https://www.toyotacertifiedcenterofsantee.com,9999,CA,32.837789,-116.999683,8871 Fanita Drive,Santee,92071,(619) 596-7700
 04181,04181,Toyota of Selma,https://www.toyotaofselma.com,12,CA,36.581667,-119.636667,3480 Floral Avenue,Selma,93662,(559) 891-2727
 04185,04185,Thompson's Toyota of Placerville,https://www.thompsonstoyota.com,12,CA,38.722583,-120.827582,140 Forni Road,Placerville,95667,(530) 622-6232
 04197,04197,Toyota of Whittier,https://www.toyotaofwhittier.com,9999,CA,33.952436,-118.013411,14577 East Whittier Blvd.,Whittier,90605,(562) 698-2591
@@ -1252,4 +1253,5 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 54024,54024,Modesto Toyota,https://www.modestotoyota.com,12,CA,37.70514,-120.99519,4513 McHenry Avenue,Modesto,95356,(209) 529-2933
 54032,54032,Maverick Toyota,https://www.MaverickToyota.com,9999,CA,32.739737,-117.052313,6800 Federal Boulevard,Lemon Grove,91945,(619) 287-2400
 54037,54037,Toyota of Corona,https://www.CoronaToyota.com,9999,CA,33.878384,-117.599106,1700 West 6th Street,Corona,92882,(951) 734-6020
+54041,54041,Toyota Carlsbad,https://www.toyotacarlsbad.com,9999,CA,33.132685,-117.326399,5424 Paseo Del Norte,Carlsbad,92008,(760) 438-2000
 54042,54042,Wondries Toyota,https://www.wondriestoyota.com,9999,CA,34.09172,-118.139042,1439 West Main Street,Alhambra,91801,(626) 289-8000

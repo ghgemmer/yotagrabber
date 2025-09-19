@@ -1119,6 +1119,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 42415,42415,Texana Toyota,https://www.texanatoyota.com,60,TX,30.1223,-93.7575,2500 IH 10 W,Orange,77632,(409) 883-8451
 42416,42416,Norm Reeves Toyota Dallas,https://www.normreevestoyotadallas.com,60,TX,32.799284,-96.681047,9525 E. RL Thornton Frwy,Dallas,75228,(214) 324-0411
 42417,42417,Toyota of Pharr,https://www.toyotaofpharr.com,60,TX,26.199688,-98.20042,1625 W. Interstate 2,Pharr,78577,(956) 784-3300
+42418,42418,McGavock Toyota of Pampa,https://www.mcgavocktoyota.com,9999,TX,35.541471,-100.97263,805 North Hobart Street,Pampa,79065,(806) 665-1665
 43019,43019,Tony Divino Toyota,https://www.tonydivinotoyota.com,15,UT,41.179142,-111.997143,777 West Riverdale Road,Riverdale,84405,(801) 394-5701
 43020,43020,Mark Miller Toyota,https://www.markmillertoyota.com,15,UT,40.753305,-111.894274,730 South West Temple,Salt Lake City,84101,(801) 364-2100
 43022,43022,Karl Malone Toyota,https://www.malonetoyota.com,15,UT,40.543017,-111.8983,11453 So. Lone Peak Pkwy,Draper,84020,(801) 553-5800

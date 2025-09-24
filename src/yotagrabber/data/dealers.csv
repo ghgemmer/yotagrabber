@@ -935,22 +935,22 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 37125,37125,Faulkner Toyota,https://www.faulknertoyotatrevose.com,80,PA,40.123616,-74.975104,2425 Lincoln Highway,Trevose,19053,(215) 244-9300
 37126,37126,Toyota of York,https://www.toyotaofyork.com,80,PA,39.983823,-76.685702,1885 Whiteford Road,York,17402,(717) 755-2961
 37127,37127,Colonial Toyota,https://www.shopcolonialtoyota.com,80,PA,40.6208,-79.195245,2600 West Pike Road,Indiana,15701,(724) 349-9100
-37130,37130,Fitzgerald Toyota Chambersburg,https://www.fitzgeraldtoyotachambersburg.com,80,PA,39.925454,-77.62032,1436 Lincoln Way East,Chambersburg,17201,(717) 264-3359
+37130,37130,Fitzgerald Toyota Chambersburg,https://www.fitzgeraldtoyotachambersburg.com,9999,PA,39.925454,-77.62032,1436 Lincoln Way East,Chambersburg,17201,(717) 264-3359
 37132,37132,Peruzzi Toyota,https://www.peruzzitoyota.com,80,PA,40.300662,-75.287452,2601 N. Bethlehem Pike,Hatfield,19440,(215) 997-1111
 37134,37134,Williams Toyota of Sayre,https://www.williamstoyotaofsayre.com,80,PA,41.98427,-76.543484,2468 Elmira Street,Sayre,18840,(570) 888-2281
 37135,37135,Preston Toyota,https://www.prestontoyota.com,80,PA,41.016639,-80.35303,1502 Wilmington Road,New Castle,16105,(724) 658-1531
 37138,37138,Hanover Toyota,https://www.hanovertoyota.com,80,PA,39.839858,-77.006855,1830 Carlisle Pike,Hanover,17331,(717) 633-1818
-37142,37142,Fiore Toyota,https://www.gofioretoyota.com,80,PA,40.451481,-78.394489,1000 S. Logan Boulevard,Hollidaysburg,16648,(814) 695-5533
+37142,37142,Fiore Toyota,https://www.gofioretoyota.com,9999,PA,40.451481,-78.394489,1000 S. Logan Boulevard,Hollidaysburg,16648,(814) 695-5533
 37148,37148,Team Toyota of Glen Mills,https://www.teamtoyotaglenmills.com,80,PA,39.882217,-75.540067,1050 Baltimore Pike,Glen Mills,19342,(484) 845-7905
-37149,37149,Bobby Rahal Toyota,https://www.bobbyrahaltoyota.com,80,PA,40.23903,-77.052712,6711 Carlisle Pike,Mechanicsburg,17050,(717) 691-0500
+37149,37149,Bobby Rahal Toyota,https://www.bobbyrahaltoyota.com,9999,PA,40.23903,-77.052712,6711 Carlisle Pike,Mechanicsburg,17050,(717) 691-0500
 37150,37150,Team Toyota,https://www.teamtoyotalanghorne.com,80,PA,40.164983,-74.9034,746 E. Lincoln Highway,Langhorne,19047,(215) 741-4200
 37151,37151,Laurel Toyota,https://www.laureltoyotapa.com,80,PA,40.266769,-78.863245,933 Eisenhower Blvd.,Johnstown,15904,(814) 269-3400
 37152,37152,Sloane Toyota of Philadelphia,https://www.sloanetoyotaphiladelphia.com,80,PA,40.05566,-75.074228,1546 Cottman Avenue,Philadelphia,19111,(215) 742-9300
 37153,37153,Koch 33 Toyota,https://www.koch33toyota.com,80,PA,40.700076,-75.287485,3816 Hecktown Road,Easton,18045,(610) 253-9191
 37154,37154,Tri County Toyota,https://www.tricountytoyota.com,80,PA,40.22128,-75.54478,15 D & L Drive,Limerick,19468,(610) 495-4588
-37155,37155,Aubrey Alexander Toyota,https://www.aubreyalexandertoyota.com,80,PA,40.827988,-76.84238,1324 N. Susquehanna Trail,Selinsgrove,17870,(570) 743-1171
+37155,37155,Aubrey Alexander Toyota,https://www.aubreyalexandertoyota.com,9999,PA,40.827988,-76.84238,1324 N. Susquehanna Trail,Selinsgrove,17870,(570) 743-1171
 37157,37157,Diehl Toyota of Butler,https://www.diehltoyotabutler.com,80,PA,40.813816,-79.927792,266 Pittsburgh Road,Butler,16002,(724) 282-8898
-37161,37161,Faulkner Toyota,https://www.faulknertoyotaharrisburg.com,80,PA,40.254055,-76.83055,3809 Paxton Street,Harrisburg,17111,(717) 565-9000
+37161,37161,Faulkner Toyota,https://www.faulknertoyotaharrisburg.com,9999,PA,40.254055,-76.83055,3809 Paxton Street,Harrisburg,17111,(717) 565-9000
 37162,37162,Spitzer Toyota,https://www.spitzertoyota.com,80,PA,40.43664,-79.737096,4710 William Penn Highway,Monroeville,15146,(412) 373-6200
 37164,37164,Sloane Toyota of Malvern,https://www.sloanetoyotamalvern.com,80,PA,40.034928,-75.574472,593 Lancaster Avenue,Malvern,19335,(610) 647-2300
 37171,37171,Motorworld Toyota,https://www.motorworldtoyota.com,80,PA,41.254145,-75.837371,150 Motorworld Drive,Wilkes Barre,18702,(570) 829-3500
@@ -965,7 +965,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 37189,37189,Cochran Toyota,https://www.cochrantoyota.com,80,PA,40.333128,-79.74317,12204 Route 30,North Huntingdon,15642,(724) 515-2220
 37190,37190,Mike Kelly Toyota of Uniontown,http://www.mikekellytoyota.com,80,PA,39.91208,-79.757717,1 Mary Jane Wood Drive,Uniontown,15401,(724) 437-8422
 37191,37191,Ciocca Toyota of Williamsport,https://www.cioccatoyotaofwilliamsport.com,80,PA,41.23615,-76.812347,203 Lycoming Mall Drive,Muncy,17756,(570) 323-4683
-37193,37193,Heritage Toyota Harrisburg,http://www.heritagetoyotaharrisburg.com,80,PA,40.322689,-76.788705,6060 Allentown Blvd,Harrisburg,17112,(717) 545-4726
+37193,37193,Heritage Toyota Harrisburg,http://www.heritagetoyotaharrisburg.com,9999,PA,40.322689,-76.788705,6060 Allentown Blvd,Harrisburg,17112,(717) 545-4726
 37194,37194,Brewer Airport Toyota,https://brewerairporttoyota.com,80,PA,40.50433,-80.223526,8900 University Blvd.,Moon Township,15108,(412) 262-5600
 37195,37195,Toyota of Erie,https://www.toyotaoferie.com,80,PA,42.07246,-80.09257,9140 Peach Street,Waterford,16441,(814) 868-3656
 37196,37196,Kelly Toyota of Hamburg,https://www.kellytoyotaofhamburg.com,80,PA,40.560888,-76.000017,41 Industrial Drive,Hamburg,19526,(484) 665-0130
@@ -976,6 +976,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 37202,37202,LeadCar Toyota Hazleton,https://www.leadcartoyotahazleton.com,80,PA,40.989265,-76.011601,730 Airport Road,Hazleton,18202,(570) 453-4141
 37203,37203,Delaney Toyota of Dubois,https://www.delaneytoyota.com,80,PA,41.120332,-78.737563,860 Beaver Drive,Dubois,15801,(814) 371-3333
 37204,37204,Jim Shorkey Toyota of Greensburg,https://www.jimshorkeytoyotagreensburg.com,80,PA,40.29837,-79.481549,4964 Route 30,Greensburg,15601,(724) 837-6693
+37205,37205,Bobby Rahal Toyota of State College,https://www.bobbyrahaltoyotaofstatecollege.com,9999,PA,40.804511,-77.882559,120 East Clinton Avenue,State College,16803,(814) 237-5713
 38025,38025,Valenti Toyota,https://www.valentitoyota.com,17,RI,41.350573,-71.768238,6 Langworthy Road,Westerly,02891,(401) 322-7200
 38026,38026,Balise Toyota of Warwick,https://www.balisetoyotaofwarwick.com,9999,RI,41.742346,-71.429872,1400 Post Road,Warwick,02888,(401) 785-8900
 38029,38029,Toyota of Smithfield,https://www.toyotaofsmithfield.com,9999,RI,41.935296,-71.491401,550 George Washington Hwy,Smithfield,02917,(401) 723-0972

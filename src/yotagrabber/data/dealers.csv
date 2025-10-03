@@ -1217,7 +1217,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 47037,47037,Victory Toyota Barboursville,https://www.victorytoyotabarboursville.com,80,WV,38.415122,-82.259474,1 Superior Way,Barboursville,25504,(304) 736-5400
 47038,47038,Victory Toyota Charleston,https://www.victorytoyotacharleston.com,80,WV,38.370629,-81.671648,1905 Patrick Street Plaza,Charleston,25387,(304) 513-3777
 47039,47039,Parkersburg Toyota,https://www.parkersburgtoyota.com,9999,WV,39.268278,-81.514403,3101 E 7th Street,Parkersburg,26101,(304) 424-5122
-48005,48005,Le Mieux & Son Toyota,https://www.lemieuxtoyota.com,21,WI,44.48136,-88.071172,2550 South Oneida Street,Green Bay,54304,(920) 496-2200
+48005,48005,Le Mieux & Son Toyota,https://www.lemieuxtoyota.com,9999,WI,44.48136,-88.071172,2550 South Oneida Street,Green Bay,54304,(920) 496-2200
 48021,48021,Kari Toyota,https://www.karitoyota.com,21,WI,46.726434,-92.102988,1002 Tower Avenue,Superior,54880,(715) 394-4429
 48027,48027,Markquart Toyota,https://www.markquarttoyota.com,21,WI,44.870127,-91.425717,1844 Commercial Blvd.,Chippewa Falls,54729,(715) 834-4440
 48028,48028,Kolosso Toyota,https://www.kolossotoyota.com,21,WI,44.273612,-88.451281,3000 W. Wisconsin Avenue,Appleton,54914,(920) 738-3666
@@ -1241,6 +1241,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 48071,48071,Smart Motors Toyota,https://www.smarttoyota.com,21,WI,43.05102,-89.48171,5901 Odana Road,Madison,53719,(608) 275-7808
 48072,48072,Umansky Toyota,https://www.umanskytoyota.com,9999,WI,43.11941,-87.93062,1620 W. Silver Spring Dr.,Glendale,53209,(414) 228-1450
 48073,48073,Dahl Toyota Sheboygan,https://www.dahltoyotasheboygan.com,9999,WI,43.756971,-87.762033,4120 N. Frontage Road,Sheboygan,53081,(920) 458-6171
+48075,48075,Kolosso Toyota,https://www.kolossotoyota.com,9999,WI,44.273612,-88.451281,3000 W. Wisconsin Avenue,Appleton,54914,(920) 738-3666
 49025,49025,Rock Springs Toyota,https://www.rockspringstoyota.com,15,WY,41.590307,-109.225613,401 N. Center Street,Rock Springs,82901,(307) 362-5015
 49029,49029,Fremont Toyota,https://www.fremonttoyotalander.com,15,WY,42.844429,-108.748,103 Fremont Way,Lander,82520,(307) 332-5011
 49030,49030,Fremont Toyota of Sheridan,https://www.fremonttoyotasheridan.com,15,WY,44.780704,-106.942888,1614 Coffeen Avenue,Sheridan,82801,(307) 674-4423

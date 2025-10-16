@@ -11,7 +11,7 @@ collection over that time period.
 All files are read only view on my google drive.  Thus if you wish to do filtering, etc you need 
 download the file and open it or save it to your own google drive.
 
-Folder updates typically show up each day around 5am CDT.
+Folder updates typically show up each day around 6am CDT.
 Each model's current inventory is placed in a <model>.csv file.  A raw  (filename <model>_Lastraw.parquet)
 python pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model
 before various filtering/modification is applied for the csv file, such as removal of many fields we don't use or 

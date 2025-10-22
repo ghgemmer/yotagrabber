@@ -190,9 +190,9 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 05030,05030,"Pedersen Toyota, Ltd.",https://www.pedersentoyota.com,15,CO,40.525592,-105.077488,4455 South College Avenue,Ft Collins,80525,(970) 223-3100
 05043,05043,"Stapp Interstate Toyota, Inc.",https://www.interstatetoyota.com,15,CO,40.117725,-104.97839,8019 Raspberry Way,Frederick,80504,(303) 776-1743
 05046,05046,Bighorn Toyota,https://www.bighorntoyota.com,15,CO,39.562797,-107.368132,130 Center Drive,Glenwood Springs,81601,(970) 945-6544
-05049,05049,"Turner Toyota, Inc.",https://www.turnertoyota.com,15,CO,38.488056,-107.852535,2262 East Main Street,Montrose,81401,(970) 249-6691
+05049,05049,"Turner Toyota, Inc.",https://www.turnertoyota.com,9999,CO,38.488056,-107.852535,2262 East Main Street,Montrose,81401,(970) 249-6691
 05051,05051,Pueblo Toyota,https://www.pueblotoyota.com,15,CO,38.310205,-104.639427,2220 US Highway 50 West,Pueblo,81008,(719) 543-1719
-05055,05055,Western Slope Toyota,https://www.westernslopetoyota.com,15,CO,39.105268,-108.63413,2264 Highway 6 and 50,Grand Junction,81505,(970) 243-0843
+05055,05055,Western Slope Toyota,https://www.westernslopetoyota.com,9999,CO,39.105268,-108.63413,2264 Highway 6 and 50,Grand Junction,81505,(970) 243-0843
 05057,05057,"Hellman Toyota, Inc.",https://www.hellmantoyota.com,15,CO,38.748901,-108.062082,750 E. Highway 92,Delta,81416,(970) 874-4444
 05063,05063,AutoNation Toyota Arapahoe,https://www.autonationtoyotaarapahoe.com,15,CO,39.5959,-104.8655,10531 East Arapahoe Road,Centennial,80112,(303) 578-6111
 05067,05067,Mountain States Toyota,https://www.mountainstatestoyota.com,15,CO,39.8243,-104.9906,201 West 70th Avenue,Denver,80221,(303) 302-8888
@@ -206,6 +206,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 05076,05076,Corwin Toyota Colorado Springs,https://www.corwintoyotacoloradosprings.com,15,CO,38.938522,-104.731042,5115 New Car Drive,Colorado Springs,80923,(719) 598-2222
 05077,05077,Toyota of Colorado Springs,https://www.toyotaofcoloradosprings.com,15,CO,38.81366,-104.826286,15 East Motor Way,Colorado Springs,80905,(719) 471-3100
 05078,05078,Groove Toyota,https://www.groovetoyota.com,15,CO,39.618187,-104.987643,5460 South Broadway,Englewood,80113,(303) 761-3222
+05079,05079,Vista Toyota Delta,https://www.vistatoyotaco.com,9999,CO,38.748901,-108.062082,750 E. Highway 92,Delta,81416,(970) 874-4444
 06002,06002,A-1 Toyota,https://www.a1toyota.com,16,CT,41.335911,-72.978339,50 Amity Road,New Haven,06515,(203) 389-1521
 06015,06015,Girard Toyota-BMW,https://www.girardtoyota.com,16,CT,41.36469,-72.115931,543 Colman Street,New London,06320,(860) 447-3141
 06022,06022,Stephen Toyota,https://www.stephentoyota.com,16,CT,41.696487,-72.907324,1069 Farmington Ave,Bristol,06010,(860) 584-7333

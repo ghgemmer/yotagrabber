@@ -502,27 +502,28 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 19044,19044,Antwerpen's Toyota,https://www.antwerpentoyota.com,80,MD,39.209586,-76.94244,12420 Auto Drive,Clarksville,21029,(410) 531-5700
 19045,19045,Jim Coleman Toyota,https://www.jimcolemantoyota.com,80,MD,39.0278,-77.145883,10400 Auto Park Avenue,Bethesda,20817,(301) 469-7100
 19052,19052,Fitzgerald Toyota Gaithersburg,https://www.fitzgeraldtoyotagaithersburg.com,80,MD,39.157317,-77.216917,907 N. Frederick Avenue,Gaithersburg,20879,(301) 921-0300
-19056,19056,Bayside Toyota,https://www.baysidetoyota.com,80,MD,38.562374,-76.600171,105 Auto Drive,Prince Frederick,20678,(410) 535-1500
+19056,19056,Bayside Toyota,https://www.baysidetoyota.com,9999,MD,38.562374,-76.600171,105 Auto Drive,Prince Frederick,20678,(410) 535-1500
 19057,19057,355 Toyota,https://www.355toyota.com,80,MD,39.112833,-77.161917,15625 Frederick Road,Rockville,20855,(301) 340-0900
 19059,19059,Toyota of Southern Maryland,https://www.toyotasomd.com,80,MD,38.285355,-76.474615,22500 Three Notch Road,Lexington Park,20653,(301) 863-7555
-19061,19061,Pohanka Toyota of Salisbury,https://www.pohankatoyotamd.com,80,MD,38.391119,-75.576496,2010 N. Salisbury Blvd.,Salisbury,21801,(410) 543-2000
+19061,19061,Pohanka Toyota of Salisbury,https://www.pohankatoyotamd.com,9999,MD,38.391119,-75.576496,2010 N. Salisbury Blvd.,Salisbury,21801,(410) 543-2000
 19063,19063,DARCARS Toyota of Frederick,https://www.darcarstoyotaoffrederick.com,80,MD,39.376847,-77.408936,5293 Buckeystown Pike,Frederick,21704,(301) 696-6300
 19066,19066,DARCARS Toyota of Frederick Service Center,http://darcarsfrederick.xigroupauto.com,80,MD,39.416312,-77.441136,1040 West Patrick Street,Frederick,21701,(301) 662-8293
 19069,19069,DARCARS Toyota of Baltimore,https://www.darcarstoyotaofbaltimore.com,80,MD,39.28699,-76.54349,6007 Eastern Avenue,Baltimore,21224,(410) 633-2200
-19070,19070,Passport Toyota,https://www.passporttoyota.com,80,MD,38.825812,-76.922979,5001 Auth Way,Suitland,20746,(301) 899-6000
+19070,19070,Passport Toyota,https://www.passporttoyota.com,9999,MD,38.825812,-76.922979,5001 Auth Way,Suitland,20746,(301) 899-6000
 19071,19071,Heritage Toyota Catonsville,https://www.heritagetoyotacatonsville.com,80,MD,39.284568,-76.754916,6324 Baltimore Ntl Pike,Baltimore,21228,(410) 788-8400
 19072,19072,Heritage Toyota Owings Mills,https://www.heritagetoyotaowingsmills.com,80,MD,39.40789,-76.76305,9801 Reisterstown Road,Owings Mills,21117,(410) 363-2000
-19074,19074,Waldorf Toyota,https://www.waldorftoyota.com,80,MD,38.638048,-76.898171,2600 Crain Highway,Waldorf,20601,(301) 843-3700
+19074,19074,Waldorf Toyota,https://www.waldorftoyota.com,9999,MD,38.638048,-76.898171,2600 Crain Highway,Waldorf,20601,(301) 843-3700
 19075,19075,Hertrich Toyota of Pocomoke,https://www.hertrichtoyotapocomoke.com,80,MD,38.044029,-75.543184,1337 Ocean Highway,Pocomoke City,21851,(410) 957-4444
 19076,19076,Sheehy Toyota of Laurel,https://www.sheehytoyotalaurel.com,80,MD,39.128421,-76.822635,8801 Freestate Drive,Laurel,20723,(301) 362-3399
 19077,19077,Ourisman Toyota 40,https://www.ourismantoyota40.com,80,MD,39.433442,-76.330494,1101 Business Center Way,Edgewood,21040,(410) 679-1500
 19078,19078,Safford Brown Toyota Glen Burnie,https://www.saffordbrowntoyotaglenburnie.com,80,MD,39.17576,-76.616614,7167 Ritchie Highway,Glen Burnie,21061,(410) 761-9000
-19079,19079,Koons Toyota Annapolis,https://www.koonstoyotaannapolis.com,80,MD,38.976826,-76.511289,1107 West Street,Annapolis,21401,(410) 268-6480
+19079,19079,Koons Toyota Annapolis,https://www.koonstoyotaannapolis.com,9999,MD,38.976826,-76.511289,1107 West Street,Annapolis,21401,(410) 268-6480
 19080,19080,Koons Toyota Westminster,https://www.koonstoyotawestminster.com,80,MD,39.572739,-76.984183,375 Baltimore Blvd.,Westminster,21157,(888) 461-7519
-19081,19081,Koons Toyota Easton,https://www.koonstoyotaeaston.com,80,MD,38.733104,-76.069144,6730 Ocean Gateway,Easton,21601,(410) 822-8000
-19082,19082,Toyota of Bowie,https://www.toyotaofbowie.com,80,MD,38.951717,-76.714983,16700 Governor Bridge Road,Bowie,20716,(301) 867-1600
+19081,19081,Koons Toyota Easton,https://www.koonstoyotaeaston.com,9999,MD,38.733104,-76.069144,6730 Ocean Gateway,Easton,21601,(410) 822-8000
+19082,19082,Toyota of Bowie,https://www.toyotaofbowie.com,9999,MD,38.951717,-76.714983,16700 Governor Bridge Road,Bowie,20716,(301) 867-1600
 19083,19083,Toyota Certified at Capital Plaza,https://www.toyotacapitalplaza.com,80,MD,38.939801,-76.911437,6100 Annapolis Road,Greater Landover,20784,(301) 772-6900
 19084,19084,Sheehy Toyota of Timonium,https://www.sheehytoyotatimonium.com,80,MD,39.473775,-76.640276,10401 York Road,Cockeysville,21030,(410) 666-8900
+19088,19088,CMA's Toyota of Lexington Park,https://www.cmastoyotaoflexingtonpark.com,9999,MD,38.285355,-76.474615,22500 Three Notch Road,Lexington Park,20653,(301) 863-7555
 20006,20006,Jaffarian Toyota,https://www.jaffarian-toyota.com,17,MA,42.765439,-71.105303,600 River St,Haverhill,01832,(978) 372-8551
 20009,20009,K-M Toyota,https://www.kmmotors.com,17,MA,42.700592,-73.11622,51 West Main Street,North Adams,01247,(413) 663-5731
 20016,20016,Balise Toyota,https://www.balisetoyota.com/,9999,MA,42.142538,-72.62707,1399 Riverdale Street,West Springfield,01089,(413) 734-8795

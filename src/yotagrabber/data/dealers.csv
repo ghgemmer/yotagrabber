@@ -524,7 +524,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 19083,19083,Toyota Certified at Capital Plaza,https://www.toyotacapitalplaza.com,80,MD,38.939801,-76.911437,6100 Annapolis Road,Greater Landover,20784,(301) 772-6900
 19084,19084,Sheehy Toyota of Timonium,https://www.sheehytoyotatimonium.com,80,MD,39.473775,-76.640276,10401 York Road,Cockeysville,21030,(410) 666-8900
 19088,19088,CMA's Toyota of Lexington Park,https://www.cmastoyotaoflexingtonpark.com,9999,MD,38.285355,-76.474615,22500 Three Notch Road,Lexington Park,20653,(301) 863-7555
-20006,20006,Jaffarian Toyota,https://www.jaffarian-toyota.com,17,MA,42.765439,-71.105303,600 River St,Haverhill,01832,(978) 372-8551
+20006,20006,Jaffarian Toyota,https://www.jaffarian-toyota.com,9999,MA,42.765439,-71.105303,600 River St,Haverhill,01832,(978) 372-8551
 20009,20009,K-M Toyota,https://www.kmmotors.com,17,MA,42.700592,-73.11622,51 West Main Street,North Adams,01247,(413) 663-5731
 20016,20016,Balise Toyota,https://www.balisetoyota.com/,9999,MA,42.142538,-72.62707,1399 Riverdale Street,West Springfield,01089,(413) 734-8795
 20019,20019,Toyota of Watertown,https://www.toyotaofwatertown.com,9999,MA,42.364367,-71.177262,149 Arsenal St,Watertown,02472,(617) 926-5200
@@ -673,17 +673,18 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 27023,27023,Elko Toyota,https://www.elkotoyota.com,15,NV,40.834697,-115.740047,1585 Lamoille Hwy.,Elko,89801,(775) 777-2277
 27024,27024,David Wilson's Toyota of Las Vegas,https://www.dwtoyotalasvegas.com,15,NV,36.143896,-115.104659,3255 East Sahara Avenue,Las Vegas,89104,(702) 457-2000
 28012,28012,Grappone Toyota,https://www.grapponetoyota.com,17,NH,43.170513,-71.526577,594 Route 3-A,Bow,03304,(603) 224-9912
-28021,28021,Bill Dube Toyota,https://www.billdubetoyota.com,17,NH,43.1724,-70.85966,40 Dover Point Road,Dover,03820,(603) 749-5500
-28024,28024,Irwin Toyota,https://www.irwinzonetoyota.com,17,NH,43.536206,-71.466192,59 Bisson Avenue,Laconia,03246,(603) 524-4922
-28029,28029,Toyota of Keene,https://www.toyotakeene.com,17,NH,42.875373,-72.231658,591 Monadnock Hwy. Rt 12,East Swanzey,03446,(603) 354-5000
-28036,28036,Ira Toyota of Manchester,https://www.toyotaofmanchesternh.com,17,NH,42.952,-71.4383,33 Autocenter Road,Manchester,03103,(603) 624-1800
+28021,28021,Bill Dube Toyota,https://www.billdubetoyota.com,9999,NH,43.1724,-70.85966,40 Dover Point Road,Dover,03820,(603) 749-5500
+28024,28024,Irwin Toyota,https://www.irwinzonetoyota.com,9999,NH,43.536206,-71.466192,59 Bisson Avenue,Laconia,03246,(603) 524-4922
+28029,28029,Toyota of Keene,https://www.toyotakeene.com,9999,NH,42.875373,-72.231658,591 Monadnock Hwy. Rt 12,East Swanzey,03446,(603) 354-5000
+28036,28036,Ira Toyota of Manchester,https://www.toyotaofmanchesternh.com,9999,NH,42.952,-71.4383,33 Autocenter Road,Manchester,03103,(603) 624-1800
 28037,28037,Berlin City Toyota,https://www.berlincitytoyotanh.com,17,NH,44.41326,-71.195554,485 Main Street,Gorham,03581,(603) 752-6644
 28038,28038,Toyota of Nashua,https://www.toyotaofnashua.com,9999,NH,42.728407,-71.445614,10 Marmon Drive,Nashua,03060,(603) 888-3555
-28039,28039,McGee Toyota of Claremont,https://www.mcgeetoyotaofclaremont.com,17,NH,43.348607,-72.361492,168 Charlestown Road,Claremont,03743,(603) 542-5181
-28040,28040,McGee Toyota of Epping,https://www.mcgeetoyotaofepping.com,17,NH,43.028061,-71.075293,58 Calef Highway,Epping,03042,(603) 693-1010
+28039,28039,McGee Toyota of Claremont,https://www.mcgeetoyotaofclaremont.com,9999,NH,43.348607,-72.361492,168 Charlestown Road,Claremont,03743,(603) 542-5181
+28040,28040,McGee Toyota of Epping,https://www.mcgeetoyotaofepping.com,9999,NH,43.028061,-71.075293,58 Calef Highway,Epping,03042,(603) 693-1010
 28041,28041,Canobie Lake Toyota,https://www.canobielaketoyota.com,9999,NH,42.7489,-71.2042,412 S. Broadway,Salem,03079,(603) 893-3525
-28042,28042,Rochester Toyota,https://www.rochestertoyota.net,17,NH,43.327738,-71.004977,48 Farmington Rd-Route 11 West,Rochester,03867,(603) 332-5131
-28043,28043,McGovern Toyota of Portsmouth,https://www.mcgoverntoyotaofportsmouth.com,17,NH,43.0584,-70.7723,150 Greenleaf Avenue,Portsmouth,03801,(603) 431-6100
+28042,28042,Rochester Toyota,https://www.rochestertoyota.net,9999,NH,43.327738,-71.004977,48 Farmington Rd-Route 11 West,Rochester,03867,(603) 332-5131
+28043,28043,McGovern Toyota of Portsmouth,https://www.mcgoverntoyotaofportsmouth.com,9999,NH,43.0584,-70.7723,150 Greenleaf Avenue,Portsmouth,03801,(603) 431-6100
+28045,28045,McGovern Toyota of Concord,https://www.mcgoverntoyotaofconcord.com,9999,NH,43.170513,-71.526577,594 Route 3-A,Bow,03304,(603) 224-9912
 29008,29008,Parkway Toyota,https://www.parkwaytoyota.com,16,NJ,40.868421,-73.958307,50 Sylvan Avenue,Englewood Cliffs,07632,(201) 944-3300
 29025,29025,Toyota of Hackensack,https://www.toyotaofhackensack.com,16,NJ,40.886901,-74.039269,278 River Street,Hackensack,07601,(201) 488-7777
 29031,29031,Galaxy Toyota,https://www.galaxytoyota.net,16,NJ,40.291614,-74.039874,750 Route 36,Eatontown,07724,(732) 544-1000
@@ -1136,7 +1137,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 44016,44016,White River Toyota,https://www.whiterivertoyota.com,17,VT,43.644272,-72.330095,303 Sykes Mountain Avenue,White River Junction,05001,(802) 299-2800
 44020,44020,Alderman's Toyota,https://www.aldermanstoyota.com,17,VT,43.585656,-72.967415,33 Seward Road,Rutland,05701,(802) 776-6000
 44022,44022,802 Toyota,https://www.802toyota.com,17,VT,44.220376,-72.563585,30 Berlin Mall Road,Berlin,05602,(802) 229-9117
-44024,44024,Faith's Toyota Ford,https://www.faithstoyota.com,17,VT,43.1088,-72.4416,6896 Route 5 South,Westminster,05158,(802) 463-3300
+44024,44024,Faith's Toyota Ford,https://www.faithstoyota.com,9999,VT,43.1088,-72.4416,6896 Route 5 South,Westminster,05158,(802) 463-3300
 44025,44025,Coggins Toyota of Bennington,https://www.cogginstoyotaofbennington.com,17,VT,42.909903,-73.220763,751 North Bennington Road,Bennington,05201,(802) 681-0600
 45009,45009,Checkered Flag Toyota,https://toyota.checkeredflag.com,80,VA,36.847767,-76.163478,5301 Virginia Beach Boulevard,Virginia Beach,23462,(757) 490-1111
 45016,45016,Bill Page Toyota,https://www.billpagetoyota.com,80,VA,38.870871,-77.174385,2923 Annandale Road,Falls Church,22042,(703) 532-8800

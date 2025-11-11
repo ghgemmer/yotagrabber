@@ -1036,6 +1036,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 41086,41086,Fox Toyota,https://www.foxtoyotaclinton.com,22,TN,36.170417,-84.082944,228 Fox Family Lane,Clinton,37716,(865) 494-0228
 41087,41087,Toyota of Bristol,https://www.toyotaofbristol.com,22,TN,36.592554,-82.222519,3045 W. State Street,Bristol,37620,(423) 764-3155
 41089,41089,Victory Toyota Dyersburg,https://www.victorytoyotadyersburg.com,22,TN,36.058016,-89.397659,920 Highway 51 Bypass,Dyersburg,38024,(731) 285-5110
+41090,41090,Cumberland Toyota,https://www.cumberlandtoyota.com,9999,TN,36.138257,-85.522059,1540 Interstate Drive,Cookeville,38501,(931) 526-5600
 42025,42025,Toyota of Laredo,https://www.toyotaoflaredo.com,60,TX,27.556012,-99.450141,6324 Bob Bullock Loop,Laredo,78041,(956) 718-4200
 42026,42026,Robbins Toyota,https://www.robbinstoyota.com,60,TX,33.453053,-94.128038,6233 Mall Drive,Nash,75569,(903) 794-5121
 42057,42057,Toyota of Irving,https://www.toyotaofirving.com,60,TX,32.837997,-96.96956,1999 West Airport Frwy.,Irving,75062,(972) 258-1200

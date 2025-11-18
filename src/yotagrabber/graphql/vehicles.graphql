@@ -1,7 +1,7 @@
 query {
   locateVehiclesByZip(
     zipCode: "ZIPCODE"
-    brand: "TOYOTA"
+    brand: "VEHICLE_MAKE"
     pageNo: PAGENUMBER
     pageSize: 250
     seriesCodes: "MODELCODE"

@@ -25,6 +25,8 @@ PAGE_FILES_DEBUG_ENABLED = False
 
 # Get the model that we should be searching for.
 MODEL = os.environ.get("MODEL")
+# Get the vehicleMake that we should be searching for.
+VEHICLE_MAKE = os.environ.get("VEHICLE_MAKE")
 # optional search parameters to use when want a single location search
 MODEL_SEARCH_ZIPCODE = os.environ.get("MODEL_SEARCH_ZIPCODE")
 MODEL_SEARCH_RADIUS = os.environ.get("MODEL_SEARCH_RADIUS")
@@ -38,25 +40,38 @@ MAX_TOTAL_PAGE_RETIRES_FOR_MODEL = 2 * 3 * 30 # say on avg 3 groups of 2 retries
 def get_vehicle_query_Objects():
     """Read vehicle query from a file and create the query objects."""
     vehicleQueryObjects = {}
+    vehicleMake = ""
+    if VEHICLE_MAKE == "lexus":
+        vehicleMake = "LEXUS"
+    else:
+        # Toyota
+        vehicleMake = "TOYOTA"
+        
     if (MODEL_SEARCH_ZIPCODE is not None) and (MODEL_SEARCH_RADIUS is not None) and MODEL_SEARCH_ZIPCODE and MODEL_SEARCH_RADIUS:
         # single zipcode and radius search specified
         with open(f"{config.BASE_DIRECTORY}/graphql/vehicles.graphql", "r") as fileh:
             query = fileh.read()
         query = query.replace("ZIPCODE", MODEL_SEARCH_ZIPCODE)
         query = query.replace("MODELCODE", MODEL)
+        query = query.replace("VEHICLE_MAKE", vehicleMake)
         query = query.replace("DISTANCEMILES", MODEL_SEARCH_RADIUS)
         query = query.replace("LEADIDUUID", str(uuid.uuid4()))
         vehicleQueryObjects["SingleZipCode_" + MODEL_SEARCH_ZIPCODE + "_RadiusMiles_" + MODEL_SEARCH_RADIUS] = query        
     else:
-        if MODEL in [ "camry", "tacoma", "tundra", "rav4hybrid", "rav4", "corolla"]:
-            # note that the tacoma is the largest number of vehicles (some 44,000 for the last 2 years), followed by tundra, camry, rav4hybrid, rav4
-            vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "midIllinois", "east", "atlanta", "topLeftCornerContlUS", "portlandOregon", "bottomLeftCornerContlUS", "midCalifornia", "upperCalifornia", "topRightCornerContlUS", "midPennsylvania", "rochesterNewYork", "albanyNewYork", "bostonMA", "midTennessee", "midOhio", "richmondVA", "bottomRightCornerContlUS", "panhandleFlorida", "midFlorida", "bottomCenterContlUS", "midTexas", "midArizona", "renoNevada", "topCenterContlUS" ]
-        elif MODEL in ["grandhighlander" ]:
-            # some zone seem to almost never work so removed them and seemed to cause more problems in others.
-            # Still get lots of retries so not sure this even fixes getting all the vehicles
-            vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "midIllinois", "topLeftCornerContlUS", "portlandOregon", "bottomLeftCornerContlUS", "midCalifornia", "upperCalifornia", "topRightCornerContlUS", "midPennsylvania", "rochesterNewYork", "albanyNewYork", "bostonMA", "midOhio", "richmondVA", "bottomCenterContlUS", "midTexas", "midArizona", "renoNevada", "topCenterContlUS" ]
+        if VEHICLE_MAKE == "lexus":
+            vehicleQueryZonesToUse = ["alaska", "midCalifornia", "bottomLeftCornerContlUS", "west", "central", "east"]
+            #vehicleQueryZonesToUse = ["alaska", "west", "central", "midIllinois", "east", "atlanta", "topLeftCornerContlUS", "portlandOregon", "bottomLeftCornerContlUS", "midCalifornia", "upperCalifornia", "topRightCornerContlUS", "midPennsylvania", "rochesterNewYork", "albanyNewYork", "bostonMA", "midTennessee", "midOhio", "richmondVA", "bottomRightCornerContlUS", "panhandleFlorida", "midFlorida", "bottomCenterContlUS", "midTexas", "midArizona", "renoNevada", "topCenterContlUS" ]
         else:
-            vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "east"]
+            # toyota
+            if MODEL in [ "camry", "tacoma", "tundra", "rav4hybrid", "rav4", "corolla"]:
+                # note that the tacoma is the largest number of vehicles (some 44,000 for the last 2 years), followed by tundra, camry, rav4hybrid, rav4
+                vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "midIllinois", "east", "atlanta", "topLeftCornerContlUS", "portlandOregon", "bottomLeftCornerContlUS", "midCalifornia", "upperCalifornia", "topRightCornerContlUS", "midPennsylvania", "rochesterNewYork", "albanyNewYork", "bostonMA", "midTennessee", "midOhio", "richmondVA", "bottomRightCornerContlUS", "panhandleFlorida", "midFlorida", "bottomCenterContlUS", "midTexas", "midArizona", "renoNevada", "topCenterContlUS" ]
+            elif MODEL in ["grandhighlander" ]:
+                # some zone seem to almost never work so removed them and seemed to cause more problems in others.
+                # Still get lots of retries so not sure this even fixes getting all the vehicles
+                vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "midIllinois", "topLeftCornerContlUS", "portlandOregon", "bottomLeftCornerContlUS", "midCalifornia", "upperCalifornia", "topRightCornerContlUS", "midPennsylvania", "rochesterNewYork", "albanyNewYork", "bostonMA", "midOhio", "richmondVA", "bottomCenterContlUS", "midTexas", "midArizona", "renoNevada", "topCenterContlUS" ]
+            else:
+                vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "east"]
         zip_codes = {
             "alaska": "99518",  # Anchorage Alaska 99518
             "hawaii": "96720",  # Hilo HI 96720
@@ -95,6 +110,7 @@ def get_vehicle_query_Objects():
             zip_code = zip_codes[zone]
             query = query.replace("ZIPCODE", zip_code)
             query = query.replace("MODELCODE", MODEL)
+            query = query.replace("VEHICLE_MAKE", vehicleMake)
             query = query.replace("DISTANCEMILES", str(5823 + randbelow(1000)))
             query = query.replace("LEADIDUUID", str(uuid.uuid4()))
             vehicleQueryObjects[zone] = query
@@ -319,7 +335,11 @@ def update_vehicles_and_return_df(useLocalData = False):
     """    
     if not MODEL:
         sys.exit("Set the MODEL environment variable first")
-    
+    if VEHICLE_MAKE == "lexus":
+        vehicleMake = VEHICLE_MAKE
+    else:
+        vehicleMake = "toyota"
+    print ("Vehicle Make for which MODEL is being searched for is ", vehicleMake)    
     if (USE_LOCAL_DATA_ONLY or useLocalData):
         df, statusOfGetAllPages = read_local_data()
     else:
@@ -328,15 +348,26 @@ def update_vehicles_and_return_df(useLocalData = False):
     # Stop here if there are no vehicles to list.
     if df.empty:
         print(f"No vehicles found for model: {MODEL}")
-        emptyDfWithFinalColumns = pd.DataFrame(columns = ["vin", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "dealerMarketingName", "dealerWebsite", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "options", "eta.currFromDate", "eta.currToDate", "infoDateTime"])
+        emptyDfWithColumnsForParquet = pd.DataFrame(columns = ["vin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "dealerMarketingName", "dealerWebsite", "options", "eta.currFromDate", "eta.currToDate", "infoDateTime"])
+        emptyDfWithFinalColumnsForCsv = pd.DataFrame(columns = ["Year", "Model", "Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "infoDateTime", "Options"])
         if statusOfGetAllPages["completedOk"]:
-            # store current results
-            emptyDfWithFinalColumns.to_csv(f"output/{MODEL}.csv", index=False)
-            df.to_parquet(f"output/{MODEL}_raw.parquet", index=False)
-            writeCompletionStatusToFile(statusOfGetAllPages)
+            if (not USE_LOCAL_DATA_ONLY) and (not useLocalData):
+                # store current results as valid get
+                emptyDfWithFinalColumnsForCsv.to_csv(f"output/{MODEL}.csv", index=False)
+                emptyDfWithColumnsForParquet.to_parquet(f"output/{MODEL}_raw.parquet", index=False)
+                writeCompletionStatusToFile(statusOfGetAllPages)
         else:
-            print(f"Completion status not Ok for model: {MODEL}, not storing any results in output files")
-        return (emptyDfWithFinalColumns, statusOfGetAllPages)
+            print(f"Error: Completion status not Ok for model: {MODEL}, not storing any results in output files and leaving them as is.")
+            print(f"update_vehicles_and_return_df returning empty dataframe and status not Ok to caller so caller does nothing")
+            # When completion status is not Ok it was decided we don't want to overwrite the stored files but just leave them as is
+            # with their last data for any user to access as that is the last valid data we got, and the user can know how old it is by the
+            # status file and the infoDateTime field in the inventory file.
+            # Even if we are told to use local data on the next run it will return the last valid data we got (when we had completion OK = True)
+            # and so no change is seen by the higher level calling program.  We want to avoid the higher level caller
+            # thinking we got a valid response of empty when the completion status was not ok thinking there was no
+            # inventory for that model anymore which would be incorrect as it was because of an error (incomplete)
+            # TODO.  May need to revisit this approach in regards to when local data is being used.
+        return (emptyDfWithFinalColumnsForCsv, statusOfGetAllPages)
 
     # Write the raw data to a file.
     if (not USE_LOCAL_DATA_ONLY) and (not useLocalData):

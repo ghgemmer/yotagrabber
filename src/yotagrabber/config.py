@@ -4,6 +4,7 @@ import pathlib
 import random
 
 BASE_DIRECTORY = pathlib.Path(__file__).parent.resolve()
+#print("config.py global variable BASE_DIRECTORY", BASE_DIRECTORY)
 
 
 def random_user_agent():

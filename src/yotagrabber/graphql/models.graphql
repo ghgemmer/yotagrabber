@@ -1,5 +1,5 @@
 query {
-  models(zipCd: "ZIPCODE", brand: "T") {
+  models(zipCd: "ZIPCODE", brand: "VEHICLE_MAKE") {
     asShownDisclaimer
     asShown
     cityMPG

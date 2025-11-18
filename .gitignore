@@ -164,13 +164,18 @@ credentials.json
 *credentials.json
 *.token.json
 *_token.json
-/src/output/*
-/src/test/
+#/src/output/*
 /output/*
 !/output/Readme.txt
 !/output/rav4pluginhybrid_StatusInfo.json
 /src/Edit*
+# Exclude the contents of the src directory including all files and subdirectories on down
+# Will reinclude only those subdirectories, files etc that we want.
+# Doing this as I leave alot of attempts at new versions of files around instead of using git branches and a python
+# development virtual environment (just a single user me), so as to not affect any existing golden files that are currently 
+# being used in active runs.
 /src/*
+# reinclude these files in the /src directory
 !/src/SearchVehicles-Example_config.yaml
 !/src/SearchVehiclesRav4pluginhybrid_config.yaml
 !/src/zipCodesToCheck.txt
@@ -184,8 +189,106 @@ credentials.json
 !/src/Example_UserMatchCriteriaFilter.py
 !/src/dealers.py
 !/src/MatchSoundNotification.mp3
-!/src/4runnerhybridTest0_raw.parquet
-!/src/4runnerhybridTest1_raw.parquet
+!/src/createTestParquetFiles.py
+!/src/RunUserVehicleSearchesExample.bat
+!/src/waitForSeconds.py
+
+# reinclude files in /src/ouput
+# Must do this as git ignores that subdirectory (and anything in it on down) 
+# in the immediate parent excluded directory until you reinclude it
+# That is git will ignore any include of a file in that immediate subdirectory or anywhere on down until you do this. 
+!/src/output/
+# exclude all files and subdirectories in this /src/output directory
+/src/output/*
+# reinclude specific files in this /src/output directory
+!/src/output/4runner_Lastraw_VerifySellingPriceMethod.xlsx
+!/src/output/4runner_NewMethodComparedToOLd.xlsx
+!/src/output/rav4pluginhybrid_Lastraw_VerifySellingPriceMethod.xlsx
+!/src/output/rav4pluginhybrid_NewMethodComparedToOld.xlsx
+
+# reinclude files in /src/ToyotaSearchInventoryWebSourcePages
+# Must do this as git ignores that subdirectory (and anything in it on down) 
+# in the immediate parent excluded directory until you reinclude it
+# That is git will ignore any include of a file in that immediate subdirectory or anywhere on down until you do this. 
+!/src/ToyotaSearchInventoryWebSourcePages/
+# exclude all files and subdirectories in this /src/ToyotaSearchInventoryWebSourcePages directory
+src/ToyotaSearchInventoryWebSourcePages/*
+# reinclude specific files in this /src/ToyotaSearchInventoryWebSourcePages directory
+!/src/ToyotaSearchInventoryWebSourcePages/SnippetWithPriceDetermination.js
+!/src/ToyotaSearchInventoryWebSourcePages/166.626a79eb.chunk.js
+!/src/ToyotaSearchInventoryWebSourcePages/166.626a79eb.chunk-Beautified.js
+!/src/ToyotaSearchInventoryWebSourcePages/topLevelSearchPageSource.html
+!/src/ToyotaSearchInventoryWebSourcePages/search-inventory-tool.js
+
+
+# reinclude this immediate subdirectory in the /src directory.
+# Must do this as git ignores that subdirectory (and anything in it on down) 
+# in the immediate parent excluded directory until you reinclude it
+# That is git will ignore any include of a file in that immediate subdirectory or anywhere on down until you do this. 
+!/src/yotagrabber/
+# exclude all files and subdirectories in this /src/yotagrabber directory
+/src/yotagrabber/*
+# reinclude specific files in this /src/yotagrabber directory
+!/src/yotagrabber/models.py
+!/src/yotagrabber/models-FirstRefactorAttemptToMakeIntoClassesForExtending.py
+!/src/yotagrabber/vehicles.py
+!/src/yotagrabber/config.py
+!/src/yotagrabber/wafbypass.py
+!/src/yotagrabber/vehiclesTestWithChangeHistoryIndividualColumns.py
+!/src/yotagrabber/vehicleUtilities.py
+
+# reinclude this immediate child directory in /src/yotagrabber/  (gitignore rule)
+!/src/yotagrabber/graphql/
+# exclude all files and subdirectories in this
+/src/yotagrabber/graphql/*
+# reinclude specific immediate files in this subdirectory
+!/src/yotagrabber/graphql/models.graphql
+!/src/yotagrabber/graphql/vehicles.graphql
+!/src/yotagrabber/graphql/vehicleByVin.graphql
+!/src/yotagrabber/graphql/modelsWithVehicleMake.graphql
+!/src/yotagrabber/graphql/vehiclesWithVehicleMake.graphql
+
+# reinclude this immediate child directory in /src/yotagrabber/ (gitignore rule)
+!/src/yotagrabber/data/
+# exclude all files and subdirectories in this
+/src/yotagrabber/data/*
+# reinclude specific immediate files in this subdirectory
 !/src/yotagrabber/data/dealers.csv
 !/src/yotagrabber/data/zipcodes.txt
+!/src/yotagrabber/data/dealers_Adders.json
+
+
+# reinclude this immediate child directory in /src/ (gitignore rule)
+!src/test/
+# exclude all files and subdirectories in this
+/src/test/*
+# reinclude specific immediate files in this subdirectory
+!/src/test/4runnerhybridTest0_raw.parquet
+!/src/test/4runnerhybridTest0_StatusInfo.json
+!/src/test/4runnerhybridTest1_raw.parquet
+!/src/test/4runnerhybridTest1_StatusInfo.json
+!/src/test/4runnerhybridTest2Empty_raw.parquet
+!/src/test/4runnerhybridTest2Empty_StatusInfo.json
+!/src/test/4runnerhybridTest3HalfEmpty_raw.parquet
+!/src/test/4runnerhybridTest3HalfEmpty_StatusInfo.json
+!/src/test/4runnerhybridTest8_raw.parquet
+!/src/test/4runnerhybridTest8_StatusInfo.json
+!/src/test/ConfigItemOutputResultsMethodTest.bat
+!/src/test/ConfigItemOutputResultsMethodTest_Test2.bat
+!/src/test/SearchVehicles4runnerhybridTest.bat
+!/src/test/SearchVehicles4runnerhybridTestCnfg0_config.yaml
+!/src/test/SearchVehicles4runnerhybridTestCnfg1_config.yaml
+!/src/test/Test_UserMatchCriteriaFilter.py
+!/src/test/Test_UserMatchCriteriaFilter0.py
+!/src/test/Test_UserMatchCriteriaFilter1.py
+!/src/test/4runner_Test*_raw.parquet
+!/src/test/4runner_Test*_StatusInfo.json
+!/src/test/4runner_Tests_LastChangeDate.txt
+!/src/test/4runnerLastChangeDateTest.bat
+!/src/test/modelsTest0.json
+!/src/test/modelsTest0_raw.json
+!/src/test/MatchSoundNotification.mp3
+
+
+
 

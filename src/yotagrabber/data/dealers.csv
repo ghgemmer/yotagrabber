@@ -462,13 +462,13 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 16064,16064,Coad Toyota Paducah,https://www.coadtoyotapaducah.com,22,KY,37.081955,-88.681211,3941 Mike Smith Drive,Paducah,42001,(270) 408-6453
 16065,16065,Toyota of Ashland,https://www.toyotaofashland.com,22,KY,38.46584,-82.615995,3503 Winchester Avenue,Ashland,41101,(606) 744-2727
 16066,16066,Don Franklin Corbin Toyota,https://www.donfranklincorbintoyota.com,22,KY,36.964646,-84.080296,311 E. Cumberland Gap Pky,Corbin,40701,(606) 528-1200
-17014,17014,Price LeBlanc Toyota,https://www.priceleblanctoyota.com,60,LA,30.375531,-91.035155,13250 Airline Highway,Baton Rouge,70817,(225) 408-1100
+17014,17014,Price LeBlanc Toyota,https://www.priceleblanctoyota.com,9999,LA,30.375531,-91.035155,13250 Airline Highway,Baton Rouge,70817,(225) 408-1100
 17023,17023,Yokem Toyota,https://www.yokemtoyota.com,60,LA,32.419428,-93.721138,1199 E. Bert Kouns Ind. Loop,Shreveport,71105,(318) 798-3773
 17027,17027,Van-Trow Toyota,https://www.vantrowtoyota.com,60,LA,32.519925,-92.103619,2015 Louisville Avenue,Monroe,71201,(318) 387-2020
 17029,17029,Bubba Oustalet Toyota,https://www.oustalettoyota.com,60,LA,30.22216,-92.657185,246 North Broadway,Jennings,70546,(337) 824-3673
 17041,17041,Musson-Patout Toyota,https://www.mussonpatouttoyota.com,60,LA,29.983014,-91.853465,208 West Hwy 90 Frontage Rd,New Iberia,70560,(337) 367-0488
 17050,17050,Lakeside Toyota,https://www.lakesidetoyota.com,60,LA,30.015884,-90.154269,3701 North Causeway Blvd.,Metairie,70002,(504) 833-3311
-17055,17055,Team Toyota,https://www.team-toyota.com,60,LA,30.442924,-91.009833,1788 O'Neal Lane,Baton Rouge,70816,(225) 273-5880
+17055,17055,Team Toyota,https://www.team-toyota.com,9999,LA,30.442924,-91.009833,1788 O'Neal Lane,Baton Rouge,70816,(225) 273-5880
 17057,17057,John Harvey Toyota,https://www.johnharveytoyota.com,60,LA,32.563132,-93.728687,2901 Benton Road,Bossier City,71111,(318) 741-1337
 17058,17058,Toyota of New Orleans,https://www.toyotaofneworleans.com,60,LA,30.053973,-89.947249,13150 I-10 Service Road,New Orleans,70128,(504) 940-0000
 17060,17060,Lake Charles Toyota,https://www.lakecharlestoyota.com,60,LA,30.18609,-93.179351,3905 Gerstner Memorial Dr,Lake Charles,70607,(337) 478-3511
@@ -477,7 +477,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 17066,17066,Northshore Toyota,https://www.northshoretoyota.com,60,LA,30.428625,-90.079251,68500 Hwy 190 Service Rd.,Covington,70433,(985) 893-7778
 17068,17068,All Star Toyota of Baton Rouge,https://www.allstartoyotaofbatonrouge.com,60,LA,30.441726,-91.088344,9150 Airline Highway,Baton Rouge,70815,(225) 925-2525
 17070,17070,Greg Leblanc Toyota,https://www.gregleblanctoyota.com,60,LA,29.60449,-90.751058,220 S. Hollywood Road,Houma,70360,(985) 876-7210
-17071,17071,Supreme Toyota of Hammond,https://www.supremetoyota.com,60,LA,30.48654,-90.482167,1415 South Morrison Blvd,Hammond,70403,(985) 345-1425
+17071,17071,Supreme Toyota of Hammond,https://www.supremetoyota.com,9999,LA,30.48654,-90.482167,1415 South Morrison Blvd,Hammond,70403,(985) 345-1425
 17073,17073,Hixson Toyota,https://www.hixsontoyota.com,60,LA,31.08775,-93.270504,11981 Lake Charles Highway,Leesville,71446,(337) 239-3434
 17075,17075,Walker Toyota,https://www.walker-toyota.com,60,LA,31.294613,-92.50514,5735 Coliseum Blvd.,Alexandria,71303,(318) 445-1486
 17076,17076,Karl Malone Toyota of Ruston,https://www.karlmalonetoyotaofruston.com,60,LA,32.541166,-92.626038,1001 N. Service Road East,Ruston,71270,(318) 255-1387
@@ -486,6 +486,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 17080,17080,Toyota of Kenner,https://www.toyotaofkenner.net,60,LA,30.007144,-90.233551,2460 Veterans Memorial Blvd,Kenner,70062,(504) 464-4500
 17081,17081,Morgan City Toyota,https://www.morgancitytoyota.com,60,LA,29.703244,-91.199813,1105 Brashear Avenue,Morgan City,70380,(985) 380-2395
 17082,17082,Carlock Toyota of Slidell,https://www.carlocktoyotaofslidell.com,60,LA,30.23967,-89.76556,300 E. Howze Beach Road,Slidell,70461,(985) 643-0005
+17083,17083,All Star Toyota of Baton Rouge,https://www.allstartoyotaofbatonrouge.com,9999,LA,30.441726,-91.088344,9150 Airline Highway,Baton Rouge,70815,(225) 925-2525
 18010,18010,Down East Toyota,https://www.downeasttoyota.com,17,ME,44.777185,-68.73465,652 Wilson Street,Brewer,04412,(207) 989-6400
 18023,18023,Shepard Toyota,https://www.shepardtoyota.com,17,ME,44.093668,-69.139592,"181 New County Road, Route 1",Rockland,04841,(207) 594-8424
 18031,18031,York Toyota,https://www.yorkstoyota.com,17,ME,46.146959,-67.840005,315 North Street,Houlton,04730,(207) 532-6534

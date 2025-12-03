@@ -1,6 +1,6 @@
 code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 01007,01007,Bill Penney Toyota,https://www.billpenneytoyota.com,50,AL,34.737385,-86.65119,"4808 University Dr., N.W.",Huntsville,35816,(256) 837-1111
-01033,01033,McKinnon Toyota,https://www.mckinnontoyota.com,50,AL,32.886596,-86.621391,235 Price Drive,Clanton,35046,(205) 755-3430
+01033,01033,McKinnon Toyota,https://www.mckinnontoyota.com,9999,AL,32.886596,-86.621391,235 Price Drive,Clanton,35046,(205) 755-3430
 01053,01053,Toyota of Dothan,https://www.toyotaofdothan.com,50,AL,31.192701,-85.408607,2285 Ross Clark Circle,Dothan,36301,(334) 794-0741
 01059,01059,Serra Toyota,https://www.serratoyota.com,50,AL,33.620794,-86.685932,1300 Center Point Parkway,Birmingham,35215,(205) 838-4400
 01061,01061,Limbaugh Toyota,https://www.limbaughtoyota.com,50,AL,33.507035,-86.881857,2200 Avenue T,Birmingham,35218,(205) 780-0500
@@ -19,7 +19,8 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 01091,01091,Bill Penney Toyota of Jasper,https://www.billpenneytoyotaofjasper.com,50,AL,33.839028,-87.233016,3815 Hwy 78 E,Jasper,35501,(205) 221-3939
 01092,01092,Toyota of Montgomery,https://www.toyotamontgomery.com,50,AL,32.366981,-86.210045,911 Eastern Blvd.,Montgomery,36117,(334) 272-7147
 01093,01093,Singing River Toyota,https://www.singingrivertoyota.com,50,AL,34.713889,-87.668496,5100 US-43,Tuscumbia,35674,(256) 383-3611
-01094,01094,Allen Turner Toyota of Auburn,https://www.allenturnertoyotaofauburn.com/,50,AL,32.560407,-85.498678,170 West Creek Parkway,Auburn,36830,(334) 887-1100
+01094,01094,Allen Turner Toyota of Auburn,https://www.allenturnertoyotaofauburn.com/,9999,AL,32.560407,-85.498678,170 West Creek Parkway,Auburn,36830,(334) 887-1100
+01095,01095,Toyota of Montgomery,https://www.toyotamontgomery.com,9999,AL,32.366981,-86.210045,911 Eastern Blvd.,Montgomery,36117,(334) 272-7147
 02010,02010,Precision Toyota of Tucson,https://www.pretoy.com,15,AZ,32.28701,-110.983221,700 West Wetmore Road,Tucson,85705,(520) 795-5565
 02016,02016,Big Two Toyota of Chandler,https://www.bigtwotoyota.com,15,AZ,33.28793,-111.790768,1250 S. Gilbert Road,Chandler,85286,(480) 898-6000
 02021,02021,Desert Toyota of Tucson,https://www.deserttoyota.com,15,AZ,32.205909,-110.839698,7150 East 22nd Street,Tucson,85710,(520) 296-8535

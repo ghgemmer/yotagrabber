@@ -88,7 +88,9 @@ show up the next time the inventory search is run. The InventoryRunlog may also 
 the latest is at the bottom of the file.
 
 
-Column definitions that are not obvious or to remove any ambiguity are as follows:
+Column definitions that are not obvious or to remove any ambiguity are as follows  (note that all prices exclude
+state sales tax, license and registration fees, doc fees, and any other mandatory fees the dealer charges, 
+and thus are NOT Out The Door prices) :
 "Model" -  This actually contains just the Trim + Drivetrain code (for example XLE FWD, TRD Sport RWD, SR5 4WD).
            The top level model name is left off (Camry, 4Runner, etc) as the file name implies it.
 "Color" - Exterior color

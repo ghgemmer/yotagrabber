@@ -1,4 +1,4 @@
-Readme.txt updated 8/24/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 12/4/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts.
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.

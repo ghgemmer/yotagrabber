@@ -398,7 +398,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 13058,13058,Ed Martin Toyota,https://www.edmartintoyota.com,21,IN,39.993489,-86.006232,9230 E. 141 Street,Noblesville,46060,(317) 764-2700
 13060,13060,Team Toyota,https://www.teamtoyotaon41.com,9999,IN,41.515643,-87.471612,400 Indianapolis Blvd.,Schererville,46375,(219) 924-8100
 13066,13066,Carver Toyota of Columbus,https://www.carvertoyota.com,21,IN,39.297169,-85.95684,10255 N. U.S. Highway 31,Taylorsville,47280,(812) 526-7700
-13067,13067,Kenny Kent Toyota,https://www.kennykenttoyota.com,21,IN,37.977416,-87.481501,5600 East Division Street,Evansville,47715,(812) 473-5600
+13067,13067,Kenny Kent Toyota,https://www.kennykenttoyota.com,9999,IN,37.977416,-87.481501,5600 East Division Street,Evansville,47715,(812) 473-5600
 13068,13068,Toyota of Merrillville,https://www.toyotaofmerrillville.com,9999,IN,41.47188,-87.28185,4450 E. Lincoln Highway,Merrillville,46410,(219) 947-3325
 13069,13069,Toyota of Terre Haute,https://www.toyotaofterrehaute.com,21,IN,39.382416,-87.393706,7030 South U.S. Hwy 41,Terre Haute,47802,(812) 298-3300
 13070,13070,Andy Mohr Toyota,https://www.andymohrtoyota.com,21,IN,39.762468,-86.36185,8941 E. U.S. Hwy. 36,Avon,46123,(317) 686-9682
@@ -446,7 +446,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 16005,16005,Green's Toyota of Lexington,https://www.greenstoyotaoflexington.com,22,KY,38.050554,-84.456123,630 E. New Circle Road,Lexington,40505,(859) 254-5751
 16006,16006,Toyota of Louisville,https://www.toyotaoflouisville.com,22,KY,38.155594,-85.835686,6514 Dixie Highway,Louisville,40258,(502) 935-1433
 16042,16042,Toyota of Bowling Green,https://www.toyotaofbowlinggreen.com,22,KY,36.954447,-86.428295,2398 Scottsville Road,Bowling Green,42104,(270) 843-4321
-16044,16044,Toyota of Hopkinsville,https://www.toyotaofhopkinsville.com,22,KY,36.823515,-87.474411,4395 Ft. Campbell Blvd,Hopkinsville,42240,(270) 886-9099
+16044,16044,Toyota of Hopkinsville,https://www.toyotaofhopkinsville.com,9999,KY,36.823515,-87.474411,4395 Ft. Campbell Blvd,Hopkinsville,42240,(270) 886-9099
 16046,16046,Toyota of Murray,https://www.toyotaofmurray.com,22,KY,36.593297,-88.314623,1301 South 12th Street,Murray,42071,(270) 753-4961
 16048,16048,Toyota of Somerset,https://www.toyotaofsomerset.com,22,KY,37.034487,-84.627729,4195 South Highway 27,Somerset,42503,(606) 679-1601
 16049,16049,Toyota South,https://www.toyotasouth.com,22,KY,37.759931,-84.275255,961 Four Mile Road,Richmond,40475,(859) 624-1313
@@ -456,13 +456,14 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 16055,16055,Walters Toyota,https://www.walterstoyota.com,22,KY,37.5371,-82.599234,30 Walters Lane,Pikeville,41501,(606) 432-1451
 16056,16056,Toyota on Nicholasville,https://www.toyotaonnicholasville.com,22,KY,37.917449,-84.555907,2100 Lexington Road,Nicholasville,40356,(859) 887-4200
 16058,16058,Kerry Toyota Service Center,www.kerrytoyota.com,9999,KY,39.0776,-84.5189,550 Pike Street,Covington,41011,(859) 581-0911
-16059,16059,Don Moore Toyota,https://www.donmooretoyota.com,22,KY,37.730889,-87.122997,4216 Frederica Street,Owensboro,42301,(270) 926-2500
+16059,16059,Don Moore Toyota,https://www.donmooretoyota.com,9999,KY,37.730889,-87.122997,4216 Frederica Street,Owensboro,42301,(270) 926-2500
 16061,16061,Frankfort Toyota,https://www.frankforttoyota.com,22,KY,38.188104,-84.818523,1001 Leestown Road,Frankfort,40601,(502) 695-1500
 16062,16062,Mann Toyota,https://www.manntoyota.com,22,KY,37.644617,-82.777283,1811 U.S. Highway 23 North,Prestonsburg,41653,(606) 886-3861
 16063,16063,Watermark Toyota,https://www.watermarktoyota.com,22,KY,37.3523,-87.484258,1055 Crossing Place,Madisonville,42431,(270) 821-3372
 16064,16064,Coad Toyota Paducah,https://www.coadtoyotapaducah.com,22,KY,37.081955,-88.681211,3941 Mike Smith Drive,Paducah,42001,(270) 408-6453
 16065,16065,Toyota of Ashland,https://www.toyotaofashland.com,22,KY,38.46584,-82.615995,3503 Winchester Avenue,Ashland,41101,(606) 744-2727
 16066,16066,Don Franklin Corbin Toyota,https://www.donfranklincorbintoyota.com,22,KY,36.964646,-84.080296,311 E. Cumberland Gap Pky,Corbin,40701,(606) 528-1200
+16067,16067,Toyota of Madisonville,https://www.toyotaofmadisonville.com,9999,KY,37.3523,-87.484258,1055 Crossing Place,Madisonville,42431,(270) 821-3372
 17014,17014,Price LeBlanc Toyota,https://www.priceleblanctoyota.com,9999,LA,30.375531,-91.035155,13250 Airline Highway,Baton Rouge,70817,(225) 408-1100
 17023,17023,Yokem Toyota,https://www.yokemtoyota.com,60,LA,32.419428,-93.721138,1199 E. Bert Kouns Ind. Loop,Shreveport,71105,(318) 798-3773
 17027,17027,Van-Trow Toyota,https://www.vantrowtoyota.com,60,LA,32.519925,-92.103619,2015 Louisville Avenue,Monroe,71201,(318) 387-2020

@@ -1,4 +1,4 @@
-Readme.txt updated 12/4/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 12/8/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts.
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
@@ -88,9 +88,14 @@ show up the next time the inventory search is run. The InventoryRunlog may also 
 the latest is at the bottom of the file.
 
 
-Column definitions that are not obvious or to remove any ambiguity are as follows  (note that all prices exclude
+Column definitions that are not obvious or to remove any ambiguity are as follows.  Note that all prices exclude
 state sales tax, license and registration fees, doc fees, and any other mandatory fees the dealer charges, 
-and thus are NOT Out The Door prices) :
+and thus are NOT Out The Door prices.  Also sometimes a discount will be shown on the Toyota Inventory Search Website but
+the dealer shows a higher price (usually TSRP with no discount) for some reason.  Sometimes this is because the dealer has
+tacked on other items not shown in the options (Paint protection, etc) and to get the discount shown on the toyota website
+you would be charged full price for those tacked on items bringing the price back up to TSRP in the end.  And it may not be
+possible to remove those items.
+
 "Model" -  This actually contains just the Trim + Drivetrain code (for example XLE FWD, TRD Sport RWD, SR5 4WD).
            The top level model name is left off (Camry, 4Runner, etc) as the file name implies it.
 "Color" - Exterior color

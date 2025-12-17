@@ -231,8 +231,8 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 06055,06055,McGee Toyota of Putnam,https://www.mcgeetoyotaofputnam.com,9999,CT,41.925237,-71.874712,88 Providence Pike,Putnam,06260,(860) 923-4041
 07008,07008,Price Toyota,https://www.pricetoyota.com,80,DE,39.674367,-75.595383,168 N. Dupont Highway,New Castle,19720,(302) 322-8600
 07009,07009,Newark Toyotaworld,https://www.newarktoyotaworld.com,9999,DE,39.687501,-75.745175,230 E. Cleveland Avenue,Newark,19711,(302) 368-6262
-07012,07012,Hertrich Toyota,https://www.hertrichtoyota.com,80,DE,38.957724,-75.430122,1367 Bay Road,Milford,19963,(302) 422-2586
-07013,07013,IG Burton Toyota of Dover,https://www.igburtontoyota.com,80,DE,39.1943,-75.548401,1536 N. DuPont Highway,Dover,19901,(302) 734-5748
+07012,07012,Hertrich Toyota,https://www.hertrichtoyota.com,9999,DE,38.957724,-75.430122,1367 Bay Road,Milford,19963,(302) 422-2586
+07013,07013,IG Burton Toyota of Dover,https://www.igburtontoyota.com,9999,DE,39.1943,-75.548401,1536 N. DuPont Highway,Dover,19901,(302) 734-5748
 09043,09043,Doral Toyota,https://www.doraltoyota.com,50,FL,25.783627,-80.354518,9775 North West 12th Str,Doral,33172,(305) 261-2181
 09076,09076,Earl Stewart Toyota of North Palm Beach,https://www.earlstewarttoyota.com,50,FL,26.803403,-80.054792,1215 N. Federal Highway,Lake Park,33403,(561) 844-3461
 09079,09079,Lakeland Toyota,https://www.lakelandtoyota.com,50,FL,28.077868,-81.981217,2925 Mall Hill Drive,Lakeland,33810,(863) 688-5451
@@ -340,13 +340,13 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 12015,12015,Continental Toyota,https://www.continentaltoyota.com,9999,IL,41.767664,-87.866713,6701 S. La Grange Road,Hodgkins,60525,(708) 354-5800
 12042,12042,Hiland Toyota,https://www.hilandtoyota.com,21,IL,41.47013,-90.460954,5500 45th Avenue Drive,Moline,61265,(309) 764-2481
 12071,12071,Newbold Toyota,https://www.newboldtoyota.com,21,IL,38.58452,-89.939446,1282 Central Park Drive,O'Fallon,62269,(618) 628-7000
-12074,12074,Lombard Toyota,https://www.lombardtoyota.com,21,IL,41.8594,-88.03088,725 West Roosevelt Road,Lombard,60148,(630) 629-3900
-12077,12077,Bredemann Toyota,https://www.bredemanntoyota.com,21,IL,42.03952,-87.84287,1301 W. Dempster Street,Park Ridge,60068,(847) 655-1407
+12074,12074,Lombard Toyota,https://www.lombardtoyota.com,9999,IL,41.8594,-88.03088,725 West Roosevelt Road,Lombard,60148,(630) 629-3900
+12077,12077,Bredemann Toyota,https://www.bredemanntoyota.com,9999,IL,42.03952,-87.84287,1301 W. Dempster Street,Park Ridge,60068,(847) 655-1407
 12082,12082,Orland Toyota,https://www.orlandtoyota.com,9999,IL,41.601661,-87.826163,8485 West 159th St,Tinley Park,60487,(708) 429-3900
 12085,12085,Bill Walsh Toyota,https://www.billwalshtoyota.com,21,IL,41.378657,-88.83505,4000 N. Columbus Street,Ottawa,61350,(815) 434-4000
-12086,12086,Schaumburg Toyota,https://www.schaumburgtoyota.com,21,IL,42.047595,-88.101661,875 West Golf Road,Schaumburg,60194,(888) 565-3540
+12086,12086,Schaumburg Toyota,https://www.schaumburgtoyota.com,9999,IL,42.047595,-88.101661,875 West Golf Road,Schaumburg,60194,(888) 565-3540
 12088,12088,K.C. Summers Toyota,https://www.kcsummerstoyota.com,21,IL,39.482362,-88.378394,117 South 19th Street,Mattoon,61938,(217) 234-8863
-12090,12090,Toyota of Naperville,https://www.toyotaofnaperville.com,21,IL,41.775699,-88.185019,1488 West Ogden Avenue,Naperville,60540,(630) 357-1578
+12090,12090,Toyota of Naperville,https://www.toyotaofnaperville.com,9999,IL,41.775699,-88.185019,1488 West Ogden Avenue,Naperville,60540,(630) 357-1578
 12100,12100,Oak Lawn Toyota,https://www.oaklawntoyota.com,9999,IL,41.72051,-87.72939,4320 West 95th Street,Oak Lawn,60453,(708) 423-5200
 12102,12102,Arlington Toyota,https://www.toyotaarlington.com,21,IL,42.148459,-88.03091,2095 N. Rand Road,Palatine,60074,(847) 485-1200
 12103,12103,Green Toyota,https://www.greentoyota.com,21,IL,39.757097,-89.72978,3901 Wabash Avenue,Springfield,62711,(217) 698-3100
@@ -356,19 +356,19 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 12118,12118,Anderson Toyota,https://www.andersontoyota.com,21,IL,42.31946,-88.98382,4100 N. Perryville Road,Loves Park,61111,(815) 397-8995
 12125,12125,Fort's Toyota of Pekin,https://www.toyota-pekin.com,21,IL,40.624025,-89.620547,120 Radio City Drive,North Pekin,61554,(309) 382-4000
 12126,12126,Dan Hecht Chevrolet/Toyota,https://www.danhechttoyota.com,21,IL,39.098787,-88.546786,2400 South Banker Street,Effingham,62401,(217) 342-4111
-12133,12133,Romeoville Toyota,https://www.romeovilletoyota.com,21,IL,41.599334,-88.123372,684 S. Weber Road,Romeoville,60446,(815) 744-2760
+12133,12133,Romeoville Toyota,https://www.romeovilletoyota.com,9999,IL,41.599334,-88.123372,684 S. Weber Road,Romeoville,60446,(815) 744-2760
 12134,12134,Oakbrook Toyota in Westmont,https://www.oakbrooktoyota.com,9999,IL,41.81083,-87.95959,550 East Ogden Avenue,Westmont,60559,(630) 789-9600
-12135,12135,Pauly Toyota,https://www.paulytoyota.com,21,IL,42.21262,-88.28562,1035 S. Route 31,Crystal Lake,60014,(815) 459-7100
-12136,12136,Ken Nelson Toyota,https://www.kennelsontoyota.com,21,IL,41.857124,-89.490042,1050 N. Galena Avenue,Dixon,61021,(815) 288-4455
-12137,12137,Classic Toyota,https://www.classicdirecttoyota.com,21,IL,42.36783,-87.87921,515 N. Green Bay Road,Waukegan,60085,(847) 336-4300
-12138,12138,St. Charles Toyota,https://www.stcharlestoyota.net,21,IL,41.92071,-88.2813,2651 E. Main Street,St. Charles,60174,(630) 584-6655
-12141,12141,Elgin Toyota,https://www.elgintoyota.com,21,IL,42.013769,-88.217935,1600 W. Lake Street,Streamwood,60107,(847) 741-2100
-12144,12144,AutoNation Toyota Libertyville,https://www.autonationtoyotalibertyville.com,21,IL,42.26538,-87.94869,1180 South Milwaukee Ave.,Libertyville,60048,(224) 993-9001
+12135,12135,Pauly Toyota,https://www.paulytoyota.com,9999,IL,42.21262,-88.28562,1035 S. Route 31,Crystal Lake,60014,(815) 459-7100
+12136,12136,Ken Nelson Toyota,https://www.kennelsontoyota.com,9999,IL,41.857124,-89.490042,1050 N. Galena Avenue,Dixon,61021,(815) 288-4455
+12137,12137,Classic Toyota,https://www.classicdirecttoyota.com,9999,IL,42.36783,-87.87921,515 N. Green Bay Road,Waukegan,60085,(847) 336-4300
+12138,12138,St. Charles Toyota,https://www.stcharlestoyota.net,9999,IL,41.92071,-88.2813,2651 E. Main Street,St. Charles,60174,(630) 584-6655
+12141,12141,Elgin Toyota,https://www.elgintoyota.com,9999,IL,42.013769,-88.217935,1600 W. Lake Street,Streamwood,60107,(847) 741-2100
+12144,12144,AutoNation Toyota Libertyville,https://www.autonationtoyotalibertyville.com,9999,IL,42.26538,-87.94869,1180 South Milwaukee Ave.,Libertyville,60048,(224) 993-9001
 12147,12147,Shottenkirk Toyota,https://www.shottenkirktoyota.com,21,IL,39.936215,-91.330472,5333 Broadway,Quincy,62301,(217) 224-1500
 12148,12148,Toyota of Danville,https://www.toyotaofdanville.com,21,IL,40.085248,-87.63591,2106 Georgetown Road,Tilton,61833,(217) 442-8474
 12149,12149,Woodrum Toyota of Macomb,https://www.woodrumtoyota.com,21,IL,40.459216,-90.62661,3100 East Jackson,Macomb,61455,(309) 837-2321
 12150,12150,Chicago Northside Toyota,https://www.chicagotoyota.com,9999,IL,41.991831,-87.689933,6042 N. Western Avenue,Chicago,60659,(773) 728-5000
-12151,12151,Brian Bemis Toyota of DeKalb,https://www.dekalbtoyota.com,21,IL,41.946638,-88.731077,1890 Sycamore Road,DeKalb,60115,(815) 748-7300
+12151,12151,Brian Bemis Toyota of DeKalb,https://www.dekalbtoyota.com,9999,IL,41.946638,-88.731077,1890 Sycamore Road,DeKalb,60115,(815) 748-7300
 12153,12153,Marion Toyota,https://www.mariontoyota.com,21,IL,37.74596,-88.990892,3300 W. Deyoung St.,Marion,62959,(618) 997-5692
 12155,12155,Napleton's Toyota of Urbana,https://www.napletonstoyotaofurbana.com,21,IL,40.138723,-88.195398,1101 Napleton Way,Urbana,61802,(217) 367-1222
 12156,12156,Sam Leman Toyota Bloomington,https://www.samlemantoyotabloomington.com,21,IL,40.457302,-88.97077,1615 Morrissey Drive,Bloomington,61704,(309) 662-3800
@@ -377,13 +377,15 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 12161,12161,Toyota of Lincoln Park,https://www.ToyotaOfLincolnPark.com,9999,IL,41.90999,-87.65092,1561 North Fremont Street,Chicago,60642,(312) 707-9500
 12162,12162,Monken Toyota of Mt. Vernon,https://www.monkentoyotamtvernon.com,21,IL,38.312177,-88.95556,100 South 45th Street,Mt Vernon,62864,(618) 242-0334
 12164,12164,Gerald Toyota of Matteson,https://www.geraldtoyotamatteson.com,9999,IL,41.50462,-87.75079,5540 Auto Court,Matteson,60443,(708) 720-8600
-12165,12165,Toyota of Fox Lake,https://www.toyotaoffoxlake.com,21,IL,42.39178,-88.18192,75 South Route 12,Fox Lake,60020,(847) 587-9200
+12165,12165,Toyota of Fox Lake,https://www.toyotaoffoxlake.com,9999,IL,42.39178,-88.18192,75 South Route 12,Fox Lake,60020,(847) 587-9200
 12166,12166,Victory Toyota of Midtown,https://www.victorytoyotamidtown.com,9999,IL,41.930147,-87.746977,3255 North Cicero Avenue,Chicago,60641,(773) 622-6300
-12167,12167,Toyota on Edens,https://www.toyotaonedens.com,21,IL,42.124135,-87.783422,1530 Frontage Road,Northbrook,60062,(847) 272-0808
+12167,12167,Toyota on Edens,https://www.toyotaonedens.com,9999,IL,42.124135,-87.783422,1530 Frontage Road,Northbrook,60062,(847) 272-0808
 12168,12168,Kunes Toyota of Galesburg,https://www.kunesgalesburgtoyota.com,21,IL,40.980676,-90.362968,2763 N. Seminary Street,Galesburg,61401,(309) 344-2080
-12169,12169,McGrath Elmhurst Toyota,https://www.elmhursttoyota.com,21,IL,41.91793,-87.95365,440 West Lake Street,Elmhurst,60126,(630) 279-2160
+12169,12169,McGrath Elmhurst Toyota,https://www.elmhursttoyota.com,9999,IL,41.91793,-87.95365,440 West Lake Street,Elmhurst,60126,(630) 279-2160
 12170,12170,Peoria Toyota,https://www.peoriatoyota.com,21,IL,40.777922,-89.632037,7401 North Allen Road,Peoria,61614,(309) 693-7000
 12171,12171,Toyota on Western,https://www.toyotaonwestern.com,9999,IL,41.76703,-87.68322,6941 South Western Ave,Chicago,60636,(773) 776-4016
+12173,12173,Ottawa Toyota,https://www.ottawatoyotadealer.com,9999,IL,41.378657,-88.83505,4000 N. Columbus Street,Ottawa,61350,(815) 434-4000
+12174,12174,Arlington Toyota,https://www.toyotaarlington.com,9999,IL,42.148459,-88.03091,2095 N. Rand Road,Palatine,60074,(847) 485-1200
 13027,13027,Bob Rohrman Toyota,https://www.rohrmantoyota.com,21,IN,40.418283,-86.832726,3900 State Road 26 East,Lafayette,47905,(765) 448-1000
 13033,13033,Tom Wood Toyota,https://www.tomwoodtoyota.com,21,IN,39.946533,-86.35094,6408 Crane Drive,Whitestown,46075,(317) 297-2444
 13035,13035,Evans Toyota,https://www.evanstoyota.com,21,IN,41.117427,-85.149608,515 West Coliseum Blvd,Fort Wayne,46808,(260) 482-3730
@@ -528,6 +530,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 19084,19084,Sheehy Toyota of Timonium,https://www.sheehytoyotatimonium.com,9999,MD,39.473775,-76.640276,10401 York Road,Cockeysville,21030,(410) 666-8900
 19088,19088,CMA's Toyota of Lexington Park,https://www.cmastoyotaoflexingtonpark.com,9999,MD,38.285355,-76.474615,22500 Three Notch Road,Lexington Park,20653,(301) 863-7555
 19089,19089,AutoNation Toyota White Marsh,https://www.autonationtoyotawhitemarsh.com,9999,MD,39.375117,-76.507283,8001 Belair Road,Baltimore,21236,(410) 661-5700
+19091,19091,Preston Toyota of Easton,https://www.prestontoyotamd.com,9999,MD,38.733104,-76.069144,6730 Ocean Gateway,Easton,21601,(410) 822-8000
 20006,20006,Jaffarian Toyota,https://www.jaffarian-toyota.com,9999,MA,42.765439,-71.105303,600 River St,Haverhill,01832,(978) 372-8551
 20009,20009,K-M Toyota,https://www.kmmotors.com,17,MA,42.700592,-73.11622,51 West Main Street,North Adams,01247,(413) 663-5731
 20016,20016,Balise Toyota,https://www.balisetoyota.com/,9999,MA,42.142538,-72.62707,1399 Riverdale Street,West Springfield,01089,(413) 734-8795
@@ -1242,8 +1245,8 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 48064,48064,International Toyota,https://www.internationaltoyota.com,21,WI,43.756971,-87.762033,4120 N. Frontage Road,Sheboygan,53081,(920) 458-6171
 48065,48065,Toyota of Brookfield,https://www.toyotaofbrookfield.com,21,WI,43.08565,-88.168629,20655 West Capitol Drive,Brookfield,53045,(262) 781-2626
 48066,48066,Rhinelander Toyota,https://www.rhinelandertoyota.com,21,WI,45.656976,-89.383027,1955 North Stevens Street,Rhinelander,54501,(715) 365-8696
-48067,48067,Kenosha Toyota,https://www.kenoshatoyota.com,21,WI,42.558075,-87.954257,8180 120th Avenue,Kenosha,53142,(262) 857-1700
-48068,48068,Zeigler Toyota of Racine,https://www.zeiglertoyotaracine.com,21,WI,42.726366,-87.952016,13350 Kilbourn Drive,Mount Pleasant,53177,(262) 886-5111
+48067,48067,Kenosha Toyota,https://www.kenoshatoyota.com,9999,WI,42.558075,-87.954257,8180 120th Avenue,Kenosha,53142,(262) 857-1700
+48068,48068,Zeigler Toyota of Racine,https://www.zeiglertoyotaracine.com,9999,WI,42.726366,-87.952016,13350 Kilbourn Drive,Mount Pleasant,53177,(262) 886-5111
 48069,48069,Marthaler Toyota of Ashland,https://www.ashland-toyota.com,21,WI,46.605203,-90.856043,2301 Lakeshore Drive East,Ashland,54806,(715) 682-5252
 48070,48070,Wilde Toyota,https://www.wildetoyota.com,21,WI,42.9845,-88.04776,3225 South 108th Street,West Allis,53227,(414) 545-8010
 48071,48071,Smart Motors Toyota,https://www.smarttoyota.com,21,WI,43.05102,-89.48171,5901 Odana Road,Madison,53719,(608) 275-7808

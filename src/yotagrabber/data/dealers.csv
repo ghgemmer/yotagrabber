@@ -1243,15 +1243,16 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 48060,48060,LeadCar Toyota La Crosse,https://www.leadcartoyotalacrosse.com,21,WI,43.805287,-91.253808,800 Third Street South,La Crosse,54601,(608) 793-7000
 48061,48061,East Madison Toyota,https://eastmadisontoyota.com,21,WI,43.13989,-89.28968,3501 Lancaster Drive,Madison,53718,(608) 240-7900
 48064,48064,International Toyota,https://www.internationaltoyota.com,21,WI,43.756971,-87.762033,4120 N. Frontage Road,Sheboygan,53081,(920) 458-6171
-48065,48065,Toyota of Brookfield,https://www.toyotaofbrookfield.com,21,WI,43.08565,-88.168629,20655 West Capitol Drive,Brookfield,53045,(262) 781-2626
+48065,48065,Toyota of Brookfield,https://www.toyotaofbrookfield.com,9999,WI,43.08565,-88.168629,20655 West Capitol Drive,Brookfield,53045,(262) 781-2626
 48066,48066,Rhinelander Toyota,https://www.rhinelandertoyota.com,21,WI,45.656976,-89.383027,1955 North Stevens Street,Rhinelander,54501,(715) 365-8696
 48067,48067,Kenosha Toyota,https://www.kenoshatoyota.com,9999,WI,42.558075,-87.954257,8180 120th Avenue,Kenosha,53142,(262) 857-1700
 48068,48068,Zeigler Toyota of Racine,https://www.zeiglertoyotaracine.com,9999,WI,42.726366,-87.952016,13350 Kilbourn Drive,Mount Pleasant,53177,(262) 886-5111
 48069,48069,Marthaler Toyota of Ashland,https://www.ashland-toyota.com,21,WI,46.605203,-90.856043,2301 Lakeshore Drive East,Ashland,54806,(715) 682-5252
-48070,48070,Wilde Toyota,https://www.wildetoyota.com,21,WI,42.9845,-88.04776,3225 South 108th Street,West Allis,53227,(414) 545-8010
+48070,48070,Wilde Toyota,https://www.wildetoyota.com,9999,WI,42.9845,-88.04776,3225 South 108th Street,West Allis,53227,(414) 545-8010
 48071,48071,Smart Motors Toyota,https://www.smarttoyota.com,21,WI,43.05102,-89.48171,5901 Odana Road,Madison,53719,(608) 275-7808
 48072,48072,Umansky Toyota,https://www.umanskytoyota.com,9999,WI,43.11941,-87.93062,1620 W. Silver Spring Dr.,Glendale,53209,(414) 228-1450
 48073,48073,Dahl Toyota Sheboygan,https://www.dahltoyotasheboygan.com,9999,WI,43.756971,-87.762033,4120 N. Frontage Road,Sheboygan,53081,(920) 458-6171
+48074,48074,Serra Toyota,https://www.serratoyotamke.com,9999,WI,42.940583,-87.949823,5727 S. 27th Street,Milwaukee,53221,(414) 281-3100
 48075,48075,Kolosso Toyota,https://www.kolossotoyota.com,9999,WI,44.273612,-88.451281,3000 W. Wisconsin Avenue,Appleton,54914,(920) 738-3666
 49025,49025,Rock Springs Toyota,https://www.rockspringstoyota.com,15,WY,41.590307,-109.225613,401 N. Center Street,Rock Springs,82901,(307) 362-5015
 49029,49029,Fremont Toyota,https://www.fremonttoyotalander.com,15,WY,42.844429,-108.748,103 Fremont Way,Lander,82520,(307) 332-5011

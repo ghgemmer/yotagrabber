@@ -202,7 +202,7 @@ def get_vehicle_query_Objects():
 
     if (MODEL_SEARCH_ZIPCODE is not None) and (MODEL_SEARCH_RADIUS is not None) and MODEL_SEARCH_ZIPCODE and MODEL_SEARCH_RADIUS:
         # single zipcode and radius search specified
-        with open(f"{config.BASE_DIRECTORY}/graphql/vehicles.graphql", "r") as fileh:
+        with open(f"{config.BASE_DIRECTORY}/graphql/vehiclesWithVehicleMake.graphql", "r") as fileh:
             query = fileh.read()
         query = query.replace("ZIPCODE", MODEL_SEARCH_ZIPCODE)
         query = query.replace("MODELCODE", MODEL)
@@ -263,7 +263,7 @@ def get_vehicle_query_Objects():
         }
         for zone in vehicleQueryZonesToUse:
             # Replace certain place holders in the query with values.
-            with open(f"{config.BASE_DIRECTORY}/graphql/vehicles.graphql", "r") as fileh:
+            with open(f"{config.BASE_DIRECTORY}/graphql/vehiclesWithVehicleMake.graphql", "r") as fileh:
                 query = fileh.read()
             zip_code = zip_codes[zone]
             query = query.replace("ZIPCODE", zip_code)
@@ -836,7 +836,12 @@ def transformRawDfToCsvStyleDf ( inputDf):
         ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
         output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if ok else "output")
         with open(f"{output_dir}/models.json", "r") as fileh:
-            title = [x["title"] for x in json.load(fileh) if x["modelCode"] == MODEL][0]
+            models_list = json.load(fileh)
+            # Case-insensitive lookup to match API behavior
+            matching_models = [x["title"] for x in models_list if x["modelCode"].lower() == MODEL.lower()]
+            if not matching_models:
+                raise ValueError(f"Model code {MODEL} not found in {output_dir}/models.json. Available models: {', '.join(x['modelCode'] for x in models_list)}")
+            title = matching_models[0]
     
         df = (
             df[
@@ -1316,6 +1321,8 @@ def determineRowDifferences( row, columnsToIgnore, originalColumnsInOld, origina
     # only one value is shown.  
     # Also the row's rowChangeTypeColumnName column value is to be updated with an indication if there was any difference or not
     #
+    # Convert row to object dtype for string columns to prevent FutureWarning during assignment
+    row = row.astype({rowChangeTypeColumnName: 'object', rowModificationsColumnName: 'object'})
     global debugEnabled
     namesOfModifiedFieldsString = ""
     rowIsTheSame = True
@@ -1446,15 +1453,11 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     # the row previously existed and did not change (i.e the VIN is in both and all the data associated with it is the same).
     # Also add a rowModificationsColumnName and initialize it to None for no modifications.
     # Ensure dtype is object to avoid FutureWarning when assigning string values later
-    dfNewMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
-    dfNewMerged[rowModificationsColumnName] = None
-    dfNewMerged[rowChangeTypeColumnName] = dfNewMerged[rowChangeTypeColumnName].astype('object')
-    dfNewMerged[rowModificationsColumnName] = dfNewMerged[rowModificationsColumnName].astype('object')
-    dfOldMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
-    dfOldMerged[rowModificationsColumnName] = None
-    dfOldMerged[rowChangeTypeColumnName] = dfOldMerged[rowChangeTypeColumnName].astype('object')
-    dfOldMerged[rowModificationsColumnName] = dfOldMerged[rowModificationsColumnName].astype('object')
-    
+    # IMPORTANT: Assign with dtype='object' from the start to ensure proper dtype through slicing and apply operations
+    dfNewMerged[rowChangeTypeColumnName] = pd.Series([rowSameVINContentsIndicator] * len(dfNewMerged), dtype='object', index=dfNewMerged.index)
+    dfNewMerged[rowModificationsColumnName] = pd.Series([None] * len(dfNewMerged), dtype='object', index=dfNewMerged.index)
+    dfOldMerged[rowChangeTypeColumnName] = pd.Series([rowSameVINContentsIndicator] * len(dfOldMerged), dtype='object', index=dfOldMerged.index)
+    dfOldMerged[rowModificationsColumnName] = pd.Series([None] * len(dfOldMerged), dtype='object', index=dfOldMerged.index)   
     
     # Update the RowChangeType column for those merged dfs.
     # The WhoDidMergeComeFrom_ is used to determine if the row was in left only, both.  right only is not possible because 
@@ -1466,10 +1469,7 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     # Now do the determination on just the rows that were in both.  We can create a slice of just those rows with common VINs
     # and run the determination on then and then the result is what gets concatenated later on for that.
     dfNewMergeOnlyCommonVins = dfNewMerged[dfNewMerged["WhoDidMergeComeFrom_"] == 'both'].copy(deep=True)
-    # Ensure dtype is object to avoid FutureWarning when assigning string values later
-    # Use loc to ensure proper assignment
-    dfNewMergeOnlyCommonVins.loc[:, rowChangeTypeColumnName] = dfNewMergeOnlyCommonVins[rowChangeTypeColumnName].astype('object')
-    dfNewMergeOnlyCommonVins.loc[:, rowModificationsColumnName] = dfNewMergeOnlyCommonVins[rowModificationsColumnName].astype('object')
+    # Apply determineRowDifferences - dtype is already object from parent DataFrame
     dfNewMergeOnlyCommonVins = dfNewMergeOnlyCommonVins.apply(determineRowDifferences, axis=1, args= (columnsToIgnoreForComparison, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight))
     
     # Concatenate just the new and old merged dfs together first since will need to do renames

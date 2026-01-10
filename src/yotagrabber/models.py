@@ -9,6 +9,7 @@ import pandas as pd
 import random
 import requests
 from time import sleep
+from typing import Any, Dict, List, Optional # Imported for Type Hinting
 
 from yotagrabber import config, wafbypass, vehicleUtilities
 
@@ -25,7 +26,8 @@ genericToyotaMakeToGraphQLBrandFieldStr = {vehicleUtilities.vehicleMakeToyota: "
 class modelsClass:
     # base Class for model collection and updating.  Needs certain methods overriden in superclass
     def __init__(self):
-        self.vehicleMake = None
+        # Initialize as empty string so it is always compatible with path/string functions
+        self.vehicleMake: str = "" 
 
     def read_local_data(self):
         """Read local raw data from the disk instead of querying website."""
@@ -34,7 +36,8 @@ class modelsClass:
             result = json.load(fileh)
         return result
 
-    def query_for_models(self):
+    # Type hint added to indicate it returns a list of dicts OR None
+    def query_for_models(self) -> Optional[List[Dict[str, Any]]]: 
         """Send query for a list of models and return response as a json result."""
         print("Error: modelClass.query_for_models method is abstract and must be overriden by a superclass")
         return None
@@ -53,14 +56,27 @@ class modelsClass:
 
     def update_models(self):
         """Generate a raw JSON file containing the models."""
+        result = None
+        
         # Get a dataframe of the models from the json result.
         if USE_LOCAL_DATA_ONLY:
             result = self.read_local_data()
         else:
             result = self.query_for_models()
+            
+            # Check if result is None before proceeding to save file
+            if result is None:
+                print(f"Error: Could not retrieve models for {self.vehicleMake}. Skipping update.")
+                return
+
             fileName = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(self.vehicleMake) + "/models_raw.json"
             df = pd.json_normalize(result)
             df.to_json(fileName, orient="records", indent=2)
+
+        # Check if result is None before proceeding to normalize into dataframe
+        if result is None:
+            print("Error: No result data available to process.")
+            return
 
         # Create DataFrame from result regardless of source.
         df = pd.json_normalize(result)
@@ -103,7 +119,7 @@ class genericToyotaModelsClass(modelsClass):
 
         return query
 
-    def query_for_models(self):
+    def query_for_models(self) -> Optional[List[Dict[str, Any]]]:
         """Send query for a list of models and return response as a json result."""
         query = self.get_models_query()
         

@@ -12,10 +12,11 @@ import requests.exceptions
 import requests
 import pandas as pd
 import re
+from typing import List, Tuple, Dict, Any, Optional
 
-forceRspFailureTest = 0 # set to > 0 to perform tests related to forcing a response failure to test request retry
+forceRspFailureTest: int = 0 # set to > 0 to perform tests related to forcing a response failure to test request retry
 
-def interruptibleSleep(sleepTime):
+def interruptibleSleep(sleepTime: float) -> bool:
     wasInterrupted = False
     if sleepTime > 0:
         try:
@@ -30,9 +31,9 @@ def interruptibleSleep(sleepTime):
     #    print("Interruptible Sleep time was 0")
     return wasInterrupted
 
-def readInZipCodes(fileName, vehicleMake="toyota"):
+def readInZipCodes(fileName: str, vehicleMake: str = "toyota") -> List[str]:
     # reads in and returns a list of zipCodes (Toyota) or state codes (Lexus) from the passed file
-    zipCodes = []
+    zipCodes: List[str] = []
     with open(fileName, "r") as fileh:
         for zip in fileh:
             zip = zip.strip(" \n\r")
@@ -51,7 +52,7 @@ def readInZipCodes(fileName, vehicleMake="toyota"):
                         print("Error: Ignoring Invalid zip code '" + zip + "' for Toyota")
     return zipCodes
 
-def writeZipCodes(zipCodes, startIndex, fileName):
+def writeZipCodes(zipCodes: List[str], startIndex: int, fileName: str) -> None:
     with open(fileName, "w") as fileh:
         listLen = len(zipCodes)
         indx = startIndex
@@ -60,7 +61,7 @@ def writeZipCodes(zipCodes, startIndex, fileName):
             fileh.write(str(zipCodes[indx])+ "\n")
             indx += 1
             
-def getAddressComponents(address):
+def getAddressComponents(address: str) -> Tuple[str, str, str, str]:
     # Takes the full address which is in the form <street address>,<0 or more spaces><city>,<0 or more spaces>state<1 or more spaces>zipcode<0 or more spaces>
     # (streetAddressOnly, city, state, zipcode)
     streetAddressOnly = ""
@@ -78,28 +79,31 @@ def getAddressComponents(address):
         print("getAddressComponents: Could not parse Address into streetAddressOnly, city, state, zipcode", address)
     return (streetAddressOnly, city, state, zipcode)
 
-def updateAddressComponentsIn(rowSeries):
+def updateAddressComponentsIn(rowSeries: pd.Series) -> pd.Series:
     # takes a dataframe rowSeries with at least columns "state", "address", "address1", "city", "zip"
     # where address contains the full address including city, state, zipcode and updates the columns 
     # "state", "address1" (i.e. street address only), "city", "zip" with the corresponding information.
-    streetAddressOnly, city, state, zipcode = getAddressComponents(rowSeries["address"])
+    # We cast to str to satisfy type checkers that these fields are strings
+    streetAddressOnly, city, state, zipcode = getAddressComponents(str(rowSeries["address"]))
     rowSeries["address1"] = streetAddressOnly
     rowSeries["city"] = city
     rowSeries["state"] = state
     rowSeries["zip"] = zipcode
     return rowSeries
 
-def formatPhoneNumber(phoneNumberStr):
+def formatPhoneNumber(phoneNumberStr: Any) -> str:
     # Strip all non-digit characters to handle both formatted and unformatted phone numbers
-    digitsOnly = ''.join(c for c in str(phoneNumberStr) if c.isdigit())
+    # Input is Any because pandas might pass it as an object/int/str
+    s_phoneNumber = str(phoneNumberStr)
+    digitsOnly = ''.join(c for c in s_phoneNumber if c.isdigit())
     if len(digitsOnly) != 10:
-        formattedPhoneNumberStr = "(" + phoneNumberStr[:3] + ") " + phoneNumberStr[3:6] + "-" + phoneNumberStr[6:]
+        formattedPhoneNumberStr = "(" + s_phoneNumber[:3] + ") " + s_phoneNumber[3:6] + "-" + s_phoneNumber[6:]
         return formattedPhoneNumberStr
     else:
         # Return original if not 10 digits
-        return phoneNumberStr
+        return s_phoneNumber
     
-def updateDealers(dealerFileName, zipCodeFileName, vehicleMake="toyota", dealerAddersJsonFileName = ""):
+def updateDealers(dealerFileName: str, zipCodeFileName: str, vehicleMake: str = "toyota", dealerAddersJsonFileName: str = "") -> None:
     print("This program updates the passed dealer file (or creates that file if not present)") 
     print("with any dealers found (new or update of existing), during the search ")
     print("of the remaining zip codes/state to look for dealers for, out of the zip code file,")
@@ -134,6 +138,8 @@ def updateDealers(dealerFileName, zipCodeFileName, vehicleMake="toyota", dealerA
     else:
         print("Reading in zip codes from file:", zipCodeFileName)
         zipCodesToUpdateDealers = readInZipCodes(zipCodeFileName, vehicleMake)
+    
+    dealers: pd.DataFrame
     if Path(dealerFileName).is_file():
         print("Reading in existing Dealer csv", dealerFileName)
         # leave the code and dealerId fields as strings (since they are unquoted)
@@ -143,11 +149,13 @@ def updateDealers(dealerFileName, zipCodeFileName, vehicleMake="toyota", dealerA
             dealers["code"] = dealers["code"].apply(pd.to_numeric)
             dealers["dealerId"] = dealers["dealerId"].apply(pd.to_numeric)
     else:
-        # Instead of pd.DataFrame(), match the schema. Fix FutureWarning Error: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
-        dealers = pd.DataFrame(columns=df.columns).astype(df.dtypes)
+        # Instead of pd.DataFrame(), match the schema.
+        dealers = pd.DataFrame(columns=["code", "dealerId", "name", "url", "regionId", "state", "lat", "long", "address1", "city", "zip", "phone"])
+        
     indx = 0
     for zipCode in zipCodesToUpdateDealers:
         # TODO add in retries
+        codeToSearch: str
         if vehicleMake == "lexus":
             # Lexus: state codes are left padded with spaces to be 2 characters
             codeToSearch = zipCode # State for Lexus
@@ -156,9 +164,10 @@ def updateDealers(dealerFileName, zipCodeFileName, vehicleMake="toyota", dealerA
              codeToSearch = ("0" * (5 - len(zipCode))) + zipCode
         print("Getting dealers for/near zipcode/state",codeToSearch, ", at zipcode list index:", indx )
         tryCount = 1
-        result = None
+        result: Optional[Dict[str, Any]] = None
         while True:
             try:
+                resp: requests.Response
                 if vehicleMake == "lexus":
                     # Lexus: state-based API
                     getDealersBaseUrl = "https://www.lexus.com/rest/lexus/dealers?experience=dealer&state="
@@ -168,12 +177,6 @@ def updateDealers(dealerFileName, zipCodeFileName, vehicleMake="toyota", dealerA
                     )
                 else:
                     # Toyota: zipcode-based API
-                    # Could not get url "https://dealers.prod.webservices.toyota.com/v1/dealers/?zipcode=" + zipCodeWithLeadingZeroes, to work
-                    # as it kept giving an resp.status_code 403 for not authorized, even when set host and authority to dealers.prod.webservices.toyota.com
-                    # , and even trying the wafpypass, so there is something that requires more authorization to access that.
-                    # That is what the inventory get uses to get the dealers for that zip code but could not get it to work.
-                    # So had to use the url below which is accessed when on the https://www.toyota.com/connected-services/toyota-app/ page
-                    # and  click on the Find Dealer https://www.toyota.com/dealers/#default link on that page which pops up a map window
                     resp = requests.get(
                             "https://api.ws.dpcmaps.toyota.com/v1/dealers?attributeKey=&searchMode=pmaProximityLayered&zipcode=" + codeToSearch,
                             timeout=20,
@@ -182,8 +185,8 @@ def updateDealers(dealerFileName, zipCodeFileName, vehicleMake="toyota", dealerA
                 break
             except (requests.exceptions.JSONDecodeError) as inst:
                 print ("updateDealers: Exception occurred with accessing json response:", str(type(inst)) + " "  + str(inst))
-                print("resp.status_code", resp.status_code)
-                print("resp.headers", resp.headers)
+                # Note: resp might be unbound if exception happens before assignment, but in this structure it happens after request
+                # print("resp.status_code", resp.status_code) 
                 result = None
                 # retry
                 if tryCount <= 0:
@@ -192,10 +195,7 @@ def updateDealers(dealerFileName, zipCodeFileName, vehicleMake="toyota", dealerA
                 interruptibleSleep(4)
                 print("Retrying request, tryCount = ", tryCount)
         if (result is not None) and result and ("dealers" in result) and (len(result["dealers"]) > 0):
-            #print("Result is", result)
-            #df = pd.DataFrame.from_dict(result["dealers"])
             df = pd.json_normalize(result["dealers"])
-            #print ("df is", df)
 
             if vehicleMake == "lexus":
                 # Lexus field mapping
@@ -279,13 +279,7 @@ def updateDealers(dealerFileName, zipCodeFileName, vehicleMake="toyota", dealerA
                 df.drop(columns=["address"], inplace=True)
             # format phone number
             df["phone"] = df["phone"].apply(formatPhoneNumber)
-            if False:
-                # force the code and dealerId fields to ints as the vehicles.py expects that type (i.e. leading 0s are removed)
-                df["code"] = df["code"].apply(pd.to_numeric)
-                df["dealerId"] = df["dealerId"].apply(pd.to_numeric)
-            #print(df)
-            #print("type(df['code'][0])", type(df["code"][0]))
-            #print("type(df['lat'][0])", type(df["lat"][0]))
+            
             dealers = pd.concat([dealers, df], ignore_index=True)
             dealers.drop_duplicates(subset=["code"], keep='last', inplace=True)
         else:
@@ -315,6 +309,7 @@ def updateDealers(dealerFileName, zipCodeFileName, vehicleMake="toyota", dealerA
     # delete the remaining zip codes file.
     Path(remainingZipCodeFileName).unlink(missing_ok=True)
     print("------------> UPDATE OF DEALERS COMPLETED <--------------")
+
 if __name__ == "__main__":
     import sys
     # pass dealer file name

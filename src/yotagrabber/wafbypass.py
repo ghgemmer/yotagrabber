@@ -1,9 +1,10 @@
 # Bypass the AWS WAF in front of the GraphQL endpoint.
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 from inputimeout import inputimeout, TimeoutOccurred
+from typing import Dict, Optional, Tuple, Any
 
 
-def getUserInput(promptStr, sleepTime):
+def getUserInput(promptStr: str, sleepTime: float) -> Tuple[bool, str]:
     # Outputs the prompt if not null, and waits for a user input (with an ending CR which is not returned with the result) for the sleepTime
     # returns a tuple (timedOut, userInput) where timedOut is True if timed out before input, otherwise userInput has the user entry
     # without the CR
@@ -17,11 +18,15 @@ def getUserInput(promptStr, sleepTime):
 
 class WAFBypass:
     """Bypass the AWS WAF in front of the GraphQL endpoint."""
-    def __init__(self, vehicle_make="toyota"):
+    
+    # Type Hint: Explicitly define valid_headers as a Dict or None
+    valid_headers: Optional[Dict[str, str]]
+
+    def __init__(self, vehicle_make: str = "toyota"):
         self.vehicle_make = vehicle_make
         self.valid_headers = None
 
-    def intercept_request(self, request):
+    def intercept_request(self, request: Any):
         """Find the GraphQL request and save the headers."""
         if request.resource_type == "xhr" and request.url.endswith("/graphql"):
             self.valid_headers = request.headers
@@ -63,7 +68,8 @@ class WAFBypass:
                 sleepTime = 60* 10
                 print("Waiting time ", sleepTime, "secs before retrying WAF Bypass")
                 getUserInput("Enter Cr to terminate wait early", sleepTime)
-    def run(self):
+    
+    def run(self) -> Optional[Dict[str, str]]:
         """Return the valid headers to bypass the WAF."""
         self.get_headers()
         return self.valid_headers

@@ -1,13 +1,14 @@
 """Common vehicle utilities used by the programs."""
 import json
 import pathlib
+from typing import Tuple, Optional, Union
 from yotagrabber import config
 
-vehicleMakeLexus = "lexus"
-vehicleMakeToyota = "toyota"
+vehicleMakeLexus: str = "lexus"
+vehicleMakeToyota: str = "toyota"
 
 
-def getVehicleMakeDealersFullFileName(vehicleMake):
+def getVehicleMakeDealersFullFileName(vehicleMake: str) -> pathlib.Path:
     """
     Get the full path to the dealers file for the passed vehicle make.
     Using dealers.csv with vehicleMake column for all makes.
@@ -15,7 +16,7 @@ def getVehicleMakeDealersFullFileName(vehicleMake):
     filename = pathlib.Path(f"{config.BASE_DIRECTORY}/dealers.csv")
     return filename
 
-def getVehicleMakeRelOutDirNoEndSlash(vehicleMake):
+def getVehicleMakeRelOutDirNoEndSlash(vehicleMake: str) -> str:
     """
     Get the relative output directory (no ending slash) for the passed vehicle make.
     Returns path relative to the src/ directory (typical working directory).
@@ -28,17 +29,18 @@ def getVehicleMakeRelOutDirNoEndSlash(vehicleMake):
         outputDir = f"./output/{vehicleMake}"
     return outputDir
 
-def validateVehicleMake(userInputVehicleMake):
+def validateVehicleMake(userInputVehicleMake: Optional[str]) -> Tuple[bool, Optional[str]]:
     """
     Validate that the passed vehicle make is supported.
     The internal vehicleMake is used internally by the program
     returns tuples of (ok, vehicleMake)
     """
-    vehicleMake = None
+    vehicleMake: Optional[str] = None
     passedUserInputVehicleMake = userInputVehicleMake
     ok = False
-    if type(userInputVehicleMake) is str:
+    if isinstance(userInputVehicleMake, str):
         userInputVehicleMake = userInputVehicleMake.upper()
+    
     if userInputVehicleMake == "LEXUS":
         vehicleMake = vehicleMakeLexus
         ok = True
@@ -46,6 +48,7 @@ def validateVehicleMake(userInputVehicleMake):
         # Toyota
         vehicleMake = vehicleMakeToyota
         ok = True
+        
     if not ok:
         print(f"Error: Unsupported vehicle make '{passedUserInputVehicleMake}'.  Supported makes are 'toyota' and 'lexus'.")
     return (ok, vehicleMake)

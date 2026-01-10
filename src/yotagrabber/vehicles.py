@@ -505,15 +505,23 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
                     pagesToGet = pages
                     recordsToGet = records
                 print(queryDetailString + ":    ", len(result["vehicleSummary"]))
-                adderDfNormalized = pd.json_normalize(result["vehicleSummary"])
-                infoDateTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                adderDfNormalized["infoDateTime"] = infoDateTime
-                if PAGE_FILES_DEBUG_ENABLED:
-                    adderDfNormalized.to_csv(f"output/pages/{MODEL}{queryDetailString}_raw_page{page_number}.csv", index=False)
-                if df.empty:
-                    df = adderDfNormalized
-                else:
-                    df = pd.concat([df, adderDfNormalized], ignore_index=True)
+                # Only process if there are records to avoid empty concat warning
+                if len(result["vehicleSummary"]) > 0:
+                    adderDfNormalized = pd.json_normalize(result["vehicleSummary"])
+                    
+                    # Handle all-NA columns to avoid FutureWarning in pd.concat
+                    for col in adderDfNormalized.columns:
+                        if adderDfNormalized[col].isna().all():
+                            adderDfNormalized[col] = ""
+
+                    infoDateTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    adderDfNormalized["infoDateTime"] = infoDateTime
+                    if PAGE_FILES_DEBUG_ENABLED:
+                        adderDfNormalized.to_csv(f"output/pages/{MODEL}{queryDetailString}_raw_page{page_number}.csv", index=False)
+                    if df.empty:
+                        df = adderDfNormalized
+                    else:
+                        df = pd.concat([df, adderDfNormalized], ignore_index=True)
                 
                 if pagesToGet > pages:
                     pagesToGet = pages
@@ -1271,9 +1279,9 @@ def update_vehicles_and_return_df(useLocalData: bool = False, testModeOn: bool =
     if lastRawParquetFileExists:
         if len(lastParquetDf):
             if not("FirstAddedDate" in lastParquetDf.columns):
-                lastParquetDf["FirstAddedDate"] = None
+                lastParquetDf["FirstAddedDate"] = ""
             if not(LastChangedDateTimeColName in lastParquetDf.columns):
-                lastParquetDf[LastChangedDateTimeColName] = None
+                lastParquetDf[LastChangedDateTimeColName] = ""
             lastParquetMergeColumnsOnlyDf = lastParquetDf[["vin", "FirstAddedDate", LastChangedDateTimeColName]]
             if "FirstAddedDate" in df.columns:
                 df.drop(['FirstAddedDate'], axis=1, inplace=True)
@@ -1289,7 +1297,11 @@ def update_vehicles_and_return_df(useLocalData: bool = False, testModeOn: bool =
             if df.empty:
                 pass
             else:
-                lastParquetDf = pd.concat([lastParquetDf, df], ignore_index=True)
+                # Check if lastParquetDf is empty before concat
+                if lastParquetDf.empty:
+                    lastParquetDf = df
+                else:
+                    lastParquetDf = pd.concat([lastParquetDf, df], ignore_index=True)
             lastParquetDf.drop_duplicates(subset=["vin"], keep='last', inplace=True)
         else:
             df["FirstAddedDate"] = df["infoDateTime"]

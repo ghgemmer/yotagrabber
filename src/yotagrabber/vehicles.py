@@ -319,6 +319,9 @@ def readChangeHistoryParquetDf():
     global columnsForEmptyChangeHistoryCsvDf
     
     df = pd.DataFrame(columns = columnsForEmptyChangeHistoryCsvDf)
+    # Set object dtype for string columns to avoid FutureWarning
+    df[rowChangeTypeColumnName] = df[rowChangeTypeColumnName].astype('object')
+    df[rowModificationsColumnName] = df[rowModificationsColumnName].astype('object')
     parquetFileName = getChangeHistoryParquetFileName()
     # TODO do we need to convert fields that are int strings to ints, and what about booleans?
     if Path(parquetFileName).exists():
@@ -1415,6 +1418,9 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     
     # initialize the return dataframe
     dfChangeHistory = pd.DataFrame(columns = columnsForEmptyChangeHistoryCsvDf)
+    # Set object dtype for string columns to avoid FutureWarning
+    dfChangeHistory[rowChangeTypeColumnName] = dfChangeHistory[rowChangeTypeColumnName].astype('object')
+    dfChangeHistory[rowModificationsColumnName] = dfChangeHistory[rowModificationsColumnName].astype('object')
     
     # Save off the original column names in both to make operations later easier since duplicate column names with
     # suffixes will be added.
@@ -1461,8 +1467,9 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     # and run the determination on then and then the result is what gets concatenated later on for that.
     dfNewMergeOnlyCommonVins = dfNewMerged[dfNewMerged["WhoDidMergeComeFrom_"] == 'both'].copy(deep=True)
     # Ensure dtype is object to avoid FutureWarning when assigning string values later
-    dfNewMergeOnlyCommonVins[rowChangeTypeColumnName] = dfNewMergeOnlyCommonVins[rowChangeTypeColumnName].astype('object')
-    dfNewMergeOnlyCommonVins[rowModificationsColumnName] = dfNewMergeOnlyCommonVins[rowModificationsColumnName].astype('object')
+    # Use loc to ensure proper assignment
+    dfNewMergeOnlyCommonVins.loc[:, rowChangeTypeColumnName] = dfNewMergeOnlyCommonVins[rowChangeTypeColumnName].astype('object')
+    dfNewMergeOnlyCommonVins.loc[:, rowModificationsColumnName] = dfNewMergeOnlyCommonVins[rowModificationsColumnName].astype('object')
     dfNewMergeOnlyCommonVins = dfNewMergeOnlyCommonVins.apply(determineRowDifferences, axis=1, args= (columnsToIgnoreForComparison, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight))
     
     # Concatenate just the new and old merged dfs together first since will need to do renames

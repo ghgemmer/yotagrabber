@@ -13,7 +13,7 @@ from time import sleep
 from yotagrabber import config, wafbypass, vehicleUtilities
 
 # Set to True to use local data and skip requests to the Toyota website.
-USE_LOCAL_DATA_ONLY = True
+USE_LOCAL_DATA_ONLY = False
 
 DEBUG_ENABLED = False
 

@@ -1320,9 +1320,6 @@ def determineRowDifferences( row, columnsToIgnore, originalColumnsInOld, origina
     # For columns only in one or the other there is an indication of that and 
     # only one value is shown.  
     # Also the row's rowChangeTypeColumnName column value is to be updated with an indication if there was any difference or not
-    #
-    # Convert row to object dtype for string columns to prevent FutureWarning during assignment
-    row = row.astype({rowChangeTypeColumnName: 'object', rowModificationsColumnName: 'object'})
     global debugEnabled
     namesOfModifiedFieldsString = ""
     rowIsTheSame = True
@@ -1469,6 +1466,8 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     # Now do the determination on just the rows that were in both.  We can create a slice of just those rows with common VINs
     # and run the determination on then and then the result is what gets concatenated later on for that.
     dfNewMergeOnlyCommonVins = dfNewMerged[dfNewMerged["WhoDidMergeComeFrom_"] == 'both'].copy(deep=True)
+    dfNewMergeOnlyCommonVins[rowChangeTypeColumnName] = dfNewMergeOnlyCommonVins[rowChangeTypeColumnName].astype(object)
+    dfNewMergeOnlyCommonVins[rowModificationsColumnName] = dfNewMergeOnlyCommonVins[rowModificationsColumnName].astype(object)
     # Apply determineRowDifferences - dtype is already object from parent DataFrame
     dfNewMergeOnlyCommonVins = dfNewMergeOnlyCommonVins.apply(determineRowDifferences, axis=1, args= (columnsToIgnoreForComparison, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight))
     

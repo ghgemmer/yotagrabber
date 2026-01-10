@@ -67,6 +67,9 @@ db.sqlite3-journal
 instance/
 .webassets-cache
 
+# git diff files
+*.diff
+
 # Scrapy stuff:
 .scrapy
 
@@ -194,6 +197,7 @@ credentials.json
 !/src/createTestParquetFiles.py
 !/src/RunUserVehicleSearchesExample.bat
 !/src/waitForSeconds.py
+!/src/fetch_vehicles.py
 
 # reinclude files in /src/ouput
 # Must do this as git ignores that subdirectory (and anything in it on down) 
@@ -210,6 +214,7 @@ credentials.json
 !/src/output/models.json
 !/src/output/models_raw.json
 !/src/output/lexus/
+/src/output/lexus/*
 !/src/output/lexus/models.json
 !/src/output/lexus/models_raw.json
 

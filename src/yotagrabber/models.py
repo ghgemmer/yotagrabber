@@ -59,8 +59,8 @@ class modelsClass:
         else:
             result = self.query_for_models()
             fileName = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(self.vehicleMake) + "/models_raw.json"
-            with open(fileName, "w") as fileh:
-                json.dump(fileName, orient="records", indent=2)
+            df = pd.json_normalize(result)
+            df.to_json(fileName, orient="records", indent=2)
 
         # Create DataFrame from result regardless of source.
         df = pd.json_normalize(result)

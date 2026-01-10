@@ -39,13 +39,13 @@ def validateVehicleMake(userInputVehicleMake):
     ok = False
     if type(userInputVehicleMake) is str:
         userInputVehicleMake = userInputVehicleMake.upper()
-        if userInputVehicleMake == "LEXUS":
-            vehicleMake = vehicleMakeLexus
-            ok = True
-        elif userInputVehicleMake in ("", None, "TOYOTA"):
-            # Toyota
-            vehicleMake = vehicleMakeToyota
-            ok = True
-        if not ok:
-            print(f"Error: Unsupported vehicle make '{passedUserInputVehicleMake}'.  Supported makes are 'toyota' and 'lexus'.")
+    if userInputVehicleMake == "LEXUS":
+        vehicleMake = vehicleMakeLexus
+        ok = True
+    elif userInputVehicleMake in ("", None, "TOYOTA"):
+        # Toyota
+        vehicleMake = vehicleMakeToyota
+        ok = True
+    if not ok:
+        print(f"Error: Unsupported vehicle make '{passedUserInputVehicleMake}'.  Supported makes are 'toyota' and 'lexus'.")
     return (ok, vehicleMake)

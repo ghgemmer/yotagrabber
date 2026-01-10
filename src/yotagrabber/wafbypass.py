@@ -17,7 +17,8 @@ def getUserInput(promptStr, sleepTime):
 
 class WAFBypass:
     """Bypass the AWS WAF in front of the GraphQL endpoint."""
-    def __init__(self):
+    def __init__(self, vehicle_make="toyota"):
+        self.vehicle_make = vehicle_make
         self.valid_headers = None
 
     def intercept_request(self, request):
@@ -40,8 +41,11 @@ class WAFBypass:
                         page = context.new_page()
                         page.on("request", self.intercept_request)
                         # pick a model that usually doesn't have much inventory to reduce response time and web page load time
-                        page.goto("https://www.toyota.com/search-inventory/model/" + "corollahatchback" + "/?zipcode=90210")
-                        #print("https://www.toyota.com/search-inventory/model/" + "corollahatchback" + "/?zipcode=90210")
+                        if self.vehicle_make.lower() == "lexus":
+                            page.goto("https://www.lexus.com/search-inventory/model/" + "is" + "/?zipcode=90210")
+                        else:
+                            page.goto("https://www.toyota.com/search-inventory/model/" + "corollahatchback" + "/?zipcode=90210")
+                            #print("https://www.toyota.com/search-inventory/model/" + "corollahatchback" + "/?zipcode=90210")
                         page.wait_for_load_state("networkidle", timeout=60000)
                     except Exception as inst:
                         print("Error: WAFBypass.get_headers: exception in code going to inventory page: ", str(inst))

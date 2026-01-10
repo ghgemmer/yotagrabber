@@ -1,3 +1,5 @@
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -205,6 +207,11 @@ credentials.json
 !/src/output/4runner_NewMethodComparedToOLd.xlsx
 !/src/output/rav4pluginhybrid_Lastraw_VerifySellingPriceMethod.xlsx
 !/src/output/rav4pluginhybrid_NewMethodComparedToOld.xlsx
+!/src/output/models.json
+!/src/output/models_raw.json
+!/src/output/lexus/
+!/src/output/lexus/models.json
+!/src/output/lexus/models_raw.json
 
 # reinclude files in /src/ToyotaSearchInventoryWebSourcePages
 # Must do this as git ignores that subdirectory (and anything in it on down) 

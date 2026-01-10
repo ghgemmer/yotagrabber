@@ -4,45 +4,32 @@ Fetch vehicle inventory using yotagrabber
 
 Usage:
     python fetch_vehicle.py <make> <model>
-
-Examples:
-    python fetch_vehicle.py lexus rz        # Fetch Lexus RZ inventory
-    python fetch_vehicle.py lexus nx        # Fetch Lexus NX inventory
-    python fetch_vehicle.py toyota tacoma   # Fetch Toyota Tacoma inventory
-    python fetch_vehicle.py toyota rav4     # Fetch Toyota RAV4 inventory
-
-Supported Makes:
-    - toyota
-    - lexus
-
-Common Lexus Models:
-    nx, rx, tx, es, gx, lx, ux, is, ls, lc, rc, rz
-
-Common Toyota Models:
-    camry, tacoma, tundra, rav4hybrid, rav4, corolla, corollacross, 4runner, highlander, grandhighlander, sienna, avalon, prius, priusprime
+...
 """
 import os
 import sys
 from pathlib import Path
+from typing import List
 
 # Add src directory to Python path
-src_dir = Path(__file__).parent / "src"
+src_dir: Path = Path(__file__).parent / "src"
 sys.path.insert(0, str(src_dir))
 
-def print_usage():
+def print_usage() -> None:
+    """Prints the usage documentation."""
     print(__doc__)
 
-def main():
+def main() -> None:
     if len(sys.argv) < 3:
         print_usage()
         print("\nError: Please provide both make and model as arguments.")
         sys.exit(1)
 
-    make = sys.argv[1].lower()
-    model = sys.argv[2].lower()
+    make: str = sys.argv[1].lower()
+    model: str = sys.argv[2].lower()
 
     # Validate make
-    supported_makes = ['toyota', 'lexus']
+    supported_makes: List[str] = ['toyota', 'lexus']
     if make not in supported_makes:
         print(f"Error: Unsupported make '{make}'. Supported makes are: {', '.join(supported_makes)}")
         sys.exit(1)
@@ -59,6 +46,7 @@ def main():
     print()
 
     # Import the vehicles module from yotagrabber
+    # We place the import here because it relies on the sys.path modification above
     try:
         from yotagrabber import vehicles
         
@@ -69,10 +57,11 @@ def main():
         vehicles.update_vehicles()
 
         # Determine output directory
+        output_dir: Path
         if make == 'lexus':
-            output_dir = Path(f"output/lexus")
+            output_dir = Path("output/lexus")
         else:
-            output_dir = Path(f"output")
+            output_dir = Path("output")
 
         print("\n" + "=" * 80)
         print("INVENTORY FETCH COMPLETED!")

@@ -1,4 +1,4 @@
-# Updates the dealer info in teh dealers.csv file
+# Updates the dealer info in the dealers.csv file
 
 import random
 import numpy as np
@@ -227,7 +227,7 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, vehicleMake: str = 
                 # copy code to dealerId (same in Toyota)
                 df["dealerId"] = df["code"]
                 # no regionalId in Lexus
-                df["regionId"] = None
+                df["regionId"] = ""
                 df["vehicleMake"] = "lexus"
             else:
                 # Toyota field mapping
@@ -280,7 +280,10 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, vehicleMake: str = 
             # format phone number
             df["phone"] = df["phone"].apply(formatPhoneNumber)
             
-            dealers = pd.concat([dealers, df], ignore_index=True)
+            if dealers.empty:
+                dealers = df
+            else:
+                dealers = pd.concat([dealers, df], ignore_index=True)
             dealers.drop_duplicates(subset=["code"], keep='last', inplace=True)
         else:
             print("Error: Failed getting dealers near zipcode/state.  Response is not json format or does not contain a 'dealers' field or dealers field was empty.  ZipCode/state checked was", codeToSearch)
@@ -301,7 +304,11 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, vehicleMake: str = 
         interruptibleSleep(4)
         
     # Now concatenate the dealers adders file onto the dealers and keep only the first duplicate if any
-    dealers = pd.concat([dealers, dealerAddersDf])
+    if not dealerAddersDf.empty:
+        if dealers.empty:
+            dealers = dealerAddersDf
+        else:
+            dealers = pd.concat([dealers, dealerAddersDf])
     dealers.drop_duplicates(subset=["code"], keep='first', inplace=True)
     dealers.sort_values(by=["code"], inplace=True)
     # Write out to the results ot the csv file.

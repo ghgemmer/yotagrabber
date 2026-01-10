@@ -1320,6 +1320,7 @@ def determineRowDifferences( row, columnsToIgnore, originalColumnsInOld, origina
     # For columns only in one or the other there is an indication of that and 
     # only one value is shown.  
     # Also the row's rowChangeTypeColumnName column value is to be updated with an indication if there was any difference or not
+    row = row.astype(object)
     global debugEnabled
     namesOfModifiedFieldsString = ""
     rowIsTheSame = True
@@ -1478,11 +1479,22 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     #dfNewMerged.reset_index(drop=True, inplace=True)
     #dfNewMergeOnlyCommonVins.reset_index(drop=True, inplace=True)
     #dfOldMerged.reset_index(drop=True, inplace=True)
-    dfChangeHistory = pd.concat([
+    # Filter out empty DataFrames to avoid FutureWarning
+    frames_to_concat = [
         dfNewMerged[dfNewMerged[rowChangeTypeColumnName] == rowAddedNewVINIndicator],
         dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName] == rowModifiedVINContentsIndicator],
-        dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator] 
-        ], ignore_index=True)
+        dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator]
+    ]
+    frames_to_concat = [df for df in frames_to_concat if not df.empty]
+    
+    if frames_to_concat:
+        dfChangeHistory = pd.concat(frames_to_concat, ignore_index=True)
+    else:
+        dfChangeHistory = pd.DataFrame(columns=columnsForEmptyChangeHistoryCsvDf)
+    
+    # Fix: columnsForEmptyChangeHistoryCsvDf is missing LastChangedDateTime, so we must add it manually if missing
+    if LastChangedDateTimeColName not in dfChangeHistory.columns:
+        dfChangeHistory[LastChangedDateTimeColName] = pd.Series(dtype='object')
     
     # Updated the LastChangedDateTimeColName for MODED entries with the infoDateTime column
     dfChangeHistory[LastChangedDateTimeColName] = dfChangeHistory[LastChangedDateTimeColName].where(dfChangeHistory[rowChangeTypeColumnName] != rowModifiedVINContentsIndicator, dfChangeHistory["infoDateTime"])

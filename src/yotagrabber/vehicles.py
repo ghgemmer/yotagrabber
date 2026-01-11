@@ -398,6 +398,19 @@ def query_toyota(page_number: int, query: str, headers: Optional[Dict[str, str]]
                 headers=headers,
                 timeout=20,
             )
+            if PAGE_FILES_DEBUG_ENABLED:
+                request_id = f"{MODEL}_{page_number}_{str(uuid.uuid4())[:8]}"
+                try:
+                    with open(f"output/pages/{request_id}_query.graphql", "w", encoding='utf-8') as f:
+                        f.write(query)
+                except Exception as e:
+                    print(f"Warning: Could not write debug query file: {e}")
+                if resp:
+                    try:
+                        with open(f"output/pages/{request_id}_response.json", "w", encoding='utf-8') as f:
+                            f.write(resp.text)
+                    except Exception as e:
+                        print(f"Warning: Could not write debug response file: {e}")
             if DEBUG_ENABLED:
                 if resp is None:
                     print("query resp is None")

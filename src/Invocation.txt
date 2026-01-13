@@ -210,7 +210,13 @@ able to open as a spreadsheet (get a non accessible at this time type error mess
 For updating the dealers.csv that vehicles.py uses to find the state a dealerId is in (the graphql only has the dealerId
 , which is a number, and not the dealer state and some other dealer detail, for it) run the following
 
-py dealers.py ".\yotagrabber\data\dealers.csv" ".\yotagrabber\data\zipcodes.txt" ".\yotagrabber\data\dealers_Adders.json"
+py dealers.py ".\yotagrabber\data\dealers.csv" ".\yotagrabber\data\zipcodes.txt" ".\yotagrabber\data\dealers_Adders.json" "toyota"
+
+Note that vehicleMake parameter is optional and defaults to "toyota" if not present.
+If you want to run for lexus then replace "toyota" with "lexus" (and ensure the zipcodes file has state codes instead of zipcodes).
+If you don't have a dealerAdders file but want to specify the vehicleMake, use "" for the dealerAdders file parameter.
+For example, with Lexus:
+py dealers.py ".\yotagrabber\data\dealers.csv" ".\yotagrabber\data\lexus_state_codes.txt" "" "lexus"
 
 Note that this can take a few hours to run as it spreads out its request over time so as to not
 overwhelm the toyota website.

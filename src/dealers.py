@@ -96,14 +96,14 @@ def formatPhoneNumber(phoneNumberStr: Any) -> str:
     # Input is Any because pandas might pass it as an object/int/str
     s_phoneNumber = str(phoneNumberStr)
     digitsOnly = ''.join(c for c in s_phoneNumber if c.isdigit())
-    if len(digitsOnly) != 10:
+    if len(digitsOnly) == 10:
         formattedPhoneNumberStr = "(" + s_phoneNumber[:3] + ") " + s_phoneNumber[3:6] + "-" + s_phoneNumber[6:]
         return formattedPhoneNumberStr
     else:
         # Return original if not 10 digits
         return s_phoneNumber
     
-def updateDealers(dealerFileName: str, zipCodeFileName: str, vehicleMake: str = "toyota", dealerAddersJsonFileName: str = "") -> None:
+def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFileName: str = "", vehicleMake: str = "toyota") -> None:
     print("This program updates the passed dealer file (or creates that file if not present)") 
     print("with any dealers found (new or update of existing), during the search ")
     print("of the remaining zip codes/state to look for dealers for, out of the zip code file,")
@@ -166,8 +166,8 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, vehicleMake: str = 
         tryCount = 1
         result: Optional[Dict[str, Any]] = None
         while True:
+            resp: Optional[requests.Response] = None
             try:
-                resp: requests.Response
                 if vehicleMake == "lexus":
                     # Lexus: state-based API
                     getDealersBaseUrl = "https://www.lexus.com/rest/lexus/dealers?experience=dealer&state="
@@ -181,12 +181,15 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, vehicleMake: str = 
                             "https://api.ws.dpcmaps.toyota.com/v1/dealers?attributeKey=&searchMode=pmaProximityLayered&zipcode=" + codeToSearch,
                             timeout=20,
                     )
-                result = resp.json()
-                break
+                
+                if resp is not None:
+                    result = resp.json()
+                    break
             except (requests.exceptions.JSONDecodeError) as inst:
                 print ("updateDealers: Exception occurred with accessing json response:", str(type(inst)) + " "  + str(inst))
-                # Note: resp might be unbound if exception happens before assignment, but in this structure it happens after request
-                # print("resp.status_code", resp.status_code) 
+                if resp is not None:
+                    print("resp.status_code", resp.status_code)
+                    print("resp.headers", resp.headers)
                 result = None
                 # retry
                 if tryCount <= 0:
@@ -322,10 +325,11 @@ if __name__ == "__main__":
     # pass dealer file name
     dealerFileName = sys.argv[1:][0]
     zipCodeFileName = sys.argv[1:][1]
-    vehicleMake = "toyota"  # Default to toyota
     dealerAddersJsonFileName = ""
+    vehicleMake = "toyota"  # Default to toyota
+    
     if len(sys.argv[1:]) >= 3:
-        vehicleMake = sys.argv[1:][2]
+        dealerAddersJsonFileName = sys.argv[1:][2]
     if len(sys.argv[1:]) >= 4:
-        dealerAddersJsonFileName = sys.argv[1:][3]
-    updateDealers(dealerFileName, zipCodeFileName, vehicleMake, dealerAddersJsonFileName)
+        vehicleMake = sys.argv[1:][3]
+    updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName, vehicleMake)

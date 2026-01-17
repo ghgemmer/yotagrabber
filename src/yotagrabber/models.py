@@ -208,6 +208,8 @@ class toyotaModelsClass(genericToyotaModelsClass):
         # drop any duplicate model codes.
         updatedModels = models
 
+        # Add in any old models we can still get which are not in the current models list
+        #if datetime.date.today().year <= 2025
         new_model_row = pd.DataFrame({'modelCode': ['rav4prime'], 'title': ['RAV4 Prime']})
         updatedModels = pd.concat([updatedModels, new_model_row], ignore_index=True)
         new_model_row1 = pd.DataFrame({'modelCode': ['venza'], 'title': ['Venza']})

@@ -168,6 +168,12 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
         while True:
             resp: Optional[requests.Response] = None
             try:
+                # Could not get url "https://dealers.prod.webservices.toyota.com/v1/dealers/?zipcode=" + zipCodeWithLeadingZeroes, to work
+                # as it kept giving an resp.status_code 403 for not authorized, even when set host and authority to dealers.prod.webservices.toyota.com
+                # , and even trying the wafpypass, so there is something that requires more authorization to access that.
+                # That is what the inventory get uses to get the dealers for that zip code but could not get it to work.
+                # So had to use the url below which is accessed when on the https://www.toyota.com/connected-services/toyota-app/ page
+                # and  click on the Find Dealer https://www.toyota.com/dealers/#default link on that page which pops up a map window
                 if vehicleMake == "lexus":
                     # Lexus: state-based API
                     getDealersBaseUrl = "https://www.lexus.com/rest/lexus/dealers?experience=dealer&state="
@@ -287,6 +293,13 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
                 dealers = df
             else:
                 dealers = pd.concat([dealers, df], ignore_index=True)
+            if False:
+                # force the code and dealerId fields to ints as the vehicles.py expects that type (i.e. leading 0s are removed)
+                df["code"] = df["code"].apply(pd.to_numeric)
+                df["dealerId"] = df["dealerId"].apply(pd.to_numeric)
+            #print(df)
+            #print("type(df['code'][0])", type(df["code"][0]))
+            #print("type(df['lat'][0])", type(df["lat"][0]))
             dealers.drop_duplicates(subset=["code"], keep='last', inplace=True)
         else:
             print("Error: Failed getting dealers near zipcode/state.  Response is not json format or does not contain a 'dealers' field or dealers field was empty.  ZipCode/state checked was", codeToSearch)

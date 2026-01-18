@@ -204,7 +204,10 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
                 interruptibleSleep(4)
                 print("Retrying request, tryCount = ", tryCount)
         if (result is not None) and result and ("dealers" in result) and (len(result["dealers"]) > 0):
+            #print("Result is", result)
+            #df = pd.DataFrame.from_dict(result["dealers"])
             df = pd.json_normalize(result["dealers"])
+            #print ("df is", df)
 
             if vehicleMake == "lexus":
                 # Lexus field mapping

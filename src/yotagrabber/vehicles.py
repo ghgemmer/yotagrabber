@@ -664,6 +664,19 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
     if "FirstAddedDate" in df.columns:
         # remove it as the inventory website does not have this, and if it does we don't want to include it anyway
         df.drop(["FirstAddedDate"], axis=1, inplace=True)
+
+    # Sanitize numeric columns to ensure they are numeric and handle empty strings
+    numeric_cols_to_sanitize = [
+        "price.sellingPrice", "price.baseMsrp", "price.totalMsrp",
+        "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph",
+        "price.dioTotalMsrp", "price.dioTotalDealerSellingPrice",
+        "price.dealerCashApplied",
+        "mpg.combined", "mpg.city", "mpg.highway"
+    ]
+    for col in numeric_cols_to_sanitize:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+
     return (df, statusInfo )
 
 def sanitizeStr(strng: Any) -> Any:

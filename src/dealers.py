@@ -97,7 +97,7 @@ def formatPhoneNumber(phoneNumberStr: Any) -> str:
     s_phoneNumber = str(phoneNumberStr)
     digitsOnly = ''.join(c for c in s_phoneNumber if c.isdigit())
     if len(digitsOnly) == 10:
-        formattedPhoneNumberStr = "(" + s_phoneNumber[:3] + ") " + s_phoneNumber[3:6] + "-" + s_phoneNumber[6:]
+        formattedPhoneNumberStr = "(" + digitsOnly[:3] + ") " + digitsOnly[3:6] + "-" + digitsOnly[6:]
         return formattedPhoneNumberStr
     else:
         # Return original if not 10 digits

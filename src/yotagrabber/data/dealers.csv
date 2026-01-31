@@ -384,6 +384,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 12169,12169,McGrath Elmhurst Toyota,https://www.elmhursttoyota.com,9999,IL,41.91793,-87.95365,440 West Lake Street,Elmhurst,60126,(630) 279-2160
 12170,12170,Peoria Toyota,https://www.peoriatoyota.com,21,IL,40.777922,-89.632037,7401 North Allen Road,Peoria,61614,(309) 693-7000
 12171,12171,Toyota on Western,https://www.toyotaonwestern.com,9999,IL,41.76703,-87.68322,6941 South Western Ave,Chicago,60636,(773) 776-4016
+12172,12172,Toyota of Downtown Chicago,https://www.dttoyotachicago.com,9999,IL,41.90999,-87.65092,1561 North Fremont Street,Chicago,60642,(312) 707-9500
 12173,12173,Ottawa Toyota,https://www.ottawatoyotadealer.com,9999,IL,41.378657,-88.83505,4000 N. Columbus Street,Ottawa,61350,(815) 434-4000
 12174,12174,Arlington Toyota,https://www.toyotaarlington.com,9999,IL,42.148459,-88.03091,2095 N. Rand Road,Palatine,60074,(847) 485-1200
 13027,13027,Bob Rohrman Toyota,https://www.rohrmantoyota.com,21,IN,40.418283,-86.832726,3900 State Road 26 East,Lafayette,47905,(765) 448-1000
@@ -691,6 +692,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 28041,28041,Canobie Lake Toyota,https://www.canobielaketoyota.com,9999,NH,42.7489,-71.2042,412 S. Broadway,Salem,03079,(603) 893-3525
 28042,28042,Rochester Toyota,https://www.rochestertoyota.net,9999,NH,43.327738,-71.004977,48 Farmington Rd-Route 11 West,Rochester,03867,(603) 332-5131
 28043,28043,McGovern Toyota of Portsmouth,https://www.mcgoverntoyotaofportsmouth.com,9999,NH,43.0584,-70.7723,150 Greenleaf Avenue,Portsmouth,03801,(603) 431-6100
+28044,28044,Ecodrive Toyota of Gorham,https://www.ecodrivetoyotaofgorham.com,9999,NH,44.41326,-71.195554,485 Main Street,Gorham,03581,(603) 752-6644
 28045,28045,McGovern Toyota of Concord,https://www.mcgoverntoyotaofconcord.com,9999,NH,43.170513,-71.526577,594 Route 3-A,Bow,03304,(603) 224-9912
 29008,29008,Parkway Toyota,https://www.parkwaytoyota.com,16,NJ,40.868421,-73.958307,50 Sylvan Avenue,Englewood Cliffs,07632,(201) 944-3300
 29025,29025,Toyota of Hackensack,https://www.toyotaofhackensack.com,16,NJ,40.886901,-74.039269,278 River Street,Hackensack,07601,(201) 488-7777

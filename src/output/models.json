@@ -1,0 +1,134 @@
+[
+  {
+    "modelCode":"4runner",
+    "title":"4Runner"
+  },
+  {
+    "modelCode":"camry",
+    "title":"Camry"
+  },
+  {
+    "modelCode":"corolla",
+    "title":"Corolla"
+  },
+  {
+    "modelCode":"corollacross",
+    "title":"Corolla Cross"
+  },
+  {
+    "modelCode":"corollacrosshybrid",
+    "title":"Corolla Cross Hybrid"
+  },
+  {
+    "modelCode":"corollahatchback",
+    "title":"Corolla Hatchback"
+  },
+  {
+    "modelCode":"corollahybrid",
+    "title":"Corolla Hybrid"
+  },
+  {
+    "modelCode":"grcorolla",
+    "title":"GR Corolla"
+  },
+  {
+    "modelCode":"supra",
+    "title":"GR Supra"
+  },
+  {
+    "modelCode":"86",
+    "title":"GR86"
+  },
+  {
+    "modelCode":"grandhighlander",
+    "title":"Grand Highlander"
+  },
+  {
+    "modelCode":"grandhighlanderhybrid",
+    "title":"Grand Highlander Hybrid"
+  },
+  {
+    "modelCode":"highlander",
+    "title":"Highlander"
+  },
+  {
+    "modelCode":"highlanderhybrid",
+    "title":"Highlander Hybrid"
+  },
+  {
+    "modelCode":"landcruiser",
+    "title":"Land Cruiser"
+  },
+  {
+    "modelCode":"mirai",
+    "title":"Mirai"
+  },
+  {
+    "modelCode":"prius",
+    "title":"Prius"
+  },
+  {
+    "modelCode":"priuspluginhybrid",
+    "title":"Prius Plug-in Hybrid"
+  },
+  {
+    "modelCode":"rav4",
+    "title":"RAV4"
+  },
+  {
+    "modelCode":"rav4pluginhybrid",
+    "title":"RAV4 Plug-in Hybrid"
+  },
+  {
+    "modelCode":"sequoia",
+    "title":"Sequoia"
+  },
+  {
+    "modelCode":"sienna",
+    "title":"Sienna"
+  },
+  {
+    "modelCode":"tacoma",
+    "title":"Tacoma"
+  },
+  {
+    "modelCode":"tacomahybrid",
+    "title":"Tacoma i-FORCE MAX"
+  },
+  {
+    "modelCode":"toyotacrown",
+    "title":"Toyota Crown"
+  },
+  {
+    "modelCode":"toyotacrownsignia",
+    "title":"Toyota Crown Signia"
+  },
+  {
+    "modelCode":"tundra",
+    "title":"Tundra"
+  },
+  {
+    "modelCode":"tundrahybrid",
+    "title":"Tundra i-FORCE MAX"
+  },
+  {
+    "modelCode":"bz",
+    "title":"bZ"
+  },
+  {
+    "modelCode":"rav4prime",
+    "title":"RAV4 Prime"
+  },
+  {
+    "modelCode":"venza",
+    "title":"Venza"
+  },
+  {
+    "modelCode":"4runnerhybrid",
+    "title":"4Runner i-FORCE MAX"
+  },
+  {
+    "modelCode":"priusprime",
+    "title":"Prius Prime"
+  }
+]

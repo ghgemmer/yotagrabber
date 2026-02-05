@@ -1,4 +1,4 @@
-"""Get a list of Toyota vehicles from the Toyota website."""
+"""Get a list of Toyota/Lexus vehicles from the Toyota/Lexus websites."""
 import datetime
 import json
 import os
@@ -15,66 +15,76 @@ from timeit import default_timer as timer
 import numpy as np
 import glob
 import numbers
-
+from typing import Any, Dict, List, Optional, Tuple, Union, Set, cast
 
 import pandas as pd
 import csv
 import requests
 from collections.abc import Iterable
-from yotagrabber import config, wafbypass
+from yotagrabber import config, wafbypass, vehicleUtilities
 
-PROGRAM_VERSION = "Vehicles Program Version 6.4.2 07-04-2025" #
+PROGRAM_VERSION: str = "Vehicles Program Version 6.5.1 01-10-2026 - Multi-make support"
 
 # Set to True to use local data and skip requests to the Toyota website.
-USE_LOCAL_DATA_ONLY = False
+USE_LOCAL_DATA_ONLY: bool = False
 
-DEBUG_ENABLED = False
+DEBUG_ENABLED: bool = False
 
-PAGE_FILES_DEBUG_ENABLED = False
+PAGE_FILES_DEBUG_ENABLED: bool = False
 
 # Get the model that we should be searching for.
-MODEL = os.environ.get("MODEL")
+MODEL: Optional[str] = os.environ.get("MODEL")
+# Get the vehicle make (toyota, lexus)
+VEHICLE_MAKE: Optional[str] = os.environ.get("VEHICLE_MAKE")
 # optional search parameters to use when want a single location search
-MODEL_SEARCH_ZIPCODE = os.environ.get("MODEL_SEARCH_ZIPCODE")
-MODEL_SEARCH_RADIUS = os.environ.get("MODEL_SEARCH_RADIUS")
+MODEL_SEARCH_ZIPCODE: Optional[str] = os.environ.get("MODEL_SEARCH_ZIPCODE")
+MODEL_SEARCH_RADIUS: Optional[str] = os.environ.get("MODEL_SEARCH_RADIUS")
 
-changeHistoryUseThisAsTodaysDateForTesting = None # for testing change the environment variable string to yyyy-mm-dd hh:mm:ss, otherwise leave env variable not defined. 
+# GraphQL Page Size for vehicle searches
+# Lexus API returns "Transformation too large" errors with pageSize=250 on high-inventory
+# models like RX. Using smaller page size (e.g., 200) avoids this AppSync limitation.
+VEHICLE_MAKE_PAGE_SIZE: Dict[str, int] = {
+    "toyota": 250,
+    "lexus": 200
+}
 
-forceQueryRspFailureTest = 0 # set to > 0 to perform tests related to forcing a query response failure to test query request retry
+changeHistoryUseThisAsTodaysDateForTesting: Optional[str] = None # for testing change the environment variable string to yyyy-mm-dd hh:mm:ss, otherwise leave env variable not defined. 
 
-totalPageRetries= 0
-MAX_TOTAL_PAGE_RETIRES_FOR_MODEL = 2 * 3 * 30 # say on avg 3 groups of 2 retries per page (10 sec avg per retry) over 30 pages  giving 30 minutes extra worst case per model
+forceQueryRspFailureTest: int = 0 # set to > 0 to perform tests related to forcing a query response failure to test query request retry
 
-LastChangedDateTimeColName = "LastChangedDateTime"
-columnsForEmptyDfParquet = ["vin", "isTempVin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', 'cab.code', 'cab', 'bed.code', 'bed', "FirstAddedDate", LastChangedDateTimeColName, "infoDateTime", "options"]
-columnsForEmptyDfFinalCsv = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", LastChangedDateTimeColName, "infoDateTime", "Options"]
+totalPageRetries: int = 0
+MAX_TOTAL_PAGE_RETIRES_FOR_MODEL: int = 2 * 3 * 30 # say on avg 3 groups of 2 retries per page (10 sec avg per retry) over 30 pages  giving 30 minutes extra worst case per model
+
+LastChangedDateTimeColName: str = "LastChangedDateTime"
+columnsForEmptyDfParquet: List[str] = ["vin", "isTempVin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', 'cab.code', 'cab', 'bed.code', 'bed', "FirstAddedDate", LastChangedDateTimeColName, "infoDateTime", "options"]
+columnsForEmptyDfFinalCsv: List[str] = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", LastChangedDateTimeColName, "infoDateTime", "Options"]
 # TODO should be able to construct the below from the columnsForEmptyDfFinalCsv
 # columns need to be in the order we want.
-rowModificationsColumnName = "List of Changes"
-rowChangeTypeColumnName = "RowChangeType"
-rowChangeDateTime = "Event DateTime"
-columnsForEmptyChangeHistoryCsvDf = [rowChangeTypeColumnName, rowChangeDateTime, "Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", "infoDateTime", rowModificationsColumnName, "Options"]
+rowModificationsColumnName: str = "List of Changes"
+rowChangeTypeColumnName: str = "RowChangeType"
+rowChangeDateTime: str = "Event DateTime"
+columnsForEmptyChangeHistoryCsvDf: List[str] = [rowChangeTypeColumnName, rowChangeDateTime, "Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", "infoDateTime", rowModificationsColumnName, "Options"]
 
-columnValueChangedIndicator =  "----->"
-columnValueNotChangedIndicator = "_"
-rowAddedNewVINIndicator = "ADDED"
-rowModifiedVINContentsIndicator = "MODED"
-rowRemovedVINIndicator = "REMOVED"
-rowSameVINContentsIndicator = ""
+columnValueChangedIndicator: str =  "----->"
+columnValueNotChangedIndicator: str = "_"
+rowAddedNewVINIndicator: str = "ADDED"
+rowModifiedVINContentsIndicator: str = "MODED"
+rowRemovedVINIndicator: str = "REMOVED"
+rowSameVINContentsIndicator: str = ""
 
-maxDaysOldToKeep = 14  # 2 weeks for change history entries
-maxDaysToKeepTempVinSold = 7 * 16 #16 weeks for temp VIN in sold files.
+maxDaysOldToKeep: int = 14  # 2 weeks for change history entries
+maxDaysToKeepTempVinSold: int = 7 * 16 #16 weeks for temp VIN in sold files.
 
 @cache
-
-def getExcelDistanceFormulaForCsv(dfColumns, excelRowIndex = 2):
+def getExcelDistanceFormulaForCsv(dfColumns: Tuple[str, ...], excelRowIndex: int = 2) -> str:
     # gets the Excel formula to put in row excelRowIndex in the DistanceFromCenter column
     # dfColumns is a tuple of the column names of a df in the order the df has them in, and unique.
     dealerLatColName = "Dealer Lat"
     dealerLongColName = "Dealer Long"
     centerLatColName = "CenterLat"
     centerLongColName ="CenterLong"
-    colNameToColCsvIndex = {dealerLatColName: None, dealerLongColName: None, centerLatColName: None, centerLongColName: None}
+    colNameToColCsvIndex: Dict[str, Optional[int]] = {dealerLatColName: None, dealerLongColName: None, centerLatColName: None, centerLongColName: None}
+    
     for colName in colNameToColCsvIndex:
         if colName in dfColumns:
             colNameToColCsvIndex[colName] = dfColumns.index(colName)
@@ -84,6 +94,9 @@ def getExcelDistanceFormulaForCsv(dfColumns, excelRowIndex = 2):
     colNameToExcelCellRef = {}
     for colName in colNameToColCsvIndex:
         excelColIndex = colNameToColCsvIndex[colName]
+        if excelColIndex is None:
+             # Should not happen given check above, but for typing safety
+             return ""
         excelColRef = ""
         remainder = excelColIndex
         alphabetSize = 26
@@ -97,16 +110,15 @@ def getExcelDistanceFormulaForCsv(dfColumns, excelRowIndex = 2):
         colNameToExcelCellRef[colName] = excelColRef + str(excelRowIndex)
     
     formula = f'=ACOS(COS(RADIANS(90-{colNameToExcelCellRef[dealerLatColName]}))*COS(RADIANS(90-{colNameToExcelCellRef[centerLatColName]}))+SIN(RADIANS(90-{colNameToExcelCellRef[dealerLatColName]}))*SIN(RADIANS(90-{colNameToExcelCellRef[centerLatColName]}))*COS(RADIANS({colNameToExcelCellRef[dealerLongColName]}-{colNameToExcelCellRef[centerLongColName]})))*6371*0.621371'
-    # 
     return formula
 
-def getVehicleByVinWithBypass(vin):
+def getVehicleByVinWithBypass(vin: str) -> Optional[Dict[str, Any]]:
     print("Bypassing WAF")
     headers = wafbypass.WAFBypass().run()
     result = getVehicleByVin(vin, headers)
     return result
 
-def getVehicleByVin(vin, headers):
+def getVehicleByVin(vin: str, headers: Optional[Dict[str, str]]) -> Optional[Dict[str, Any]]:
     global forceQueryRspFailureTest
     # queries the vehicle information by the VIN  from the website using the passed bypass request headers and returns it.
     # The information is the same as what vehicles.graphql returns excluding the fields
@@ -162,11 +174,12 @@ def getVehicleByVin(vin, headers):
                         break
             except Exception as inst:
                 print ("query_toyota: Exception occurred with accessing json response:", str(type(inst)) + " "  + str(inst))
-                print("resp.status_code", resp.status_code)
-                print("resp.headers", resp.headers)
-                #print("resp.text", resp.text)
-                #print("resp.content", resp.content)
-                #return None
+                if resp:
+                    print("resp.status_code", resp.status_code)
+                    print("resp.headers", resp.headers)
+                    #print("resp.text", resp.text)
+                    #print("resp.content", resp.content)
+                    #return None
         except Exception as inst:
             print ("query_toyota: Exception occurred :", str(type(inst)) + " "  + str(inst))
         tryCount -= 1
@@ -184,28 +197,57 @@ def getVehicleByVin(vin, headers):
     #pprint(result, indent=4)
     return result
 
-def get_vehicle_query_Objects():
+def get_vehicle_query_Objects() -> Dict[str, str]:
     """Read vehicle query from a file and create the query objects."""
-    vehicleQueryObjects = {}
+    vehicleQueryObjects: Dict[str, str] = {}
+
+    # Validate and get internal vehicle make
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    if not ok:
+        print("Error: get_vehicle_query_Objects: Invalid vehicle make specified:", VEHICLE_MAKE)
+        return vehicleQueryObjects
+    
+    assert vehicle_make is not None
+    
+    # Determine GraphQL brand parameter for vehicle search API
+    brand = "LEXUS" if vehicle_make == vehicleUtilities.vehicleMakeLexus else "TOYOTA"
+    
+    # Determine page size based on vehicle make
+    page_size = VEHICLE_MAKE_PAGE_SIZE.get(vehicle_make, 250)
+
     if (MODEL_SEARCH_ZIPCODE is not None) and (MODEL_SEARCH_RADIUS is not None) and MODEL_SEARCH_ZIPCODE and MODEL_SEARCH_RADIUS:
         # single zipcode and radius search specified
-        with open(f"{config.BASE_DIRECTORY}/graphql/vehicles.graphql", "r") as fileh:
+        with open(f"{config.BASE_DIRECTORY}/graphql/vehiclesWithVehicleMake.graphql", "r") as fileh:
             query = fileh.read()
+        if MODEL:
+             query = query.replace("MODELCODE", MODEL)
         query = query.replace("ZIPCODE", MODEL_SEARCH_ZIPCODE)
-        query = query.replace("MODELCODE", MODEL)
+        query = query.replace("VEHICLE_MAKE", brand)
+        query = query.replace("PAGESIZE", str(page_size))
         query = query.replace("DISTANCEMILES", MODEL_SEARCH_RADIUS)
         query = query.replace("LEADIDUUID", str(uuid.uuid4()))
         vehicleQueryObjects["SingleZipCode_" + MODEL_SEARCH_ZIPCODE + "_RadiusMiles_" + MODEL_SEARCH_RADIUS] = query
     else:
-        if MODEL in [ "camry", "tacoma", "tundra", "rav4hybrid", "rav4", "corolla", "corollacross", "4runner"]:
-            # note that the tacoma is the largest number of vehicles (some 44,000 for the last 2 years), followed by tundra, camry, rav4hybrid, rav4
-            vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "midIllinois", "east", "atlanta", "topLeftCornerContlUS", "portlandOregon", "bottomLeftCornerContlUS", "midCalifornia", "upperCalifornia", "topRightCornerContlUS", "midPennsylvania", "rochesterNewYork", "albanyNewYork", "bostonMA", "midTennessee", "midOhio", "richmondVA", "bottomRightCornerContlUS", "panhandleFlorida", "midFlorida", "bottomCenterContlUS", "midTexas", "midArizona", "renoNevada", "topCenterContlUS" ]
-        elif MODEL in ["grandhighlander" ]:
-            # some zone seem to almost never work so removed them and seemed to cause more problems in others.
-            # Still get lots of retries so not sure this even fixes getting all the vehicles
-            vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "midIllinois", "topLeftCornerContlUS", "portlandOregon", "bottomLeftCornerContlUS", "midCalifornia", "upperCalifornia", "topRightCornerContlUS", "midPennsylvania", "rochesterNewYork", "albanyNewYork", "bostonMA", "midOhio", "richmondVA", "bottomCenterContlUS", "midTexas", "midArizona", "renoNevada", "topCenterContlUS" ]
+        # Determine zone strategy based on vehicle make
+        vehicleQueryZonesToUse: List[str] = []
+        default_radius: int = 5823
+        
+        if vehicle_make == vehicleUtilities.vehicleMakeLexus:
+            vehicleQueryZonesToUse = ["central"]
+            default_radius = 10000
         else:
-            vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "east"]
+            # Toyota: multi-zone strategy based on model volume
+            if MODEL in [ "camry", "tacoma", "tundra", "rav4hybrid", "rav4", "corolla", "corollacross", "4runner"]:
+                # note that the tacoma is the largest number of vehicles (some 44,000 for the last 2 years), followed by tundra, camry, rav4hybrid, rav4
+                vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "midIllinois", "east", "atlanta", "topLeftCornerContlUS", "portlandOregon", "bottomLeftCornerContlUS", "midCalifornia", "upperCalifornia", "topRightCornerContlUS", "midPennsylvania", "rochesterNewYork", "albanyNewYork", "bostonMA", "midTennessee", "midOhio", "richmondVA", "bottomRightCornerContlUS", "panhandleFlorida", "midFlorida", "bottomCenterContlUS", "midTexas", "midArizona", "renoNevada", "topCenterContlUS" ]
+            elif MODEL in ["grandhighlander" ]:
+                # some zone seem to almost never work so removed them and seemed to cause more problems in others.
+                # Still get lots of retries so not sure this even fixes getting all the vehicles
+                vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "midIllinois", "topLeftCornerContlUS", "portlandOregon", "bottomLeftCornerContlUS", "midCalifornia", "upperCalifornia", "topRightCornerContlUS", "midPennsylvania", "rochesterNewYork", "albanyNewYork", "bostonMA", "midOhio", "richmondVA", "bottomCenterContlUS", "midTexas", "midArizona", "renoNevada", "topCenterContlUS" ]
+            else:
+                vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "east"]
+            default_radius = 5823 # Toyota default
+
         zip_codes = {
             "alaska": "99518",  # Anchorage Alaska 99518
             "hawaii": "96720",  # Hilo HI 96720
@@ -239,49 +281,64 @@ def get_vehicle_query_Objects():
         }
         for zone in vehicleQueryZonesToUse:
             # Replace certain place holders in the query with values.
-            with open(f"{config.BASE_DIRECTORY}/graphql/vehicles.graphql", "r") as fileh:
+            with open(f"{config.BASE_DIRECTORY}/graphql/vehiclesWithVehicleMake.graphql", "r") as fileh:
                 query = fileh.read()
             zip_code = zip_codes[zone]
             query = query.replace("ZIPCODE", zip_code)
-            query = query.replace("MODELCODE", MODEL)
-            query = query.replace("DISTANCEMILES", str(5823 + randbelow(1000)))
+            if MODEL:
+                query = query.replace("MODELCODE", MODEL)
+            query = query.replace("VEHICLE_MAKE", brand)
+            query = query.replace("PAGESIZE", str(page_size))
+            query = query.replace("DISTANCEMILES", str(default_radius + randbelow(1000)))
             query = query.replace("LEADIDUUID", str(uuid.uuid4()))
             vehicleQueryObjects[zone] = query
 
     return vehicleQueryObjects
     
-def getChangeHistoryParquetFileName():
-    parquetFileName = f"output/{MODEL}_ChangeHistory.parquet"
+def getChangeHistoryParquetFileName() -> str:
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    parquetFileName = f"{output_dir}/{MODEL}_ChangeHistory.parquet"
     return parquetFileName
 
-def getChangeHistoryCsvFileName():
-    parquetFileName = f"output/{MODEL}_ChangeHistory.csv"
+def getChangeHistoryCsvFileName() -> str:
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    parquetFileName = f"{output_dir}/{MODEL}_ChangeHistory.csv"
     return parquetFileName
 
-def getLastRawParquetFileName():
-    parquetFileName = f"output/{MODEL}_Lastraw.parquet"
+def getLastRawParquetFileName() -> str:
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    parquetFileName = f"{output_dir}/{MODEL}_Lastraw.parquet"
     return parquetFileName
     
-def getInventoryTestParquetFileName():
-    parquetFileName = f"output/{MODEL}_raw.parquet"
+def getInventoryTestParquetFileName() -> str:
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    parquetFileName = f"{output_dir}/{MODEL}_raw.parquet"
     return parquetFileName
 
-def getLastRawStatusFileName():
-    # The status Info file associated with the last raw parque file named getLastParquetFileName
-    statusFileName = f"output/{MODEL}_LastStatusInfo.json"
+def getLastRawStatusFileName() -> str:
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    statusFileName = f"{output_dir}/{MODEL}_LastStatusInfo.json"
     return statusFileName
 
-def getInventoryTestStatusFileName():
-    # The status Info file associated with the last raw parque file named getLastParquetFileName
-    statusFileName = f"output/{MODEL}_StatusInfo.json"
+def getInventoryTestStatusFileName() -> str:
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    statusFileName = f"{output_dir}/{MODEL}_StatusInfo.json"
     return statusFileName
     
-def readChangeHistoryParquetDf():
+def readChangeHistoryParquetDf() -> pd.DataFrame:
     # Reads the change history file containing the last change history dataframe and returns the dataframe
     # If there is no such parquet file an empty dataframe with default columns is returned
     global columnsForEmptyChangeHistoryCsvDf
     
     df = pd.DataFrame(columns = columnsForEmptyChangeHistoryCsvDf)
+    df[rowChangeTypeColumnName] = df[rowChangeTypeColumnName].astype('object')
+    df[rowModificationsColumnName] = df[rowModificationsColumnName].astype('object')
     parquetFileName = getChangeHistoryParquetFileName()
     # TODO do we need to convert fields that are int strings to ints, and what about booleans?
     if Path(parquetFileName).exists():
@@ -290,8 +347,7 @@ def readChangeHistoryParquetDf():
         print("readChangeHistoryParquetDf: Change history parquet file does not exist", parquetFileName, " . Using emtpy dataframe for it")
     return df
     
-    
-def readLastParquetDf():
+def readLastParquetDf() -> Tuple[bool, bool, pd.DataFrame, Dict[str, Any]]:
     # Reads the last parquet file containing the last inventory extracted and returns the dataframe for it
     # and its associated Last StatusOfGetAllPages Info.
     # tuple returned is (rawParquetFileExists, StatusOfGetAllPagesFileExists, rawParquetDf, statusOfGetAllPages)
@@ -301,7 +357,7 @@ def readLastParquetDf():
     rawParquetFileExists = False
     statusOfGetAllPagesFileExists = False
     df = pd.DataFrame(columns = columnsForEmptyDfParquet)
-    statusOfGetAllPages = {"completedOk": False, "numberRawVehiclesFound": 0, "numberRawVehiclesMissing": 100000, "completionMsg": "", "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+    statusOfGetAllPages: Dict[str, Any] = {"completedOk": False, "numberRawVehiclesFound": 0, "numberRawVehiclesMissing": 100000, "completionMsg": "", "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
     statusFileName = getLastRawStatusFileName()
     parquetFileName = getLastRawParquetFileName()
     # TODO do we need to convert fields that are int strings to ints, and what about booleans?
@@ -328,7 +384,7 @@ def readLastParquetDf():
     return (rawParquetFileExists, statusOfGetAllPagesFileExists, df , statusOfGetAllPages )
      
 
-def read_local_data(testModeOn = False):
+def read_local_data(testModeOn: bool = False) -> Tuple[bool, bool, pd.DataFrame, Dict[str, Any]]:
     """
     Read local raw data from the disk instead of querying Toyota, and also the StatusOfGetAllPages Info and return them along with
     the rawParquetExists,  StatusOfGetAllPagesFileExists indicating those files existed.
@@ -342,7 +398,7 @@ def read_local_data(testModeOn = False):
     rawParquetFileExists = False
     statusOfGetAllPagesFileExists = False
     df = pd.DataFrame(columns = columnsForEmptyDfParquet)
-    statusOfGetAllPages = {"completedOk": False, "numberRawVehiclesFound": 0, "numberRawVehiclesMissing": 100000, "completionMsg": "", "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+    statusOfGetAllPages: Dict[str, Any] = {"completedOk": False, "numberRawVehiclesFound": 0, "numberRawVehiclesMissing": 100000, "completionMsg": "", "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
     if testModeOn:
         # we use different files for inventory gotten and status
         statusFileName = getInventoryTestStatusFileName()
@@ -376,13 +432,13 @@ def read_local_data(testModeOn = False):
     return (rawParquetFileExists, statusOfGetAllPagesFileExists, df , statusOfGetAllPages )
 
 
-def writeCompletionStatusToFile(statusOfGetAllPages):
+def writeCompletionStatusToFile(statusOfGetAllPages: Dict[str, Any]) -> None:
     # Only need to write out to the last status info file, as the test status info file is left unchanged.
     statusFileName = getLastRawStatusFileName()
     with open(statusFileName, "w") as f:
         json.dump(statusOfGetAllPages, f, indent=4)
 
-def query_toyota(page_number, query, headers):
+def query_toyota(page_number: int, query: str, headers: Optional[Dict[str, str]]) -> Optional[Dict[str, Any]]:
     """Query Toyota for a list of vehicles."""
     global forceQueryRspFailureTest
     global totalPageRetries
@@ -406,6 +462,19 @@ def query_toyota(page_number, query, headers):
                 headers=headers,
                 timeout=20,
             )
+            if PAGE_FILES_DEBUG_ENABLED:
+                request_id = f"{MODEL}_{page_number}_{str(uuid.uuid4())[:8]}"
+                try:
+                    with open(f"output/pages/{request_id}_query.graphql", "w", encoding='utf-8') as f:
+                        f.write(query)
+                except Exception as e:
+                    print(f"Warning: Could not write debug query file: {e}")
+                if resp:
+                    try:
+                        with open(f"output/pages/{request_id}_response.json", "w", encoding='utf-8') as f:
+                            f.write(resp.text)
+                    except Exception as e:
+                        print(f"Warning: Could not write debug response file: {e}")
             if DEBUG_ENABLED:
                 if resp is None:
                     print("query resp is None")
@@ -429,11 +498,12 @@ def query_toyota(page_number, query, headers):
                         break
             except Exception as inst:
                 print ("query_toyota: Exception occurred with accessing json response:", str(type(inst)) + " "  + str(inst))
-                print("resp.status_code", resp.status_code)
-                print("resp.headers", resp.headers)
-                #print("resp.text", resp.text)
-                #print("resp.content", resp.content)
-                #return None
+                if resp:
+                    print("resp.status_code", resp.status_code)
+                    print("resp.headers", resp.headers)
+                    #print("resp.text", resp.text)
+                    #print("resp.content", resp.content)
+                    #return None
         except Exception as inst:
             print ("query_toyota: Exception occurred :", str(type(inst)) + " "  + str(inst))
         tryCount -= 1
@@ -452,10 +522,17 @@ def query_toyota(page_number, query, headers):
         return result
 
 
-def get_all_pages():
-    """Get all pages of results for a query to Toyota."""
+def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
+    """Get all pages of results for a query to Toyota/Lexus."""
     global totalPageRetries
     totalPageRetries = 0
+
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    if not ok:
+        print("Error: get_all_pages: Invalid vehicle make specified:", VEHICLE_MAKE)
+        return (pd.DataFrame(), {"completedOk": False, "numberRawVehiclesFound": 0, "numberRawVehiclesMissing": 100000, "completionMsg": "Invalid vehicle make specified", "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+
+    assert vehicle_make is not None
 
     df = pd.DataFrame()
     page_number = 1
@@ -465,7 +542,7 @@ def get_all_pages():
 
     # Get headers by bypassing the WAF.
     print("Bypassing WAF")
-    headers = wafbypass.WAFBypass().run()
+    headers = wafbypass.WAFBypass(vehicle_make).run()
 
     # Start a timer.
     timer_start = timer()
@@ -483,8 +560,8 @@ def get_all_pages():
     # but we can only access maxPagesToGet pages of records.
     pagesToGet = maxPagesToGet
     recordsToGet = maxRecordsToGet
+    
     while True:
-
         if page_number > maxPagesToGet:
             print("Error: Prematurely terminating due to limit of max pages can get of ", maxPagesToGet, ". All vehicles were not found! Model ", MODEL)
             break
@@ -492,8 +569,12 @@ def get_all_pages():
         elapsed_time = timer() - timer_start
         if elapsed_time > 4 * 60:
             print("  >>> Refreshing WAF bypass >>>\n")
-            headers = wafbypass.WAFBypass().run()
+            if vehicle_make:
+                headers = wafbypass.WAFBypass(vehicle_make).run()
+            else:
+                headers = wafbypass.WAFBypass().run()
             timer_start = timer()
+        
         # Get a page of vehicles.
         # We request several different geographically spread out locales, each with a radius that
         # that reaches to anywhere in the US from that locale (including Alaska and Hawaii)
@@ -525,13 +606,24 @@ def get_all_pages():
                     pagesToGet = pages
                     recordsToGet = records
                 print(queryDetailString + ":    ", len(result["vehicleSummary"]))
-                adderDfNormalized = pd.json_normalize(result["vehicleSummary"])
-                # Add in date that got this vehicle info
-                infoDateTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                adderDfNormalized["infoDateTime"] = infoDateTime
-                if PAGE_FILES_DEBUG_ENABLED:
-                    adderDfNormalized.to_csv(f"output/pages/{MODEL}{queryDetailString}_raw_page{page_number}.csv", index=False)
-                df = pd.concat([df, adderDfNormalized])
+                # Only process if there are records to avoid empty concat warning
+                if len(result["vehicleSummary"]) > 0:
+                    adderDfNormalized = pd.json_normalize(result["vehicleSummary"])
+                    
+                    # Handle all-NA columns to avoid FutureWarning in pd.concat
+                    for col in adderDfNormalized.columns:
+                        if adderDfNormalized[col].isna().all():
+                            adderDfNormalized[col] = ""
+
+                    # Add in date that got this vehicle info
+                    infoDateTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    adderDfNormalized["infoDateTime"] = infoDateTime
+                    if PAGE_FILES_DEBUG_ENABLED:
+                        adderDfNormalized.to_csv(f"output/pages/{MODEL}{queryDetailString}_raw_page{page_number}.csv", index=False)
+                    if df.empty:
+                        df = adderDfNormalized
+                    else:
+                        df = pd.concat([df, adderDfNormalized], ignore_index=True)
                 #df = pd.concat([df, pd.json_normalize(result["vehicleSummary"])])
                 if pagesToGet > pages:
                     pagesToGet = pages
@@ -540,13 +632,17 @@ def get_all_pages():
             elapsed_time = timer() - timer_start
             if elapsed_time > 4 * 60:
                 print("  >>> Refreshing WAF bypass >>>\n")
-                headers = wafbypass.WAFBypass().run()
+                if vehicle_make:
+                     headers = wafbypass.WAFBypass(vehicle_make).run()
+                else:
+                     headers = wafbypass.WAFBypass().run()
                 timer_start = timer()
         # Drop any duplicate VINs.
         df.drop_duplicates(subset=["vin"], inplace=True)
         if PAGE_FILES_DEBUG_ENABLED:
             df.to_csv(f"output/pages/{MODEL}_raw_page{page_number}.csv", index=False)
         print(f"Found {len(df)} (+{len(df)-last_run_counter}) vehicles so far.\n")
+        
         ## If we didn't find more cars from the previous run, we've found them all.
         #if len(df) == last_run_counter:
         if len(df) >= recordsToGet:
@@ -563,6 +659,7 @@ def get_all_pages():
         page_number += 1
         sleep(10)
         continue
+    
     completionMsg = ""
     if gotPageInfoAtLeastOnce:
         numberRawVehiclesFound = len(df)
@@ -582,9 +679,22 @@ def get_all_pages():
     if "FirstAddedDate" in df.columns:
         # remove it as the inventory website does not have this, and if it does we don't want to include it anyway
         df.drop(["FirstAddedDate"], axis=1, inplace=True)
+
+    # Sanitize numeric columns to ensure they are numeric and handle empty strings
+    numeric_cols_to_sanitize = [
+        "price.sellingPrice", "price.baseMsrp", "price.totalMsrp",
+        "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph",
+        "price.dioTotalMsrp", "price.dioTotalDealerSellingPrice",
+        "price.dealerCashApplied",
+        "mpg.combined", "mpg.city", "mpg.highway"
+    ]
+    for col in numeric_cols_to_sanitize:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+
     return (df, statusInfo )
 
-def sanitizeStr(strng):
+def sanitizeStr(strng: Any) -> Any:
     # Replace tabs, and characters outside ascii 0 -7F range in string that might cause issues with other programs,
     # with a " ".
     # Also replaces &nbsp with a " "
@@ -598,10 +708,10 @@ def sanitizeStr(strng):
         sanitizedString = re.sub(rePattern, ' ', sanitizedString)
     return sanitizedString
 
-def isNumber(value):
+def isNumber(value: Any) -> bool:
     return ((isinstance(value, int)) or (isinstance(value, float)))
     
-def calcPrices(rowSeries):
+def calcPrices(rowSeries: pd.Series) -> pd.Series:
     # Returns the row series with the updated prices and Selling Price Incomplete from the df row series
     # Assumes the series has columns "Selling Price", "Selling Price Incomplete", "price.nonSpAdvertizedPrice", "price.advertizedPrice", 
     # "price.dioTotalDealerSellingPrice", "TMSRP plus DIO", "Total MSRP", "Base MSRP", "Markup", "isSmartPath"
@@ -642,15 +752,15 @@ def calcPrices(rowSeries):
     nonSpAdvertizedPrice = rowSeries["price.nonSpAdvertizedPrice"]
     advertizedPrice = rowSeries["price.advertizedPrice"]
     dioTotalDealerSellingPrice = rowSeries["price.dioTotalDealerSellingPrice"]
-    tMsrpPlusDio = np.NaN
+    tMsrpPlusDio = np.nan
     baseMsrp = rowSeries["Base MSRP"]
     totalMsrp = rowSeries["Total MSRP"]
-    markup = np.NaN
+    markup = np.nan
     
     isSmartPathPresentAndTrue = isinstance(isSmartPath, bool) and isSmartPath
     
     if valueIsNanNoneNull(baseMsrp) or not(isinstance(baseMsrp, (int,float))):
-        baseMsrp = np.NaN
+        baseMsrp = np.nan
     if valueIsNanNoneNull(totalMsrp) or not(isinstance(totalMsrp, (int,float))):
         totalMsrp = baseMsrp
     if valueIsNanNoneNull(dioTotalDealerSellingPrice):
@@ -694,7 +804,7 @@ def calcPrices(rowSeries):
     
     return rowSeries
 
-def transformRawDfToCsvStyleDf ( inputDf):
+def transformRawDfToCsvStyleDf(inputDf: pd.DataFrame) -> pd.DataFrame:
     # transforms the input raw df (one that has all the raw parquet fields) into an output df for a csv file.
     # Note that year range is not limited in the return and must be done outside of this.
     # the index is reset on the returned df
@@ -782,8 +892,19 @@ def transformRawDfToCsvStyleDf ( inputDf):
             'bed': "Bed",
         }
     
-        with open(f"output/models.json", "r") as fileh:
-            title = [x["title"] for x in json.load(fileh) if x["modelCode"] == MODEL][0]
+        ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+        output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+        with open(f"{output_dir}/models.json", "r") as fileh:
+            models_list = json.load(fileh)
+            matching_models = [x["title"] for x in models_list if x["modelCode"].lower() == (MODEL.lower() if MODEL else "")]
+            if not matching_models:
+                 if MODEL:
+                    raise ValueError(f"Model code {MODEL} not found in {output_dir}/models.json. Available models: {', '.join(x['modelCode'] for x in models_list)}")
+                 else:
+                     # fallback
+                     title = ""
+            else:
+                title = matching_models[0]
     
         df = (
             df[
@@ -849,8 +970,8 @@ def transformRawDfToCsvStyleDf ( inputDf):
         # Calculate the various prices.
         df["Raw Selling Price"] = df["Selling Price"] # create column with default
         df["Selling Price Incomplete"] = False  # create column with default
-        df["TMSRP plus DIO"] = np.NaN # create column with default
-        df["Markup"] = np.NaN # create column with default
+        df["TMSRP plus DIO"] = np.nan # create column with default
+        df["Markup"] = np.nan # create column with default
         if len(df):
             # Note: Using a slice of the df that contains just the columns needed for the price calculation does not
             # execute any faster than passing all columns to the apply.
@@ -861,13 +982,13 @@ def transformRawDfToCsvStyleDf ( inputDf):
         statuses = {None: False, 1: True, 0: False}
         df.replace({"Pre-Sold": statuses}, inplace=True)
         
-        statuses = {
+        statuses_shipping = {
             "A": "Factory to port",
             "F": "Port to dealer",
             "G": "At dealer",
         }
-        df.replace({"Shipping Status": statuses}, inplace=True)
-    
+        df.replace({"Shipping Status": statuses_shipping}, inplace=True)
+
         # df["Image"] = df["media"].apply(
         #     lambda x: [x["href"] for x in x if x["type"] == "carjellyimage"][0]
         # )
@@ -882,7 +1003,6 @@ def transformRawDfToCsvStyleDf ( inputDf):
         df["CenterLat"] = 41.978382
         df["CenterLong"] = -91.668626
         df["DistanceFromCenter"] = None
-    
     
         df = df[
             [
@@ -955,23 +1075,27 @@ def transformRawDfToCsvStyleDf ( inputDf):
         df = pd.DataFrame(columns = columnsForEmptyDfFinalCsv)
     return df
     
-def getFileNameForSoldRawParquet(model, year):
+def getFileNameForSoldRawParquet(model: str, year: int) -> str:
     # model is a str, and year is a number
     #  output/<model>_<year>_Sold_raw.parquet
-    return f"output/" + model + "_" + "{:04d}".format(year) + "_Sold_raw.parquet"
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    return f"{output_dir}/" + model + "_" + "{:04d}".format(year) + "_Sold_raw.parquet"
     
-def getFileNameForSoldCsv(model, year):
+def getFileNameForSoldCsv(model: str, year: int) -> str:
     # model is a str, and year is a number
     # returns output/<model>_<year>_Sold.csv
-    return f"output/" + model + "_" + "{:04d}".format(year) + "_Sold.csv"
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    return f"{output_dir}/" + model + "_" + "{:04d}".format(year) + "_Sold.csv"
     
-def valueIsStrType(value):
+def valueIsStrType(value: Any) -> bool:
     isStrType = False
     if isinstance(value, str):
         isStrType = True
     return isStrType
 
-def pruneSoldFiles(model):
+def pruneSoldFiles(model: str) -> None:
     # Prunes the models Sold files of Temp VIN entries whose infoDateTime is older than 12 weeks.
     # The assumption is by that time they have been turned into a real VINs with production starting.
     global changeHistoryUseThisAsTodaysDateForTesting
@@ -1014,7 +1138,7 @@ def pruneSoldFiles(model):
             else:
                 print("Error: pruneSoldFiles : dataframe does not contain infoDateTime column. Leaving sold file unchanged")
 
-def writeLastParquetAndAssociatedFiles(inputDf):
+def writeLastParquetAndAssociatedFiles(inputDf: pd.DataFrame) -> None:
     # Updates the <model>_<year>_Sold_raw.parquet, and <model>_<year>_Sold.csv files with the inputDf, by appending the
     # sold entries (by year) in the inputDf to corresponding sold model year parquet files and then removing duplicate VIns 
     # in those sold model parquet files, and then removing any entries from those sold model parquet files that were
@@ -1045,8 +1169,8 @@ def writeLastParquetAndAssociatedFiles(inputDf):
         #print("modelYearsNotSold", modelYearsNotSold, "modelYearsSold", modelYearsSold)
         #print("combinedModelYears", combinedModelYears)
         for year in combinedModelYears:
-            modelYearSoldFileName = getFileNameForSoldRawParquet(MODEL, year)
-            modelYearSoldCsvFileName = getFileNameForSoldCsv(MODEL, year)
+            modelYearSoldFileName = getFileNameForSoldRawParquet(MODEL if MODEL else "", year)
+            modelYearSoldCsvFileName = getFileNameForSoldCsv(MODEL if MODEL else "", year)
             if Path(modelYearSoldFileName).exists():
                 modelYearSoldRawParquetDf = pd.read_parquet(modelYearSoldFileName)
             else:
@@ -1056,7 +1180,11 @@ def writeLastParquetAndAssociatedFiles(inputDf):
             if year in modelYearsSold:
                 # append the Sold entries from the raw parquet df for that model year to the Sold model year raw parquet df
                 # and drop any duplicates
-                modelYearSoldRawParquetDf = pd.concat([modelYearSoldRawParquetDf, modelSoldDf[modelSoldDf["year"] == year]])
+                soldEntriesForYear = modelSoldDf[modelSoldDf["year"] == year]
+                if modelYearSoldRawParquetDf.empty:
+                    modelYearSoldRawParquetDf = soldEntriesForYear
+                else:
+                    modelYearSoldRawParquetDf = pd.concat([modelYearSoldRawParquetDf, soldEntriesForYear], ignore_index=True)
                 modelYearSoldRawParquetDf.drop_duplicates(subset=["vin"], keep='last', inplace=True)
             if year in modelYearsNotSold:
                 # remove any VIN entires, if any, from model year sold parquet df that are not sold in the raw parquet df
@@ -1091,7 +1219,7 @@ def writeLastParquetAndAssociatedFiles(inputDf):
     #debugCols = ["vin", "isTempVin", 'isSmartPath', 'isUnlockPriceDealer', "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', "FirstAddedDate", "LastChangedDateTime", "infoDateTime"]
     #df.to_csv(rawParquetFileName[:-7] + "csv", columns= debugCols, index=False)
 
-def debugCheckingDf(df, msg= "", vin= ""):
+def debugCheckingDf(df: pd.DataFrame, msg: str = "", vin: str = "") -> None:
     # Used to check various aspect of the dataframe at various points to see if something is or is not present
     # for debugging puposes.
     return
@@ -1112,9 +1240,8 @@ def debugCheckingDf(df, msg= "", vin= ""):
             print("debugCheckingDf: At point", msg, ": vin/VIN",vinLookingFor, "was found in the df" )
     else:
         print("debugCheckingDf: At point", msg, ": df has no vin or VIN column name")
-        
 
-def updateDfsLastChangedDateTimeUsingChangeHistory(df, lastParquetDf, changeHistoryCurrentOnlyDf):
+def updateDfsLastChangedDateTimeUsingChangeHistory(df: pd.DataFrame, lastParquetDf: pd.DataFrame, changeHistoryCurrentOnlyDf: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
     # Updates copies of the df (a passed CSV style df), and lastParquetDf (a passed raw parquet df) LastChangedDateTimeColName 
     # values using the infoDateTime field of the changeHistoryCurrentOnlyDf for VINs in those dataframes with MODED in changeHistoryCurrentOnlyDf, 
     # and returns them as a tuple (df, lastParquetDf)
@@ -1142,7 +1269,7 @@ def updateDfsLastChangedDateTimeUsingChangeHistory(df, lastParquetDf, changeHist
     return (dfMerged, dfLastParquetMerged)
     
 
-def getChangeHistoryFinalColumnsSelect(originalColumnsInOld, originalColumnsInNew):
+def getChangeHistoryFinalColumnsSelect(originalColumnsInOld: pd.Index, originalColumnsInNew: pd.Index) -> List[str]:
     # returns an ordered list of columns for the final columns we want in the change history
     # The original columns passed are are in order we want for the dataframes.
     # It is assumed that the selection are for dfChangeHistory in getChangeHistory right before
@@ -1159,10 +1286,10 @@ def getChangeHistoryFinalColumnsSelect(originalColumnsInOld, originalColumnsInNe
         finalColumnsSelect.append(column)
     return finalColumnsSelect
 
-def valueIsNanNoneNull(value):
+def valueIsNanNoneNull(value: Any) -> bool:
     return (value is None) or (isinstance(value, float) and np.isnan(value))
     
-def getOptionDifferences(oldOptions, newOptions):
+def getOptionDifferences(oldOptions: Any, newOptions: Any) -> str:
     # returns a string of the differences between the old and new options.  If null is returned then there are no differences.
     diffs = ""
     removedOptionsStr = ""
@@ -1237,7 +1364,8 @@ def getOptionDifferences(oldOptions, newOptions):
         diffs =  addedOptionsStr + removedOptionsStr + sameOptionsStr
     return diffs
 
-def determineRowDifferences( row, columnsToIgnore, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight):
+def determineRowDifferences(row: pd.Series, columnsToIgnore: List[str], originalColumnsInOld: pd.Index, originalColumnsInNew: pd.Index, mergeSuffixRight: str) -> pd.Series:
+    row = row.astype(object)
     # Determines if there are any differences between the row's new values and the row's old values for each
     # column name in row that is not in columnsToIgnore and updates the row's rowChangeTypeColumnName column, and 
     # rowModificationsColumnName column values.
@@ -1336,7 +1464,7 @@ def determineRowDifferences( row, columnsToIgnore, originalColumnsInOld, origina
         
     return row
 
-def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
+def getChangeHistory(oldDf: pd.DataFrame, newDf: pd.DataFrame, lastChangeHistorydf: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
     # returns a data frame  that is the concatenation of the lastChangeHistorydf
     # and the added, modified, removed entries between the passed old df and the new df with 
     # an indicator if the old and new value in the row was different and the old value as well, and
@@ -1357,6 +1485,8 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     
     # initialize the return dataframe
     dfChangeHistory = pd.DataFrame(columns = columnsForEmptyChangeHistoryCsvDf)
+    dfChangeHistory[rowChangeTypeColumnName] = dfChangeHistory[rowChangeTypeColumnName].astype('object')
+    dfChangeHistory[rowModificationsColumnName] = dfChangeHistory[rowModificationsColumnName].astype('object')
     
     # Save off the original column names in both to make operations later easier since duplicate column names with
     # suffixes will be added.
@@ -1374,18 +1504,18 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     
     # The next merge does the same thing but in the opposite direction. In this one we only care to know which VINs
     # in the old one were not in the new one and can get this from WhoDidMergeComeFrom_  
-    
+
     dfNewMergeColumnsToUse = dfNew[["VIN"]]
     dfOldMerged = dfOld.merge(dfNewMergeColumnsToUse, left_on="VIN", right_on="VIN", how='left', indicator = "WhoDidMergeComeFrom_")
     
     #Now add a RowChangeType column to both dfNewMerged, and dfOldMerged and initialize to indicate the 
     # the row previously existed and did not change (i.e the VIN is in both and all the data associated with it is the same).
     # Also add a rowModificationsColumnName and initialize it to None for no modifications.
-    dfNewMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
-    dfNewMerged[rowModificationsColumnName] = None
-    dfOldMerged[rowChangeTypeColumnName] = rowSameVINContentsIndicator
-    dfOldMerged[rowModificationsColumnName] = None
-    
+    dfNewMerged[rowChangeTypeColumnName] = pd.Series([rowSameVINContentsIndicator] * len(dfNewMerged), dtype='object', index=dfNewMerged.index)
+    dfNewMerged[rowModificationsColumnName] = pd.Series([None] * len(dfNewMerged), dtype='object', index=dfNewMerged.index)
+    dfOldMerged[rowChangeTypeColumnName] = pd.Series([rowSameVINContentsIndicator] * len(dfOldMerged), dtype='object', index=dfOldMerged.index)
+    dfOldMerged[rowModificationsColumnName] = pd.Series([None] * len(dfOldMerged), dtype='object', index=dfOldMerged.index)   
+
     
     # Update the RowChangeType column for those merged dfs.
     # The WhoDidMergeComeFrom_ is used to determine if the row was in left only, both.  right only is not possible because 
@@ -1397,6 +1527,8 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     # Now do the determination on just the rows that were in both.  We can create a slice of just those rows with common VINs
     # and run the determination on then and then the result is what gets concatenated later on for that.
     dfNewMergeOnlyCommonVins = dfNewMerged[dfNewMerged["WhoDidMergeComeFrom_"] == 'both'].copy(deep=True)
+    dfNewMergeOnlyCommonVins[rowChangeTypeColumnName] = dfNewMergeOnlyCommonVins[rowChangeTypeColumnName].astype(object)
+    dfNewMergeOnlyCommonVins[rowModificationsColumnName] = dfNewMergeOnlyCommonVins[rowModificationsColumnName].astype(object)
     dfNewMergeOnlyCommonVins = dfNewMergeOnlyCommonVins.apply(determineRowDifferences, axis=1, args= (columnsToIgnoreForComparison, originalColumnsInOld, originalColumnsInNew, mergeSuffixRight))
     
     # Concatenate just the new and old merged dfs together first since will need to do renames
@@ -1406,11 +1538,20 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     #dfNewMerged.reset_index(drop=True, inplace=True)
     #dfNewMergeOnlyCommonVins.reset_index(drop=True, inplace=True)
     #dfOldMerged.reset_index(drop=True, inplace=True)
-    dfChangeHistory = pd.concat([
+    frames_to_concat = [
         dfNewMerged[dfNewMerged[rowChangeTypeColumnName] == rowAddedNewVINIndicator],
         dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName] == rowModifiedVINContentsIndicator],
-        dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator] 
-        ])
+        dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator]
+    ]
+    frames_to_concat = [df for df in frames_to_concat if not df.empty]
+    
+    if frames_to_concat:
+        dfChangeHistory = pd.concat(frames_to_concat, ignore_index=True)
+    else:
+        dfChangeHistory = pd.DataFrame(columns=columnsForEmptyChangeHistoryCsvDf)
+    
+    if LastChangedDateTimeColName not in dfChangeHistory.columns:
+        dfChangeHistory[LastChangedDateTimeColName] = pd.Series(dtype='object')
     
     # Updated the LastChangedDateTimeColName for MODED entries with the infoDateTime column
     dfChangeHistory[LastChangedDateTimeColName] = dfChangeHistory[LastChangedDateTimeColName].where(dfChangeHistory[rowChangeTypeColumnName] != rowModifiedVINContentsIndicator, dfChangeHistory["infoDateTime"])
@@ -1422,7 +1563,12 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     changeHistoryCurrentOnlyDf = dfChangeHistory.copy(deep=True)
     
     # Now concatenate the new change history to the last change history with the last change history first
-    dfChangeHistory = pd.concat([lastChangeHistorydf, dfChangeHistory])
+    if lastChangeHistorydf.empty:
+        dfChangeHistory = dfChangeHistory
+    elif dfChangeHistory.empty:
+        dfChangeHistory = lastChangeHistorydf 
+    else:
+        dfChangeHistory = pd.concat([lastChangeHistorydf, dfChangeHistory], ignore_index=True)
     # Now filter these to only keep the ones that were at most maxDaysOldToKeep days old (rowChangeDateTime within the last maxDaysOldToKeep).
     if not (changeHistoryUseThisAsTodaysDateForTesting is None):
         print("!!!!!!!! Warning: getChangeHistory:  Using a test date in place of Todays Date for testing date filtering. Test date is:", changeHistoryUseThisAsTodaysDateForTesting)
@@ -1450,7 +1596,7 @@ def getChangeHistory(oldDf, newDf, lastChangeHistorydf):
     #print(datetime.datetime.now(), "getChangeHistory: Exited")
     return (dfChangeHistory, changeHistoryCurrentOnlyDf)
 
-def getEnvVariableTestMode():
+def getEnvVariableTestMode() -> Tuple[bool, str, Optional[str]]:
     # returns a tuple that indicates if the environement variable indicates test mode is enabled
     # testModeEnvOn is boolean and the other values are strings.
     # ( testModeEnvOn , testModeEnvVarName,  testModeEnvValue) 
@@ -1461,7 +1607,7 @@ def getEnvVariableTestMode():
         testModeEnvOn = True
     return (testModeEnvOn, testModeEnvVarName, testModeEnvValue)
     
-def getEnvVariableTestModeTodayDate():
+def getEnvVariableTestModeTodayDate() -> Tuple[str, Optional[str]]:
     # returns a tuple that indicates if the environement variable indicates the todays date to use for some testing.
     # testModeEnvOn is boolean and the other values are strings.
     # (testModeTodayDateEnvVarName, testModeTodayDateEnvValue) 
@@ -1470,7 +1616,7 @@ def getEnvVariableTestModeTodayDate():
     return (testModeTodayDateEnvVarName, testModeTodayDateEnvValue)
     
 
-def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
+def update_vehicles_and_return_df(useLocalData: bool = False, testModeOn: bool = False) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     """Generate a curated database file for the given vehicle model environment variable, as well as
     returning that database as a dataframe and status of the inventory Get.
     Returns:  a tuple   (dataframe, status ) where dataframe is a pandas dataframe and
@@ -1514,7 +1660,7 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     rawParquetFileExists = False
     statusOfGetAllPagesFileExists = False
     df = pd.DataFrame()
-    statusOfGetAllPages = {"completedOk": False, "numberRawVehiclesFound": 0, "numberRawVehiclesMissing": 100000, "completionMsg": "", "date": ""}
+    statusOfGetAllPages: Dict[str, Any] = {"completedOk": False, "numberRawVehiclesFound": 0, "numberRawVehiclesMissing": 100000, "completionMsg": "", "date": ""}
     
     # Read in the last inventory gotten (last parquet file) and associated status file.
     lastRawParquetFileExists, lastRawStatusOfGetAllPagesFileExists, lastParquetDf, statusOfGetAllPagesLastParquet = readLastParquetDf()
@@ -1597,11 +1743,11 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
         if len(lastParquetDf):
             # it is not empty
             if not("FirstAddedDate" in lastParquetDf.columns):
-                # use None
-                lastParquetDf["FirstAddedDate"] = None
+                # use None/""
+                lastParquetDf["FirstAddedDate"] = ""
             if not(LastChangedDateTimeColName in lastParquetDf.columns):
-                # use None
-                lastParquetDf[LastChangedDateTimeColName] = None
+                # use None/""
+                lastParquetDf[LastChangedDateTimeColName] = ""
             lastParquetMergeColumnsOnlyDf = lastParquetDf[["vin", "FirstAddedDate", LastChangedDateTimeColName]]
             if "FirstAddedDate" in df.columns:
                 # if for some reason that df gotten from the inventory website or local file has a FirstAddedDate, remove it (it shouldn't)
@@ -1629,7 +1775,14 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
             # drop the merge info column from the df as no longer need it.
             df.drop(["WhoDidMergeComeFrom_"], axis=1, inplace=True)
             # append the df to the last raw parquet
-            lastParquetDf = pd.concat([lastParquetDf, df])
+            if df.empty:
+                pass
+            else:
+                # Check if lastParquetDf is empty before concat
+                if lastParquetDf.empty:
+                    lastParquetDf = df
+                else:
+                    lastParquetDf = pd.concat([lastParquetDf, df], ignore_index=True)
             # drop duplicate VINs keeping the last one encountered as when there are common VINs then the df is the one we want to keep
             # as it has the latest information we want to keep,
             # and as the df is concatenated to the end of lastParquetDf it will be the last occurrence
@@ -1678,25 +1831,27 @@ def update_vehicles_and_return_df(useLocalData = False, testModeOn = False):
     writeCompletionStatusToFile(statusOfGetAllPages)
     
     # Prune the Sold files (of old temp VIN entries, etc)
-    pruneSoldFiles(MODEL)
+    pruneSoldFiles(MODEL if MODEL else "")
     
     # reset the index as the returned df assumes it. 
     df.reset_index(drop=True, inplace=True)  # drop keeps from inserting current index as a column in dataframe
     
     # Write the data out to its corresponding file.
-    df.to_csv(f"output/{MODEL}.csv", index=False)
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    df.to_csv(f"{output_dir}/{MODEL}.csv", index=False)
     return (df, statusOfGetAllPages )
 
-def update_vehicles(useLocalData = False, testModeOn = False):
+def update_vehicles(useLocalData: bool = False, testModeOn: bool = False) -> None:
     """Generate a curated database file for the given vehicle model environment variable."""
     # This function is used to generate the inventory database file for the given vehicle model,
     # but it has no return statement so that the correct system exit code applies
     # (success is 0 anything else is failed) when called by "poetry run update_vehicles".
     update_vehicles_and_return_df(useLocalData = useLocalData, testModeOn = testModeOn)
 
-def extract_marketing_long_names(options_raw):
+def extract_marketing_long_names(options_raw: Any) -> str:
     """extracts `marketingName` from `Options` col"""
-    options = set()
+    options: Set[str] = set()
     if isinstance(options_raw, Iterable):
         for item in options_raw:
             gotIt = False
@@ -1743,4 +1898,3 @@ if __name__ == "__main__":
     #print("useLocalData", useLocalData, "type", str(type(useLocalData)))
     #print("useLocalData", useLocalData, "type", str(type(useLocalData)))
     update_vehicles(useLocalData, testModeOn)
-

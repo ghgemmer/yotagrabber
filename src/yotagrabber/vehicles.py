@@ -40,6 +40,14 @@ VEHICLE_MAKE: Optional[str] = os.environ.get("VEHICLE_MAKE")
 MODEL_SEARCH_ZIPCODE: Optional[str] = os.environ.get("MODEL_SEARCH_ZIPCODE")
 MODEL_SEARCH_RADIUS: Optional[str] = os.environ.get("MODEL_SEARCH_RADIUS")
 
+# GraphQL Page Size for vehicle searches
+# Lexus API returns "Transformation too large" errors with pageSize=250 on high-inventory
+# models like RX. Using smaller page size (e.g., 200) avoids this AppSync limitation.
+VEHICLE_MAKE_PAGE_SIZE: Dict[str, int] = {
+    "toyota": 250,
+    "lexus": 200
+}
+
 changeHistoryUseThisAsTodaysDateForTesting: Optional[str] = None # for testing change the environment variable string to yyyy-mm-dd hh:mm:ss, otherwise leave env variable not defined. 
 
 forceQueryRspFailureTest: int = 0 # set to > 0 to perform tests related to forcing a query response failure to test query request retry
@@ -199,8 +207,13 @@ def get_vehicle_query_Objects() -> Dict[str, str]:
         print("Error: get_vehicle_query_Objects: Invalid vehicle make specified:", VEHICLE_MAKE)
         return vehicleQueryObjects
     
+    assert vehicle_make is not None
+    
     # Determine GraphQL brand parameter for vehicle search API
     brand = "LEXUS" if vehicle_make == vehicleUtilities.vehicleMakeLexus else "TOYOTA"
+    
+    # Determine page size based on vehicle make
+    page_size = VEHICLE_MAKE_PAGE_SIZE.get(vehicle_make, 250)
 
     if (MODEL_SEARCH_ZIPCODE is not None) and (MODEL_SEARCH_RADIUS is not None) and MODEL_SEARCH_ZIPCODE and MODEL_SEARCH_RADIUS:
         # single zipcode and radius search specified
@@ -210,6 +223,7 @@ def get_vehicle_query_Objects() -> Dict[str, str]:
              query = query.replace("MODELCODE", MODEL)
         query = query.replace("ZIPCODE", MODEL_SEARCH_ZIPCODE)
         query = query.replace("VEHICLE_MAKE", brand)
+        query = query.replace("PAGESIZE", str(page_size))
         query = query.replace("DISTANCEMILES", MODEL_SEARCH_RADIUS)
         query = query.replace("LEADIDUUID", str(uuid.uuid4()))
         vehicleQueryObjects["SingleZipCode_" + MODEL_SEARCH_ZIPCODE + "_RadiusMiles_" + MODEL_SEARCH_RADIUS] = query
@@ -274,6 +288,7 @@ def get_vehicle_query_Objects() -> Dict[str, str]:
             if MODEL:
                 query = query.replace("MODELCODE", MODEL)
             query = query.replace("VEHICLE_MAKE", brand)
+            query = query.replace("PAGESIZE", str(page_size))
             query = query.replace("DISTANCEMILES", str(default_radius + randbelow(1000)))
             query = query.replace("LEADIDUUID", str(uuid.uuid4()))
             vehicleQueryObjects[zone] = query

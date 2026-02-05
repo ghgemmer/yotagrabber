@@ -3,7 +3,7 @@ query {
     zipCode: "ZIPCODE"
     brand: "VEHICLE_MAKE"
     pageNo: PAGENUMBER
-    pageSize: 250
+    pageSize: PAGESIZE
     seriesCodes: "MODELCODE"
     distance: DISTANCEMILES
     leadid: "LEADIDUUID"

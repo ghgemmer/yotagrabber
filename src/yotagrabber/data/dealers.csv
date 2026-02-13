@@ -208,27 +208,28 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 05077,05077,Toyota of Colorado Springs,https://www.toyotaofcoloradosprings.com,15,CO,38.81366,-104.826286,15 East Motor Way,Colorado Springs,80905,(719) 471-3100
 05078,05078,Groove Toyota,https://www.groovetoyota.com,15,CO,39.618187,-104.987643,5460 South Broadway,Englewood,80113,(303) 761-3222
 05079,05079,Vista Toyota Delta,https://www.vistatoyotaco.com,9999,CO,38.748901,-108.062082,750 E. Highway 92,Delta,81416,(970) 874-4444
-06002,06002,A-1 Toyota,https://www.a1toyota.com,16,CT,41.335911,-72.978339,50 Amity Road,New Haven,06515,(203) 389-1521
+06002,06002,A-1 Toyota,https://www.a1toyota.com,9999,CT,41.335911,-72.978339,50 Amity Road,New Haven,06515,(203) 389-1521
 06015,06015,Girard Toyota-BMW,https://www.girardtoyota.com,16,CT,41.36469,-72.115931,543 Colman Street,New London,06320,(860) 447-3141
-06022,06022,Stephen Toyota,https://www.stephentoyota.com,16,CT,41.696487,-72.907324,1069 Farmington Ave,Bristol,06010,(860) 584-7333
+06022,06022,Stephen Toyota,https://www.stephentoyota.com,9999,CT,41.696487,-72.907324,1069 Farmington Ave,Bristol,06010,(860) 584-7333
 06025,06025,Lynch Toyota,https://www.lynchtoyota.com,9999,CT,41.811798,-72.514958,179 Tolland Turnpike,Manchester,06040,(860) 646-4321
 06026,06026,"Gale Toyota, Inc.",https://www.galetoyota.com,9999,CT,41.994767,-72.573431,50 Palomba Drive,Enfield,06082,(860) 741-3761
-06029,06029,Toyota of Greenwich,https://www.toyotaofgreenwich.com,16,CT,41.036442,-73.60276,"75 E. Putnam Ave, Box 402",Cos Cob,06807,(203) 661-5055
-06032,06032,Greentree Toyota,https://www.greentreetoyota.com,16,CT,41.424973,-73.419459,87 Federal Road,Danbury,06810,(203) 730-4040
-06036,06036,Middletown Toyota,https://www.middletowntoyota.com,16,CT,41.576516,-72.671736,634 Newfield Street,Middletown,06457,(860) 347-7294
+06029,06029,Toyota of Greenwich,https://www.toyotaofgreenwich.com,9999,CT,41.036442,-73.60276,"75 E. Putnam Ave, Box 402",Cos Cob,06807,(203) 661-5055
+06032,06032,Greentree Toyota,https://www.greentreetoyota.com,9999,CT,41.424973,-73.419459,87 Federal Road,Danbury,06810,(203) 730-4040
+06036,06036,Middletown Toyota,https://www.middletowntoyota.com,9999,CT,41.576516,-72.671736,634 Newfield Street,Middletown,06457,(860) 347-7294
 06037,06037,Charles Toyota,https://www.charlestoyota.com,16,CT,41.503778,-72.091477,500 West Thames Street,Norwich,06360,(860) 889-8375
-06040,06040,Colonial Toyota,https://www.colonialtoyotact.com,16,CT,41.228373,-73.069176,470 Boston Post Road,Milford,06460,(203) 878-7401
+06040,06040,Colonial Toyota,https://www.colonialtoyotact.com,9999,CT,41.228373,-73.069176,470 Boston Post Road,Milford,06460,(203) 878-7401
 06042,06042,Hoffman Toyota,https://www.hoffmantoyota.com,16,CT,41.81845,-72.868437,"36 Albany Turnpike, Rt 44",West Simsbury,06092,(860) 651-3725
-06043,06043,Westbrook Toyota,https://www.westbrooktoyota.com,16,CT,41.29035,-72.442205,80 Flat Rock Place,Westbrook,06498,(860) 388-6991
-06045,06045,Torrington Toyota,https://www.torringtontoyota.com,16,CT,41.818698,-73.08815,1472 East Main Street,Torrington,06790,(860) 482-9496
-06046,06046,Dowling Toyota of Litchfield,https://www.dowlingtoyota.com,16,CT,41.736171,-73.215514,451 Bantam Road,Litchfield,06759,(860) 567-0815
-06047,06047,Toyota of Wallingford,https://www.wow-toyota.com,16,CT,41.479633,-72.811467,859-861 No. Colony Road,Wallingford,06492,(203) 284-7400
+06043,06043,Westbrook Toyota,https://www.westbrooktoyota.com,9999,CT,41.29035,-72.442205,80 Flat Rock Place,Westbrook,06498,(860) 388-6991
+06045,06045,Torrington Toyota,https://www.torringtontoyota.com,9999,CT,41.818698,-73.08815,1472 East Main Street,Torrington,06790,(860) 482-9496
+06046,06046,Dowling Toyota of Litchfield,https://www.dowlingtoyota.com,9999,CT,41.736171,-73.215514,451 Bantam Road,Litchfield,06759,(860) 567-0815
+06047,06047,Toyota of Wallingford,https://www.wow-toyota.com,9999,CT,41.479633,-72.811467,859-861 No. Colony Road,Wallingford,06492,(203) 284-7400
 06049,06049,Toyota of Colchester,https://www.toyotaofcolchester.com,16,CT,41.579941,-72.341886,100 Old Hartford Road,Colchester,06415,(860) 537-2468
 06050,06050,Hartford Toyota,https://www.hartfordtoyota.com,16,CT,41.789824,-72.657709,135 West Service Road,Hartford,06120,(860) 278-5411
 06051,06051,New Country Toyota of Westport,https://www.newcountrywestporttoyota.com,16,CT,41.138034,-73.339284,777 Post Road East,Westport,06880,(203) 222-3300
-06052,06052,Toyota of Stamford,https://www.toyotaofstamford.com,16,CT,41.055215,-73.523747,909 East Main Street,Stamford,06902,(203) 348-3751
-06054,06054,Crabtree Toyota,https://www.crabtreetoyota.com,16,CT,41.56905,-73.098733,832 Straits Turnpike,Watertown,06795,(203) 283-3083
+06052,06052,Toyota of Stamford,https://www.toyotaofstamford.com,9999,CT,41.055215,-73.523747,909 East Main Street,Stamford,06902,(203) 348-3751
+06054,06054,Crabtree Toyota,https://www.crabtreetoyota.com,9999,CT,41.56905,-73.098733,832 Straits Turnpike,Watertown,06795,(203) 283-3083
 06055,06055,McGee Toyota of Putnam,https://www.mcgeetoyotaofputnam.com,9999,CT,41.925237,-71.874712,88 Providence Pike,Putnam,06260,(860) 923-4041
+06056,06056,Keeler Toyota of Westport,https://www.toyotaofwestport.com,9999,CT,41.138034,-73.339284,777 Post Road East,Westport,06880,(203) 222-3300
 07008,07008,Price Toyota,https://www.pricetoyota.com,80,DE,39.674367,-75.595383,168 N. Dupont Highway,New Castle,19720,(302) 322-8600
 07009,07009,Newark Toyotaworld,https://www.newarktoyotaworld.com,9999,DE,39.687501,-75.745175,230 E. Cleveland Avenue,Newark,19711,(302) 368-6262
 07012,07012,Hertrich Toyota,https://www.hertrichtoyota.com,9999,DE,38.957724,-75.430122,1367 Bay Road,Milford,19963,(302) 422-2586
@@ -694,10 +695,10 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 28043,28043,McGovern Toyota of Portsmouth,https://www.mcgoverntoyotaofportsmouth.com,9999,NH,43.0584,-70.7723,150 Greenleaf Avenue,Portsmouth,03801,(603) 431-6100
 28044,28044,Ecodrive Toyota of Gorham,https://www.ecodrivetoyotaofgorham.com,9999,NH,44.41326,-71.195554,485 Main Street,Gorham,03581,(603) 752-6644
 28045,28045,McGovern Toyota of Concord,https://www.mcgoverntoyotaofconcord.com,9999,NH,43.170513,-71.526577,594 Route 3-A,Bow,03304,(603) 224-9912
-29008,29008,Parkway Toyota,https://www.parkwaytoyota.com,16,NJ,40.868421,-73.958307,50 Sylvan Avenue,Englewood Cliffs,07632,(201) 944-3300
-29025,29025,Toyota of Hackensack,https://www.toyotaofhackensack.com,16,NJ,40.886901,-74.039269,278 River Street,Hackensack,07601,(201) 488-7777
+29008,29008,Parkway Toyota,https://www.parkwaytoyota.com,9999,NJ,40.868421,-73.958307,50 Sylvan Avenue,Englewood Cliffs,07632,(201) 944-3300
+29025,29025,Toyota of Hackensack,https://www.toyotaofhackensack.com,9999,NJ,40.886901,-74.039269,278 River Street,Hackensack,07601,(201) 488-7777
 29031,29031,Galaxy Toyota,https://www.galaxytoyota.net,16,NJ,40.291614,-74.039874,750 Route 36,Eatontown,07724,(732) 544-1000
-29037,29037,"Glen Motors, Inc.",https://www.glentoyota.com,16,NJ,40.948616,-74.137978,23-07 Maple Avenue,Fair Lawn,07410,(201) 791-3800
+29037,29037,"Glen Motors, Inc.",https://www.glentoyota.com,9999,NJ,40.948616,-74.137978,23-07 Maple Avenue,Fair Lawn,07410,(201) 791-3800
 29058,29058,Towne Toyota,https://www.townetoyota.com,16,NJ,40.888436,-74.662269,1499 Route 46,Ledgewood,07852,(973) 584-8100
 29059,29059,Toyota of Morristown,https://www.toyotaofmorristown.com,16,NJ,40.805132,-74.46398,169 Ridgedale Ave,Morristown,07960,(973) 540-1111
 29062,29062,Toyota of Runnemede,https://www.toyotaofrunnemede.com,16,NJ,39.846956,-75.07215,99 South Black Horse Pike,Runnemede,08078,(856) 939-3400
@@ -705,24 +706,24 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 29071,29071,Liberty Toyota,https://www.libertytoyota.com,16,NJ,40.058171,-74.88692,4397 South Route 130,Burlington,08016,(609) 386-6300
 29073,29073,Team Toyota of Princeton,https://www.teamtoyotaprinceton.com,16,NJ,40.271051,-74.711816,2871 Route 1,Lawrenceville,08648,(609) 883-4200
 29075,29075,Sansone Toyota,https://www.sansonestoyota.com,16,NJ,40.592269,-74.274102,100 Route 1 North,Avenel,07001,(732) 587-1100
-29078,29078,Toyota Universe,https://www.toyotauniverse.com,16,NJ,40.883904,-74.213483,1485 Route 46 East,Little Falls,07424,(973) 785-4710
+29078,29078,Toyota Universe,https://www.toyotauniverse.com,9999,NJ,40.883904,-74.213483,1485 Route 46 East,Little Falls,07424,(973) 785-4710
 29081,29081,Crestmont Toyota,https://www.crestmonttoyota.com,16,NJ,40.975096,-74.289485,730 State Route 23,Pompton Plains,07444,(973) 839-2500
 29083,29083,Route 22 Toyota,https://www.route22toyota.com,16,NJ,40.697248,-74.221547,109 Route 22 West,Hillside,07205,(973) 705-9400
 29086,29086,Toyota of Vineland,https://www.toyotaofvineland.com,16,NJ,39.496649,-75.042535,650 North Delsea Drive,Vineland,08360,(856) 696-5900
-29090,29090,Hudson Toyota,https://www.hudsontoyota.com,16,NJ,40.717188,-74.095409,599 Route 440,Jersey City,07304,(201) 862-7579
+29090,29090,Hudson Toyota,https://www.hudsontoyota.com,9999,NJ,40.717188,-74.095409,599 Route 440,Jersey City,07304,(201) 862-7579
 29092,29092,Gateway Toyota,https://www.gatewaytoyota.com,16,NJ,39.956381,-74.168649,395 Rt 37E & Batchelor St,Toms River,08753,(732) 240-2000
 29095,29095,Toyota World of Lakewood,https://www.lakewoodtoyota.com,16,NJ,40.083502,-74.173113,1118 Route 88,Lakewood,08701,(732) 364-9000
 29099,29099,Toyota of Turnersville,https://www.toyotaofturnersville.com,16,NJ,39.729815,-75.032018,3400 Route 42,Turnersville,08012,(856) 728-5000
 29100,29100,Toyota World of Newton,https://www.newtontoyota.com,16,NJ,41.079974,-74.73527,66 Route 206 North,Newton,07860,(973) 383-0200
 29101,29101,Dayton Toyota,https://www.daytontoyota.com,16,NJ,40.375977,-74.501527,2291 Route 130,Dayton,08810,(732) 329-9191
 29102,29102,Holman Toyota,https://www.holmantoyota.com,16,NJ,39.91802,-74.944225,1301 Route 73,Mount Laurel,08054,(856) 866-2000
-29103,29103,East Coast Toyota,https://www.eastcoasttoyota.com,16,NJ,40.841653,-74.082592,85 State Highway 17,Wood Ridge,07075,(201) 939-9400
+29103,29103,East Coast Toyota,https://www.eastcoasttoyota.com,9999,NJ,40.841653,-74.082592,85 State Highway 17,Wood Ridge,07075,(201) 939-9400
 29104,29104,Fred Beans Toyota of Flemington,https://www.fredbeanstoyota.com,16,NJ,40.477717,-74.863216,174 Route 202 North,Flemington,08822,(908) 788-5700
 29105,29105,DCH Freehold Toyota,https://www.dchfreeholdtoyota.com,16,NJ,40.278497,-74.295065,4268 Route 9 South,Freehold,07728,(732) 431-1300
 29106,29106,DCH Brunswick Toyota,https://www.dchbrunswicktoyota.com,16,NJ,40.45593,-74.479355,1504 U.S. Route 1,North Brunswick,08902,(732) 418-8888
 29107,29107,Paul Miller Toyota,https://www.paulmillertoyota.com,16,NJ,40.855834,-74.31039,1137-1183 Bloomfield Avenue,West Caldwell,07006,(973) 882-1822
 29108,29108,Autoland Toyota,https://www.1800toyotaland.com,16,NJ,40.685077,-74.320064,170 Route 22 East,Springfield,07081,(973) 467-6101
-29113,29113,Prestige Toyota of Ramsey,https://www.prestigetoyota.com,16,NJ,41.067361,-74.133227,1096 Route 17 North,Ramsey,07446,(201) 825-2700
+29113,29113,Prestige Toyota of Ramsey,https://www.prestigetoyota.com,9999,NJ,41.067361,-74.133227,1096 Route 17 North,Ramsey,07446,(201) 825-2700
 29114,29114,Toyota World of Clinton,https://www.toyotaworldclinton.com,16,NJ,40.675616,-74.915872,2017 Route 31,Clinton,08809,(908) 638-4100
 29115,29115,Empire Toyota of Green Brook,https://www.shopempiretoyotaofgreenbrook.com,16,NJ,40.600317,-74.483117,220 Route 22 West,Green Brook,08812,(732) 968-1000
 30032,30032,Webb Toyota,https://www.webbtoyota.com,15,NM,36.752747,-108.1563,3701 E. Main Street,Farmington,87402,(505) 327-5900
@@ -739,57 +740,57 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 31011,31011,Johnstons Toyota,https://www.johnstonstoyota.com,16,NY,41.409505,-74.415822,5021 Route 17M,New Hampton,10958,(845) 374-8600
 31019,31019,Waite Toyota,https://www.waitetoyota.com,16,NY,43.932602,-75.935842,18406 US Route 11,Watertown,13601,(315) 788-6022
 31024,31024,Kinderhook Toyota,https://www.kinderhooktoyota.com,16,NY,42.332788,-73.703578,1908 State Route 9H,Hudson,12534,(518) 822-9911
-31039,31039,Queensboro Toyota,https://www.queensborotoyota.com,16,NY,40.753871,-73.899891,62-10 Northern Boulevard,Woodside,11377,(718) 335-8600
+31039,31039,Queensboro Toyota,https://www.queensborotoyota.com,9999,NY,40.753871,-73.899891,62-10 Northern Boulevard,Woodside,11377,(718) 335-8600
 31068,31068,Northtown Toyota,https://www.northtowntoyota.com,16,NY,42.981706,-78.796624,1135 Millersport Highway,Amherst,14226,(716) 836-4600
 31069,31069,Hoselton Toyota,https://www.hoseltontoyota.com,16,NY,43.10067,-77.480876,50 Marsh Road,East Rochester,14445,(585) 381-8530
-31076,31076,Penn Toyota,https://www.penntoyota.com,16,NY,40.807765,-73.632855,2400 Northern Blvd.,Greenvale,11548,(516) 621-8600
+31076,31076,Penn Toyota,https://www.penntoyota.com,9999,NY,40.807765,-73.632855,2400 Northern Blvd.,Greenvale,11548,(516) 621-8600
 31088,31088,Burdick Toyota,https://www.burdicktoyota.com,16,NY,43.151723,-76.111666,5947 East Circle Drive,Cicero,13039,(315) 458-7590
 31101,31101,T J Toyota,https://www.tjtoyota.com,16,NY,44.696766,-74.986977,6706 State Highway 56,Potsdam,13676,(315) 265-3350
-31105,31105,Smithtown Toyota,https://www.smithtowntoyota.com,16,NY,40.85579,-73.170657,360 East Jericho Turnpike,Smithtown,11787,(631) 724-3300
+31105,31105,Smithtown Toyota,https://www.smithtowntoyota.com,9999,NY,40.85579,-73.170657,360 East Jericho Turnpike,Smithtown,11787,(631) 724-3300
 31112,31112,Prestige Toyota,https://www.prestigetoyota-ny.com,16,NY,41.956961,-73.990824,756 E. Chester St By-Pass,Kingston,12401,(845) 339-3313
 31113,31113,Gault Toyota,https://www.gaulttoyota.com,16,NY,42.107245,-76.037911,2205 North Street,Endicott,13760,(607) 748-8244
 31115,31115,Romano Toyota,https://www.romanotoyota.com,16,NY,43.061924,-76.062393,6400 Basile Rowe,East Syracuse,13057,(315) 445-1071
 31116,31116,New Country Toyota of Saratoga Springs,https://www.toyotaofsaratogasprings.com,16,NY,43.099633,-73.750893,3002 Route 50,Saratoga Springs,12866,(518) 584-7272
 31119,31119,Lia Toyota of Colonie,https://www.liatoyotaofcolonie.com,16,NY,42.755822,-73.876879,"2116 Central Ave., Rte. 5",Schenectady,12304,(518) 374-3700
-31121,31121,Fordham Toyota,https://www.fordhamtoyota.com,16,NY,40.861761,-73.910378,236-240 W. Fordham Road,Bronx,10468,(718) 367-0400
+31121,31121,Fordham Toyota,https://www.fordhamtoyota.com,9999,NY,40.861761,-73.910378,236-240 W. Fordham Road,Bronx,10468,(718) 367-0400
 31124,31124,Empire Toyota,https://www.empiretoyota.com,16,NY,42.446514,-75.0126,6281 State Highway 23,Oneonta,13820,(607) 433-0045
 31132,31132,New Country Toyota of Clifton Park,https://www.toyotaofcliftonpark.com,16,NY,42.870695,-73.725193,202 Route 146,Mechanicville,12118,(518) 664-4444
-31135,31135,New Rochelle Toyota,https://www.newrochelletoyota.com,16,NY,40.914543,-73.778288,47 Cedar Street,New Rochelle,10801,(914) 576-8000
-31138,31138,Westchester Toyota,https://www.westchestertoyota.com,16,NY,40.972936,-73.834946,2167 Central Park Avenue,Yonkers,10710,(914) 779-8700
-31139,31139,Riverhead Toyota,https://www.riverheadtoyota.com,16,NY,40.924133,-72.69902,1655 Old Country Road,Riverhead,11901,(631) 727-7722
+31135,31135,New Rochelle Toyota,https://www.newrochelletoyota.com,9999,NY,40.914543,-73.778288,47 Cedar Street,New Rochelle,10801,(914) 576-8000
+31138,31138,Westchester Toyota,https://www.westchestertoyota.com,9999,NY,40.972936,-73.834946,2167 Central Park Avenue,Yonkers,10710,(914) 779-8700
+31139,31139,Riverhead Toyota,https://www.riverheadtoyota.com,9999,NY,40.924133,-72.69902,1655 Old Country Road,Riverhead,11901,(631) 727-7722
 31141,31141,Luv Toyota,https://www.luvtoyota.com,16,NY,42.09807,-79.309315,215 East Fairmount Avenue,Lakewood,14750,(716) 763-3300
 31142,31142,Steet Toyota,https://www.steettoyota.com,16,NY,43.105436,-75.297113,4991 Commercial Drive,Yorkville,13495,(315) 736-8241
-31144,31144,Star Toyota of Bayside,https://www.startoyota.com,16,NY,40.75829,-73.778042,205-11 Northern Blvd.,Bayside,11361,(718) 279-1800
-31154,31154,Millennium Toyota,https://www.millenniumtoyota.com,16,NY,40.714606,-73.630242,257 North Franklin Street,Hempstead,11550,(516) 485-1400
-31156,31156,Plaza Toyota,https://www.plazatoyota.com,16,NY,40.61816,-73.945086,2721 Nostrand Avenue,Brooklyn,11210,(718) 253-8400
+31144,31144,Star Toyota of Bayside,https://www.startoyota.com,9999,NY,40.75829,-73.778042,205-11 Northern Blvd.,Bayside,11361,(718) 279-1800
+31154,31154,Millennium Toyota,https://www.millenniumtoyota.com,9999,NY,40.714606,-73.630242,257 North Franklin Street,Hempstead,11550,(516) 485-1400
+31156,31156,Plaza Toyota,https://www.plazatoyota.com,9999,NY,40.61816,-73.945086,2721 Nostrand Avenue,Brooklyn,11210,(718) 253-8400
 31160,31160,West Herr Toyota of Orchard Park,https://www.toyotaorchardpark.com,16,NY,42.7712,-78.80782,4141 Southwestern Blvd.,Orchard Park,14127,(716) 648-4141
-31161,31161,City World Toyota,https://www.cityworldtoyota.com,16,NY,40.874226,-73.852729,3333 Boston Road,Bronx,10469,(718) 655-7000
-31162,31162,Toyota of Manhattan,https://www.toyotaofmanhattan.com,16,NY,40.76514,-73.99528,677-681 11th Avenue,New York,10019,(212) 399-9600
+31161,31161,City World Toyota,https://www.cityworldtoyota.com,9999,NY,40.874226,-73.852729,3333 Boston Road,Bronx,10469,(718) 655-7000
+31162,31162,Toyota of Manhattan,https://www.toyotaofmanhattan.com,9999,NY,40.76514,-73.99528,677-681 11th Avenue,New York,10019,(212) 399-9600
 31165,31165,Basil Toyota,https://www.basiltoyota.com,16,NY,43.123751,-78.695558,6157 South Transit Road,Lockport,14094,(716) 625-8444
-31166,31166,Atlantic Toyota,https://www.atlantictoyotany.com,16,NY,40.7206,-73.304364,207 Sunrise Highway,West Islip,11795,(631) 789-2700
+31166,31166,Atlantic Toyota,https://www.atlantictoyotany.com,9999,NY,40.7206,-73.304364,207 Sunrise Highway,West Islip,11795,(631) 789-2700
 31167,31167,Toyota of Batavia,https://www.toyotaofbatavia.com,16,NY,43.007262,-78.223445,3899 West Main Street Road,Batavia,14020,(585) 344-4141
-31171,31171,Newburgh Toyota,https://www.newburghtoyota.com,16,NY,41.515671,-74.103191,218 Route 17K,Newburgh,12550,(845) 561-0340
-31172,31172,Curry Toyota,https://www.currytoyota.com,16,NY,41.308003,-73.877117,3026 E. Main Street,Cortlandt Manor,10567,(914) 528-4347
-31173,31173,Advantage Toyota,https://www.advantagetoyotany.com,16,NY,40.66368,-73.71606,400 Sunrise Highway,Valley Stream,11581,(516) 887-8600
+31171,31171,Newburgh Toyota,https://www.newburghtoyota.com,9999,NY,41.515671,-74.103191,218 Route 17K,Newburgh,12550,(845) 561-0340
+31172,31172,Curry Toyota,https://www.currytoyota.com,9999,NY,41.308003,-73.877117,3026 E. Main Street,Cortlandt Manor,10567,(914) 528-4347
+31173,31173,Advantage Toyota,https://www.advantagetoyotany.com,9999,NY,40.66368,-73.71606,400 Sunrise Highway,Valley Stream,11581,(516) 887-8600
 31174,31174,Steet Toyota of Johnstown-Gloversville,https://www.steettoyotajohnstown.com,16,NY,43.023718,-74.360132,310 North Comrie Avenue,Johnstown,12095,(518) 762-7222
 31175,31175,West Herr Toyota of Williamsville,https://www.toyotawilliamsville.com,16,NY,42.96458,-78.69261,8129 Main Street,Williamsville,14221,(716) 250-5500
-31176,31176,Interstate Toyota,https://www.interstatetoyota.net,16,NY,41.109791,-74.08845,411 Route 59,Airmont,10952,(845) 352-6200
+31176,31176,Interstate Toyota,https://www.interstatetoyota.net,9999,NY,41.109791,-74.08845,411 Route 59,Airmont,10952,(845) 352-6200
 31177,31177,Maguire Toyota,https://www.maguiretoyota.com,16,NY,42.422695,-76.516612,370 Elmira Road,Ithaca,14850,(607) 257-1515
-31178,31178,Sunrise Toyota,https://www.sunrisetoyota.com,16,NY,40.748152,-73.141489,3984 Sunrise Highway,Oakdale,11769,(631) 589-9000
-31179,31179,Empire Toyota of Huntington,https://www.shopempiretoyota.com,16,NY,40.835372,-73.371609,1030 East Jericho Turnpke,Huntington Station,11746,(631) 498-8302
+31178,31178,Sunrise Toyota,https://www.sunrisetoyota.com,9999,NY,40.748152,-73.141489,3984 Sunrise Highway,Oakdale,11769,(631) 589-9000
+31179,31179,Empire Toyota of Huntington,https://www.shopempiretoyota.com,9999,NY,40.835372,-73.371609,1030 East Jericho Turnpke,Huntington Station,11746,(631) 498-8302
 31180,31180,Della Toyota,https://www.dellatoyota.com,16,NY,44.697232,-73.516205,32 Della Drive,Plattsburgh,12901,(518) 563-4131
-31181,31181,Westbury Toyota,https://www.westburytoyota.com,16,NY,40.756051,-73.553812,1121 Old Country Road,Westbury,11590,(516) 333-3100
+31181,31181,Westbury Toyota,https://www.westburytoyota.com,9999,NY,40.756051,-73.553812,1121 Old Country Road,Westbury,11590,(516) 333-3100
 31182,31182,Williams Toyota of Elmira,https://www.williamstoyotaofelmira.com,16,NY,42.15845,-76.862703,1074 County Route 64,Elmira,14903,(607) 796-9600
-31183,31183,DCH Wappingers Falls Toyota,https://www.dchwappingerstoyota.com,16,NY,41.580834,-73.90942,1349 Route 9,Wappingers Falls,12590,(845) 298-8880
-31185,31185,Rivera Toyota of Mt. Kisco,https://www.riveratoyota.com,16,NY,41.219275,-73.717433,325 N. Bedford Road,Mt. Kisco,10549,(914) 666-5181
+31183,31183,DCH Wappingers Falls Toyota,https://www.dchwappingerstoyota.com,9999,NY,41.580834,-73.90942,1349 Route 9,Wappingers Falls,12590,(845) 298-8880
+31185,31185,Rivera Toyota of Mt. Kisco,https://www.riveratoyota.com,9999,NY,41.219275,-73.717433,325 N. Bedford Road,Mt. Kisco,10549,(914) 666-5181
 31186,31186,Island Toyota,https://www.islandtoyota.com,16,NY,40.589859,-74.089501,1591 Hylan Boulevard,Staten Island,10305,(718) 874-8888
 31188,31188,Northway Toyota,https://www.northwaytoyota.com,16,NY,42.741769,-73.761767,737 New Loudon Road,Latham,12110,(518) 783-1951
-31189,31189,Lia Toyota of Rockland,https://www.liatoyotaofrockland.com,16,NY,41.080134,-73.949721,618 Route 303,Blauvelt,10913,(845) 358-2220
-31190,31190,Sunrise Toyota North,https://www.sunrisetoyotanorth.com,16,NY,40.88373,-72.938763,910 Middle Country Road,Middle Island,11953,(631) 924-8100
-31191,31191,Toyota of Massapequa,https://www.toyotaofmassapequany.com,16,NY,40.6739,-73.497,3660 Sunrise Highway,Seaford,11783,(516) 217-1400
-31192,31192,Hillside Toyota,https://www.hillsidetoyota.nyc,16,NY,40.704486,-73.815078,139-65 Queens Boulevard,Jamaica,11435,(718) 657-2220
+31189,31189,Lia Toyota of Rockland,https://www.liatoyotaofrockland.com,9999,NY,41.080134,-73.949721,618 Route 303,Blauvelt,10913,(845) 358-2220
+31190,31190,Sunrise Toyota North,https://www.sunrisetoyotanorth.com,9999,NY,40.88373,-72.938763,910 Middle Country Road,Middle Island,11953,(631) 924-8100
+31191,31191,Toyota of Massapequa,https://www.toyotaofmassapequany.com,9999,NY,40.6739,-73.497,3660 Sunrise Highway,Seaford,11783,(516) 217-1400
+31192,31192,Hillside Toyota,https://www.hillsidetoyota.nyc,9999,NY,40.704486,-73.815078,139-65 Queens Boulevard,Jamaica,11435,(718) 657-2220
 31194,31194,Fox Toyota,https://www.fox-toyota.com,16,NY,42.947117,-76.548579,188 Grant Avenue,Auburn,13021,(315) 253-7341
-31195,31195,Toyota City,https://www.toyotacityny.com,16,NY,40.954308,-73.717713,1305 East Boston Post Rd.,Mamaroneck,10543,(914) 998-1000
+31195,31195,Toyota City,https://www.toyotacityny.com,9999,NY,40.954308,-73.717713,1305 East Boston Post Rd.,Mamaroneck,10543,(914) 998-1000
 31196,31196,Romeo Toyota of Glens Falls,https://www.romeotoyotaofglensfalls.com,16,NY,43.304193,-73.65974,163-169 Broad Street,Glens Falls,12801,(518) 793-5611
 31197,31197,West Herr Toyota of Canandaigua,https://www.toyotacanandaigua.com,16,NY,42.91323,-77.30032,2435 State Route 332,Canandaigua,14424,(585) 394-5280
 31198,31198,West Herr Toyota of Rochester,https://www.westherrtoyotarochester.com,16,NY,43.21758,-77.74646,4374 Ridge Road West,Rochester,14626,(585) 225-6600
@@ -797,7 +798,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 31201,31201,Williams Toyota of Binghamton,https://www.williamstoyotaofbinghamton.com,16,NY,42.104446,-75.884796,393 Court Street,Binghamton,13904,(607) 724-1334
 31202,31202,Nye Toyota,https://www.nyetoyota.com,16,NY,43.076483,-75.68303,1441 Genesee Street,Oneida,13421,(315) 363-1000
 31203,31203,Maguire Toyota of Grand Island,https://www.maguiretoyotaofgrandisland.com,16,NY,43.015246,-78.971947,1974 Alvin Road,Grand Island,14072,(716) 773-7505
-31204,31204,Toyota of Bay Ridge Brooklyn,https://www.toyotaofbayridge.com,16,NY,40.63566,-74.016338,6401 6th Avenue,Brooklyn,11220,(718) 439-7888
+31204,31204,Toyota of Bay Ridge Brooklyn,https://www.toyotaofbayridge.com,9999,NY,40.63566,-74.016338,6401 6th Avenue,Brooklyn,11220,(718) 439-7888
 32001,32001,Toyota of Greensboro,https://www.toyotaofgreensboro.com,50,NC,36.109296,-79.828663,2630 Battleground Avenue,Greensboro,27408,(336) 288-1190
 32015,32015,Cox Toyota,https://www.coxtoyota.com,50,NC,36.06358,-79.523555,3860 Danbrook Road,Burlington,27215,(336) 226-6361
 32024,32024,Massey Toyota,https://www.masseytoyota.com,50,NC,35.261223,-77.660323,4760 Highway 70 West,Kinston,28504,(252) 523-6111
@@ -1056,7 +1057,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 42161,42161,Street Toyota,https://www.streettoyota.com,60,TX,35.16057,-101.939066,4500 South Soncy Road,Amarillo,79119,(806) 355-9846
 42186,42186,Cavender Toyota,https://www.cavendertoyota.com,60,TX,29.4811,-98.602479,5730 N.W. Loop 410,San Antonio,78238,(210) 681-6601
 42192,42192,Mitchell Toyota,https://www.mitchelltoyota.com,60,TX,31.431635,-100.454472,1500 Knickerbocker Road,San Angelo,76904,(325) 653-2302
-42196,42196,Don Ringler Toyota,https://www.donringlertoyota.com,60,TX,31.059365,-97.434994,7777 S. General Bruce Dr.,Temple,76502,(254) 778-4285
+42196,42196,Don Ringler Toyota,https://www.donringlertoyota.com,9999,TX,31.059365,-97.434994,7777 S. General Bruce Dr.,Temple,76502,(254) 778-4285
 42201,42201,Red McCombs Toyota,https://www.redmccombstoyota.com,60,TX,29.57157,-98.59498,13526 IH-10 West,San Antonio,78249,(210) 530-3000
 42202,42202,Toyota of Richardson,https://www.toyotaofrichardson.com,60,TX,32.963767,-96.725302,1221 N Central Expressway,Richardson,75080,(214) 446-8081
 42206,42206,Tegeler Toyota,https://www.tegelertoyota.com,60,TX,30.152029,-96.416216,1515 Highway 290 West,Brenham,77833,(979) 836-1615
@@ -1064,7 +1065,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 42216,42216,Jeff Hunter Toyota,https://www.jeffhuntertoyota.com,60,TX,31.502044,-97.171966,1440 West Loop 340,Waco,76712,(254) 662-6644
 42219,42219,Fox Toyota of El Paso,https://www.foxtoyotaofelpaso.com,60,TX,31.743006,-106.32843,11165 Gateway Boulevard West,El Paso,79935,(915) 598-0399
 42221,42221,Toyota of Plano,https://www.toyotaofplano.com,60,TX,33.082152,-96.848986,6888 State Hwy 121,Plano,75024,(972) 248-7777
-42228,42228,Toyota of Killeen,https://www.toyotaofkilleen.com,60,TX,31.081536,-97.698143,4001 E Central Texas Exp.,Killeen,76543,(254) 690-5800
+42228,42228,Toyota of Killeen,https://www.toyotaofkilleen.com,9999,TX,31.081536,-97.698143,4001 E Central Texas Exp.,Killeen,76543,(254) 690-5800
 42234,42234,Gullo Toyota of Conroe,https://www.gullotoyota.com,60,TX,30.30089,-95.467635,500 I-45 South,Conroe,77304,(936) 441-4141
 42241,42241,Universal Toyota,https://www.universaltoyota.com,60,TX,29.54854,-98.362033,12102 IH-35 North,San Antonio,78233,(210) 654-1515
 42242,42242,Classic Toyota,https://www.classictoyotatyler.com,60,TX,32.304473,-95.321474,1717 West SW Loop 323,Tyler,75701,(903) 581-0600
@@ -1073,7 +1074,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 42254,42254,Toyota of Del Rio,https://www.toyotaofdelrio.com,60,TX,29.406102,-100.904097,3617 Highway 90 West,Del Rio,78840,(830) 775-7577
 42255,42255,Silsbee Toyota,https://www.silsbeetoyota.com,60,TX,30.339317,-94.153767,1396 Highway 327 East,Silsbee,77656,(409) 895-3700
 42259,42259,Loving Toyota,https://www.lovingtoyota.com,60,TX,31.322765,-94.694835,1807 South Medford Drive,Lufkin,75901,(936) 699-1000
-42262,42262,AutoNation Toyota South Austin,https://www.autonationtoyotasouthaustin.com,60,TX,30.207361,-97.757719,4800 IH-35 South,Austin,78745,(512) 518-6900
+42262,42262,AutoNation Toyota South Austin,https://www.autonationtoyotasouthaustin.com,9999,TX,30.207361,-97.757719,4800 IH-35 South,Austin,78745,(512) 518-6900
 42264,42264,Gene Messer Toyota,https://www.genemessertoyota.com,60,TX,33.578674,-101.949217,6102 19th Street,Lubbock,79407,(806) 748-4800
 42268,42268,Texas Toyota of Grapevine,https://www.toyotaofgrapevine.com,60,TX,32.924339,-97.06938,701 State Hwy. 114 East,Grapevine,76051,(817) 329-5949
 42270,42270,Joe Myers Toyota,https://www.joemyerstoyota.com,60,TX,29.904532,-95.603264,19010 Northwest Freeway,Houston,77065,(281) 890-8700
@@ -1089,14 +1090,14 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 42291,42291,Community Toyota,https://www.communitytoyota.com,60,TX,29.804387,-94.989061,4701 Interstate 10 East,Baytown,77521,(281) 839-7700
 42292,42292,Lithia Toyota of Abilene,https://www.toyotaabilene.com,60,TX,32.407797,-99.781475,4449 Southwest Drive,Abilene,79606,(325) 793-3000
 42295,42295,Pat Lobb Toyota of McKinney,https://www.toyotaofmckinney.com,60,TX,33.167315,-96.643216,3350 S. Central Expresswy,McKinney,75070,(214) 544-8696
-42298,42298,Round Rock Toyota,https://www.roundrocktoyota.com,60,TX,30.53407,-97.69082,2307 North I-35,Round Rock,78664,(512) 244-6900
+42298,42298,Round Rock Toyota,https://www.roundrocktoyota.com,9999,TX,30.53407,-97.69082,2307 North I-35,Round Rock,78664,(512) 244-6900
 42299,42299,Bruner Toyota,https://www.brunertoyota.com,60,TX,31.736842,-98.964271,224 Early Boulevard,Early,76802,(325) 646-0500
 42302,42302,Toyota of Rockwall,https://www.toyotaofrockwall.com,60,TX,32.9112,-96.44628,1250 East I30,Rockwall,75087,(469) 402-1300
 42304,42304,Mike Shaw Toyota,https://www.mikeshawtoyota.com,60,TX,27.841286,-97.631672,3232 US Highway 77,Corpus Christi,78380,(361) 316-3355
 42305,42305,Vic Vaughan Toyota of Boerne,https://www.vicvaughantoyotaofboerne.com,60,TX,29.751035,-98.702137,31205 IH-10 West,Boerne,78006,(210) 870-1800
 42309,42309,Toyota of Midland,https://www.toyotaofmidland.com,60,TX,31.989633,-102.150182,800 North Loop 250 West,Midland,79703,(432) 520-4114
 42311,42311,Classic Toyota Galveston,https://www.classictoyotagalveston.com,60,TX,29.28666,-94.85887,7802 Broadway,Galveston,77554,(409) 744-5711
-42312,42312,Lost Pines Toyota,https://www.lostpinestoyota.com,60,TX,30.109985,-97.357753,806 Highway 71 West,Bastrop,78602,(512) 303-1200
+42312,42312,Lost Pines Toyota,https://www.lostpinestoyota.com,9999,TX,30.109985,-97.357753,806 Highway 71 West,Bastrop,78602,(512) 303-1200
 42313,42313,Toyota of Victoria,https://www.toyotaofvictoria.com,60,TX,28.849355,-96.99702,5902 North Navarro,Victoria,77904,(361) 578-1505
 42315,42315,Bryan College Station Toyota,https://www.bcstoyota.com,60,TX,30.667535,-96.330487,728 N. Earl Rudder Frwy.,Bryan,77802,(979) 776-0404
 42316,42316,Huntsville Toyota,https://www.huntsvilletoyotapm.com,60,TX,30.68512,-95.537602,849 I-45 South,Huntsville,77340,(936) 349-0909
@@ -1122,9 +1123,9 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 42404,42404,Toyota of Paris,https://www.toyotaofparistx.com,60,TX,33.672811,-95.516097,3235 NE Loop 286,Paris,75460,(903) 784-8989
 42405,42405,Toyota of Mt. Pleasant,https://www.toyotaofmtpleasant.com,60,TX,33.170708,-95.002473,102 Tankersley Road,Mt. Pleasant,75455,(903) 577-7770
 42406,42406,Toyota of Wichita Falls,https://www.toyotaofwf.com,60,TX,33.89283,-98.483623,5715 Kell E. Boulevard,Wichita Falls,76310,(940) 280-2510
-42407,42407,San Marcos Toyota,https://www.sanmarcostoyota.com,60,TX,29.815615,-97.997752,5101 IH-35 South,San Marcos,78666,(512) 392-1999
+42407,42407,San Marcos Toyota,https://www.sanmarcostoyota.com,9999,TX,29.815615,-97.997752,5101 IH-35 South,San Marcos,78666,(512) 392-1999
 42408,42408,John Eagle Sport City Toyota,https://www.sportcitytoyota.com,60,TX,32.862817,-96.662333,12650 LBJ Freeway,Dallas,75228,(972) 681-3000
-42409,42409,Toyota of North Austin,https://www.toyotaofnorthaustin.com,60,TX,30.357687,-97.716387,8400 Research Boulevard,Austin,78758,(512) 458-2222
+42409,42409,Toyota of North Austin,https://www.toyotaofnorthaustin.com,9999,TX,30.357687,-97.716387,8400 Research Boulevard,Austin,78758,(512) 458-2222
 42410,42410,Doggett Toyota of Beaumont,https://www.doggetttoyotabeaumont.com,60,TX,30.118294,-94.147187,4235 Eastex Freeway,Beaumont,77706,(409) 892-4888
 42411,42411,Platinum Toyota of Texoma,https://www.platinumtoyota.com,60,TX,33.774142,-96.582528,1920 U.S. Highway 75 North,Denison,75020,(903) 463-9800
 42412,42412,Legacy Toyota of Dallas,https://www.legacytoyotadallas.com,60,TX,32.645554,-96.860383,39660 LBJ Freeway (I-20),Dallas,75237,(972) 780-1166
@@ -1134,6 +1135,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 42416,42416,Norm Reeves Toyota Dallas,https://www.normreevestoyotadallas.com,60,TX,32.799284,-96.681047,9525 E. RL Thornton Frwy,Dallas,75228,(214) 324-0411
 42417,42417,Toyota of Pharr,https://www.toyotaofpharr.com,60,TX,26.199688,-98.20042,1625 W. Interstate 2,Pharr,78577,(956) 784-3300
 42418,42418,McGavock Toyota of Pampa,https://www.mcgavocktoyota.com,9999,TX,35.541471,-100.97263,805 North Hobart Street,Pampa,79065,(806) 665-1665
+42419,42419,Toyota of Cedar Park,https://www.toyotaofcedarpark.com,9999,TX,30.543361,-97.815361,5600 183A Toll Road,Cedar Park,78641,(512) 379-7575
 43019,43019,Tony Divino Toyota,https://www.tonydivinotoyota.com,15,UT,41.179142,-111.997143,777 West Riverdale Road,Riverdale,84405,(801) 394-5701
 43020,43020,Mark Miller Toyota,https://www.markmillertoyota.com,15,UT,40.753305,-111.894274,730 South West Temple,Salt Lake City,84101,(801) 364-2100
 43022,43022,Karl Malone Toyota,https://www.malonetoyota.com,15,UT,40.543017,-111.8983,11453 So. Lone Peak Pkwy,Draper,84020,(801) 553-5800

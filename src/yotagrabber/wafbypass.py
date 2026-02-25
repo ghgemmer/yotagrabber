@@ -22,10 +22,11 @@ class WAFBypass:
 
     def intercept_request(self, request):
         """Find the GraphQL request and save the headers."""
-        if request.resource_type == "xhr" and request.url.endswith("/graphql"):
-            self.valid_headers = request.headers
-            # Just in case the request JSON is needed later.
-            # pprint(request.post_data_json)
+        if request.url.endswith("/graphql"): 
+            if request.resource_type in ["xhr", "fetch"]:
+                self.valid_headers = request.headers
+                # Just in case the request JSON is needed later.
+                # pprint(request.post_data_json)
         return request
 
     def get_headers(self) -> None:

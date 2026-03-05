@@ -449,7 +449,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 16004,16004,Swope Toyota,https://www.swopetoyota.com,22,KY,37.715244,-85.877307,1085 North Dixie Highway,Elizabethtown,42701,(270) 737-2181
 16005,16005,Green's Toyota of Lexington,https://www.greenstoyotaoflexington.com,22,KY,38.050554,-84.456123,630 E. New Circle Road,Lexington,40505,(859) 254-5751
 16006,16006,Toyota of Louisville,https://www.toyotaoflouisville.com,22,KY,38.155594,-85.835686,6514 Dixie Highway,Louisville,40258,(502) 935-1433
-16042,16042,Toyota of Bowling Green,https://www.toyotaofbowlinggreen.com,22,KY,36.954447,-86.428295,2398 Scottsville Road,Bowling Green,42104,(270) 843-4321
+16042,16042,Toyota of Bowling Green,https://www.toyotaofbowlinggreen.com,9999,KY,36.954447,-86.428295,2398 Scottsville Road,Bowling Green,42104,(270) 843-4321
 16044,16044,Toyota of Hopkinsville,https://www.toyotaofhopkinsville.com,9999,KY,36.823515,-87.474411,4395 Ft. Campbell Blvd,Hopkinsville,42240,(270) 886-9099
 16046,16046,Toyota of Murray,https://www.toyotaofmurray.com,22,KY,36.593297,-88.314623,1301 South 12th Street,Murray,42071,(270) 753-4961
 16048,16048,Toyota of Somerset,https://www.toyotaofsomerset.com,22,KY,37.034487,-84.627729,4195 South Highway 27,Somerset,42503,(606) 679-1601
@@ -1024,7 +1024,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 41001,41001,Capital Toyota,https://www.capitaltoyota.com,22,TN,35.019899,-85.201868,5808 Lee Hwy,Chattanooga,37421,(423) 892-0661
 41021,41021,Roberts Toyota,https://www.robertstoyota.com,22,TN,35.634491,-87.01958,1027 Nashville Highway,Columbia,38401,(931) 388-3006
 41030,41030,Toyota of Kingsport,https://www.toyotaofkingsport.com,22,TN,36.54659,-82.500561,2525 East Stone Drive,Kingsport,37660,(423) 246-6611
-41041,41041,Nashville Toyota North,https://www.nashvilletoyotanorth.com,22,TN,36.310126,-86.678,2400 Gallatin Pike North,Madison,37115,(615) 868-7990
+41041,41041,Nashville Toyota North,https://www.nashvilletoyotanorth.com,9999,TN,36.310126,-86.678,2400 Gallatin Pike North,Madison,37115,(615) 868-7990
 41043,41043,Principle Toyota,https://www.principletoyota.com,22,TN,35.05105,-89.817133,7370 Winchester Road,Memphis,38125,(901) 758-4040
 41050,41050,Cumberland Toyota,https://www.cumberlandtoyota.com,22,TN,36.138257,-85.522059,1540 Interstate Drive,Cookeville,38501,(931) 526-5600
 41052,41052,Rusty Wallace Toyota,https://www.rustywallacetoyota.com,22,TN,36.179783,-83.391156,5944 W Andrew Johnson Hwy,Morristown,37814,(423) 587-1972
@@ -1037,16 +1037,17 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 41066,41066,Wolfchase Toyota,https://www.wolfchasetoyota.com,22,TN,35.186103,-89.793728,2201 North Germantown Parkway,Cordova,38016,(901) 384-3100
 41070,41070,Chuck Hutton Toyota,https://www.chuckhuttontoyota.com,22,TN,35.023369,-90.003644,4601 Hutton Way,Memphis,38116,(901) 345-3200
 41073,41073,Landers McLarty Toyota,https://www.landersmclartytoyota.com,22,TN,35.045856,-86.572882,2970 Huntsville Highway,Fayetteville,37334,(931) 438-6300
-41078,41078,Toyota of Cool Springs,https://www.toyotaofcoolsprings.com,22,TN,35.93566,-86.82097,1875 West McEwen Drive,Franklin,37067,(615) 790-8401
-41079,41079,Toyota of Murfreesboro,https://www.toyotaofmurfreesboro.com,22,TN,35.869131,-86.460882,3434 Bill Smith Drive,Murfreesboro,37129,(615) 890-1500
+41078,41078,Toyota of Cool Springs,https://www.toyotaofcoolsprings.com,9999,TN,35.93566,-86.82097,1875 West McEwen Drive,Franklin,37067,(615) 790-8401
+41079,41079,Toyota of Murfreesboro,https://www.toyotaofmurfreesboro.com,9999,TN,35.869131,-86.460882,3434 Bill Smith Drive,Murfreesboro,37129,(615) 890-1500
 41082,41082,Johnson City Toyota,https://www.johnsoncitytoyota.com,22,TN,36.363635,-82.380902,3124 Bristol Highway,Johnson City,37601,(423) 282-2241
 41083,41083,Toyota of Gallatin,https://www.toyotagallatin.com,22,TN,36.362233,-86.494348,1435 Nashville Pike,Gallatin,37066,(615) 230-9000
-41084,41084,Wyatt Johnson Toyota,https://www.wyattjohnsontoyota.com,22,TN,36.578722,-87.299294,2595 Wilma Rudolph Blvd,Clarksville,37040,(931) 645-8900
-41085,41085,Beaman Toyota,https://www.beamantoyota.com,22,TN,36.086162,-86.699064,343  Harding Place,Nashville,37211,(615) 251-8400
+41084,41084,Wyatt Johnson Toyota,https://www.wyattjohnsontoyota.com,9999,TN,36.578722,-87.299294,2595 Wilma Rudolph Blvd,Clarksville,37040,(931) 645-8900
+41085,41085,Beaman Toyota,https://www.beamantoyota.com,9999,TN,36.086162,-86.699064,343  Harding Place,Nashville,37211,(615) 251-8400
 41086,41086,Fox Toyota,https://www.foxtoyotaclinton.com,22,TN,36.170417,-84.082944,228 Fox Family Lane,Clinton,37716,(865) 494-0228
 41087,41087,Toyota of Bristol,https://www.toyotaofbristol.com,22,TN,36.592554,-82.222519,3045 W. State Street,Bristol,37620,(423) 764-3155
 41089,41089,Victory Toyota Dyersburg,https://www.victorytoyotadyersburg.com,22,TN,36.058016,-89.397659,920 Highway 51 Bypass,Dyersburg,38024,(731) 285-5110
 41090,41090,Cumberland Toyota,https://www.cumberlandtoyota.com,9999,TN,36.138257,-85.522059,1540 Interstate Drive,Cookeville,38501,(931) 526-5600
+41091,41091,Toyota of Gallatin,https://www.toyotagallatin.com,9999,TN,36.362233,-86.494348,1429 Nashville Pike,Gallatin,37066,(615) 230-9000
 42025,42025,Toyota of Laredo,https://www.toyotaoflaredo.com,60,TX,27.556012,-99.450141,6324 Bob Bullock Loop,Laredo,78041,(956) 718-4200
 42026,42026,Robbins Toyota,https://www.robbinstoyota.com,60,TX,33.453053,-94.128038,6233 Mall Drive,Nash,75569,(903) 794-5121
 42057,42057,Toyota of Irving,https://www.toyotaofirving.com,60,TX,32.837997,-96.96956,1999 West Airport Frwy.,Irving,75062,(972) 258-1200

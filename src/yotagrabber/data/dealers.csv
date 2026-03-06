@@ -239,7 +239,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 09079,09079,Lakeland Toyota,https://www.lakelandtoyota.com,50,FL,28.077868,-81.981217,2925 Mall Hill Drive,Lakeland,33810,(863) 688-5451
 09096,09096,Arlington Toyota,https://www.arlingtontoyota.com,50,FL,30.325258,-81.516694,10939 Atlantic Blvd.,Jacksonville,32225,(904) 721-3000
 09107,09107,Toyota of Hollywood,https://www.toyotaofhollywood.com,50,FL,26.026041,-80.207999,1841 North State Road 7,Hollywood,33021,(844) 821-8998
-09108,09108,Marianna Toyota,https://www.mariannatoyota.com,50,FL,30.780614,-85.251002,2961 Pennsylvania Avenue,Marianna,32448,(850) 526-3511
+09108,09108,Marianna Toyota,https://www.mariannatoyota.com,9999,FL,30.780614,-85.251002,2961 Pennsylvania Avenue,Marianna,32448,(850) 526-3511
 09112,09112,Germain Toyota of Naples,https://www.germaintoyotaofnaples.com,50,FL,26.291656,-81.802461,13315 Tamiami Trail North,Naples,34110,(239) 592-5550
 09126,09126,Village Cadillac-Toyota,https://www.villagetoyota.com,50,FL,28.826629,-82.578924,2431 Suncoast Blvd.,Homosassa,34448,(352) 628-5100
 09140,09140,Toyota of Vero Beach,https://www.verobeachtoyota.com,50,FL,27.584101,-80.377854,1075 South US Highway 1,Vero Beach,32962,(772) 569-8000
@@ -294,6 +294,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 09247,09247,Lake City Toyota,https://www.lctoyota.com,50,FL,30.1847,-82.65369,1232 West US Highway 90,Lake City,32055,(386) 755-0631
 09248,09248,Gettel Stadium Toyota,https://www.stadiumtoyota.com,50,FL,27.99287,-82.50564,5088 North Dale Mabry Highway,Tampa,33614,(813) 872-4881
 09250,09250,Gettel Toyota Ocala,https://www.getteltoyotaocala.com,50,FL,29.17816,-82.15404,"1719 S.W. College Rd,Hwy 200 W",Ocala,34471,(352) 732-0770
+09251,09251,Panama City Toyota,https://www.panamacitytoyota.com,9999,FL,30.175111,-85.67423,959 West 15th Street,Panama City,32401,(850) 769-3377
 10015,10015,Milton Martin Toyota,https://www.miltonmartintoyota.com,50,GA,34.225197,-83.861868,3150 Milton Martin Toyota Way,Gainesville,30507,(770) 532-4355
 10017,10017,Butler Toyota,https://www.butlertoyota.com,50,GA,32.9165,-83.70941,4580 Riverside Drive,Macon,31210,(478) 476-1770
 10032,10032,Marietta Toyota,https://www.mariettatoyota.com,50,GA,33.934257,-84.512243,750 Cobb Parkway South,Marietta,30060,(770) 422-1490

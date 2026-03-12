@@ -7,11 +7,11 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 01064,01064,Sunny King Toyota,https://www.sunnykingtoyota.com,50,AL,33.613976,-85.776722,2570 U.S. Highway 78 East,Anniston,36207,(256) 835-0800
 01071,01071,Serra Toyota of Decatur,https://www.toyotaofdecatur.com,50,AL,34.55964,-86.988212,309 Beltline Place,Decatur,35603,(256) 340-0330
 01073,01073,Palmer's Airport Toyota,https://www.palmerstoyota.com,50,AL,30.679936,-88.22569,470 Schillinger Road,Mobile,36695,(251) 639-0800
-01077,01077,Springhill Toyota,https://www.springhilltoyota.com,50,AL,30.655752,-88.117307,3062 Government Blvd.,Mobile,36606,(251) 450-1000
+01077,01077,Springhill Toyota,https://www.springhilltoyota.com,9999,AL,30.655752,-88.117307,3062 Government Blvd.,Mobile,36606,(251) 450-1000
 01079,01079,High Country Toyota,https://www.highcountrytoyota.com,50,AL,34.632242,-86.046198,23030 John T. Reid Parkway,Scottsboro,35769,(256) 259-1159
 01080,01080,Bondy's Enterprise Toyota,https://www.bondystoyota.com,50,AL,31.310865,-85.830622,519 Boll Weevil Circle,Enterprise,36330,(334) 347-5200
 01083,01083,Sand Mountain Toyota,https://www.sandmountaintoyota.com,50,AL,34.285907,-86.236249,9167 US Highway 431 N,Albertville,35950,(256) 878-0789
-01084,01084,Eastern Shore Toyota,https://www.easternshoretoyota.com,50,AL,30.660655,-87.855273,29732 Frederick Blvd.,Daphne,36526,(251) 625-1919
+01084,01084,Eastern Shore Toyota,https://www.easternshoretoyota.com,9999,AL,30.660655,-87.855273,29732 Frederick Blvd.,Daphne,36526,(251) 625-1919
 01085,01085,Tuscaloosa Toyota,https://www.tuscaloosatoyota.com,50,AL,33.169602,-87.494118,"3325 Skyland Blvd, East",Tuscaloosa,35405,(205) 553-3325
 01086,01086,TeamOne Toyota of Gadsden,https://www.teamonetoyota.com,50,AL,33.976433,-86.060348,927 West Grand Avenue,Rainbow City,35906,(256) 413-4456
 01089,01089,Toyota of Sylacauga,https://www.toyotaofsylacauga.com,50,AL,33.188303,-86.304114,39765 Highway 280,Sylacauga,35150,(256) 245-5251
@@ -21,6 +21,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 01093,01093,Singing River Toyota,https://www.singingrivertoyota.com,50,AL,34.713889,-87.668496,5100 US-43,Tuscumbia,35674,(256) 383-3611
 01094,01094,Allen Turner Toyota of Auburn,https://www.allenturnertoyotaofauburn.com/,9999,AL,32.560407,-85.498678,170 West Creek Parkway,Auburn,36830,(334) 887-1100
 01095,01095,Toyota of Montgomery,https://www.toyotamontgomery.com,9999,AL,32.366981,-86.210045,911 Eastern Blvd.,Montgomery,36117,(334) 272-7147
+01096,01096,Toyota West Mobile,https://www.toyotawestmobile.com,9999,AL,30.679936,-88.22569,470 Schillinger Road South,Mobile,36695,(251) 639-0800
 02010,02010,Precision Toyota of Tucson,https://www.pretoy.com,15,AZ,32.28701,-110.983221,700 West Wetmore Road,Tucson,85705,(520) 795-5565
 02016,02016,Big Two Toyota of Chandler,https://www.bigtwotoyota.com,15,AZ,33.28793,-111.790768,1250 S. Gilbert Road,Chandler,85286,(480) 898-6000
 02021,02021,Desert Toyota of Tucson,https://www.deserttoyota.com,15,AZ,32.205909,-110.839698,7150 East 22nd Street,Tucson,85710,(520) 296-8535
@@ -619,7 +620,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 22055,22055,Lake Country Toyota,https://www.lakecountrytoyota.com,21,MN,46.380752,-94.254466,7036 Lake Forest Road,Baxter,56401,(218) 454-2200
 22056,22056,LeadCar Toyota Mankato,https://www.leadcartoyotamankato.com,21,MN,44.176611,-93.965552,1234 Raintree Road,Mankato,56001,(507) 387-1148
 23035,23035,Toyota of Hattiesburg,https://www.toyotahattiesburg.com,60,MS,31.318057,-89.411102,6461 US Highway 98,Hattiesburg,39402,(601) 544-9630
-23052,23052,J. Allen Toyota,https://www.jallentoyota.com,60,MS,30.445832,-89.028508,11397 Helen Richards Road,Gulfport,39503,(228) 896-8220
+23052,23052,J. Allen Toyota,https://www.jallentoyota.com,9999,MS,30.445832,-89.028508,11397 Helen Richards Road,Gulfport,39503,(228) 896-8220
 23054,23054,Oxford Toyota,https://www.oxfordtoyota.com,60,MS,34.359899,-89.582949,435A Highway 6 West,Oxford,38655,(662) 234-4661
 23057,23057,Kirk Toyota,https://www.kirktoyota.com,60,MS,33.785172,-89.844626,237 Southwest Frontage Road,Grenada,38901,(662) 226-1181
 23061,23061,Carl Hogan Toyota,https://www.carlhogantoyota.com,60,MS,33.549657,-88.43428,3907 Highway 45 North,Columbus,39705,(662) 241-6000
@@ -633,7 +634,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 23081,23081,Gray-Daniels Toyota,https://www.gray-danielstoyota.com,60,MS,32.280664,-90.034238,104 Gray Daniels Blvd,Brandon,39042,(601) 948-0576
 23082,23082,Toyota of Brookhaven,https://www.toyotaofbrookhaven.com,60,MS,31.579237,-90.464469,890 Brookway Blvd.,Brookhaven,39601,(601) 823-7000
 23083,23083,Toyota of Jackson,https://www.toyotaofjackson.com,60,MS,32.393377,-90.144793,6100 I-55 North Frontage Road,Jackson,39211,(601) 956-9696
-23084,23084,Cannon Toyota of Moss Point,https://www.cannontoyotamosspoint.com,60,MS,30.433899,-88.526996,6521 Highway 63,Moss Point,39563,(228) 762-3533
+23084,23084,Cannon Toyota of Moss Point,https://www.cannontoyotamosspoint.com,9999,MS,30.433899,-88.526996,6521 Highway 63,Moss Point,39563,(228) 762-3533
 23085,23085,Toyota of Meridian,https://www.toyotaofmeridian.com,60,MS,32.388359,-88.683626,2900 Highway 39 North,Meridian,39301,(601) 485-1620
 24022,24022,Seeger Toyota,https://www.seegertoyota.com,23,MO,38.681033,-90.474983,12833 Olive Street Road,Creve Coeur,63141,(314) 434-5000
 24026,24026,Adams Toyota Lee's Summit,https://www.adamstoyota.com,23,MO,38.94606,-94.36789,501 N.E. Colbern Road,Lee's Summit,64086,(816) 358-7600

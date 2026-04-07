@@ -241,7 +241,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 09096,09096,Arlington Toyota,https://www.arlingtontoyota.com,50,FL,30.325258,-81.516694,10939 Atlantic Blvd.,Jacksonville,32225,(904) 721-3000
 09107,09107,Toyota of Hollywood,https://www.toyotaofhollywood.com,50,FL,26.026041,-80.207999,1841 North State Road 7,Hollywood,33021,(844) 821-8998
 09108,09108,Marianna Toyota,https://www.mariannatoyota.com,9999,FL,30.780614,-85.251002,2961 Pennsylvania Avenue,Marianna,32448,(850) 526-3511
-09112,09112,Germain Toyota of Naples,https://www.germaintoyotaofnaples.com,50,FL,26.291656,-81.802461,13315 Tamiami Trail North,Naples,34110,(239) 592-5550
+09112,09112,Germain Toyota of Naples,https://www.germaintoyotaofnaples.com,9999,FL,26.291656,-81.802461,13315 Tamiami Trail North,Naples,34110,(239) 592-5550
 09126,09126,Village Cadillac-Toyota,https://www.villagetoyota.com,50,FL,28.826629,-82.578924,2431 Suncoast Blvd.,Homosassa,34448,(352) 628-5100
 09140,09140,Toyota of Vero Beach,https://www.verobeachtoyota.com,50,FL,27.584101,-80.377854,1075 South US Highway 1,Vero Beach,32962,(772) 569-8000
 09156,09156,Ed Morse Delray Toyota,https://www.delraytoyota.com,50,FL,26.42908,-80.073352,2800 South Federal Highway,Delray Beach,33483,(561) 276-5000
@@ -277,14 +277,14 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 09226,09226,South Dade Toyota,https://www.southdadetoyota.com,50,FL,25.493731,-80.452559,29330 S. Dixie Highway,Homestead,33033,(305) 248-6330
 09227,09227,Toyota of Deerfield Beach,https://www.toyotaofdeerfieldbeach.com,50,FL,26.299023,-80.094768,1441 S. Federal Hwy.,Deerfield Beach,33441,(954) 719-7300
 09228,09228,Treasure Coast Toyota of Stuart,https://www.treasurecoasttoyotaofstuart.com,50,FL,27.14253,-80.21185,5101 S.E. Federal Highway,Stuart,34997,(772) 283-8300
-09229,09229,AutoNation Toyota Fort Myers,https://www.autonationtoyotafortmyers.com,50,FL,26.598062,-81.861109,2555 Colonial Blvd.,Ft. Myers,33907,(239) 321-5413
+09229,09229,AutoNation Toyota Fort Myers,https://www.autonationtoyotafortmyers.com,9999,FL,26.598062,-81.861109,2555 Colonial Blvd.,Ft. Myers,33907,(239) 321-5413
 09230,09230,Gettel Toyota of Lakewood,https://www.getteltoyotaoflakewood.com,50,FL,27.494777,-82.485855,5959 East State Road 64,Bradenton,34208,(941) 567-1080
 09231,09231,Beaver Toyota of St. Augustine,https://www.beavertoyotastaugustine.com,50,FL,29.838876,-81.323161,2995 U.S. Highway 1 South,St. Augustine,32086,(904) 797-8800
 09232,09232,Toyota of Clermont,https://www.toyotaofclermont.com,50,FL,28.547924,-81.6755,16851 Highway 50,Clermont,34711,(352) 404-7000
 09233,09233,Toyota of Fort Walton Beach,https://www.toyotafwb.com,50,FL,30.4444,-86.638,777 Beal Parkway N,Ft Walton Beach,32547,(850) 863-2161
-09234,09234,Venice Toyota,https://www.venicetoyota.com,50,FL,27.088348,-82.431061,"900 U.S. 41 By-Pass, South",Venice,34285,(941) 484-9000
+09234,09234,Venice Toyota,https://www.venicetoyota.com,9999,FL,27.088348,-82.431061,"900 U.S. 41 By-Pass, South",Venice,34285,(941) 484-9000
 09236,09236,Sun Toyota,https://www.suntoyota.com,50,FL,28.204162,-82.74095,3001 U.S. Highway 19,Holiday,34691,(727) 842-9735
-09239,09239,Gettel Toyota of Charlotte County,https://www.getteltoyotaofcharlottecounty.com,50,FL,26.922427,-82.047631,1801 Tamiami Trail,Punta Gorda,33950,(941) 639-1155
+09239,09239,Gettel Toyota of Charlotte County,https://www.getteltoyotaofcharlottecounty.com,9999,FL,26.922427,-82.047631,1801 Tamiami Trail,Punta Gorda,33950,(941) 639-1155
 09240,09240,Key West Toyota,https://www.keywesttoyota.com,50,FL,24.558635,-81.786826,1618 N. Roosevelt Blvd,Key West,33040,(305) 294-9572
 09241,09241,Southern 441 Toyota,https://www.southern441toyota.com,50,FL,26.681558,-80.195476,9205 Southern Blvd,Royal Palm Beach,33411,(561) 491-4400
 09242,09242,Wesley Chapel Toyota,https://www.wesleychapeltoyota.com,50,FL,28.23415,-82.35447,5300 Eagleston Blvd,Wesley Chapel,33544,(813) 973-8888
@@ -294,6 +294,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 09246,09246,Al Hendrickson Toyota,https://www.alhendricksontoyota.com,50,FL,26.274383,-80.196033,5201 West Sample Road,Coconut Creek,33073,(954) 972-1100
 09247,09247,Lake City Toyota,https://www.lctoyota.com,50,FL,30.1847,-82.65369,1232 West US Highway 90,Lake City,32055,(386) 755-0631
 09248,09248,Gettel Stadium Toyota,https://www.stadiumtoyota.com,50,FL,27.99287,-82.50564,5088 North Dale Mabry Highway,Tampa,33614,(813) 872-4881
+09249,09249,Fred Anderson Toyota of Cape Coral,https://www.toyotaofcapecoral.com,9999,FL,26.673942,-81.929736,2025 NE Pine Island Road,Cape Coral,33909,(239) 800-1215
 09250,09250,Gettel Toyota Ocala,https://www.getteltoyotaocala.com,50,FL,29.17816,-82.15404,"1719 S.W. College Rd,Hwy 200 W",Ocala,34471,(352) 732-0770
 09251,09251,Panama City Toyota,https://www.panamacitytoyota.com,9999,FL,30.175111,-85.67423,959 West 15th Street,Panama City,32401,(850) 769-3377
 10015,10015,Milton Martin Toyota,https://www.miltonmartintoyota.com,50,GA,34.225197,-83.861868,3150 Milton Martin Toyota Way,Gainesville,30507,(770) 532-4355

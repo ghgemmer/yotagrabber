@@ -703,12 +703,12 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 29025,29025,Toyota of Hackensack,https://www.toyotaofhackensack.com,9999,NJ,40.886901,-74.039269,278 River Street,Hackensack,07601,(201) 488-7777
 29031,29031,Galaxy Toyota,https://www.galaxytoyota.net,16,NJ,40.291614,-74.039874,750 Route 36,Eatontown,07724,(732) 544-1000
 29037,29037,"Glen Motors, Inc.",https://www.glentoyota.com,9999,NJ,40.948616,-74.137978,23-07 Maple Avenue,Fair Lawn,07410,(201) 791-3800
-29058,29058,Towne Toyota,https://www.townetoyota.com,16,NJ,40.888436,-74.662269,1499 Route 46,Ledgewood,07852,(973) 584-8100
+29058,29058,Towne Toyota,https://www.townetoyota.com,9999,NJ,40.888436,-74.662269,1499 Route 46,Ledgewood,07852,(973) 584-8100
 29059,29059,Toyota of Morristown,https://www.toyotaofmorristown.com,16,NJ,40.805132,-74.46398,169 Ridgedale Ave,Morristown,07960,(973) 540-1111
 29062,29062,Toyota of Runnemede,https://www.toyotaofrunnemede.com,16,NJ,39.846956,-75.07215,99 South Black Horse Pike,Runnemede,08078,(856) 939-3400
 29069,29069,Shore Toyota,https://www.shoretoyota.com,16,NJ,39.44389,-74.62752,4236 Black Horse Pike,Mays Landing,08330,(609) 645-2770
-29071,29071,Liberty Toyota,https://www.libertytoyota.com,16,NJ,40.058171,-74.88692,4397 South Route 130,Burlington,08016,(609) 386-6300
-29073,29073,Team Toyota of Princeton,https://www.teamtoyotaprinceton.com,16,NJ,40.271051,-74.711816,2871 Route 1,Lawrenceville,08648,(609) 883-4200
+29071,29071,Liberty Toyota,https://www.libertytoyota.com,9999,NJ,40.058171,-74.88692,4397 South Route 130,Burlington,08016,(609) 386-6300
+29073,29073,Team Toyota of Princeton,https://www.teamtoyotaprinceton.com,9999,NJ,40.271051,-74.711816,2871 Route 1,Lawrenceville,08648,(609) 883-4200
 29075,29075,Sansone Toyota,https://www.sansonestoyota.com,16,NJ,40.592269,-74.274102,100 Route 1 North,Avenel,07001,(732) 587-1100
 29078,29078,Toyota Universe,https://www.toyotauniverse.com,9999,NJ,40.883904,-74.213483,1485 Route 46 East,Little Falls,07424,(973) 785-4710
 29081,29081,Crestmont Toyota,https://www.crestmonttoyota.com,16,NJ,40.975096,-74.289485,730 State Route 23,Pompton Plains,07444,(973) 839-2500
@@ -722,13 +722,13 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 29101,29101,Dayton Toyota,https://www.daytontoyota.com,16,NJ,40.375977,-74.501527,2291 Route 130,Dayton,08810,(732) 329-9191
 29102,29102,Holman Toyota,https://www.holmantoyota.com,16,NJ,39.91802,-74.944225,1301 Route 73,Mount Laurel,08054,(856) 866-2000
 29103,29103,East Coast Toyota,https://www.eastcoasttoyota.com,9999,NJ,40.841653,-74.082592,85 State Highway 17,Wood Ridge,07075,(201) 939-9400
-29104,29104,Fred Beans Toyota of Flemington,https://www.fredbeanstoyota.com,16,NJ,40.477717,-74.863216,174 Route 202 North,Flemington,08822,(908) 788-5700
+29104,29104,Fred Beans Toyota of Flemington,https://www.fredbeanstoyota.com,9999,NJ,40.477717,-74.863216,174 Route 202 North,Flemington,08822,(908) 788-5700
 29105,29105,DCH Freehold Toyota,https://www.dchfreeholdtoyota.com,16,NJ,40.278497,-74.295065,4268 Route 9 South,Freehold,07728,(732) 431-1300
 29106,29106,DCH Brunswick Toyota,https://www.dchbrunswicktoyota.com,16,NJ,40.45593,-74.479355,1504 U.S. Route 1,North Brunswick,08902,(732) 418-8888
 29107,29107,Paul Miller Toyota,https://www.paulmillertoyota.com,16,NJ,40.855834,-74.31039,1137-1183 Bloomfield Avenue,West Caldwell,07006,(973) 882-1822
 29108,29108,Autoland Toyota,https://www.1800toyotaland.com,16,NJ,40.685077,-74.320064,170 Route 22 East,Springfield,07081,(973) 467-6101
 29113,29113,Prestige Toyota of Ramsey,https://www.prestigetoyota.com,9999,NJ,41.067361,-74.133227,1096 Route 17 North,Ramsey,07446,(201) 825-2700
-29114,29114,Toyota World of Clinton,https://www.toyotaworldclinton.com,16,NJ,40.675616,-74.915872,2017 Route 31,Clinton,08809,(908) 638-4100
+29114,29114,Toyota World of Clinton,https://www.toyotaworldclinton.com,9999,NJ,40.675616,-74.915872,2017 Route 31,Clinton,08809,(908) 638-4100
 29115,29115,Empire Toyota of Green Brook,https://www.shopempiretoyotaofgreenbrook.com,16,NJ,40.600317,-74.483117,220 Route 22 West,Green Brook,08812,(732) 968-1000
 30032,30032,Webb Toyota,https://www.webbtoyota.com,15,NM,36.752747,-108.1563,3701 E. Main Street,Farmington,87402,(505) 327-5900
 30033,30033,Permian Toyota,https://www.permiantoyota.com,15,NM,32.738299,-103.14398,3500 North Grimes Street,Hobbs,88240,(575) 397-1100
@@ -936,47 +936,47 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 36106,36106,Toyota of Gladstone,https://www.toyotaofgladstone.com,13,OR,45.3815,-122.6059,19375 SE McLoughlin Blvd.,Gladstone,97027,(503) 722-4800
 36107,36107,Coos Bay Toyota,https://www.coosbaytoyota.com,13,OR,43.382301,-124.220436,2001 North Bayshore Drive,Coos Bay,97420,(541) 267-3121
 36108,36108,Albany Toyota,https://www.albanytoyota.net,13,OR,44.630341,-123.056104,1205 Price Road SE,Albany,97321,(541) 926-4236
-37036,37036,Krause Toyota,https://www.krausetoyota.com,80,PA,40.574529,-75.621806,7702 Penn Drive,Breinigsville,18031,(610) 395-9858
-37065,37065,Thompson Toyota,https://www.thompsontoyota.net,80,PA,40.330117,-75.133833,122 W. Swamp Road,Doylestown,18901,(215) 345-9460
-37066,37066,Ardmore Toyota,https://www.ardmoretoyota.com,80,PA,40.004713,-75.284419,219 E. Lancaster Avenue,Ardmore,19003,(610) 645-5000
+37036,37036,Krause Toyota,https://www.krausetoyota.com,9999,PA,40.574529,-75.621806,7702 Penn Drive,Breinigsville,18031,(610) 395-9858
+37065,37065,Thompson Toyota,https://www.thompsontoyota.net,9999,PA,40.330117,-75.133833,122 W. Swamp Road,Doylestown,18901,(215) 345-9460
+37066,37066,Ardmore Toyota,https://www.ardmoretoyota.com,9999,PA,40.004713,-75.284419,219 E. Lancaster Avenue,Ardmore,19003,(610) 645-5000
 37067,37067,Bennett Toyota,https://www.bennetttoyotapa.com,80,PA,40.574557,-75.479487,1951 Lehigh Street,Allentown,18103,(610) 437-6711
-37077,37077,Performance Motors Toyota,https://www.performancetoyotapa.com,80,PA,40.32688,-76.041701,4681 Penn Avenue,Sinking Spring,19608,(610) 678-3425
+37077,37077,Performance Motors Toyota,https://www.performancetoyotapa.com,9999,PA,40.32688,-76.041701,4681 Penn Avenue,Sinking Spring,19608,(610) 678-3425
 37083,37083,Lancaster Toyota,https://www.lancastertoyota.com,9999,PA,40.089469,-76.346564,5270 Manheim Pike,East Petersburg,17520,(717) 569-7373
 37094,37094,Joel Confer Toyota,https://www.confertoyota.com,80,PA,40.804511,-77.882559,120 East Clinton Avenue,State College,16803,(814) 237-5713
 37096,37096,Allegheny Toyota,https://www.alleghenytoyotapa.com,80,PA,41.4051,-79.800632,722 Allegheny Blvd.,Franklin,16323,(814) 437-7884
-37101,37101,Sloane Toyota of Glenside,https://www.sloanetoyotaglenside.com,80,PA,40.109767,-75.144183,503 North Easton Road,Glenside,19038,(215) 885-5400
+37101,37101,Sloane Toyota of Glenside,https://www.sloanetoyotaglenside.com,9999,PA,40.109767,-75.144183,503 North Easton Road,Glenside,19038,(215) 885-5400
 37106,37106,Rohrich Toyota,https://www.rohrichtoyota.com,80,PA,40.403531,-80.020037,2020 West Liberty Avenue,Pittsburgh,15226,(412) 344-6012
 37109,37109,Palmiero Toyota,https://www.palmierotoyota.net,80,PA,41.620581,-80.212032,16165 Conneaut Lake Road,Meadville,16335,(814) 336-1061
-37112,37112,Del Toyota,https://www.deltoyota.com,80,PA,39.992825,-75.766383,2945 East Lincoln Highway,Thorndale,19372,(610) 383-6200
-37114,37114,Conicelli Toyota,https://www.conicellitoyotaofconshohocken.com,80,PA,40.096395,-75.295155,550 Ridge Pike,Conshohocken,19428,(610) 825-7128
+37112,37112,Del Toyota,https://www.deltoyota.com,9999,PA,39.992825,-75.766383,2945 East Lincoln Highway,Thorndale,19372,(610) 383-6200
+37114,37114,Conicelli Toyota,https://www.conicellitoyotaofconshohocken.com,9999,PA,40.096395,-75.295155,550 Ridge Pike,Conshohocken,19428,(610) 825-7128
 37118,37118,South Hills Toyota,https://www.southhillstoyota.com,80,PA,40.253359,-80.170748,2403 Washington Road,Canonsburg,15317,(724) 743-1144
-37125,37125,Faulkner Toyota,https://www.faulknertoyotatrevose.com,80,PA,40.123616,-74.975104,2425 Lincoln Highway,Trevose,19053,(215) 244-9300
+37125,37125,Faulkner Toyota,https://www.faulknertoyotatrevose.com,9999,PA,40.123616,-74.975104,2425 Lincoln Highway,Trevose,19053,(215) 244-9300
 37126,37126,Toyota of York,https://www.toyotaofyork.com,9999,PA,39.983823,-76.685702,1885 Whiteford Road,York,17402,(717) 755-2961
 37127,37127,Colonial Toyota,https://www.shopcolonialtoyota.com,80,PA,40.6208,-79.195245,2600 West Pike Road,Indiana,15701,(724) 349-9100
 37130,37130,Fitzgerald Toyota Chambersburg,https://www.fitzgeraldtoyotachambersburg.com,9999,PA,39.925454,-77.62032,1436 Lincoln Way East,Chambersburg,17201,(717) 264-3359
-37132,37132,Peruzzi Toyota,https://www.peruzzitoyota.com,80,PA,40.300662,-75.287452,2601 N. Bethlehem Pike,Hatfield,19440,(215) 997-1111
+37132,37132,Peruzzi Toyota,https://www.peruzzitoyota.com,9999,PA,40.300662,-75.287452,2601 N. Bethlehem Pike,Hatfield,19440,(215) 997-1111
 37134,37134,Williams Toyota of Sayre,https://www.williamstoyotaofsayre.com,80,PA,41.98427,-76.543484,2468 Elmira Street,Sayre,18840,(570) 888-2281
 37135,37135,Preston Toyota,https://www.prestontoyota.com,80,PA,41.016639,-80.35303,1502 Wilmington Road,New Castle,16105,(724) 658-1531
 37138,37138,Hanover Toyota,https://www.hanovertoyota.com,9999,PA,39.839858,-77.006855,1830 Carlisle Pike,Hanover,17331,(717) 633-1818
 37142,37142,Fiore Toyota,https://www.gofioretoyota.com,9999,PA,40.451481,-78.394489,1000 S. Logan Boulevard,Hollidaysburg,16648,(814) 695-5533
-37148,37148,Team Toyota of Glen Mills,https://www.teamtoyotaglenmills.com,80,PA,39.882217,-75.540067,1050 Baltimore Pike,Glen Mills,19342,(484) 845-7905
+37148,37148,Team Toyota of Glen Mills,https://www.teamtoyotaglenmills.com,9999,PA,39.882217,-75.540067,1050 Baltimore Pike,Glen Mills,19342,(484) 845-7905
 37149,37149,Bobby Rahal Toyota,https://www.bobbyrahaltoyota.com,9999,PA,40.23903,-77.052712,6711 Carlisle Pike,Mechanicsburg,17050,(717) 691-0500
-37150,37150,Team Toyota,https://www.teamtoyotalanghorne.com,80,PA,40.164983,-74.9034,746 E. Lincoln Highway,Langhorne,19047,(215) 741-4200
+37150,37150,Team Toyota,https://www.teamtoyotalanghorne.com,9999,PA,40.164983,-74.9034,746 E. Lincoln Highway,Langhorne,19047,(215) 741-4200
 37151,37151,Laurel Toyota,https://www.laureltoyotapa.com,80,PA,40.266769,-78.863245,933 Eisenhower Blvd.,Johnstown,15904,(814) 269-3400
-37152,37152,Sloane Toyota of Philadelphia,https://www.sloanetoyotaphiladelphia.com,80,PA,40.05566,-75.074228,1546 Cottman Avenue,Philadelphia,19111,(215) 742-9300
-37153,37153,Koch 33 Toyota,https://www.koch33toyota.com,80,PA,40.700076,-75.287485,3816 Hecktown Road,Easton,18045,(610) 253-9191
-37154,37154,Tri County Toyota,https://www.tricountytoyota.com,80,PA,40.22128,-75.54478,15 D & L Drive,Limerick,19468,(610) 495-4588
+37152,37152,Sloane Toyota of Philadelphia,https://www.sloanetoyotaphiladelphia.com,9999,PA,40.05566,-75.074228,1546 Cottman Avenue,Philadelphia,19111,(215) 742-9300
+37153,37153,Koch 33 Toyota,https://www.koch33toyota.com,9999,PA,40.700076,-75.287485,3816 Hecktown Road,Easton,18045,(610) 253-9191
+37154,37154,Tri County Toyota,https://www.tricountytoyota.com,9999,PA,40.22128,-75.54478,15 D & L Drive,Limerick,19468,(610) 495-4588
 37155,37155,Aubrey Alexander Toyota,https://www.aubreyalexandertoyota.com,9999,PA,40.827988,-76.84238,1324 N. Susquehanna Trail,Selinsgrove,17870,(570) 743-1171
 37157,37157,Diehl Toyota of Butler,https://www.diehltoyotabutler.com,80,PA,40.813816,-79.927792,266 Pittsburgh Road,Butler,16002,(724) 282-8898
 37161,37161,Faulkner Toyota,https://www.faulknertoyotaharrisburg.com,9999,PA,40.254055,-76.83055,3809 Paxton Street,Harrisburg,17111,(717) 565-9000
 37162,37162,Spitzer Toyota,https://www.spitzertoyota.com,80,PA,40.43664,-79.737096,4710 William Penn Highway,Monroeville,15146,(412) 373-6200
-37164,37164,Sloane Toyota of Malvern,https://www.sloanetoyotamalvern.com,80,PA,40.034928,-75.574472,593 Lancaster Avenue,Malvern,19335,(610) 647-2300
-37171,37171,Motorworld Toyota,https://www.motorworldtoyota.com,80,PA,41.254145,-75.837371,150 Motorworld Drive,Wilkes Barre,18702,(570) 829-3500
-37172,37172,Conicelli Toyota of Springfield,https://www.conicellitoyotaofspringfield.com,80,PA,39.916267,-75.3363,860 Baltimore Pike,Springfield,19064,(610) 690-6000
-37175,37175,Toyota Certified at Central City,https://www.centralcitytoyota.com,80,PA,39.957406,-75.217488,4800 Chestnut Street,Philadelphia,19139,(215) 476-1200
+37164,37164,Sloane Toyota of Malvern,https://www.sloanetoyotamalvern.com,9999,PA,40.034928,-75.574472,593 Lancaster Avenue,Malvern,19335,(610) 647-2300
+37171,37171,Motorworld Toyota,https://www.motorworldtoyota.com,9999,PA,41.254145,-75.837371,150 Motorworld Drive,Wilkes Barre,18702,(570) 829-3500
+37172,37172,Conicelli Toyota of Springfield,https://www.conicellitoyotaofspringfield.com,9999,PA,39.916267,-75.3363,860 Baltimore Pike,Springfield,19064,(610) 690-6000
+37175,37175,Toyota Certified at Central City,https://www.centralcitytoyota.com,9999,PA,39.957406,-75.217488,4800 Chestnut Street,Philadelphia,19139,(215) 476-1200
 37176,37176,Toyota of Scranton,https://www.toyotaofscranton.com,80,PA,41.448044,-75.642316,3400 North Main Avenue,Scranton,18508,(570) 489-7584
 37179,37179,Bobby Rahal Toyota of Lewistown,https://www.bobbyrahaltoyotaoflewistown.com,80,PA,40.617743,-77.565154,425 Electric Avenue,Lewistown,17044,(717) 248-0119
-37184,37184,New Holland Toyota,https://www.toyotanewholland.com,80,PA,40.097959,-76.102319,524 West Main Street,New Holland,17557,(717) 354-4766
+37184,37184,New Holland Toyota,https://www.toyotanewholland.com,9999,PA,40.097959,-76.102319,524 West Main Street,New Holland,17557,(717) 354-4766
 37185,37185,Baierl Toyota,https://www.baierltoyota.com,80,PA,40.670979,-80.09825,"19045 Perry Highway, Route 19",Mars,16046,(724) 741-1108
 37187,37187,Ken Ganley Toyota,https://www.kenganleytoyota.com,80,PA,40.318717,-79.941363,1110 Clairton Blvd.,Pleasant Hills,15236,(412) 469-3000
 37188,37188,Bennett Toyota of Lebanon,https://www.bennetttoyotaoflebanon.com,80,PA,40.339718,-76.460636,2635 West Cumberland Street,Lebanon,17042,(717) 202-8888
@@ -986,15 +986,16 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 37193,37193,Heritage Toyota Harrisburg,http://www.heritagetoyotaharrisburg.com,9999,PA,40.322689,-76.788705,6060 Allentown Blvd,Harrisburg,17112,(717) 545-4726
 37194,37194,Brewer Airport Toyota,https://brewerairporttoyota.com,80,PA,40.50433,-80.223526,8900 University Blvd.,Moon Township,15108,(412) 262-5600
 37195,37195,Toyota of Erie,https://www.toyotaoferie.com,80,PA,42.07246,-80.09257,9140 Peach Street,Waterford,16441,(814) 868-3656
-37196,37196,Kelly Toyota of Hamburg,https://www.kellytoyotaofhamburg.com,80,PA,40.560888,-76.000017,41 Industrial Drive,Hamburg,19526,(484) 665-0130
+37196,37196,Kelly Toyota of Hamburg,https://www.kellytoyotaofhamburg.com,9999,PA,40.560888,-76.000017,41 Industrial Drive,Hamburg,19526,(484) 665-0130
 37197,37197,LUV Toyota of Bradford,https://www.luvtoyotabradford.com,80,PA,41.975744,-78.617009,880 East Main Street,Bradford,16701,(814) 368-3191
 37198,37198,Diehl Toyota of Hermitage,https://www.diehltoyotaofhermitage.com,80,PA,41.233494,-80.457425,2757 E State Street,Hermitage,16148,(724) 347-7702
 37199,37199,Jim Shorkey Toyota,https://www.jimshorkeytoyota.com,80,PA,40.540001,-80.012419,7401 McKnight Road,Pittsburgh,15237,(412) 318-3000
-37201,37201,Toyota of Stroudsburg,https://www.toyotaofstroudsburg.com,80,PA,41.020325,-75.184665,1741 Paradise Trail,East Stroudsburg,18301,(570) 421-6930
-37202,37202,LeadCar Toyota Hazleton,https://www.leadcartoyotahazleton.com,80,PA,40.989265,-76.011601,730 Airport Road,Hazleton,18202,(570) 453-4141
+37201,37201,Toyota of Stroudsburg,https://www.toyotaofstroudsburg.com,9999,PA,41.020325,-75.184665,1741 Paradise Trail,East Stroudsburg,18301,(570) 421-6930
+37202,37202,LeadCar Toyota Hazleton,https://www.leadcartoyotahazleton.com,9999,PA,40.989265,-76.011601,730 Airport Road,Hazleton,18202,(570) 453-4141
 37203,37203,Delaney Toyota of Dubois,https://www.delaneytoyota.com,80,PA,41.120332,-78.737563,860 Beaver Drive,Dubois,15801,(814) 371-3333
 37204,37204,Jim Shorkey Toyota of Greensburg,https://www.jimshorkeytoyotagreensburg.com,80,PA,40.29837,-79.481549,4964 Route 30,Greensburg,15601,(724) 837-6693
 37205,37205,Bobby Rahal Toyota of State College,https://www.bobbyrahaltoyotaofstatecollege.com,9999,PA,40.804511,-77.882559,120 East Clinton Avenue,State College,16803,(814) 237-5713
+37206,37206,Toyota of Allentown,https://www.toyotaofallentown.com,9999,PA,40.574557,-75.479487,1951 Lehigh Street,Allentown,18103,(610) 437-6711
 38025,38025,Valenti Toyota,https://www.valentitoyota.com,17,RI,41.350573,-71.768238,6 Langworthy Road,Westerly,02891,(401) 322-7200
 38026,38026,Balise Toyota of Warwick,https://www.balisetoyotaofwarwick.com,9999,RI,41.742346,-71.429872,1400 Post Road,Warwick,02888,(401) 785-8900
 38029,38029,Toyota of Smithfield,https://www.toyotaofsmithfield.com,9999,RI,41.935296,-71.491401,550 George Washington Hwy,Smithfield,02917,(401) 723-0972

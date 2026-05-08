@@ -865,7 +865,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 34085,34085,Kings Toyota,https://www.kingstoyota.com,9999,OH,39.29334,-84.309744,4700 Fields Ertel Road,Cincinnati,45249,(513) 683-5440
 34089,34089,Joseph Toyota of Cincinnati,https://www.josephtoyota.com,9999,OH,39.236883,-84.592682,9101 Colerain Avenue,Cincinnati,45251,(513) 385-1800
 34090,34090,Brunswick Toyota,https://www.brunswickautomarttoyota.com,9999,OH,41.23975,-81.797097,3041 Center Road,Brunswick,44212,(330) 273-3300
-34092,34092,Thayer Toyota,https://www.thayertoyota.com,22,OH,41.3973,-83.65111,1225 North Main Street,Bowling Green,43402,(419) 353-5751
+34092,34092,Thayer Toyota,https://www.thayertoyota.com,9999,OH,41.3973,-83.65111,1225 North Main Street,Bowling Green,43402,(419) 353-5751
 34093,34093,Classic Toyota,https://www.driveclassictoyota.com,22,OH,41.684417,-81.33458,8510 Tyler Blvd.,Mentor,44060,(440) 953-0910
 34096,34096,Voss Toyota,https://www.vosstoyota.com,9999,OH,39.70573,-84.01378,2110 Heller Drive,Beavercreek,45434,(937) 427-3700
 34098,34098,Team Toyota,https://www.teamtoyotaohio.com,22,OH,40.375672,-80.631053,905 Brady Avenue,Steubenville,43952,(740) 283-4131
@@ -881,7 +881,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 34122,34122,Toyota of Boardman,https://www.toyotaofboardman.com,22,OH,40.99951,-80.66331,8250 Market Street,Boardman,44512,(330) 729-9080
 34124,34124,Summit Toyota of Akron,https://www.summittoyotaofakron.com,9999,OH,41.063552,-81.576654,1535 Vernon Odom Blvd.,Akron,44320,(330) 836-2500
 34125,34125,Buckeye Toyota,https://www.mybuckeyetoyota.com,22,OH,39.736966,-82.632087,1903 Riverway Drive,Lancaster,43130,(740) 654-3943
-34126,34126,Yark Toyota,https://www.yarktoyota.com,22,OH,41.5782,-83.663162,1377 Conant Street,Maumee,43537,(419) 893-5000
+34126,34126,Yark Toyota,https://www.yarktoyota.com,9999,OH,41.5782,-83.663162,1377 Conant Street,Maumee,43537,(419) 893-5000
 34127,34127,SVG Toyota,https://www.svgtoyota.com,9999,OH,39.516324,-83.4443,1132 State Route 41 South,Washington Court House,43160,(740) 333-3860
 34128,34128,Firelands Toyota,https://www.firelandstoyota.com,22,OH,41.42163,-82.67532,904 E. Strub Road,Sandusky,44870,(419) 621-0600
 34129,34129,Toyota West,https://www.toyotawest.com,22,OH,39.921996,-83.123183,1500 Auto Mall Drive,Columbus,43228,(614) 870-8200
@@ -900,6 +900,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 34143,34143,TOYOTA OF WARREN i.e. Golling Toyota,https://www.gollingtoyota.com,22,MI,42.4927,-83.0278,27100 Van Dyke Avenue,Warren,48093,(586) 758-2000
 34144,34144,South Dayton Toyota,https://www.southdaytontoyota.com,9999,OH,39.627343,-84.226654,8457 Springboro Pike,Miamisburg,45342,(937) 433-4950
 34145,34145,Diehl Toyota of Wooster,https://www.diehltoyotaofwooster.com,9999,OH,40.799856,-81.959863,1363 W. Old Lincoln Way,Wooster,44691,(330) 264-1113
+34146,34146,Firelands Toyota of Sandusky,https://www.firelandstoyota.com,9999,OH,41.42163,-82.67532,904 E. Strub Road,Sandusky,44870,(419) 621-0600
 35011,35011,Doenges Toyota,https://www.doengestoyota.com,60,OK,36.722952,-95.935925,1911 SE Washington Blvd,Bartlesville,74006,(918) 333-0900
 35025,35025,Fowler Toyota,https://www.fowlertoyota.com,60,OK,35.26835,-97.48708,4050 N. Interstate Drive,Norman,73072,(800) 375-9550
 35048,35048,Northcutt Toyota,https://www.northcutttoyota.com,60,OK,36.39007,-97.92097,3409 W. Owen K. Garriott Road,Enid,73703,(580) 234-5171

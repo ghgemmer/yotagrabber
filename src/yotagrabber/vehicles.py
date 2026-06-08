@@ -23,7 +23,7 @@ import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass
 
-PROGRAM_VERSION = "Vehicles Program Version 6.4.3 04-07-2026" #
+PROGRAM_VERSION = "Vehicles Program Version 6.4.4 06-08-2026" #
 
 # Set to True to use local data and skip requests to the Toyota website.
 USE_LOCAL_DATA_ONLY = False
@@ -757,6 +757,10 @@ def transformRawDfToCsvStyleDf ( inputDf):
             # This can happen if the passed df is the originalLastParquet before the
             # LastChangedDateTimeColName column has ever been added to it such as when the last parquet file did not exist
             df[LastChangedDateTimeColName] = None
+        if not ('eta.currFromDate' in df.columns):
+            df['eta.currFromDate'] = None
+        if not ('eta.currToDate' in df.columns):
+            df['eta.currToDate'] = None
         
         renames = {
             "vin": "VIN",

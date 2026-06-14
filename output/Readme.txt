@@ -1,5 +1,6 @@
-Readme.txt updated 6/13/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
-Alerts -  Updated how you determine the real VIN associated with a temporary VIN
+Readme.txt updated 6/14/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Last update -  Modified method for determining real VIN for temp VIN
+No Alerts - 
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
@@ -66,20 +67,19 @@ assuming this is done before 14 days after the temp VIN disappeared from the inv
 Open the Change History .csv file in Excel  select the entire spreadsheet, 
 and select Data ---> Sort ascending and enter levels "Dealer Website", then "Model", then "Options", then "Color", then "Int Color", then "Selling Price", then "Event DateTime"
 Now add a new column to the right of the "isTempVin" column and in the second row (the one below the headers column names)
-place the following formula
-=OR(AND(U2=U3,B2=B3,I2=I3, D2=D3, E2=E3, F2=F3, AS2=AS3), AND(U1=U2, B1=B2, I1=I2, D1=D2, E1=E2, F1=F2, AS1=AS2))
+place the following formula  (the formula is comparing the sort by values in the row to those in the row above it)
+=AND(U1=U2, B1=B2, I1=I2, D1=D2, E1=E2, F1=F2, AS1=AS2)
 Then copy and paste that cell to all the cells below it in that column
-Now select the entire sheet and click on tab Data -> Filter.
-Filter on "RowChangeType" for only the values "ADDED", "REMOVED".
-and Filter on the newly added column for the value "TRUE"
-Now find the temp VIN you are looking for where the row has "RowChangeType" = "REMOVED"
-The real VIN will most likely be the first row you find above that has "RowChangeType" = "ADDED" and tempVin = FALSE.
-Note that since not all the fields are compared it is possible to determine the wrong real VIN so check other fields for matching values 
-to the temp VIN row fields as well to verify this is the real VIN for that temp VIN (especially the "Event DateTime" column)
-and if it does not match then check
-in rows further up from there that match the required temporary VIN column values.
-It is also possible that there is more than one of that exact same car whose temporary VIN turned into a real VIN on that same
-day so be aware of that when performing the above checks.
+Now find the temp VIN you are looking for where the row has "RowChangeType" = "REMOVED" and the newely added column has the value TRUE
+(if no such row exists then a real VIN has not been assigned yet)
+Now starting from that row go up one row and if the "RowChangeType" = "ADDED", and isTempVIN = FALSE,  then 
+that is, assuming there are not multiple vehicles for that dealer that have those exact same sort by values,  
+the row with the real VIN that is associated  with that temp VIN.
+If not, then on the current row , verify the row has the newly added column value of TRUE and repeat the steps (if the current row does not have
+the newly added column value of TRUE then you are at the end of the set of possible real VINs that could be for that temp VIN).
+Once you have found a real VIN using the above, continue the steps to see if there are multiple real VINs that could be for that temp VIN.
+If there are not then you have found the real VIN for that temp VIN otherwise there are multiple VINS and you can't tell which one is the
+actual real VIN for that temp VIN.   
 
 
 A log file InventoryRunlog.txt is also provided which indicates when the inventory search started, log of

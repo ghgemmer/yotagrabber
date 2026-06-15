@@ -1,6 +1,7 @@
 Readme.txt updated 6/14/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
-Last update -  Modified method for determining real VIN for temp VIN
 No Alerts - 
+Last update -  Modified method for determining real VIN for temp VIN
+
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)

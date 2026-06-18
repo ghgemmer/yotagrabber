@@ -44,7 +44,8 @@ Note that the contents of the VIN entries in the sold inventory files do not upd
 to update them with from the Toyota search inventory website anymore. I.E, the website no longer returns that VIN and contents for it,
 and that is the only website that the vehicle information is obtained from by the program.
 Also a dealer may have the vehicle removed from the Toyota search inventory website results (thus showing up in the Sold files)
-if they consider it sold for all practical purposes and/or don't want to get calls about it from other potential buyers. 
+if they consider it sold for all practical purposes and/or don't want to get calls about it from other potential buyers.
+The vehicle may still appear on the dealer website in this case as well.
 Likewise, some dealers may not use the Pre-Sold field.
 
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.

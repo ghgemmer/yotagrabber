@@ -43,6 +43,9 @@ Older model year sold files will be archived at some point, when it appears ther
 Note that the contents of the VIN entries in the sold inventory files do not update after being placed in that file because there is no data 
 to update them with from the Toyota search inventory website anymore. I.E, the website no longer returns that VIN and contents for it,
 and that is the only website that the vehicle information is obtained from by the program.
+Also a dealer may have the vehicle removed from the Toyota search inventory website results (thus showing up in the Sold files)
+if they consider it sold for all practical purposes and/or don't want to get calls about it from other potential buyers. 
+Likewise, some dealers may not use the Pre-Sold field.
 
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.
 They contains all changes between runs of the inventory collection,
@@ -156,7 +159,8 @@ possible to remove those items.
                 for swapping or sale (which, among other reasons, might possibly be because it is in high demand or being held for someone or there is a waiting list for it)
                 ,  and blank of Available indicates they would.
                 
-"Pre-Sold" - The vehicle sale is pending or considered sold for all practical purposes.
+"Pre-Sold" - The vehicle sale is pending or considered sold for all practical purposes.  
+             Some dealers may not use this field and thus it would always show FALSE.
                 .
 "Shipping Status" - "Factory to port" -  Allocated, or in production, or on the ship, or sitting at the port
                     "Port to dealer" -  Checked in at the port and in the process of moving from the port to the dealership lot.

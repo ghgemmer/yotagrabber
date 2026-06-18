@@ -1,6 +1,6 @@
-Readme.txt updated 6/14/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 6/18/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Modified method for determining real VIN for temp VIN
+Last update -  Updated Sold files description.
 
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.

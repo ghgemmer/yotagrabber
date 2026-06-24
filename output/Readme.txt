@@ -1,6 +1,6 @@
-Readme.txt updated 6/18/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 6/23/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Updated Sold files description.
+Last update -  misc minor clarifications, and grammar.
 
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
@@ -28,7 +28,7 @@ the inventory (or reappeared after disappearing), and a LastChangedDateTime whic
 any information for that VIN changed.
 
 The sold inventory files are for VINs that no longer appear in the current inventory (were seen at one time 
-by the inventory run but have since disappered).
+by the inventory run but have since disappered from the Toyota inventory search website).
 These files are named  <model>_<year>_Sold.csv with the associated raw parquet in <model>_<year>_Sold_raw.parquet
 Also note that currently if a temp VIN is turned into a real VIN, and thus the temp VIN disappears, 
 the temp VIN is treated as Sold, because it disappeared from current inventory, and is placed in the associated Sold file. 
@@ -99,7 +99,7 @@ the latest is at the bottom of the file.
 
 
 Column definitions that are not obvious or to remove any ambiguity are as follows.  Note that all prices exclude
-state sales tax, license and registration fees, doc fees, and any other mandatory fees the dealer charges, 
+state sales tax, title/registration fees, doc fees, and any other mandatory fees the dealer charges, 
 and thus are NOT Out The Door prices.  Also sometimes a discount will be shown on the Toyota Inventory Search Website but
 the dealer shows a higher price (usually TSRP with no discount) for some reason.  Sometimes this is because the dealer has
 tacked on other items not shown in the options (Paint protection, etc) and to get the discount shown on the toyota website
@@ -110,11 +110,11 @@ possible to remove those items.
            The top level model name is left off (Camry, 4Runner, etc) as the file name implies it.
 "Color" - Exterior color
 "Int Color" - Interior color
-"Base MSRP" -  Is as shown on the cars window sticker and is the Base manufacturer retail price 
+"Base MSRP" -  Is as shown on the cars window sticker and is the Base Manufacturer Suggested Retail price 
 "Total MSRP" -  Also referred to as the Total SRP (Suggested Retail Price) as shown on the cars window sticker is the 
                 Base MSRP + all the factory and Port installed options/packages + delivery/handling fees  
-                (excludes taxes and other fees like Doc fee, registration fees, etc)
-"Selling Price" -  is the total dealer price (excluding taxes, fees) = Total MSRP + Dealer installed options + Dealer Markup/Discount/adjustments
+                (excludes taxes and other fees like Doc fee, title/registration fees, etc)
+"Selling Price" -  is the total dealer price (excluding taxes, title/reg, etc fees) = Total MSRP + Dealer installed options + Dealer Markup/Discount/adjustments
                    It is the bottom line final price the Toyota Search Inventory website shows with the exeptions indicated below.
                    Note that this value in general matches the dealer website value but can be different if the dealer website 
                    has additional adjustments it does not reflect back to the Toyota Search Inventory database or has not correctly updated those
@@ -157,7 +157,7 @@ possible to remove those items.
                 In this interpretation "Dealer hold" means the vehicle is spoken for already, and Available or blank means it is not.
                 Another opinion is hold status indicates whether a dealer would offer the vehicle to another dealer for a swap or sale.
                 In this intepretation "Dealer hold" indicates the vehicle will not be offered to other dealers
-                for swapping or sale (which, among other reasons, might possibly be because it is in high demand or being held for someone or there is a waiting list for it)
+                for swapping or sale, which, among other reasons, might possibly be because it is in high demand/rare or being held for someone or there is a waiting list for it,
                 ,  and blank of Available indicates they would.
                 
 "Pre-Sold" - The vehicle sale is pending or considered sold for all practical purposes.  

@@ -15,6 +15,47 @@ import re
 
 forceRspFailureTest = 0 # set to > 0 to perform tests related to forcing a response failure to test request retry
 
+def printSendRequestDetailsToString(r, dataInRequest=None, showHeaders = False, showData = True):
+    #Excludes r.history redirects.
+    printString = "-----------------------"  + "\n"
+    printString += "r.request.method  " + str(r.request.method) + "\n"
+    #print("r.request.method", r.request.method)
+    printString += "r.request.url  " + str(r.request.url) + "\n"
+    #print("r.request.url",r.request.url )
+    if dataInRequest is not None:
+        printString += "dataInRequest =  " + str(dataInRequest) + "\n"
+        #print("dataInRequest =", str(dataInRequest))
+    if showHeaders:
+        printString += "r.request.headers  " + str(r.request.headers) + "\n"
+        #print("r.request.headers", r.request.headers)
+        printString += "response r.headers  " + str(r.headers) + "\n"
+        #print("response r.headers", r.headers)
+    printString += "r.url  " + str(r.url) + "\n"
+    #print("r.url", r.url)
+    printString += "r.status_code  " + str(r.status_code) + "\n"
+    #print("r.status_code", r.status_code )
+    if showData:
+        printString += "r.request.body: " + str(r.request.body) + "\n"
+    return printString
+
+def printSendRequestDetails(r, dataInRequest=None, showHeaders = False, printIt = True, showData = True, showHistory = True):
+    # ShowHistory - indicates if r.history is shown which occurs when redirects occur
+    # showData - if True shows the body data in a POST request
+    # showHeaders - if True shows the request and response headers
+    # dataInRequest -  If not None prints the dataInRequest which is a dictionary that represents what the data in a POST Body is (which matches
+    # the data shown by showData but easier to view.
+    printString = ""
+    if showHistory:
+        # Print everything before last redirect that occurred if there were redirects.
+        for rsp in r.history:
+            printString += printSendRequestDetailsToString(rsp, dataInRequest=dataInRequest, showHeaders=showHeaders, showData=showData)
+            dataInRequest = None  # only print dataInRequest on first request that was sent.
+    printString += printSendRequestDetailsToString(r, dataInRequest=dataInRequest, showHeaders=showHeaders, showData=showData)
+    if printIt:
+        print(printString)
+    return printString
+
+
 def interruptibleSleep(sleepTime):
     wasInterrupted = False
     if sleepTime > 0:
@@ -143,8 +184,10 @@ def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""
                 # That is what the inventory get uses to get the dealers for that zip code but could not get it to work.
                 # So had to use the url below which is accessed when on the https://www.toyota.com/connected-services/toyota-app/ page
                 # and  click on the Find Dealer https://www.toyota.com/dealers/#default link on that page which pops up a map window
+                headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}  #Normal pthyon user-agent gets request rejected with a Forbidden response
                 resp = requests.get(
                         "https://api.ws.dpcmaps.toyota.com/v1/dealers?attributeKey=&searchMode=pmaProximityLayered&zipcode=" + zipCodeWithLeadingZeroes,
+                        headers = headers,
                         timeout=20,
                 )
                 result = resp.json()
@@ -160,6 +203,9 @@ def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""
                 tryCount -= 1
                 interruptibleSleep(4)
                 print("Retrying request, tryCount = ", tryCount)
+        #print("zipCodeWithLeadingZeroes", zipCodeWithLeadingZeroes)
+        #printSendRequestDetails(resp, dataInRequest=None, showHeaders = True, printIt = True, showData = True, showHistory = True)
+        #print("result is", str(result))
         if (result is not None) and result and ("dealers" in result) and (len(result["dealers"]) > 0):
             #print("Result is", result)
             #df = pd.DataFrame.from_dict(result["dealers"])

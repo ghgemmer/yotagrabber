@@ -210,27 +210,28 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 05078,05078,Groove Toyota,https://www.groovetoyota.com,15,CO,39.618187,-104.987643,5460 South Broadway,Englewood,80113,(303) 761-3222
 05079,05079,Vista Toyota Delta,https://www.vistatoyotaco.com,9999,CO,38.748901,-108.062082,750 E. Highway 92,Delta,81416,(970) 874-4444
 06002,06002,A-1 Toyota,https://www.a1toyota.com,9999,CT,41.335911,-72.978339,50 Amity Road,New Haven,06515,(203) 389-1521
-06015,06015,Girard Toyota-BMW,https://www.girardtoyota.com,16,CT,41.36469,-72.115931,543 Colman Street,New London,06320,(860) 447-3141
+06015,06015,Girard Toyota-BMW,https://www.girardtoyota.com,9999,CT,41.36469,-72.115931,543 Colman Street,New London,06320,(860) 447-3141
 06022,06022,Stephen Toyota,https://www.stephentoyota.com,9999,CT,41.696487,-72.907324,1069 Farmington Ave,Bristol,06010,(860) 584-7333
 06025,06025,Lynch Toyota,https://www.lynchtoyota.com,9999,CT,41.811798,-72.514958,179 Tolland Turnpike,Manchester,06040,(860) 646-4321
-06026,06026,"Gale Toyota, Inc.",https://www.galetoyota.com,9999,CT,41.994767,-72.573431,50 Palomba Drive,Enfield,06082,(860) 741-3761
+06026,06026,Gale Toyota,https://www.galetoyota.com,9999,CT,41.994767,-72.573431,50 Palomba Drive,Enfield,06082,(860) 741-3761
 06029,06029,Toyota of Greenwich,https://www.toyotaofgreenwich.com,9999,CT,41.036442,-73.60276,"75 E. Putnam Ave, Box 402",Cos Cob,06807,(203) 661-5055
 06032,06032,Greentree Toyota,https://www.greentreetoyota.com,9999,CT,41.424973,-73.419459,87 Federal Road,Danbury,06810,(203) 730-4040
 06036,06036,Middletown Toyota,https://www.middletowntoyota.com,9999,CT,41.576516,-72.671736,634 Newfield Street,Middletown,06457,(860) 347-7294
-06037,06037,Charles Toyota,https://www.charlestoyota.com,16,CT,41.503778,-72.091477,500 West Thames Street,Norwich,06360,(860) 889-8375
+06037,06037,Charles Toyota,https://www.charlestoyota.com,9999,CT,41.503778,-72.091477,500 West Thames Street,Norwich,06360,(860) 889-8375
 06040,06040,Colonial Toyota,https://www.colonialtoyotact.com,9999,CT,41.228373,-73.069176,470 Boston Post Road,Milford,06460,(203) 878-7401
-06042,06042,Hoffman Toyota,https://www.hoffmantoyota.com,16,CT,41.81845,-72.868437,"36 Albany Turnpike, Rt 44",West Simsbury,06092,(860) 651-3725
+06042,06042,Hoffman Toyota,https://www.hoffmantoyota.com,9999,CT,41.81845,-72.868437,"36 Albany Turnpike, Rt 44",West Simsbury,06092,(860) 651-3725
 06043,06043,Westbrook Toyota,https://www.westbrooktoyota.com,9999,CT,41.29035,-72.442205,80 Flat Rock Place,Westbrook,06498,(860) 388-6991
 06045,06045,Torrington Toyota,https://www.torringtontoyota.com,9999,CT,41.818698,-73.08815,1472 East Main Street,Torrington,06790,(860) 482-9496
 06046,06046,Dowling Toyota of Litchfield,https://www.dowlingtoyota.com,9999,CT,41.736171,-73.215514,451 Bantam Road,Litchfield,06759,(860) 567-0815
 06047,06047,Toyota of Wallingford,https://www.wow-toyota.com,9999,CT,41.479633,-72.811467,859-861 No. Colony Road,Wallingford,06492,(203) 284-7400
-06049,06049,Toyota of Colchester,https://www.toyotaofcolchester.com,16,CT,41.579941,-72.341886,100 Old Hartford Road,Colchester,06415,(860) 537-2468
-06050,06050,Hartford Toyota,https://www.hartfordtoyota.com,16,CT,41.789824,-72.657709,135 West Service Road,Hartford,06120,(860) 278-5411
+06049,06049,Toyota of Colchester,https://www.toyotaofcolchester.com,9999,CT,41.579941,-72.341886,100 Old Hartford Road,Colchester,06415,(860) 537-2468
+06050,06050,Hartford Toyota,https://www.hartfordtoyota.com,9999,CT,41.789824,-72.657709,135 West Service Road,Hartford,06120,(860) 278-5411
 06051,06051,New Country Toyota of Westport,https://www.newcountrywestporttoyota.com,16,CT,41.138034,-73.339284,777 Post Road East,Westport,06880,(203) 222-3300
 06052,06052,Toyota of Stamford,https://www.toyotaofstamford.com,9999,CT,41.055215,-73.523747,909 East Main Street,Stamford,06902,(203) 348-3751
 06054,06054,Crabtree Toyota,https://www.crabtreetoyota.com,9999,CT,41.56905,-73.098733,832 Straits Turnpike,Watertown,06795,(203) 283-3083
 06055,06055,McGee Toyota of Putnam,https://www.mcgeetoyotaofputnam.com,9999,CT,41.925237,-71.874712,88 Providence Pike,Putnam,06260,(860) 923-4041
 06056,06056,Keeler Toyota of Westport,https://www.toyotaofwestport.com,9999,CT,41.138034,-73.339284,777 Post Road East,Westport,06880,(203) 222-3300
+06057,06057,Toyota of Bristol,https://www.Toyotaofbristolct.com,9999,CT,41.696487,-73.60276,1069 Farmington Ave,Bristol,06010,(860) 584-7333
 07008,07008,Price Toyota,https://www.pricetoyota.com,80,DE,39.674367,-75.595383,168 N. Dupont Highway,New Castle,19720,(302) 322-8600
 07009,07009,Newark Toyotaworld,https://www.newarktoyotaworld.com,9999,DE,39.687501,-75.745175,230 E. Cleveland Avenue,Newark,19711,(302) 368-6262
 07012,07012,Hertrich Toyota,https://www.hertrichtoyota.com,9999,DE,38.957724,-75.430122,1367 Bay Road,Milford,19963,(302) 422-2586
@@ -452,26 +453,26 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 15059,15059,Lewis Toyota of Garden City,https://www.lewistoyotaofgardencity.com,23,KS,37.9763,-100.8374,1221 Lareu Road,Garden City,67846,(620) 275-7172
 15060,15060,Briggs Toyota of Fort Scott,https://www.briggstoyota.com,23,KS,37.818217,-94.705252,1819 South Main Street,Ft Scott,66701,(620) 223-0900
 16004,16004,Swope Toyota,https://www.swopetoyota.com,22,KY,37.715244,-85.877307,1085 North Dixie Highway,Elizabethtown,42701,(270) 737-2181
-16005,16005,Green's Toyota of Lexington,https://www.greenstoyotaoflexington.com,22,KY,38.050554,-84.456123,630 E. New Circle Road,Lexington,40505,(859) 254-5751
+16005,16005,Green's Toyota of Lexington,https://www.greenstoyotaoflexington.com,9999,KY,38.050554,-84.456123,630 E. New Circle Road,Lexington,40505,(859) 254-5751
 16006,16006,Toyota of Louisville,https://www.toyotaoflouisville.com,22,KY,38.155594,-85.835686,6514 Dixie Highway,Louisville,40258,(502) 935-1433
 16042,16042,Toyota of Bowling Green,https://www.toyotaofbowlinggreen.com,9999,KY,36.954447,-86.428295,2398 Scottsville Road,Bowling Green,42104,(270) 843-4321
 16044,16044,Toyota of Hopkinsville,https://www.toyotaofhopkinsville.com,9999,KY,36.823515,-87.474411,4395 Ft. Campbell Blvd,Hopkinsville,42240,(270) 886-9099
 16046,16046,Toyota of Murray,https://www.toyotaofmurray.com,22,KY,36.593297,-88.314623,1301 South 12th Street,Murray,42071,(270) 753-4961
-16048,16048,Toyota of Somerset,https://www.toyotaofsomerset.com,22,KY,37.034487,-84.627729,4195 South Highway 27,Somerset,42503,(606) 679-1601
-16049,16049,Toyota South,https://www.toyotasouth.com,22,KY,37.759931,-84.275255,961 Four Mile Road,Richmond,40475,(859) 624-1313
+16048,16048,Toyota of Somerset,https://www.toyotaofsomerset.com,9999,KY,37.034487,-84.627729,4195 South Highway 27,Somerset,42503,(606) 679-1601
+16049,16049,Toyota South,https://www.toyotasouth.com,9999,KY,37.759931,-84.275255,961 Four Mile Road,Richmond,40475,(859) 624-1313
 16050,16050,Kerry Toyota,https://www.kerrytoyota.com,9999,KY,39.004467,-84.655455,6050 Hopeful Church Road,Florence,41042,(859) 371-3939
 16051,16051,Oxmoor Toyota,https://www.oxmoortoyota.com,22,KY,38.249817,-85.605553,8003 Shelbyville Road,Louisville,40222,(502) 426-1200
 16052,16052,Marshall Dry Ridge Toyota,https://www.marshalldryridgetoyota.com,22,KY,38.68267,-84.6039,9 Taft Highway,Dry Ridge,41035,(859) 824-9200
-16055,16055,Walters Toyota,https://www.walterstoyota.com,22,KY,37.5371,-82.599234,30 Walters Lane,Pikeville,41501,(606) 432-1451
-16056,16056,Toyota on Nicholasville,https://www.toyotaonnicholasville.com,22,KY,37.917449,-84.555907,2100 Lexington Road,Nicholasville,40356,(859) 887-4200
+16055,16055,Walters Toyota,https://www.walterstoyota.com,9999,KY,37.5371,-82.599234,30 Walters Lane,Pikeville,41501,(606) 432-1451
+16056,16056,Toyota on Nicholasville,https://www.toyotaonnicholasville.com,9999,KY,37.917449,-84.555907,2100 Lexington Road,Nicholasville,40356,(859) 887-4200
 16058,16058,Kerry Toyota Service Center,www.kerrytoyota.com,9999,KY,39.0776,-84.5189,550 Pike Street,Covington,41011,(859) 581-0911
 16059,16059,Don Moore Toyota,https://www.donmooretoyota.com,9999,KY,37.730889,-87.122997,4216 Frederica Street,Owensboro,42301,(270) 926-2500
 16061,16061,Frankfort Toyota,https://www.frankforttoyota.com,22,KY,38.188104,-84.818523,1001 Leestown Road,Frankfort,40601,(502) 695-1500
-16062,16062,Mann Toyota,https://www.manntoyota.com,22,KY,37.644617,-82.777283,1811 U.S. Highway 23 North,Prestonsburg,41653,(606) 886-3861
+16062,16062,Mann Toyota,https://www.manntoyota.com,9999,KY,37.644617,-82.777283,1811 U.S. Highway 23 North,Prestonsburg,41653,(606) 886-3861
 16063,16063,Watermark Toyota,https://www.watermarktoyota.com,22,KY,37.3523,-87.484258,1055 Crossing Place,Madisonville,42431,(270) 821-3372
 16064,16064,Coad Toyota Paducah,https://www.coadtoyotapaducah.com,22,KY,37.081955,-88.681211,3941 Mike Smith Drive,Paducah,42001,(270) 408-6453
-16065,16065,Toyota of Ashland,https://www.toyotaofashland.com,22,KY,38.46584,-82.615995,3503 Winchester Avenue,Ashland,41101,(606) 744-2727
-16066,16066,Don Franklin Corbin Toyota,https://www.donfranklincorbintoyota.com,22,KY,36.964646,-84.080296,311 E. Cumberland Gap Pky,Corbin,40701,(606) 528-1200
+16065,16065,Toyota of Ashland,https://www.toyotaofashland.com,9999,KY,38.46584,-82.615995,3503 Winchester Avenue,Ashland,41101,(606) 744-2727
+16066,16066,Don Franklin Corbin Toyota,https://www.donfranklincorbintoyota.com,9999,KY,36.964646,-84.080296,311 E. Cumberland Gap Pky,Corbin,40701,(606) 528-1200
 16067,16067,Toyota of Madisonville,https://www.toyotaofmadisonville.com,9999,KY,37.3523,-87.484258,1055 Crossing Place,Madisonville,42431,(270) 821-3372
 17014,17014,Price LeBlanc Toyota,https://www.priceleblanctoyota.com,9999,LA,30.375531,-91.035155,13250 Airline Highway,Baton Rouge,70817,(225) 408-1100
 17023,17023,Yokem Toyota,https://www.yokemtoyota.com,60,LA,32.419428,-93.721138,1199 E. Bert Kouns Ind. Loop,Shreveport,71105,(318) 798-3773
@@ -805,44 +806,44 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 31202,31202,Nye Toyota,https://www.nyetoyota.com,16,NY,43.076483,-75.68303,1441 Genesee Street,Oneida,13421,(315) 363-1000
 31203,31203,Maguire Toyota of Grand Island,https://www.maguiretoyotaofgrandisland.com,16,NY,43.015246,-78.971947,1974 Alvin Road,Grand Island,14072,(716) 773-7505
 31204,31204,Toyota of Bay Ridge Brooklyn,https://www.toyotaofbayridge.com,9999,NY,40.63566,-74.016338,6401 6th Avenue,Brooklyn,11220,(718) 439-7888
-32001,32001,Toyota of Greensboro,https://www.toyotaofgreensboro.com,50,NC,36.109296,-79.828663,2630 Battleground Avenue,Greensboro,27408,(336) 288-1190
-32015,32015,Cox Toyota,https://www.coxtoyota.com,50,NC,36.06358,-79.523555,3860 Danbrook Road,Burlington,27215,(336) 226-6361
+32001,32001,Toyota of Greensboro,https://www.toyotaofgreensboro.com,9999,NC,36.109296,-79.828663,2630 Battleground Avenue,Greensboro,27408,(336) 288-1190
+32015,32015,Cox Toyota,https://www.coxtoyota.com,9999,NC,36.06358,-79.523555,3860 Danbrook Road,Burlington,27215,(336) 226-6361
 32024,32024,Massey Toyota,https://www.masseytoyota.com,50,NC,35.261223,-77.660323,4760 Highway 70 West,Kinston,28504,(252) 523-6111
 32069,32069,Peterson Toyota,https://www.petersontoyota.com,50,NC,34.652941,-78.999895,4381 Fayetteville Road,Lumberton,28359,(910) 738-5241
 32076,32076,Rick Hendrick Toyota,https://www.rickhendricktoyota.com,50,NC,35.061941,-78.967596,1969 Skibo Road,Fayetteville,28314,(910) 868-5071
-32082,32082,Vann York Toyota,https://www.vannyorktoyota.com,50,NC,35.983698,-80.009287,500 Eastchester Drive,High Point,27262,(336) 885-9016
-32096,32096,Scott Clark Toyota,https://www.scottclarkstoyota.com,50,NC,35.101511,-80.68129,13052 Marie Garris Drive,Matthews,28105,(704) 535-1972
+32082,32082,Vann York Toyota,https://www.vannyorktoyota.com,9999,NC,35.983698,-80.009287,500 Eastchester Drive,High Point,27262,(336) 885-9016
+32096,32096,Scott Clark Toyota,https://www.scottclarkstoyota.com,9999,NC,35.101511,-80.68129,13052 Marie Garris Drive,Matthews,28105,(704) 535-1972
 32097,32097,Fred Anderson Toyota,https://www.fredandersontoyota.com,50,NC,35.893626,-78.757037,9101 Glenwood Avenue,Raleigh,27617,(919) 787-0099
-32106,32106,Hendrick Toyota Concord,https://www.hendricktoyotaconcord.com,50,NC,35.364186,-80.706176,7670 Bruton Smith Blvd.,Concord,28027,(704) 979-7700
-32110,32110,Cloninger Toyota,https://www.cloningertoyota.com,50,NC,35.646171,-80.491457,511 Jake Alexander Blvd. South,Salisbury,28147,(704) 755-6508
-32111,32111,Modern Toyota,https://www.moderntoyota.com,50,NC,36.04643,-80.261699,3178 Peters Creek Parkway,Winston-Salem,27127,(336) 785-3100
-32113,32113,Bryan Easler Toyota,https://www.bryaneaslertoyota.com,50,NC,35.29988,-82.43941,1409 Spartanburg Highway,Hendersonville,28792,(828) 693-7261
+32106,32106,Hendrick Toyota Concord,https://www.hendricktoyotaconcord.com,9999,NC,35.364186,-80.706176,7670 Bruton Smith Blvd.,Concord,28027,(704) 979-7700
+32110,32110,Cloninger Toyota,https://www.cloningertoyota.com,9999,NC,35.646171,-80.491457,511 Jake Alexander Blvd. South,Salisbury,28147,(704) 755-6508
+32111,32111,Modern Toyota,https://www.moderntoyota.com,9999,NC,36.04643,-80.261699,3178 Peters Creek Parkway,Winston-Salem,27127,(336) 785-3100
+32113,32113,Bryan Easler Toyota,https://www.bryaneaslertoyota.com,9999,NC,35.29988,-82.43941,1409 Spartanburg Highway,Hendersonville,28792,(828) 693-7261
 32115,32115,Griffin Toyota,https://www.griffintoyota.com,50,NC,34.909397,-79.717169,949 U.S. Highway 74 East,Hamlet,28345,(910) 582-3300
 32118,32118,Greenville Toyota,https://www.greenvilletoyota.com,50,NC,35.564457,-77.403553,3615 South Memorial Drive,Greenville,27834,(252) 321-3000
 32125,32125,Pinehurst Toyota,https://www.pinehursttoyota.com,50,NC,35.16495,-79.423031,10760 US Highway 15-501,Southern Pines,28387,(910) 692-2424
-32126,32126,Town & Country Toyota,https://www.townandcountrytoyota.com,50,NC,35.113484,-80.88284,9101 South Boulevard,Charlotte,28273,(704) 552-7600
-32129,32129,Mike Johnson's Hickory Toyota,https://www.hickorytoyota.com,50,NC,35.712047,-81.325241,435 Highway 70 S.E.,Hickory,28602,(828) 328-5586
+32126,32126,Town & Country Toyota,https://www.townandcountrytoyota.com,9999,NC,35.113484,-80.88284,9101 South Boulevard,Charlotte,28273,(704) 552-7600
+32129,32129,Mike Johnson's Hickory Toyota,https://www.hickorytoyota.com,9999,NC,35.712047,-81.325241,435 Highway 70 S.E.,Hickory,28602,(828) 328-5586
 32130,32130,Hendrick Toyota Wilmington,https://www.toyotaofwilmington.com,50,NC,34.248139,-77.862593,5640 Market Street,Wilmington,28405,(910) 791-9735
 32131,32131,Pecheles Ford Toyota,https://www.pechelestoyota.com,50,NC,35.591636,-77.099851,4020 Highway 264 West,Washington,27889,(252) 975-1500
 32133,32133,Fred Anderson Toyota of Sanford,https://www.toyotaofsanford.com,50,NC,35.442921,-79.127445,3321 Highway 87 South,Sanford,27332,(919) 708-5000
 32134,32134,Toyota of New Bern,https://www.toyotaofnewbern.com,50,NC,35.003988,-76.988107,5010 Highway 70 East,New Bern,28560,(252) 637-7200
 32136,32136,Hubert Vester Toyota of Wilson,https://www.hubertvestertoyota.com,50,NC,35.7481,-77.9671,3712 Raleigh Road Pkwy.,Wilson,27896,(252) 291-5300
-32139,32139,Toyota of Gastonia,https://www.toyotaofgastonia.com,50,NC,35.255481,-81.09268,4821 Wilkinson Boulevard,Gastonia,28056,(704) 824-7777
+32139,32139,Toyota of Gastonia,https://www.toyotaofgastonia.com,9999,NC,35.255481,-81.09268,4821 Wilkinson Boulevard,Gastonia,28056,(704) 824-7777
 32140,32140,Toyota of Goldsboro,https://www.toyotaofgoldsboro.com,50,NC,35.371125,-77.931012,301 N. Oak Forest Road,Goldsboro,27534,(919) 778-3232
-32141,32141,Modern Toyota of Boone,https://www.moderntoyotaofboone.com,50,NC,36.22267,-81.65288,225 Modern Drive,Boone,28607,(828) 264-1491
+32141,32141,Modern Toyota of Boone,https://www.moderntoyotaofboone.com,9999,NC,36.22267,-81.65288,225 Modern Drive,Boone,28607,(828) 264-1491
 32142,32142,Hendrick Toyota Apex,https://www.hendricktoyotaapex.com,50,NC,35.749877,-78.836851,1210 Laura Village Drive,Apex,27523,(919) 335-1600
-32143,32143,Flow Toyota of Statesville,https://www.flowtoyotaofstatesville.com,50,NC,35.78056,-80.86273,997 Folger Drive,Statesville,28625,(704) 872-2771
-32144,32144,Mount Airy Toyota,https://www.mountairytoyota.com,50,NC,36.5095,-80.624961,508 N Andy Griffith Pkwy,Mount Airy,27030,(336) 786-2118
+32143,32143,Flow Toyota of Statesville,https://www.flowtoyotaofstatesville.com,9999,NC,35.78056,-80.86273,997 Folger Drive,Statesville,28625,(704) 872-2771
+32144,32144,Mount Airy Toyota,https://www.mountairytoyota.com,9999,NC,36.5095,-80.624961,508 N Andy Griffith Pkwy,Mount Airy,27030,(336) 786-2118
 32146,32146,Deacon Jones Toyota,https://www.deaconjonestoyota.com,50,NC,34.99123,-78.35533,1613 Sunset Avenue,Clinton,28328,(910) 592-8951
-32147,32147,Classic Toyota of Wilkesboro,https://www.classictoyotawilkesboro.com,50,NC,36.15528,-81.168728,1511 West D Street,North Wilkesboro,28659,(336) 667-1185
-32148,32148,Fred Anderson Toyota of Asheville,https://www.ashevilletoyota.com,50,NC,35.53621,-82.60152,777 Brevard Road,Asheville,28806,(828) 667-8888
+32147,32147,Classic Toyota of Wilkesboro,https://www.classictoyotawilkesboro.com,9999,NC,36.15528,-81.168728,1511 West D Street,North Wilkesboro,28659,(336) 667-1185
+32148,32148,Fred Anderson Toyota of Asheville,https://www.ashevilletoyota.com,9999,NC,35.53621,-82.60152,777 Brevard Road,Asheville,28806,(828) 667-8888
 32150,32150,Stevenson-Hendrick Toyota Jacksonville,https://www.stevensonhendricktoyota.com,50,NC,34.790294,-77.37285,3124 New Bern Highway,Jacksonville,28546,(910) 937-1555
 32152,32152,Hall Toyota Elizabeth City,https://www.halltoyotaelizabethcity.com,50,NC,36.2853,-76.237246,1002 Halstead Blvd.,Elizabeth City,27909,(252) 335-4301
 32153,32153,Classic Toyota of Henderson,https://www.classictoyotahenderson.com,50,NC,36.3225,-78.4511,205 Toyota Lane,Henderson,27537,(252) 438-2181
 32154,32154,Mark Jacobson Toyota,https://www.markjacobsontoyota.com,50,NC,35.96301,-78.975932,4516 Durham Chapel Hill Blvd.,Durham,27707,(919) 493-5599
-32155,32155,Modern Toyota of Asheboro,https://www.moderntoyotaofasheboro.com,50,NC,35.703614,-79.780261,1636 Highway 64 East,Asheboro,27203,(336) 629-9148
+32155,32155,Modern Toyota of Asheboro,https://www.moderntoyotaofasheboro.com,9999,NC,35.703614,-79.780261,1636 Highway 64 East,Asheboro,27203,(336) 629-9148
 32156,32156,Toyota of Roanoke Rapids,https://www.toyotaofroanokerapids.com,50,NC,36.44097,-77.6431,1836 Premier Blvd.,Roanoke Rapids,27870,(252) 537-6161
-32157,32157,Toyota of North Charlotte,https://www.toyotaofnorthcharlotte.com,50,NC,35.401471,-80.852908,13429 Statesville Road,Huntersville,28078,(704) 875-9199
+32157,32157,Toyota of North Charlotte,https://www.toyotaofnorthcharlotte.com,9999,NC,35.401471,-80.852908,13429 Statesville Road,Huntersville,28078,(704) 875-9199
 32158,32158,Leith Toyota,https://www.leithtoyota.com,50,NC,35.890317,-78.563795,8005 Capital Blvd.,Raleigh,27616,(919) 876-5900
 32159,32159,CMA's Rocky Mount Toyota,https://www.cmasrockymounttoyota.com,50,NC,35.968973,-77.812327,943 N. Wesleyan Blvd.,Rocky Mount,27804,(252) 977-0224
 33010,33010,Lloyds Toyota,https://www.lloydstoyota.com,23,ND,46.892392,-98.715803,500 17th St SW,Jamestown,58401,(701) 252-4690
@@ -857,7 +858,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 34041,34041,Germain Toyota of Columbus,https://www.germaintoyota.net,22,OH,39.931883,-82.839501,5711 Scarborough Blvd.,Columbus,43232,(614) 868-0300
 34044,34044,Performance Toyota,https://www.performancetoyotastore.com,9999,OH,39.332041,-84.52006,5676 Dixie Highway,Fairfield,45014,(513) 874-8797
 34050,34050,Graham Toyota,https://www.grahamtoyota.com,9999,OH,40.767788,-82.564931,1515 West Fourth Street,Mansfield,44906,(419) 529-1800
-34064,34064,Glockner Toyota,https://www.glocknertoyota.com,22,OH,38.769468,-82.986238,2867 U.S. Route 23,Portsmouth,45662,(740) 354-3255
+34064,34064,Glockner Toyota,https://www.glocknertoyota.com,9999,OH,38.769468,-82.986238,2867 U.S. Route 23,Portsmouth,45662,(740) 354-3255
 34070,34070,Toyota Direct,https://www.toyotadirect.com,22,OH,40.057783,-82.897578,4248 Morse Road,Columbus,43230,(614) 476-1979
 34073,34073,Walker Toyota,https://www.walkertoyota.com,22,OH,39.627343,-84.226654,8457 Springboro Pike,Miamisburg,45342,(937) 433-4950
 34077,34077,Joseph Airport Toyota,https://www.josephairporttoyota.com,9999,OH,39.888754,-84.22091,1180 W National Road,Vandalia,45377,(937) 898-8060
@@ -1005,8 +1006,8 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 38030,38030,Grieco Toyota,https://www.griecotoyota.com,9999,RI,41.820453,-71.362443,415 Taunton Avenue,East Providence,02914,(401) 438-0350
 38031,38031,Langway Toyota of Newport,https://www.langwaytoyotaofnewport.com,17,RI,41.519263,-71.291446,285 East Main Road,Middletown,02842,(401) 619-5400
 38032,38032,Nucar Toyota of North Kingstown,https://www.nucartoyotanorthkingstown.com,9999,RI,41.600766,-71.497203,3671 Quaker Lane,North Kingstown,02852,(401) 884-5438
-39003,39003,Ralph Hayes Toyota,https://www.ralphhayestoyota.com,50,SC,34.552107,-82.679066,3525 Clemson Boulevard,Anderson,29621,(864) 226-1571
-39028,39028,Toyota of Easley,https://www.toyotaofeasley.com,50,SC,34.825328,-82.569712,5643 Calhoun Memorial Hwy,Easley,29640,(864) 855-2233
+39003,39003,Ralph Hayes Toyota,https://www.ralphhayestoyota.com,9999,SC,34.552107,-82.679066,3525 Clemson Boulevard,Anderson,29621,(864) 226-1571
+39028,39028,Toyota of Easley,https://www.toyotaofeasley.com,9999,SC,34.825328,-82.569712,5643 Calhoun Memorial Hwy,Easley,29640,(864) 855-2233
 39031,39031,Sparks Toyota,https://www.sparkstoyota.com,50,SC,33.762513,-78.972113,4855 Highway 501,Myrtle Beach,29579,(843) 236-2161
 39040,39040,Stokes Toyota Beaufort,https://www.stokestoyotabeaufort.com,50,SC,32.446898,-80.729508,3557 Trask Parkway,Beaufort,29906,(843) 522-3232
 39042,39042,Ballentine Toyota,https://www.ballentinetoyota.com,50,SC,34.213508,-82.152448,1305 Highway 72 By-Pass,Greenwood,29646,(864) 229-5052
@@ -1014,16 +1015,16 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 39049,39049,Lugoff Toyota,https://www.lugofftoyota.com,50,SC,34.227531,-80.677178,878 Highway 1 South,Lugoff,29078,(803) 438-2772
 39052,39052,Jim Hudson Toyota,https://www.jimhudsontoyota.com,50,SC,34.098479,-81.177722,970 Columbiana Drive,Irmo,29063,(803) 407-5678
 39055,39055,Stokes Toyota Hilton Head,https://www.stokestoyotahiltonhead.com,50,SC,32.289391,-80.922214,100 Fording Island Road,Bluffton,29910,(843) 815-4444
-39058,39058,Toyota of Rock Hill,https://www.toyotarockhill.com,50,SC,34.94228,-80.970664,640 Galleria Boulevard,Rock Hill,29730,(803) 328-2886
+39058,39058,Group 1 Toyota Rock Hill,https://www.group1toyotarockhill.com,9999,SC,34.94228,-80.970664,640 Galleria Boulevard,Rock Hill,29730,(803) 328-2886
 39059,39059,Fred Anderson Toyota of Charleston,https://www.toyotaofcharleston.com,50,SC,32.791001,-80.03585,2100 Savannah Highway,Charleston,29414,(843) 556-9110
 39060,39060,Hendrick Toyota North Charleston,https://www.hendricktoyotanorthcharleston.com,50,SC,32.931131,-80.036508,7151 Rivers Avenue,North Charleston,29406,(843) 797-8000
-39061,39061,Toyota of Greenville,https://www.toyotaofgreenville.com,50,SC,34.819503,-82.341872,2686 Laurens Road,Greenville,29607,(864) 288-3535
+39061,39061,Toyota of Greenville,https://www.toyotaofgreenville.com,9999,SC,34.819503,-82.341872,2686 Laurens Road,Greenville,29607,(864) 288-3535
 39064,39064,Miracle Toyota of North Augusta,https://www.miracletoyotaofnorthaugusta.com,50,SC,33.48745,-81.929001,5512 Jefferson Davis Highway,North Augusta,29841,(803) 279-8400
 39065,39065,Davis Toyota of Orangeburg,https://www.davisorangeburgtoyota.com,50,SC,33.544498,-80.832136,3237 St. Matthews Road,Orangeburg,29118,(803) 536-4512
 39066,39066,Peter Boulware Toyota of Columbia,https://www.toyotaofcolumbia.com,50,SC,34.000075,-81.098861,2136 Sunset Blvd.,West Columbia,29169,(803) 796-6650
 39067,39067,Midlands Toyota,https://www.mymidlandstoyota.com,50,SC,34.127979,-80.960248,240 Killian Commons Parkway,Columbia,29203,(803) 786-4111
-39068,39068,Spartanburg Toyota,https://www.spartanburgtoyota.com,50,SC,34.919964,-81.996274,2450 Reidville Road,Spartanburg,29301,(864) 595-2300
-39069,39069,Fred Anderson Toyota of Greer,https://www.fredandersontoyotaofgreer.com,50,SC,34.94933,-82.20048,13770 E. Wade Hampton Blvd.,Greer,29651,(864) 662-4800
+39068,39068,Spartanburg Toyota,https://www.spartanburgtoyota.com,9999,SC,34.919964,-81.996274,2450 Reidville Road,Spartanburg,29301,(864) 595-2300
+39069,39069,Fred Anderson Toyota of Greer,https://www.fredandersontoyotaofgreer.com,9999,SC,34.94933,-82.20048,13770 E. Wade Hampton Blvd.,Greer,29651,(864) 662-4800
 39070,39070,Jim Hudson Toyota Sumter,https://www.jimhudsontoyotasumter.com,50,SC,33.959981,-80.398134,2542 Broad Street,Sumter,29150,(803) 469-9500
 40009,40009,Harr Toyota,https://www.harr-toyota.com,23,SD,45.460643,-98.429008,4255 6th Avenue SE,Aberdeen,57401,(605) 225-3078
 40011,40011,Billion Toyota,https://www.siouxfallstoyota.com,23,SD,43.543666,-96.772395,4101 W. 12th Street,Sioux Falls,57106,(605) 361-7000
@@ -1032,15 +1033,15 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 40022,40022,Capital City Toyota,https://www.toyotacapitalcity.com,23,SD,44.363572,-100.347779,518 East Sioux Avenue,Pierre,57501,(605) 224-7378
 41001,41001,Capital Toyota,https://www.capitaltoyota.com,22,TN,35.019899,-85.201868,5808 Lee Hwy,Chattanooga,37421,(423) 892-0661
 41021,41021,Roberts Toyota,https://www.robertstoyota.com,22,TN,35.634491,-87.01958,1027 Nashville Highway,Columbia,38401,(931) 388-3006
-41030,41030,Toyota of Kingsport,https://www.toyotaofkingsport.com,22,TN,36.54659,-82.500561,2525 East Stone Drive,Kingsport,37660,(423) 246-6611
+41030,41030,Toyota of Kingsport,https://www.toyotaofkingsport.com,9999,TN,36.54659,-82.500561,2525 East Stone Drive,Kingsport,37660,(423) 246-6611
 41041,41041,Nashville Toyota North,https://www.nashvilletoyotanorth.com,9999,TN,36.310126,-86.678,2400 Gallatin Pike North,Madison,37115,(615) 868-7990
 41043,41043,Principle Toyota,https://www.principletoyota.com,22,TN,35.05105,-89.817133,7370 Winchester Road,Memphis,38125,(901) 758-4040
 41050,41050,Cumberland Toyota,https://www.cumberlandtoyota.com,22,TN,36.138257,-85.522059,1540 Interstate Drive,Cookeville,38501,(931) 526-5600
-41052,41052,Rusty Wallace Toyota,https://www.rustywallacetoyota.com,22,TN,36.179783,-83.391156,5944 W Andrew Johnson Hwy,Morristown,37814,(423) 587-1972
+41052,41052,Rusty Wallace Toyota,https://www.rustywallacetoyota.com,9999,TN,36.179783,-83.391156,5944 W Andrew Johnson Hwy,Morristown,37814,(423) 587-1972
 41056,41056,Toyota of Cleveland,https://www.toyotaofcleveland.com,22,TN,35.154453,-84.946216,3560 Village North Bl SW,McDonald,37353,(423) 339-1138
 41057,41057,John Roberts Toyota,https://www.johnrobertstoyota.com,22,TN,35.454496,-86.044917,2610 Hillsboro Highway,Manchester,37355,(931) 723-4444
-41060,41060,Toyota Knoxville,https://www.toyotaknoxville.com,22,TN,35.90818,-84.13107,10415 Parkside Drive,Knoxville,37922,(865) 218-3300
-41061,41061,Rick McGill's Airport Toyota,https://www.rickmcgillairporttoyota.com,22,TN,35.82815,-83.97589,3145 Alcoa Highway,Alcoa,37701,(865) 970-2615
+41060,41060,Toyota Knoxville,https://www.toyotaknoxville.com,9999,TN,35.90818,-84.13107,10415 Parkside Drive,Knoxville,37922,(865) 218-3300
+41061,41061,Rick McGill's Airport Toyota,https://www.rickmcgillairporttoyota.com,9999,TN,35.82815,-83.97589,3145 Alcoa Highway,Alcoa,37701,(865) 970-2615
 41062,41062,Peppers Toyota,https://www.pepperstoyota.com,22,TN,36.319057,-88.2803,2400 East Wood Street,Paris,38242,(731) 642-3900
 41063,41063,Robinson Toyota,https://www.robinsontoyota.com,22,TN,35.660944,-88.866133,1453 Vann Drive,Jackson,38305,(731) 668-1234
 41066,41066,Wolfchase Toyota,https://www.wolfchasetoyota.com,22,TN,35.186103,-89.793728,2201 North Germantown Parkway,Cordova,38016,(901) 384-3100
@@ -1048,12 +1049,12 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 41073,41073,Landers McLarty Toyota,https://www.landersmclartytoyota.com,22,TN,35.045856,-86.572882,2970 Huntsville Highway,Fayetteville,37334,(931) 438-6300
 41078,41078,Toyota of Cool Springs,https://www.toyotaofcoolsprings.com,9999,TN,35.93566,-86.82097,1875 West McEwen Drive,Franklin,37067,(615) 790-8401
 41079,41079,Toyota of Murfreesboro,https://www.toyotaofmurfreesboro.com,9999,TN,35.869131,-86.460882,3434 Bill Smith Drive,Murfreesboro,37129,(615) 890-1500
-41082,41082,Johnson City Toyota,https://www.johnsoncitytoyota.com,22,TN,36.363635,-82.380902,3124 Bristol Highway,Johnson City,37601,(423) 282-2241
+41082,41082,Johnson City Toyota,https://www.johnsoncitytoyota.com,9999,TN,36.363635,-82.380902,3124 Bristol Highway,Johnson City,37601,(423) 282-2241
 41083,41083,Toyota of Gallatin,https://www.toyotagallatin.com,22,TN,36.362233,-86.494348,1435 Nashville Pike,Gallatin,37066,(615) 230-9000
 41084,41084,Wyatt Johnson Toyota,https://www.wyattjohnsontoyota.com,9999,TN,36.578722,-87.299294,2595 Wilma Rudolph Blvd,Clarksville,37040,(931) 645-8900
 41085,41085,Beaman Toyota,https://www.beamantoyota.com,9999,TN,36.086162,-86.699064,343  Harding Place,Nashville,37211,(615) 251-8400
-41086,41086,Fox Toyota,https://www.foxtoyotaclinton.com,22,TN,36.170417,-84.082944,228 Fox Family Lane,Clinton,37716,(865) 494-0228
-41087,41087,Toyota of Bristol,https://www.toyotaofbristol.com,22,TN,36.592554,-82.222519,3045 W. State Street,Bristol,37620,(423) 764-3155
+41086,41086,Fox Toyota,https://www.foxtoyotaclinton.com,9999,TN,36.170417,-84.082944,228 Fox Family Lane,Clinton,37716,(865) 494-0228
+41087,41087,Toyota of Bristol,https://www.toyotaofbristol.com,9999,TN,36.592554,-82.222519,3045 W. State Street,Bristol,37620,(423) 764-3155
 41089,41089,Victory Toyota Dyersburg,https://www.victorytoyotadyersburg.com,22,TN,36.058016,-89.397659,920 Highway 51 Bypass,Dyersburg,38024,(731) 285-5110
 41090,41090,Cumberland Toyota,https://www.cumberlandtoyota.com,9999,TN,36.138257,-85.522059,1540 Interstate Drive,Cookeville,38501,(931) 526-5600
 41091,41091,Toyota of Gallatin,https://www.toyotagallatin.com,9999,TN,36.362233,-86.494348,1429 Nashville Pike,Gallatin,37066,(615) 230-9000
@@ -1164,11 +1165,11 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 45009,45009,Checkered Flag Toyota,https://toyota.checkeredflag.com,80,VA,36.847767,-76.163478,5301 Virginia Beach Boulevard,Virginia Beach,23462,(757) 490-1111
 45016,45016,Bill Page Toyota,https://www.billpagetoyota.com,9999,VA,38.870871,-77.174385,2923 Annandale Road,Falls Church,22042,(703) 532-8800
 45030,45030,McDonough Toyota,https://www.mcdonoughtoyota.com,80,VA,38.139156,-79.04828,918 Richmond Road,Staunton,24401,(540) 886-6201
-45036,45036,Shelor Toyota,https://www.shelortoyota.com,80,VA,37.136254,-80.366507,2230 Roanoke Street,Christiansburg,24073,(540) 382-2981
+45036,45036,Shelor Toyota,https://www.shelortoyota.com,9999,VA,37.136254,-80.366507,2230 Roanoke Street,Christiansburg,24073,(540) 382-2981
 45039,45039,Pearson Toyota,https://www.pearsontoyotascion.com,80,VA,37.158597,-76.534578,12978 Jefferson Avenue,Newport News,23608,(757) 874-6000
 45040,45040,Miller Toyota,https://www.millertoyota.com,9999,VA,38.769447,-77.492021,8566 Sudley Road,Manassas,20110,(703) 369-3040
-45045,45045,Danville Toyota,https://www.danvilletoyota.com,80,VA,36.586434,-79.432969,125 Piedmont Place,Danville,24541,(434) 822-0300
-45053,45053,Haley Toyota of Roanoke,https://www.haleytoyotaofroanoke.com,80,VA,37.285418,-79.937212,"1530 Courtland Road, N.E.",Roanoke,24012,(540) 345-1666
+45045,45045,Danville Toyota,https://www.danvilletoyota.com,9999,VA,36.586434,-79.432969,125 Piedmont Place,Danville,24541,(434) 822-0300
+45053,45053,Haley Toyota of Roanoke,https://www.haleytoyotaofroanoke.com,9999,VA,37.285418,-79.937212,"1530 Courtland Road, N.E.",Roanoke,24012,(540) 345-1666
 45055,45055,Ourisman Fairfax Toyota,https://www.ourismanfairfaxtoyota.com,9999,VA,38.860483,-77.300183,10287 Fairfax Boulevard,Fairfax,22030,(703) 359-1010
 45057,45057,Haley Toyota of Richmond,https://www.haleytoyota.com,80,VA,37.426312,-77.624762,3600 Lonas Parkway,Midlothian,23112,(804) 545-7411
 45070,45070,Steven Toyota,https://www.steventoyota.com,80,VA,38.413861,-78.899895,2970 South Main St.,Harrisonburg,22801,(540) 434-1400
@@ -1182,7 +1183,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 45084,45084,Haley Toyota of Richmond CC,https://www.haleycertified.com,80,VA,37.496,-77.5508,8301 Midlothian Pike,Richmond,23235,(804) 228-4000
 45085,45085,Berglund Toyota,https://www.berglundtoyota.com,80,VA,37.360769,-79.18004,19018 Forest Road,Lynchburg,24502,(434) 528-3202
 45086,45086,Battlefield Toyota,https://www.battlefieldtoyota.com,80,VA,38.458019,-78.047039,11013 James Monroe Hwy.,Culpeper,22701,(540) 317-7800
-45087,45087,Nelson Toyota,https://www.toyotasbynelson.com,80,VA,36.740522,-79.95362,980 Fairystone Park Highway,Stanleytown,24168,(276) 638-2386
+45087,45087,Nelson Toyota,https://www.toyotasbynelson.com,9999,VA,36.740522,-79.95362,980 Fairystone Park Highway,Stanleytown,24168,(276) 638-2386
 45088,45088,Warrenton Toyota,https://www.warrentontoyota.com,9999,VA,38.732214,-77.771966,6449 Lee Highway,Warrenton,20187,(540) 878-4100
 45089,45089,Malloy Toyota,https://www.malloytoyota.com,80,VA,39.1623,-78.182381,400 Weems Lane,Winchester,22601,(540) 678-1791
 45091,45091,Sheehy Toyota of Stafford,https://www.sheehytoyotastafford.com,9999,VA,38.466705,-77.41115,95 Garrisonville Road,Stafford,22554,(540) 720-4700
@@ -1230,17 +1231,17 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 46111,46111,Toyota of Bellingham,https://www.toyotaofbellingham.com,13,WA,48.755065,-122.459948,1100 Iowa Street,Bellingham,98229,(360) 676-0600
 46112,46112,Toyota of Tri-Cities,https://www.toyotaoftricities.com,13,WA,46.226215,-119.206186,6321 W. Canal Drive,Kennewick,99336,(509) 736-9900
 47012,47012,Superior Toyota,https://www.superiortoyotawv.com,80,WV,39.268278,-81.514403,3101 E 7th Street,Parkersburg,26101,(304) 424-5122
-47018,47018,Ramey Toyota,https://www.rameytoyota.com,80,WV,37.341841,-81.125939,135 Frazier Drive,Princeton,24740,(304) 487-2279
-47025,47025,L & S Toyota of Beckley,https://www.lstoyotabeckley.com,80,WV,37.805426,-81.185166,248 Auto Plaza,Beckley,25801,(304) 252-8548
+47018,47018,Ramey Toyota,https://www.rameytoyota.com,9999,WV,37.341841,-81.125939,135 Frazier Drive,Princeton,24740,(304) 487-2279
+47025,47025,L & S Toyota of Beckley,https://www.lstoyotabeckley.com,9999,WV,37.805426,-81.185166,248 Auto Plaza,Beckley,25801,(304) 252-8548
 47027,47027,Buckhannon Toyota,https://www.buckhannontoyota.com,80,WV,38.998883,-80.25322,63 Brushy Fork Road,Buckhannon,26201,(304) 472-7200
 47029,47029,Dan Cava's Toyota World,https://www.cavatoyota.com,80,WV,39.433141,-80.188289,2510 White Hall Boulevard,White Hall,26554,(304) 366-2720
-47030,47030,Moses Toyota,https://www.mosestoyota.com,80,WV,38.387736,-81.827321,1433 MacCorkle Avenue,Saint Albans,25177,(304) 727-7777
-47033,47033,Thornhill Toyota,https://www.thornhilltoyotawv.com,80,WV,37.981765,-81.993041,63 Admiral Road,Chapmanville,25508,(304) 855-8200
+47030,47030,Moses Toyota,https://www.mosestoyota.com,9999,WV,38.387736,-81.827321,1433 MacCorkle Avenue,Saint Albans,25177,(304) 727-7777
+47033,47033,Thornhill Toyota,https://www.thornhilltoyotawv.com,9999,WV,37.981765,-81.993041,63 Admiral Road,Chapmanville,25508,(304) 855-8200
 47034,47034,CMA's Toyota of Martinsburg,https://www.cmastoyotaofmartinsburg.com,80,WV,39.456903,-77.98679,650 Foxcroft Avenue,Martinsburg,25401,(304) 263-3341
 47035,47035,Victory Toyota Highlands,https://www.victorytoyotahighlands.com,80,WV,40.063164,-80.586254,55 Robinson Drive,Triadelphia,26059,(304) 232-1880
 47036,47036,Moses Toyota of Morgantown,https://www.mosestoyotaofmorgantown.com,80,WV,39.60773,-79.967852,60 Don Knotts Blvd.,Morgantown,26508,(304) 296-4401
-47037,47037,Victory Toyota Barboursville,https://www.victorytoyotabarboursville.com,80,WV,38.415122,-82.259474,1 Superior Way,Barboursville,25504,(304) 736-5400
-47038,47038,Victory Toyota Charleston,https://www.victorytoyotacharleston.com,80,WV,38.370629,-81.671648,1905 Patrick Street Plaza,Charleston,25387,(304) 513-3777
+47037,47037,Victory Toyota Barboursville,https://www.victorytoyotabarboursville.com,9999,WV,38.415122,-82.259474,1 Superior Way,Barboursville,25504,(304) 736-5400
+47038,47038,Victory Toyota Charleston,https://www.victorytoyotacharleston.com,9999,WV,38.370629,-81.671648,1905 Patrick Street Plaza,Charleston,25387,(304) 513-3777
 47039,47039,Parkersburg Toyota,https://www.parkersburgtoyota.com,9999,WV,39.268278,-81.514403,3101 E 7th Street,Parkersburg,26101,(304) 424-5122
 48005,48005,Le Mieux & Son Toyota,https://www.lemieuxtoyota.com,9999,WI,44.48136,-88.071172,2550 South Oneida Street,Green Bay,54304,(920) 496-2200
 48021,48021,Kari Toyota,https://www.karitoyota.com,21,WI,46.726434,-92.102988,1002 Tower Avenue,Superior,54880,(715) 394-4429

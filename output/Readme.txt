@@ -1,6 +1,6 @@
-Readme.txt updated 6/29/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 6/30/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Updated when the vehicle inventory is obtained.
+Last update -  Added statement on when a car can move from the sold file back to the current inventory file.
 
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
@@ -46,6 +46,10 @@ A user can determine the real VIN that has replaced a temp VIN by using the Chan
 Once a temp VIN in the sold file is older than 16 weeks it is assumed it has been replaced with a real VIN 
 and/or the user no longer needs use of the temp VIN, and it is removed from the sold files.  This period of
 time also allows some statistics to be run on the day of the month allocations appear.
+Also VINs can move from the Sold file back to the current inventory file (non sold) if they disappeared from the
+Toyota search inventory website then reappear there.  This is rare but can sometime happen if a car sale falls through
+or someone who the car was reserved for, and considered sold, decides they don't want it.  It can also sometimes happen when a  
+quality control hold on the car at the port of entry occurs for a long time.
 Older model year sold files will be archived at some point, when it appears there is no longer any inventory of that year left.
 
 Note that the contents of the VIN entries in the sold inventory files do not update after being placed in that file because there is no data 

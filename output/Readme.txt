@@ -1,6 +1,7 @@
-Readme.txt updated 6/30/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 7/1/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Added statement on when a car can move from the sold file back to the current inventory file.
+Last update -  Added statement on sometimes dealers hiding what are considered available cars from the Toyota Search Inventory Website,
+               and only showing them on the dealer website.
 
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
@@ -59,6 +60,13 @@ Also a dealer may have the vehicle removed from the Toyota search inventory webs
 if they consider it sold for all practical purposes and/or don't want to get calls about it from other potential buyers.
 The vehicle may still appear on the dealer website in this case as well.
 Likewise, some dealers may not use the Pre-Sold field.
+
+Some dealers may actually hide cars from the Toyota Search Inventory website, even when they are NOT
+considered sold or reserved or spoken for, and only show them on the dealers website.
+Why they hide these available cars from the Toyota Search Inventoury website but show them on the dealer website is unknown.
+It would seem counterproductive to selling cars.
+Stevinson Toyota East of Aurora Colorado has been observed to hide approx half of their Rav4s like this. 
+There may be other dealers that do this but only Stevinson Toyota East has been brought to my attention. 
 
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.
 They contains all changes between runs of the inventory collection,

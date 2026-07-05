@@ -1,18 +1,42 @@
-Readme.txt updated 7/1/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 7/5/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Added statement on sometimes dealers hiding what are considered available cars from the Toyota Search Inventory Website,
+Last update -  Added further detail on dealers hiding what are considered available cars from the national Toyota Search Inventory Website,
                and only showing them on the dealer website.
 
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
-The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
+The inventory is obtained from the same place the national Toyota Inventory search website (https://www.toyota.com/search-inventory/)
 gets its data from (which is https://api.search-inventory.toyota.com/graphql ).  The folder also contains the sold inventory 
 (defined as inventory that appeared at one time in a run, but no longer appears in the inventory obtained from the website), as well as Change History 
 event files for the last 14 days which contain added VINs, modified contents of existing VINs, or removed VINs between runs of the inventory 
 collection over that time period.
 
-All files are read only view on my google drive.  Thus if you wish to do filtering, etc you need 
-download the file and open it or save it to your own google drive.
+Note that some dealers may actually hide cars from the national Toyota Search Inventory website, even when they are NOT
+considered sold or reserved or spoken for, and only show them on the dealers website.  Thus they would not
+appear on the spreadsheets.
+Per the Google AI summary, Possible reasons for why they hide these cars, are:
+"Dealers often hide or delay listing new Toyota allocations on Toyota.com to manage local market demand and customer waitlists. 
+This allows them to avoid hundreds of unwanted calls, save vehicles for in-person buyers, 
+and maintain local pricing advantages or markups without showing nationwide availability.
+The most common reasons for this inventory discrepancy include:
+
+- Preventing Out-of-State Competition: High-demand models (like RAV4 Hybrids or the Grand Highlander) see massive nationwide searches. 
+Dealers often hide allocated cars on the national site to deter out-of-state buyers, preferring to sell to locals or nearby customers.
+
+- Protecting Waitlists: Dealerships operate on waitlists. When they get a new allocation, they call the next customer in line. 
+Hiding the car from the public site prevents people from trying to "jump the line" or place a deposit on an already spoken-for vehicle.
+
+- Controlling Markups: If a highly coveted car is listed on Toyota.com with a base MSRP, 
+the dealer faces a flood of inquiries and must deal with angry buyers when they add market adjustments. 
+Stashing the inventory lets them negotiate markups directly with in-person leads."
+
+Stevinson Toyota East of Aurora Colorado has been observed to hide approx half of their large Rav4 allocation like this. 
+There are probably other dealers that do this but only Stevinson Toyota East has been brought to my attention.
+Because of this you should also do a cursory check of some local/regional dealer websites when looking for a vehicle,
+after you have looked through the spreadsheet.
+
+All files are read only view on my google drive.  Thus if you wish to do filtering, sorting, etc you need 
+download the file and open it with Excel, or save it to your own google drive.
 
 Folder updates typically show up each day by 6am CDT. The inventory run for that starts 
 at 9pm CDT the previous day and typically runs through the night and into the very early morning to
@@ -56,17 +80,11 @@ Older model year sold files will be archived at some point, when it appears ther
 Note that the contents of the VIN entries in the sold inventory files do not update after being placed in that file because there is no data 
 to update them with from the Toyota search inventory website anymore. I.E, the website no longer returns that VIN and contents for it,
 and that is the only website that the vehicle information is obtained from by the program.
+
 Also a dealer may have the vehicle removed from the Toyota search inventory website results (thus showing up in the Sold files)
 if they consider it sold for all practical purposes and/or don't want to get calls about it from other potential buyers.
 The vehicle may still appear on the dealer website in this case as well.
 Likewise, some dealers may not use the Pre-Sold field.
-
-Some dealers may actually hide cars from the Toyota Search Inventory website, even when they are NOT
-considered sold or reserved or spoken for, and only show them on the dealers website.
-Why they hide these available cars from the Toyota Search Inventoury website but show them on the dealer website is unknown.
-It would seem counterproductive to selling cars.
-Stevinson Toyota East of Aurora Colorado has been observed to hide approx half of their Rav4s like this. 
-There may be other dealers that do this but only Stevinson Toyota East has been brought to my attention. 
 
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.
 They contains all changes between runs of the inventory collection,

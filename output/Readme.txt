@@ -1,7 +1,7 @@
-Readme.txt updated 7/5/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 7/6/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Added further detail on dealers hiding what are considered available cars from the national Toyota Search Inventory Website,
-               and only showing them on the dealer website.
+Last update -  Added date on when it was observed that Stevinson Toyota East of Aurora Colorado was hiding Rav4s from the national
+               Toyota Search Inventory website
 
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
@@ -30,7 +30,7 @@ Hiding the car from the public site prevents people from trying to "jump the lin
 the dealer faces a flood of inquiries and must deal with angry buyers when they add market adjustments. 
 Stashing the inventory lets them negotiate markups directly with in-person leads."
 
-Stevinson Toyota East of Aurora Colorado has been observed to hide approx half of their large Rav4 allocation like this. 
+Stevinson Toyota East of Aurora Colorado has been observed (on 5/22/2026) to hide approx half of their large Rav4 allocation like this. 
 There are probably other dealers that do this but only Stevinson Toyota East has been brought to my attention.
 Because of this you should also do a cursory check of some local/regional dealer websites when looking for a vehicle,
 after you have looked through the spreadsheet.

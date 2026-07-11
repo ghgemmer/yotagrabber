@@ -192,6 +192,7 @@ credentials.json
 !/src/createTestParquetFiles.py
 !/src/RunUserVehicleSearchesExample.bat
 !/src/waitForSeconds.py
+!/src/WaitForTimeWindow.py
 
 # reinclude files in /src/ouput
 # Must do this as git ignores that subdirectory (and anything in it on down) 

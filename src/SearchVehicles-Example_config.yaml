@@ -237,7 +237,7 @@ textOnlyMatchesNotification: True,
 # Note that in general choose the SMS one over the MMS as long as not sending pictures too.
 # The SMS ones usually limit text to 160 chars.
 # 
-# AT&T: number@txt.att.net (SMS), number@mms.att.net (MMS)
+# AT&T: NO LONGER SUPPORTS SMS and MMS VIA EMAIL. number@txt.att.net (SMS), number@mms.att.net (MMS)
 # Boost Mobile: number@sms.myboostmobile.com (SMS), number@myboostmobile.com (MMS)
 # C-Spire: number@cspire1.com
 # Consumer Cellular: number@mailmymobile.net

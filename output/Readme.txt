@@ -1,7 +1,6 @@
-Readme.txt updated 7/6/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 7/17/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Added date on when it was observed that Stevinson Toyota East of Aurora Colorado was hiding Rav4s from the national
-               Toyota Search Inventory website
+Last update -  Added more detail on how to filter the file contents.  Also minor sentence rewording
 
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
@@ -35,8 +34,11 @@ There are probably other dealers that do this but only Stevinson Toyota East has
 Because of this you should also do a cursory check of some local/regional dealer websites when looking for a vehicle,
 after you have looked through the spreadsheet.
 
-All files are read only view on my google drive.  Thus if you wish to do filtering, sorting, etc you need 
+All files are read only view on my google drive.  Thus if you wish to do filtering, sorting, etc, you need 
 download the file and open it with Excel, or save it to your own google drive.
+On a downloaded file you can use Excel to open it and then use the Sorting or Data -> Filter operation.
+Data -> Filter allows you to filter any desired column to only see rows that contain the indicated values.
+
 
 Folder updates typically show up each day by 6am CDT. The inventory run for that starts 
 at 9pm CDT the previous day and typically runs through the night and into the very early morning to
@@ -261,8 +263,7 @@ database and changes only infrequently, so is not dynamically extracted from the
 to reduce the time it takes to get the inventory.
 
 For issues or questions contact ghgemmer@gmail.com
-See github repository https://github.com/ghgemmer/yotagrabber
-for the source code for this forked project.
+See github repository https://github.com/ghgemmer/yotagrabber for the source code for this forked project.
 
 That project also added a higher level search program searchForVehicles.py that can notify the user via any
 combination of sound, email, text whenever changes in the inventory data occur for a specified match criteria.

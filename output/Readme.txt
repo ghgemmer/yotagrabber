@@ -1,6 +1,6 @@
-Readme.txt updated 7/17/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 7/18/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Added more detail on how to filter the file contents.  Also minor sentence rewording
+Last update -  Minor sentence rewording on Change History
 
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
@@ -92,7 +92,7 @@ Change History events are in the  <model>_ChangeHistory.csv and .parquet files.
 They contains all changes between runs of the inventory collection,
 which are any added (new or reappeared) VINs, modified contents of existing VINs, or removed VINs. 
 This allows a user to see the changes that occurred from run to run.
-Only the last 14 days of changes are kept.
+Changes are only kept for the last 14 days.
 A typical use of this file is to watch for changes to the column values of a specific VIN  (sort by VIN and find the specific
 VIN).  The user can visually scan for changes between values in the rows for that VIN or look at the
 List of Changes column (for change types of MODED) to see a concise list of only the changes that occured between the current row

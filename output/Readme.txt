@@ -1,6 +1,6 @@
-Readme.txt updated 7/18/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 7/19/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Minor sentence rewording on Change History
+Last update -  Added "None" to the list of Hold Status values.
 
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
@@ -192,13 +192,13 @@ possible to remove those items.
                 otherwise just "Total MSRP".  This is based on observation from dealer websites so may not be exactly correct in all cases.
 "Hold Status" - There is uncertainty as to what exactly this field indicates. One opinion is it 
                 indicates the degree to which that vehicle is available/spoken for.  Generally, when looking for a vehicle,
-                you want to first contact dealers where PreSold is False and the hold status is blank , then those where it is "Available",  
+                you want to first contact dealers where PreSold is False and the hold status is blank or None , then those where it is "Available",  
                 then lastly where it is "Dealer hold".
-                In this interpretation "Dealer hold" means the vehicle is spoken for already, and Available or blank means it is not.
+                In this interpretation "Dealer hold" means the vehicle is spoken for already, and Available or blank or None means it is not.
                 Another opinion is hold status indicates whether a dealer would offer the vehicle to another dealer for a swap or sale.
                 In this intepretation "Dealer hold" indicates the vehicle will not be offered to other dealers
                 for swapping or sale, which, among other reasons, might possibly be because it is in high demand/rare or being held for someone or there is a waiting list for it,
-                ,  and blank of Available indicates they would.
+                ,  and blank or None or Available indicates they would.
                 
 "Pre-Sold" - The vehicle sale is pending or considered sold for all practical purposes.  
              Some dealers may not use this field and thus it would always show FALSE.

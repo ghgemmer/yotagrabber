@@ -1,14 +1,28 @@
-Readme.txt updated 7/19/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 7/28/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Added "None" to the list of Hold Status values.
+Last update -  Added description of Toyota allocation process and how the spreadsheets can help you.
 
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
 The inventory is obtained from the same place the national Toyota Inventory search website (https://www.toyota.com/search-inventory/)
 gets its data from (which is https://api.search-inventory.toyota.com/graphql ).  The folder also contains the sold inventory 
-(defined as inventory that appeared at one time in a run, but no longer appears in the inventory obtained from the website), as well as Change History 
+(defined as inventory that was obtained from the website by a program run at some point, 
+but no longer appears in the inventory obtained from the website), as well as Change History 
 event files for the last 14 days which contain added VINs, modified contents of existing VINs, or removed VINs between runs of the inventory 
 collection over that time period.
+
+See https://www.youtube.com/watch?v=dT1BWDsf90U for a detailed explanation of the Toyota allocation process.
+Generally, per the video, Toyota allocates vehicles to dealers/regions based on expected demand, historical purchases, and the types of cars/colors they 
+can produce in the factory at that point in time. Allocations are in mixed model/colors format.
+A customer, with rare exceptions, does not order a car.
+The customer makes their desire known to the dealer and the dealer either waits for an allocation from Toyota that matches that, 
+or the dealer swaps (generally the allocation before the car is delivered) with other dealers to get that car.
+Now there are cases, per the allocation video, where a customer might pay upfront for a vehicle and the dealer can then make a request 
+to Toyota to put that in their allocation process and Toyota will attempt to fit that in, but those are not common.
+
+The spreadsheets allow a person to see vehicles when they are allocated so they can maximize their ability to get the car they want, 
+and hopefully get it earlier than it would normally take.
+They also allow a person to easily compare prices between dealers (local or not) for the exact car they want or close matches.
 
 Note that some dealers may actually hide cars from the national Toyota Search Inventory website, even when they are NOT
 considered sold or reserved or spoken for, and only show them on the dealers website.  Thus they would not

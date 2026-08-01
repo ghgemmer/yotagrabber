@@ -12,13 +12,13 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 01080,01080,Bondy's Enterprise Toyota,https://www.bondystoyota.com,50,AL,31.310865,-85.830622,519 Boll Weevil Circle,Enterprise,36330,(334) 347-5200
 01083,01083,Sand Mountain Toyota,https://www.sandmountaintoyota.com,50,AL,34.285907,-86.236249,9167 US Highway 431 N,Albertville,35950,(256) 878-0789
 01084,01084,Eastern Shore Toyota,https://www.easternshoretoyota.com,9999,AL,30.660655,-87.855273,29732 Frederick Blvd.,Daphne,36526,(251) 625-1919
-01085,01085,Tuscaloosa Toyota,https://www.tuscaloosatoyota.com,50,AL,33.169602,-87.494118,"3325 Skyland Blvd, East",Tuscaloosa,35405,(205) 553-3325
+01085,01085,Tuscaloosa Toyota,https://www.tuscaloosatoyota.com,9999,AL,33.169602,-87.494118,"3325 Skyland Blvd, East",Tuscaloosa,35405,(205) 553-3325
 01086,01086,TeamOne Toyota of Gadsden,https://www.teamonetoyota.com,50,AL,33.976433,-86.060348,927 West Grand Avenue,Rainbow City,35906,(256) 413-4456
 01089,01089,Toyota of Sylacauga,https://www.toyotaofsylacauga.com,50,AL,33.188303,-86.304114,39765 Highway 280,Sylacauga,35150,(256) 245-5251
 01090,01090,Hoover Toyota,https://www.hoovertoyota.com,50,AL,33.359145,-86.832572,2686 Highway 150,Hoover,35244,(205) 978-2600
-01091,01091,Bill Penney Toyota of Jasper,https://www.billpenneytoyotaofjasper.com,50,AL,33.839028,-87.233016,3815 Hwy 78 E,Jasper,35501,(205) 221-3939
+01091,01091,Bill Penney Toyota of Jasper,https://www.billpenneytoyotaofjasper.com,9999,AL,33.839028,-87.233016,3815 Hwy 78 E,Jasper,35501,(205) 221-3939
 01092,01092,Toyota of Montgomery,https://www.toyotamontgomery.com,50,AL,32.366981,-86.210045,911 Eastern Blvd.,Montgomery,36117,(334) 272-7147
-01093,01093,Singing River Toyota,https://www.singingrivertoyota.com,50,AL,34.713889,-87.668496,5100 US-43,Tuscumbia,35674,(256) 383-3611
+01093,01093,Singing River Toyota,https://www.singingrivertoyota.com,9999,AL,34.713889,-87.668496,5100 US-43,Tuscumbia,35674,(256) 383-3611
 01094,01094,Allen Turner Toyota of Auburn,https://www.allenturnertoyotaofauburn.com/,9999,AL,32.560407,-85.498678,170 West Creek Parkway,Auburn,36830,(334) 887-1100
 01095,01095,Toyota of Montgomery,https://www.toyotamontgomery.com,9999,AL,32.366981,-86.210045,911 Eastern Blvd.,Montgomery,36117,(334) 272-7147
 01096,01096,Toyota West Mobile,https://www.toyotawestmobile.com,9999,AL,30.679936,-88.22569,470 Schillinger Road South,Mobile,36695,(251) 639-0800
@@ -41,20 +41,20 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 02057,02057,Bell Road Toyota,https://www.bellroadtoyota.com,15,AZ,33.64062,-112.103545,2020 West Bell Road,Phoenix,85023,(602) 863-0600
 02058,02058,Larry H. Miller Toyota Peoria,https://www.larrymillertoyota.com,15,AZ,33.637549,-112.244232,8633 West Bell Road,Peoria,85382,(623) 876-3400
 03024,03024,Magness Toyota,https://www.magnesstoyota.com,60,AR,36.264529,-93.135271,1407 Highway 62-65 412 NO,Harrison,72601,(870) 741-5451
-03049,03049,Ryburn Toyota,https://www.ryburntoyota.com,60,AR,33.626689,-91.803016,156 Highway 425 South,Monticello,71655,(870) 367-5353
+03049,03049,Ryburn Toyota,https://www.ryburntoyota.com,9999,AR,33.626689,-91.803016,156 Highway 425 South,Monticello,71655,(870) 367-5353
 03050,03050,J. Pauley Toyota,https://www.jpauleytoyota.com,60,AR,35.323328,-94.396463,6200 South 36th Street,Fort Smith,72908,(479) 646-7800
-03053,03053,"Phil Wright Toyota, Co.",https://www.philwrighttoyota.com,60,AR,35.276732,-93.09056,3200 East Main Street,Russellville,72802,(479) 968-1555
-03058,03058,Trotter Toyota,https://www.trottertoyota.com,60,AR,34.205521,-91.970012,3010 Auto Drive,Pine Bluff,71601,(870) 534-7521
-03065,03065,Gregg Orr Toyota,https://www.orrtoyota.com,60,AR,34.445749,-93.089124,4709 Central Avenue,Hot Springs,71913,(501) 520-0000
+03053,03053,"Phil Wright Toyota, Co.",https://www.philwrighttoyota.com,9999,AR,35.276732,-93.09056,3200 East Main Street,Russellville,72802,(479) 968-1555
+03058,03058,Trotter Toyota,https://www.trottertoyota.com,9999,AR,34.205521,-91.970012,3010 Auto Drive,Pine Bluff,71601,(870) 534-7521
+03065,03065,Gregg Orr Toyota,https://www.orrtoyota.com,9999,AR,34.445749,-93.089124,4709 Central Avenue,Hot Springs,71913,(501) 520-0000
 03066,03066,Toyota of Fayetteville,https://www.toyotaoffayetteville.com,60,AR,36.108448,-94.17794,1352 W. Showroom Drive,Fayetteville,72704,(479) 695-7600
-03067,03067,Central Toyota,https://www.centraltoyota.com,60,AR,35.801135,-90.67033,3305 Stadium Blvd.,Jonesboro,72404,(870) 268-5418
-03068,03068,Caldwell Toyota,https://www.caldwelltoyota.com,60,AR,35.058817,-92.418366,1355 Exchange Avenue,Conway,72032,(501) 327-3900
-03069,03069,Orr Toyota,https://www.orrtoyotaofsearcy.com,60,AR,35.232014,-91.707216,1745 Janet Drive,Searcy,72143,(501) 281-4620
-03072,03072,Landers Toyota,https://www.landerstoyota.com,60,AR,34.71116,-92.399489,10825 Colonel Glenn Road,Little Rock,72204,(501) 568-5800
+03067,03067,Central Toyota,https://www.centraltoyota.com,9999,AR,35.801135,-90.67033,3305 Stadium Blvd.,Jonesboro,72404,(870) 268-5418
+03068,03068,Caldwell Toyota,https://www.caldwelltoyota.com,9999,AR,35.058817,-92.418366,1355 Exchange Avenue,Conway,72032,(501) 327-3900
+03069,03069,Orr Toyota,https://www.orrtoyotaofsearcy.com,9999,AR,35.232014,-91.707216,1745 Janet Drive,Searcy,72143,(501) 281-4620
+03072,03072,Landers Toyota,https://www.landerstoyota.com,9999,AR,34.71116,-92.399489,10825 Colonel Glenn Road,Little Rock,72204,(501) 568-5800
 03073,03073,Landers Toyota NWA,https://www.landerstoyotanwa.com,60,AR,36.331586,-94.18568,411 South Metro Parkway,Rogers,72758,(479) 845-1444
-03074,03074,Mark McLarty Toyota,https://www.markmclartytoyota.com,60,AR,34.796997,-92.217703,4336 Landers Road,North Little Rock,72117,(501) 753-0400
-03075,03075,Red River Toyota,https://www.redrivertoyota.com,60,AR,35.24569,-90.782425,1903 Falls Boulevard,Wynne,72396,(870) 238-7770
-03076,03076,Karl Malone Toyota Chevrolet,https://www.karlmalonetoyotaeldorado.com,60,AR,33.208117,-92.686146,1830 West Hillsboro,El Dorado,71730,(870) 862-2900
+03074,03074,Mark McLarty Toyota,https://www.markmclartytoyota.com,9999,AR,34.796997,-92.217703,4336 Landers Road,North Little Rock,72117,(501) 753-0400
+03075,03075,Red River Toyota,https://www.redrivertoyota.com,9999,AR,35.24569,-90.782425,1903 Falls Boulevard,Wynne,72396,(870) 238-7770
+03076,03076,Karl Malone Toyota Chevrolet,https://www.karlmalonetoyotaeldorado.com,9999,AR,33.208117,-92.686146,1830 West Hillsboro,El Dorado,71730,(870) 862-2900
 04007,04007,Toyota of Berkeley,https://www.toyotaofberkeley.com,12,CA,37.865604,-122.268199,2400 Shattuck Avenue,Berkeley,94704,(510) 845-2530
 04013,04013,Hamer Toyota,https://www.hamertoyota.com,9999,CA,34.271476,-118.4677,11041 Sepulveda Blvd,Mission Hills,91345,(818) 365-9621
 04017,04017,Jimmy Vasser Toyota,https://www.jimmyvassertoyota.com,12,CA,38.290405,-122.276327,466 Soscol Avenue,Napa,94559,(707) 927-4466
@@ -475,29 +475,29 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 16066,16066,Don Franklin Corbin Toyota,https://www.donfranklincorbintoyota.com,9999,KY,36.964646,-84.080296,311 E. Cumberland Gap Pky,Corbin,40701,(606) 528-1200
 16067,16067,Toyota of Madisonville,https://www.toyotaofmadisonville.com,9999,KY,37.3523,-87.484258,1055 Crossing Place,Madisonville,42431,(270) 821-3372
 17014,17014,Price LeBlanc Toyota,https://www.priceleblanctoyota.com,9999,LA,30.375531,-91.035155,13250 Airline Highway,Baton Rouge,70817,(225) 408-1100
-17023,17023,Yokem Toyota,https://www.yokemtoyota.com,60,LA,32.419428,-93.721138,1199 E. Bert Kouns Ind. Loop,Shreveport,71105,(318) 798-3773
-17027,17027,Van-Trow Toyota,https://www.vantrowtoyota.com,60,LA,32.519925,-92.103619,2015 Louisville Avenue,Monroe,71201,(318) 387-2020
+17023,17023,Yokem Toyota,https://www.yokemtoyota.com,9999,LA,32.419428,-93.721138,1199 E. Bert Kouns Ind. Loop,Shreveport,71105,(318) 798-3773
+17027,17027,Van-Trow Toyota,https://www.vantrowtoyota.com,9999,LA,32.519925,-92.103619,2015 Louisville Avenue,Monroe,71201,(318) 387-2020
 17029,17029,Bubba Oustalet Toyota,https://www.oustalettoyota.com,60,LA,30.22216,-92.657185,246 North Broadway,Jennings,70546,(337) 824-3673
 17041,17041,Musson-Patout Toyota,https://www.mussonpatouttoyota.com,60,LA,29.983014,-91.853465,208 West Hwy 90 Frontage Rd,New Iberia,70560,(337) 367-0488
 17050,17050,Lakeside Toyota,https://www.lakesidetoyota.com,60,LA,30.015884,-90.154269,3701 North Causeway Blvd.,Metairie,70002,(504) 833-3311
 17055,17055,Team Toyota,https://www.team-toyota.com,9999,LA,30.442924,-91.009833,1788 O'Neal Lane,Baton Rouge,70816,(225) 273-5880
-17057,17057,John Harvey Toyota,https://www.johnharveytoyota.com,60,LA,32.563132,-93.728687,2901 Benton Road,Bossier City,71111,(318) 741-1337
+17057,17057,John Harvey Toyota,https://www.johnharveytoyota.com,9999,LA,32.563132,-93.728687,2901 Benton Road,Bossier City,71111,(318) 741-1337
 17058,17058,Toyota of New Orleans,https://www.toyotaofneworleans.com,60,LA,30.053973,-89.947249,13150 I-10 Service Road,New Orleans,70128,(504) 940-0000
 17060,17060,Lake Charles Toyota,https://www.lakecharlestoyota.com,60,LA,30.18609,-93.179351,3905 Gerstner Memorial Dr,Lake Charles,70607,(337) 478-3511
 17062,17062,Bohn Toyota,https://www.bohntoyota.com,60,LA,29.8741,-90.0851,3800 Lapalco Blvd.,Harvey,70058,(504) 341-3300
 17065,17065,Hampton Toyota,https://www.hamptontoyota.com,60,LA,30.160671,-92.083771,6191 Johnston Street,Lafayette,70503,(337) 984-5010
-17066,17066,Northshore Toyota,https://www.northshoretoyota.com,60,LA,30.428625,-90.079251,68500 Hwy 190 Service Rd.,Covington,70433,(985) 893-7778
+17066,17066,Northshore Toyota,https://www.northshoretoyota.com,9999,LA,30.428625,-90.079251,68500 Hwy 190 Service Rd.,Covington,70433,(985) 893-7778
 17068,17068,All Star Toyota of Baton Rouge,https://www.allstartoyotaofbatonrouge.com,60,LA,30.441726,-91.088344,9150 Airline Highway,Baton Rouge,70815,(225) 925-2525
 17070,17070,Greg Leblanc Toyota,https://www.gregleblanctoyota.com,60,LA,29.60449,-90.751058,220 S. Hollywood Road,Houma,70360,(985) 876-7210
 17071,17071,Supreme Toyota of Hammond,https://www.supremetoyota.com,9999,LA,30.48654,-90.482167,1415 South Morrison Blvd,Hammond,70403,(985) 345-1425
-17073,17073,Hixson Toyota,https://www.hixsontoyota.com,60,LA,31.08775,-93.270504,11981 Lake Charles Highway,Leesville,71446,(337) 239-3434
-17075,17075,Walker Toyota,https://www.walker-toyota.com,60,LA,31.294613,-92.50514,5735 Coliseum Blvd.,Alexandria,71303,(318) 445-1486
-17076,17076,Karl Malone Toyota of Ruston,https://www.karlmalonetoyotaofruston.com,60,LA,32.541166,-92.626038,1001 N. Service Road East,Ruston,71270,(318) 255-1387
-17078,17078,Vaughn Toyota of Bastrop,https://www.vaughntoyota.com,60,LA,32.775869,-91.881467,2329 East Madison Avenue,Bastrop,71220,(318) 281-5555
-17079,17079,Price LeBlanc Toyota of Acadiana,https://www.priceleblanctoyotaofacadiana.com,60,LA,30.475821,-92.0786,4127 I-49 South Service Road,Opelousas,70570,(337) 948-8255
+17073,17073,Hixson Toyota,https://www.hixsontoyota.com,9999,LA,30.834914,-93.249922,2517 Highway 171,DeRidder,70634,(337) 239-3452
+17075,17075,Walker Toyota,https://www.walker-toyota.com,9999,LA,31.294613,-92.50514,5735 Coliseum Blvd.,Alexandria,71303,(318) 445-1486
+17076,17076,Karl Malone Toyota of Ruston,https://www.karlmalonetoyotaofruston.com,9999,LA,32.541166,-92.626038,1001 N. Service Road East,Ruston,71270,(318) 255-1387
+17078,17078,Vaughn Toyota of Bastrop,https://www.vaughntoyota.com,9999,LA,32.775869,-91.881467,2329 East Madison Avenue,Bastrop,71220,(318) 281-5555
+17079,17079,Price LeBlanc Toyota of Acadiana,https://www.priceleblanctoyotaofacadiana.com,9999,LA,30.475821,-92.0786,4127 I-49 South Service Road,Opelousas,70570,(337) 948-8255
 17080,17080,Toyota of Kenner,https://www.toyotaofkenner.net,60,LA,30.007144,-90.233551,2460 Veterans Memorial Blvd,Kenner,70062,(504) 464-4500
 17081,17081,Morgan City Toyota,https://www.morgancitytoyota.com,60,LA,29.703244,-91.199813,1105 Brashear Avenue,Morgan City,70380,(985) 380-2395
-17082,17082,Carlock Toyota of Slidell,https://www.carlocktoyotaofslidell.com,60,LA,30.23967,-89.76556,300 E. Howze Beach Road,Slidell,70461,(985) 643-0005
+17082,17082,Carlock Toyota of Slidell,https://www.carlocktoyotaofslidell.com,9999,LA,30.23967,-89.76556,300 E. Howze Beach Road,Slidell,70461,(985) 643-0005
 17083,17083,All Star Toyota of Baton Rouge,https://www.allstartoyotaofbatonrouge.com,9999,LA,30.441726,-91.088344,9150 Airline Highway,Baton Rouge,70815,(225) 925-2525
 18010,18010,Down East Toyota,https://www.downeasttoyota.com,17,ME,44.777185,-68.73465,652 Wilson Street,Brewer,04412,(207) 989-6400
 18023,18023,Shepard Toyota,https://www.shepardtoyota.com,17,ME,44.093668,-69.139592,"181 New County Road, Route 1",Rockland,04841,(207) 594-8424
@@ -624,23 +624,24 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 22054,22054,Dahl Toyota,https://www.dahltoyota.com,21,MN,44.043547,-91.666979,1077 W. Service Drive,Winona,55987,(507) 452-4080
 22055,22055,Lake Country Toyota,https://www.lakecountrytoyota.com,21,MN,46.380752,-94.254466,7036 Lake Forest Road,Baxter,56401,(218) 454-2200
 22056,22056,LeadCar Toyota Mankato,https://www.leadcartoyotamankato.com,21,MN,44.176611,-93.965552,1234 Raintree Road,Mankato,56001,(507) 387-1148
-23035,23035,Toyota of Hattiesburg,https://www.toyotahattiesburg.com,60,MS,31.318057,-89.411102,6461 US Highway 98,Hattiesburg,39402,(601) 544-9630
+23035,23035,Toyota of Hattiesburg,https://www.toyotahattiesburg.com,9999,MS,31.318057,-89.411102,6461 US Highway 98,Hattiesburg,39402,(601) 544-9630
 23052,23052,J. Allen Toyota,https://www.jallentoyota.com,9999,MS,30.445832,-89.028508,11397 Helen Richards Road,Gulfport,39503,(228) 896-8220
-23054,23054,Oxford Toyota,https://www.oxfordtoyota.com,60,MS,34.359899,-89.582949,435A Highway 6 West,Oxford,38655,(662) 234-4661
-23057,23057,Kirk Toyota,https://www.kirktoyota.com,60,MS,33.785172,-89.844626,237 Southwest Frontage Road,Grenada,38901,(662) 226-1181
-23061,23061,Carl Hogan Toyota,https://www.carlhogantoyota.com,60,MS,33.549657,-88.43428,3907 Highway 45 North,Columbus,39705,(662) 241-6000
-23062,23062,Kim's Toyota,https://www.kimstoyota.com,60,MS,31.701517,-89.148017,1030 Highway 15 North,Laurel,39440,(601) 425-4701
-23069,23069,Carlock Toyota of Tupelo,https://www.carlocktoyotaoftupelo.com,60,MS,34.320489,-88.69915,882 Cross Creek Drive,Saltillo,38866,(662) 842-6428
+23054,23054,Oxford Toyota,https://www.oxfordtoyota.com,9999,MS,34.359899,-89.582949,435A Highway 6 West,Oxford,38655,(662) 234-4661
+23057,23057,Kirk Toyota,https://www.kirktoyota.com,9999,MS,33.785172,-89.844626,237 Southwest Frontage Road,Grenada,38901,(662) 226-1181
+23061,23061,Carl Hogan Toyota,https://www.carlhogantoyota.com,9999,MS,33.549657,-88.43428,3907 Highway 45 North,Columbus,39705,(662) 241-6000
+23062,23062,Kim's Toyota,https://www.kimstoyota.com,9999,MS,31.701517,-89.148017,550 S. 16th Ave.,Laurel,39440,(601) 425-4701
+23069,23069,Carlock Toyota of Tupelo,https://www.carlocktoyotaoftupelo.com,9999,MS,34.320489,-88.69915,882 Cross Creek Drive,Saltillo,38866,(662) 842-6428
 23071,23071,Oakes Toyota,https://www.oakestoyota.com,60,MS,33.370331,-91.040895,1753 Highway 1 South,Greenville,38701,(662) 378-8101
-23074,23074,Doc's Toyota,https://www.docstoyota.com,60,MS,32.759698,-89.155171,15120 Highway 16 West,Philadelphia,39350,(601) 781-8017
-23076,23076,Cannon Toyota,https://www.cannontoyotavicksburg.com,60,MS,32.3234,-90.8682,2047 North Frontage Road,Vicksburg,39180,(601) 636-2855
-23079,23079,Principle Toyota of Hernando,https://www.principletoyotaofhernando.com,60,MS,34.818872,-89.972853,2887 McIngvale Road South,Hernando,38632,(662) 624-2585
-23080,23080,Natchez Toyota,https://www.natcheztoyota.com,60,MS,31.508725,-91.372205,335 Highway 61 South,Natchez,39120,(601) 446-5588
-23081,23081,Gray-Daniels Toyota,https://www.gray-danielstoyota.com,60,MS,32.280664,-90.034238,104 Gray Daniels Blvd,Brandon,39042,(601) 948-0576
-23082,23082,Toyota of Brookhaven,https://www.toyotaofbrookhaven.com,60,MS,31.579237,-90.464469,890 Brookway Blvd.,Brookhaven,39601,(601) 823-7000
-23083,23083,Toyota of Jackson,https://www.toyotaofjackson.com,60,MS,32.393377,-90.144793,6100 I-55 North Frontage Road,Jackson,39211,(601) 956-9696
+23074,23074,Doc's Toyota,https://www.docstoyota.com,9999,MS,32.759698,-89.155171,15120 Highway 16 West,Philadelphia,39350,(601) 781-8017
+23076,23076,Cannon Toyota,https://www.cannontoyotavicksburg.com,9999,MS,32.3234,-90.8682,2047 North Frontage Road,Vicksburg,39180,(601) 636-2855
+23079,23079,Synergy Toyota of Hernando,https://www.toyotaofhernando.com,9999,MS,34.818872,-89.972853,2887 McIngvale Road South,Hernando,38632,(662) 624-2585
+23080,23080,Natchez Toyota,https://www.natcheztoyota.com,9999,MS,31.508725,-91.372205,335 Highway 61 South,Natchez,39120,(601) 446-5588
+23081,23081,Gray-Daniels Toyota,https://www.gray-danielstoyota.com,9999,MS,32.280664,-90.034238,104 Gray Daniels Blvd,Brandon,39042,(601) 948-0576
+23082,23082,Toyota of Brookhaven,https://www.toyotaofbrookhaven.com,9999,MS,31.579237,-90.464469,890 Brookway Blvd.,Brookhaven,39601,(601) 823-7000
+23083,23083,Toyota of Jackson,https://www.toyotaofjackson.com,9999,MS,32.393377,-90.144793,6100 I-55 North Frontage Road,Jackson,39211,(601) 956-9696
 23084,23084,Cannon Toyota of Moss Point,https://www.cannontoyotamosspoint.com,9999,MS,30.433899,-88.526996,6521 Highway 63,Moss Point,39563,(228) 762-3533
-23085,23085,Toyota of Meridian,https://www.toyotaofmeridian.com,60,MS,32.388359,-88.683626,2900 Highway 39 North,Meridian,39301,(601) 485-1620
+23085,23085,Toyota of Meridian,https://www.toyotaofmeridian.com,9999,MS,32.389238,-88.682979,3010 Highway 39,Meridian,39301,(601) 485-1620
+23087,23087,Delta Toyota of Greenville,https://www.deltatoyota.com,9999,MS,33.370331,-91.040895,1753 Highway 1 South,Greenville,38701,(662) 378-8101
 24022,24022,Seeger Toyota,https://www.seegertoyota.com,23,MO,38.681033,-90.474983,12833 Olive Street Road,Creve Coeur,63141,(314) 434-5000
 24026,24026,Adams Toyota Lee's Summit,https://www.adamstoyota.com,23,MO,38.94606,-94.36789,501 N.E. Colbern Road,Lee's Summit,64086,(816) 358-7600
 24036,24036,Tom Pappas Toyota,https://www.pappastoyota.com,23,MO,38.800211,-90.602019,10011 Spencer Road,St Peters,63376,(636) 928-1212
@@ -1035,7 +1036,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 41021,41021,Roberts Toyota,https://www.robertstoyota.com,22,TN,35.634491,-87.01958,1027 Nashville Highway,Columbia,38401,(931) 388-3006
 41030,41030,Toyota of Kingsport,https://www.toyotaofkingsport.com,9999,TN,36.54659,-82.500561,2525 East Stone Drive,Kingsport,37660,(423) 246-6611
 41041,41041,Nashville Toyota North,https://www.nashvilletoyotanorth.com,9999,TN,36.310126,-86.678,2400 Gallatin Pike North,Madison,37115,(615) 868-7990
-41043,41043,Principle Toyota,https://www.principletoyota.com,22,TN,35.05105,-89.817133,7370 Winchester Road,Memphis,38125,(901) 758-4040
+41043,41043,Principle Toyota,https://www.principletoyota.com,9999,TN,35.05105,-89.817133,7370 Winchester Road,Memphis,38125,(901) 758-4040
 41050,41050,Cumberland Toyota,https://www.cumberlandtoyota.com,22,TN,36.138257,-85.522059,1540 Interstate Drive,Cookeville,38501,(931) 526-5600
 41052,41052,Rusty Wallace Toyota,https://www.rustywallacetoyota.com,9999,TN,36.179783,-83.391156,5944 W Andrew Johnson Hwy,Morristown,37814,(423) 587-1972
 41056,41056,Toyota of Cleveland,https://www.toyotaofcleveland.com,22,TN,35.154453,-84.946216,3560 Village North Bl SW,McDonald,37353,(423) 339-1138
@@ -1043,9 +1044,9 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 41060,41060,Toyota Knoxville,https://www.toyotaknoxville.com,9999,TN,35.90818,-84.13107,10415 Parkside Drive,Knoxville,37922,(865) 218-3300
 41061,41061,Rick McGill's Airport Toyota,https://www.rickmcgillairporttoyota.com,9999,TN,35.82815,-83.97589,3145 Alcoa Highway,Alcoa,37701,(865) 970-2615
 41062,41062,Peppers Toyota,https://www.pepperstoyota.com,22,TN,36.319057,-88.2803,2400 East Wood Street,Paris,38242,(731) 642-3900
-41063,41063,Robinson Toyota,https://www.robinsontoyota.com,22,TN,35.660944,-88.866133,1453 Vann Drive,Jackson,38305,(731) 668-1234
-41066,41066,Wolfchase Toyota,https://www.wolfchasetoyota.com,22,TN,35.186103,-89.793728,2201 North Germantown Parkway,Cordova,38016,(901) 384-3100
-41070,41070,Chuck Hutton Toyota,https://www.chuckhuttontoyota.com,22,TN,35.023369,-90.003644,4601 Hutton Way,Memphis,38116,(901) 345-3200
+41063,41063,Robinson Toyota,https://www.robinsontoyota.com,9999,TN,35.660944,-88.866133,1453 Vann Drive,Jackson,38305,(731) 668-1234
+41066,41066,Wolfchase Toyota,https://www.wolfchasetoyota.com,9999,TN,35.186103,-89.793728,2201 North Germantown Parkway,Cordova,38016,(901) 384-3100
+41070,41070,Chuck Hutton Toyota,https://www.chuckhuttontoyota.com,9999,TN,35.023369,-90.003644,4601 Hutton Way,Memphis,38116,(901) 345-3200
 41073,41073,Landers McLarty Toyota,https://www.landersmclartytoyota.com,22,TN,35.045856,-86.572882,2970 Huntsville Highway,Fayetteville,37334,(931) 438-6300
 41078,41078,Toyota of Cool Springs,https://www.toyotaofcoolsprings.com,9999,TN,35.93566,-86.82097,1875 West McEwen Drive,Franklin,37067,(615) 790-8401
 41079,41079,Toyota of Murfreesboro,https://www.toyotaofmurfreesboro.com,9999,TN,35.869131,-86.460882,3434 Bill Smith Drive,Murfreesboro,37129,(615) 890-1500
@@ -1055,11 +1056,11 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 41085,41085,Beaman Toyota,https://www.beamantoyota.com,9999,TN,36.086162,-86.699064,343  Harding Place,Nashville,37211,(615) 251-8400
 41086,41086,Fox Toyota,https://www.foxtoyotaclinton.com,9999,TN,36.170417,-84.082944,228 Fox Family Lane,Clinton,37716,(865) 494-0228
 41087,41087,Toyota of Bristol,https://www.toyotaofbristol.com,9999,TN,36.592554,-82.222519,3045 W. State Street,Bristol,37620,(423) 764-3155
-41089,41089,Victory Toyota Dyersburg,https://www.victorytoyotadyersburg.com,22,TN,36.058016,-89.397659,920 Highway 51 Bypass,Dyersburg,38024,(731) 285-5110
+41089,41089,Victory Toyota Dyersburg,https://www.victorytoyotadyersburg.com,9999,TN,36.058016,-89.397659,920 Highway 51 Bypass,Dyersburg,38024,(731) 285-5110
 41090,41090,Cumberland Toyota,https://www.cumberlandtoyota.com,9999,TN,36.138257,-85.522059,1540 Interstate Drive,Cookeville,38501,(931) 526-5600
 41091,41091,Toyota of Gallatin,https://www.toyotagallatin.com,9999,TN,36.362233,-86.494348,1429 Nashville Pike,Gallatin,37066,(615) 230-9000
 42025,42025,Toyota of Laredo,https://www.toyotaoflaredo.com,60,TX,27.556012,-99.450141,6324 Bob Bullock Loop,Laredo,78041,(956) 718-4200
-42026,42026,Robbins Toyota,https://www.robbinstoyota.com,60,TX,33.453053,-94.128038,6233 Mall Drive,Nash,75569,(903) 794-5121
+42026,42026,Robbins Toyota,https://www.robbinstoyota.com,9999,TX,33.453053,-94.128038,6233 Mall Drive,Nash,75569,(903) 794-5121
 42057,42057,Toyota of Irving,https://www.toyotaofirving.com,60,TX,32.837997,-96.96956,1999 West Airport Frwy.,Irving,75062,(972) 258-1200
 42073,42073,Sterling McCall Toyota,https://www.sterlingmccalltoyota.com,60,TX,29.679432,-95.539482,9400 Southwest Freeway,Houston,77074,(713) 270-3900
 42087,42087,Don McGill Toyota,https://www.donmcgilltoyota.com,60,TX,29.786292,-95.594766,11800 Katy Freeway,Houston,77079,(281) 496-2000
@@ -1126,7 +1127,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 42345,42345,Poe Toyota,https://www.poetoyota.com,60,TX,31.7877,-106.4061,6330 Montana Avenue,El Paso,79925,(915) 775-2000
 42346,42346,Longo Toyota of Prosper,https://www.longotoyotaofprosper.com,60,TX,33.220539,-96.833488,2100 West University Drive,Prosper,75078,(469) 296-4557
 42347,42347,Toyota of Fort Worth,https://www.toyotaoffortworth.com,60,TX,32.723533,-97.474485,9001 Camp Bowie West Blvd.,Fort Worth,76116,(817) 560-1500
-42348,42348,Shapen Toyota,https://www.shapentoyota.com,60,TX,32.498099,-94.358257,5015 East End Blvd. South,Marshall,75672,(903) 938-9026
+42348,42348,Shapen Toyota,https://www.shapentoyota.com,9999,TX,32.498099,-94.358257,5015 East End Blvd. South,Marshall,75672,(903) 938-9026
 42352,42352,Toyota of Longview,https://www.toyotaoflongview.com,60,TX,32.530617,-94.773354,1400 West Loop 281,Longview,75604,(903) 295-9300
 42392,42392,Country Toyota,https://www.countrytoyotapampa.com,60,TX,35.541471,-100.97263,805 North Hobart Street,Pampa,79065,(806) 665-1665
 42402,42402,Shottenkirk Toyota Weatherford,https://www.shottenkirktoyotaweatherford.com,60,TX,32.757132,-97.699978,2601 E. I-20 Service Road,Hudson Oaks,76087,(817) 597-5000

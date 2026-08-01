@@ -1010,7 +1010,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone
 39028,39028,Toyota of Easley,https://www.toyotaofeasley.com,9999,SC,34.825328,-82.569712,5643 Calhoun Memorial Hwy,Easley,29640,(864) 855-2233
 39031,39031,Sparks Toyota,https://www.sparkstoyota.com,50,SC,33.762513,-78.972113,4855 Highway 501,Myrtle Beach,29579,(843) 236-2161
 39040,39040,Stokes Toyota Beaufort,https://www.stokestoyotabeaufort.com,50,SC,32.446898,-80.729508,3557 Trask Parkway,Beaufort,29906,(843) 522-3232
-39042,39042,Ballentine Toyota,https://www.ballentinetoyota.com,50,SC,34.213508,-82.152448,1305 Highway 72 By-Pass,Greenwood,29646,(864) 229-5052
+39042,39042,Ballentine Toyota,https://www.ballentinetoyota.com,9999,SC,34.213508,-82.152448,1305 Highway 72 By-Pass,Greenwood,29646,(864) 229-5052
 39046,39046,Florence Toyota,https://www.florencetoyota.com,50,SC,34.183425,-79.816285,2300 West Palmetto Street,Florence,29501,(843) 669-1676
 39049,39049,Lugoff Toyota,https://www.lugofftoyota.com,50,SC,34.227531,-80.677178,878 Highway 1 South,Lugoff,29078,(803) 438-2772
 39052,39052,Jim Hudson Toyota,https://www.jimhudsontoyota.com,50,SC,34.098479,-81.177722,970 Columbiana Drive,Irmo,29063,(803) 407-5678

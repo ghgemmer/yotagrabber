@@ -3,6 +3,7 @@
 import random
 import numpy as np
 from inputimeout import inputimeout, TimeoutOccurred
+from timeit import default_timer as timer
 import sys
 import json
 import os.path
@@ -12,6 +13,23 @@ import requests.exceptions
 import requests
 import pandas as pd
 import re
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
+from inputimeout import inputimeout, TimeoutOccurred
+from yotagrabber import wafbypassDealerInfo
+
+
+def getUserInput(promptStr, sleepTime):
+    # Outputs the prompt if not null, and waits for a user input (with an ending CR which is not returned with the result) for the sleepTime
+    # returns a tuple (timedOut, userInput) where timedOut is True if timed out before input, otherwise userInput has the user entry
+    # without the CR
+    userInput = ""
+    timedOut = False
+    try:
+        userInput = inputimeout(prompt=promptStr, timeout=(sleepTime))
+    except TimeoutOccurred:
+        timedOut = True
+    return (timedOut, userInput)
+
 
 forceRspFailureTest = 0 # set to > 0 to perform tests related to forcing a response failure to test request retry
 
@@ -121,10 +139,93 @@ def updateAddressComponentsIn(rowSeries):
     rowSeries["state"] = state
     rowSeries["zip"] = zipcode
     return rowSeries
+    
 
 def formatPhoneNumber(phoneNumberStr):
     formattedPhoneNumberStr = "(" + phoneNumberStr[:3] + ") " + phoneNumberStr[3:6] + "-" + phoneNumberStr[6:]
     return formattedPhoneNumberStr 
+    
+def handle_response(response):
+    # Print out URL and status code for every network resource
+    print(f"URL: {response.url} | Status: {response.status}")
+    
+    # Conditionally extract data if it's a target API endpoint
+    if "api.ws.dpcmaps.toyota.com/v1/dealers" in response.url and (response.status == 200):
+        #print("JSON Data:", response.json())
+        pass
+
+def getDealersUsingBrowser(dealersInfoUrl):
+    """Run a browser, to satisy the dealers WAF, to get the dealers json file.  Left in for history of what seemed to work or not"""
+    resp = None
+    dealersJson = None
+    while True:
+        try:
+            with sync_playwright() as playwright:
+                browser = playwright.chromium.launch(headless=False) # headless=True does not seem to work for at all for anything, as get a status code 403 as the first and only response sent back by the server on the page.goto.
+                #browser = playwright.firefox.launch(headless=True)  # page.on("response", response_handler) with Firefox regardless of headless or not,  does not seem to see last response which is the one we wanted and thus page.expect_response does not work
+                try:
+                    dealersJson = None
+                    #context = browser.new_context(viewport={"width": 1920, "height": 1080})
+                    context = browser.new_context(viewport={"width": 10, "height": 10})
+                    page = context.new_page()
+                    #page = browser.new_page()
+                    #getUserInput("Enter Cr to terminate browser inspection", 10000)
+                    #page.goto(dealersInfoUrl)
+                    if 1:  # Works with firefox headless = True or False, and chromium headless = False  
+                        page.goto(dealersInfoUrl)
+                        print("page.wait_for_load_state('networkidle', timeout=10000)")
+                        page.wait_for_load_state("networkidle", timeout=10000)
+                        json_string = page.locator("body > pre").inner_text()
+                        dealersJson = json.loads(json_string)
+                    if 0:
+                        response_info = page.wait_for_response(lambda resp: (resp.status == 200) and ("api.ws.dpcmaps.toyota.com/v1/dealers" in resp.url))
+                        print("Got to point A")
+                        page.goto(dealersInfoUrl)
+                        responseA = response_info
+                        dealersJson = responseA.json()
+                        print("Json data", dealersJson)
+                    if 0:
+                        page.on("response", handle_response)
+                        page.goto(dealersInfoUrl)
+                        print("Waiting 7 seconds")
+                        page.wait_for_timeout(7000)
+                        print("Page content", page.content()) 
+                        json_string = page.locator("body > pre").inner_text()
+                        dealersJson = json.loads(json_string)
+                        #getUserInput("Enter Cr to terminate browser inspection", 1000)
+                    #getUserInput("Enter Cr to terminate browser inspection", 1000)
+                    if 0:  # Works with chromium with headless = False.  Firefox seems to fail in any case of headless setting.
+                        #page.on("response", handle_response) 
+                        with page.expect_response(lambda response: (response.status == 200) and ("api.ws.dpcmaps.toyota.com/v1/dealers" in response.url)) as response_info:
+                        #with page.expect_response(lambda response: (response.status == 200) and ("/mp_verify" in response.url)) as response_info:
+                            page.goto(dealersInfoUrl)
+                        #getUserInput("Enter Cr to terminate browser inspection", 1000)
+                        responseA = response_info
+                        print ("response_info.value" , repr(response_info.value))
+                        response = response_info.value
+                        print ("response.url", response.url)
+                        print ("response.status", response.status)
+                        print ("response.headers", response.headers)
+                        #print("response.text()", response.text())
+                        dealersJson = response.json()
+                except Exception as inst:
+                    print("Error: run_browser: exception in code going to dealersInfoUrl page: ", dealersInfoUrl, str(inst))
+                finally:
+                    browser.close()
+            if dealersJson is not None:
+                break
+            else:
+                print("Error: run_browser was None")
+                sleepTime = 60* 10
+                print("Waiting time ", sleepTime, "secs before retrying WAF Bypass")
+                getUserInput("Enter Cr to terminate wait early", sleepTime)
+        except Exception as inst:
+            print("Error: run_browser: exception", str(inst))
+            sleepTime = 60* 10
+            print("Waiting time ", sleepTime, "secs before retrying WAF Bypass")
+            getUserInput("Enter Cr to terminate wait early", sleepTime)
+    return dealersJson
+
     
 def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""):
     print("This program updates the passed dealer file (or creates that file if not present)") 
@@ -169,12 +270,16 @@ def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""
             dealers["dealerId"] = dealers["dealerId"].apply(pd.to_numeric)
     else:
         dealers = pd.DataFrame()
+    print("Getting WAF bypass for dealer info website")
+    headers = wafbypassDealerInfo.WAFBypass().run()
+    # Start a timer.
+    timer_start = timer()
     indx = 0
     for zipCode in zipCodesToUpdateDealers:
         # TODO add in retries
         zipCodeWithLeadingZeroes = ("0" * (5 - len(zipCode))) + zipCode
         print("Getting dealers for/near zipcode",zipCodeWithLeadingZeroes, ", at zipcode list index:", indx )
-        tryCount = 1
+        tryCount = 3
         result = None
         while True:
             try:
@@ -184,14 +289,35 @@ def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""
                 # That is what the inventory get uses to get the dealers for that zip code but could not get it to work.
                 # So had to use the url below which is accessed when on the https://www.toyota.com/connected-services/toyota-app/ page
                 # and  click on the Find Dealer https://www.toyota.com/dealers/#default link on that page which pops up a map window
-                headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}  #Normal pthyon user-agent gets request rejected with a Forbidden response
-                resp = requests.get(
-                        "https://api.ws.dpcmaps.toyota.com/v1/dealers?attributeKey=&searchMode=pmaProximityLayered&zipcode=" + zipCodeWithLeadingZeroes,
-                        headers = headers,
-                        timeout=20,
-                )
-                result = resp.json()
+                if 1:
+                    # The WAF bypass expires every 5 minutes, so we refresh about every 4 minutes.
+                    elapsed_time = timer() - timer_start
+                    if elapsed_time > 4 * 60:
+                        print("  >>> Refreshing WAF bypass for dealer info website  >>>\n")
+                        headers = wafbypassDealerInfo.WAFBypass().run()
+                        timer_start = timer()
+                    resp = requests.get(
+                            "https://api.ws.dpcmaps.toyota.com/v1/dealers?attributeKey=&searchMode=pmaProximityLayered&zipcode=" + zipCodeWithLeadingZeroes,
+                            headers = headers,
+                            timeout=20,
+                    )
+                    #print("resp.status_code", resp.status_code)
+                    result = resp.json()
+                else:
+                    #Note that Waf Bypass not needed outside of getDealersUsingBrowser, as getDealersUsingBrowser handles it implicitly internally in the request response series.
+                    result = getDealersUsingBrowser("https://api.ws.dpcmaps.toyota.com/v1/dealers?attributeKey=&searchMode=pmaProximityLayered&zipcode=" + zipCodeWithLeadingZeroes)
                 break
+            except (requests.exceptions.ReadTimeout) as inst:
+                print ("updateDealers: Exception occurred with ReadTimeout")
+                #print("resp.status_code", resp.status_code)
+                result = None
+                # retry
+                if tryCount <= 0:
+                    break
+                tryCount -= 1
+                interruptibleSleep(4)
+                print("Retrying request, tryCount = ", tryCount)
+                
             except (requests.exceptions.JSONDecodeError) as inst:
                 print ("updateDealers: Exception occurred with accessing json response:", str(type(inst)) + " "  + str(inst))
                 print("resp.status_code", resp.status_code)

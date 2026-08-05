@@ -55,6 +55,16 @@ forceQueryRspFailureTest: int = 0 # set to > 0 to perform tests related to forci
 totalPageRetries: int = 0
 MAX_TOTAL_PAGE_RETIRES_FOR_MODEL: int = 2 * 3 * 30 # say on avg 3 groups of 2 retries per page (10 sec avg per retry) over 30 pages  giving 30 minutes extra worst case per model
 
+# Stop once this many page numbers in a row have produced no new vehicles at all.
+# Without this the loop keeps requesting every remaining page whenever some records are permanently
+# unreachable, because it only stops when it has found every record the website claims exist.  A
+# measured lexus RX run spent 12 consecutive page numbers, each firing a query for every search
+# zone, retrieving nothing new before it finally ran out of pages.
+# The trade off is that a genuine late trickle of vehicles after a long flat stretch is given up on,
+# so keep this comfortably above 1.  In that same RX run a threshold of 3 would have stopped at page
+# 8 instead of 20 and given up 3 of 4841 vehicles.
+MAX_CONSECUTIVE_PAGES_WITH_NO_NEW_VEHICLES: int = 3
+
 LastChangedDateTimeColName: str = "LastChangedDateTime"
 columnsForEmptyDfParquet: List[str] = ["vin", "isTempVin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', 'cab.code', 'cab', 'bed.code', 'bed', "FirstAddedDate", LastChangedDateTimeColName, "infoDateTime", "options"]
 columnsForEmptyDfFinalCsv: List[str] = ["Year", "Model", "Color", "Int Color", "Base MSRP", "Total MSRP", "Selling Price", "Selling Price Incomplete", "Markup", "TMSRP plus DIO", "Shipping Status", "Pre-Sold", "Hold Status", "eta.currFromDate", "eta.currToDate", "VIN", "isTempVin", "Dealer", "Dealer Website", "Dealer State", "Dealer City", "Dealer Zip", "Dealer Lat", "Dealer Long", "CenterLat", "CenterLong", "DistanceFromCenter", "Transmission", "MPG Combined", "MPG City", "MPG Highway", "Engine Code", "Engine Name", "Cab Code", "Cab", "Bed Code" , "Bed" , "FirstAddedDate", LastChangedDateTimeColName, "infoDateTime", "Options"]
@@ -233,6 +243,12 @@ def get_vehicle_query_Objects() -> Dict[str, str]:
         default_radius: int = 5823
         
         if vehicle_make == vehicleUtilities.vehicleMakeLexus:
+            # A single nationwide zone is enough for every lexus series.  The multiple zones only
+            # exist to get past the website's limit of 40 pages for any one query, and no lexus
+            # series comes close to that ceiling.  The RX is the biggest and a measured national run
+            # of it returned 4954 records over 20 pages, so one zone can already reach every one.
+            # If a lexus series ever does report totalRecords near the ceiling, give it the spread
+            # of zones the high volume toyota models use below.
             vehicleQueryZonesToUse = ["central"]
             default_radius = 10000
         else:
@@ -552,6 +568,9 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
     gotPageInfoAtLeastOnce = False
     # Set a last run counter.
     last_run_counter = 0
+    # Count of page numbers in a row that have yielded no new vehicles.  See
+    # MAX_CONSECUTIVE_PAGES_WITH_NO_NEW_VEHICLES.
+    consecutivePagesWithNoNewVehicles = 0
     # Perform the queries for the model
     # Toyota's API won't return any vehicles past past 40.
     maxPagesToGet = 40
@@ -643,14 +662,22 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
             df.to_csv(f"output/pages/{MODEL}_raw_page{page_number}.csv", index=False)
         print(f"Found {len(df)} (+{len(df)-last_run_counter}) vehicles so far.\n")
         
-        ## If we didn't find more cars from the previous run, we've found them all.
-        #if len(df) == last_run_counter:
+        # Track page numbers that produced nothing new, so a run whose remaining records are
+        # unreachable stops instead of grinding through every remaining page.
+        if len(df) == last_run_counter:
+            consecutivePagesWithNoNewVehicles += 1
+        else:
+            consecutivePagesWithNoNewVehicles = 0
         if len(df) >= recordsToGet:
             # we found total records indicated by any one request, which is all the records we are looking for.
             print("All vehicles found. Model ", MODEL)
             break
         elif page_number >= pagesToGet:
             print("Error: Reached total pages for this vehicle (or page limit) of", page_number, ". All vehicles were not found! Model " , MODEL ,  "missing ", recordsToGet - len(df), "vehicles")
+            break
+        elif consecutivePagesWithNoNewVehicles >= MAX_CONSECUTIVE_PAGES_WITH_NO_NEW_VEHICLES:
+            print("Stopping early: the last", consecutivePagesWithNoNewVehicles, "page numbers produced no new vehicles, so the remaining",
+                  recordsToGet - len(df), "are treated as unreachable. Model", MODEL)
             break
         elif totalPageRetries > MAX_TOTAL_PAGE_RETIRES_FOR_MODEL:
             print("Error: Reached total page retries limit", totalPageRetries, ". All vehicles were not found! Model " , MODEL ,  "missing ", recordsToGet - len(df), "vehicles")
@@ -820,7 +847,9 @@ def transformRawDfToCsvStyleDf(inputDf: pd.DataFrame) -> pd.DataFrame:
             ["dealerId", "state", "city", "zip", "lat", "long"]
         ]
         dealers.rename(columns={"state": "Dealer State", "city": "Dealer City", "zip": "Dealer Zip", "lat": "Dealer Lat", "long": "Dealer Long"}, inplace=True)
-        df["dealerCd"] = df["dealerCd"].apply(pd.to_numeric)
+        # errors="coerce" so a non numeric dealer code becomes NaN and simply fails to match a dealer
+        # rather than raising.  Toyota dealer codes are all numeric but other makes may not be.
+        df["dealerCd"] = pd.to_numeric(df["dealerCd"], errors="coerce")
         df = df.merge(dealers, left_on="dealerCd", right_on="dealerId", how='left')
         # how = 'left' will keep vehicle entry even if can't find dealer code for it, so state will show up as blank or NAN.
         # Without the how = 'left' any row we can't find the matching dealer code in dealers would be removed from df which we don't want.
@@ -900,19 +929,26 @@ def transformRawDfToCsvStyleDf(inputDf: pd.DataFrame) -> pd.DataFrame:
             'bed': "Bed",
         }
     
+        # The title is the model name (like 4Runner) that gets removed from the front of the trim
+        # further below.  A missing model, or a make whose models query supplies no title, falls
+        # back to a blank title, which leaves the whole marketing name intact rather than aborting
+        # a run that may already have taken a long time to collect.
         ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
-        output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
-        with open(f"{output_dir}/models.json", "r") as fileh:
-            models_list = json.load(fileh)
+        title = ""
+        modelsFileName = vehicleUtilities.getModelsFileName(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
+        if Path(modelsFileName).exists():
+            with open(modelsFileName, "r") as fileh:
+                models_list = json.load(fileh)
             matching_models = [x["title"] for x in models_list if x["modelCode"].lower() == (MODEL.lower() if MODEL else "")]
             if not matching_models:
-                 if MODEL:
-                    raise ValueError(f"Model code {MODEL} not found in {output_dir}/models.json. Available models: {', '.join(x['modelCode'] for x in models_list)}")
-                 else:
-                     # fallback
-                     title = ""
-            else:
+                print("Warning: transformRawDfToCsvStyleDf: Model", MODEL, "is not listed in", modelsFileName,
+                      ". Keeping the full marketing name in the Model column. Available models:",
+                      ", ".join(x["modelCode"] for x in models_list))
+            elif matching_models[0]:
                 title = matching_models[0]
+        else:
+            print("Error: transformRawDfToCsvStyleDf: Models file does not exist", modelsFileName,
+                  ". Keeping the full marketing name in the Model column")
     
         df = (
             df[
@@ -968,7 +1004,9 @@ def transformRawDfToCsvStyleDf(inputDf: pd.DataFrame) -> pd.DataFrame:
         )
     
         # Remove the model name (like 4Runner) from the model column (like TRD Pro).
-        df["Model"] = df["Model"].str.replace(f"{title} ", "")
+        # A blank title means there is nothing to strip, and replacing " " would mangle every row.
+        if title:
+            df["Model"] = df["Model"].str.replace(f"{title} ", "")
     
         # Clean up colors with extra tags.
         # df = df[df["Color"].notna()]  # don't remove entries with missing color as still want to see those vehicles.
@@ -996,6 +1034,19 @@ def transformRawDfToCsvStyleDf(inputDf: pd.DataFrame) -> pd.DataFrame:
             "G": "At dealer",
         }
         df.replace({"Shipping Status": statuses_shipping}, inplace=True)
+        # Any dealerCategory the website returns that is not one of the known ones above would
+        # otherwise pass straight through as a bare raw letter, which reads like a real status and is
+        # easy to miss when writing a match criteria filter.  Lexus returns an "L" on a small number
+        # of vehicles, meaning something the toyota side never uses.  Label these explicitly so they
+        # are obviously not one of the known statuses, and say so in the log.
+        # Note that lexus never returns "A" at all, so lexus inventory has no factory to port stage
+        # to see, unlike toyota where it is the most common status.
+        unmappedStatusMask = df["Shipping Status"].notna() & ~df["Shipping Status"].isin(statuses_shipping.values())
+        if unmappedStatusMask.any():
+            unmappedStatusCodes = sorted(set(df.loc[unmappedStatusMask, "Shipping Status"].astype(str)))
+            print("Warning: transformRawDfToCsvStyleDf: Unrecognized dealerCategory value(s)", unmappedStatusCodes,
+                  "on", int(unmappedStatusMask.sum()), "vehicles. Labeling them as Unknown (<code>)")
+            df.loc[unmappedStatusMask, "Shipping Status"] = "Unknown (" + df.loc[unmappedStatusMask, "Shipping Status"].astype(str) + ")"
 
         # df["Image"] = df["media"].apply(
         #     lambda x: [x["href"] for x in x if x["type"] == "carjellyimage"][0]

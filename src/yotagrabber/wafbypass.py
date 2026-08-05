@@ -75,13 +75,30 @@ class WAFBypass:
                         for model in target_models:
                             print(f"WAFBypass: Attempting to load inventory page for model '{model}'...")
                             try:
+                                # Note: the lexus url must NOT have a trailing slash ahead of the
+                                # query string, as .../model/LC/?zipcode=90210 returns a 301 redirect.
                                 if self.vehicle_make.lower() == "lexus":
-                                    url = f"https://www.lexus.com/search-inventory/model/{model}/?zipcode={safe_zip}"
+                                    url = f"https://www.lexus.com/search-inventory/model/{model}?zipcode={safe_zip}"
                                 else:
                                     url = f"https://www.toyota.com/search-inventory/model/{model}/?zipcode={safe_zip}"
-                                
+
                                 page.goto(url, timeout=45000)
-                                page.wait_for_load_state("networkidle", timeout=45000)
+
+                                # The graphql request we want the headers from fires while the page
+                                # loads, so stop as soon as intercept_request has captured them
+                                # instead of waiting for the whole page to go quiet.  The lexus page
+                                # in particular keeps background requests going and never reaches
+                                # networkidle, so waiting for it burned the full timeout on every
+                                # model tried, and the bypass gets redone every 4 minutes during a
+                                # long inventory run.  Fall back to the original networkidle wait
+                                # only if the headers have not shown up on their own.
+                                headersWaitSecs = 30
+                                for _ in range(headersWaitSecs * 2):
+                                    if self.valid_headers is not None:
+                                        break
+                                    page.wait_for_timeout(500)
+                                if self.valid_headers is None:
+                                    page.wait_for_load_state("networkidle", timeout=45000)
 
                                 # Check if we successfully captured headers
                                 if self.valid_headers is not None:
@@ -92,6 +109,11 @@ class WAFBypass:
 
                             except Exception as e:
                                 print(f"WAFBypass: Failed to load model '{model}': {str(e)}")
+                                # The headers are captured by the request interceptor, so they may
+                                # already be in hand even though the page load itself errored out.
+                                if self.valid_headers is not None:
+                                    print(f"WAFBypass: Headers were captured for '{model}' before the error, using them.")
+                                    break
                                 print("WAFBypass: Retrying with next fallback model...")
                                 continue
                         

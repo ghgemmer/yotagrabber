@@ -18,16 +18,34 @@ def getVehicleMakeDealersFullFileName(vehicleMake: str) -> pathlib.Path:
 
 def getVehicleMakeRelOutDirNoEndSlash(vehicleMake: str) -> str:
     """
-    Get the relative output directory (no ending slash) for the passed vehicle make.
+    Get the relative output directory (no ending slash) that holds the output files.
     Returns path relative to the src/ directory (typical working directory).
-    Need to go up one level to get to repo root, then into output/
+
+    Every vehicle make writes into the one output directory.  Makes are told apart by a file
+    name prefix (see getOutputFileNamePrefix) rather than by a per make subdirectory.
     """
-    if vehicleMake == "toyota":
-        outputDir = "./output"
-    else:
-        # For Lexus and other makes, use subdirectory
-        outputDir = f"./output/{vehicleMake}"
-    return outputDir
+    return "./output"
+
+def getOutputFileNamePrefix(vehicleMake: str) -> str:
+    """
+    Return the prefix to put on output file names that are not already model specific.
+
+    Toyota gets no prefix so that its existing output files keep their current names.  Any
+    other make gets a prefix so its files sit alongside toyota's in the output directory
+    without colliding.  Per model output files do not need this because toyota model codes
+    are lowercase names and lexus model codes are uppercase series codes, so they never clash.
+    """
+    if vehicleMake == vehicleMakeToyota:
+        return ""
+    return vehicleMake + "_"
+
+def getModelsFileName(vehicleMake: str) -> str:
+    """Return the name of the curated models file for the vehicle make."""
+    return getVehicleMakeRelOutDirNoEndSlash(vehicleMake) + "/" + getOutputFileNamePrefix(vehicleMake) + "models.json"
+
+def getModelsRawFileName(vehicleMake: str) -> str:
+    """Return the name of the raw models file for the vehicle make."""
+    return getVehicleMakeRelOutDirNoEndSlash(vehicleMake) + "/" + getOutputFileNamePrefix(vehicleMake) + "models_raw.json"
 
 def validateVehicleMake(userInputVehicleMake: Optional[str]) -> Tuple[bool, Optional[str]]:
     """

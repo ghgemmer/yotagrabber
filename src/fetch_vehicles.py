@@ -56,12 +56,10 @@ def main() -> None:
 
         vehicles.update_vehicles()
 
-        # Determine output directory
-        output_dir: Path
-        if make == 'lexus':
-            output_dir = Path("output/lexus")
-        else:
-            output_dir = Path("output")
+        # Every make writes into the one output directory.  Per model file names do not need a
+        # make prefix because toyota model codes are lowercase names and lexus model codes are
+        # uppercase series codes, so the two never collide.
+        output_dir: Path = Path("output")
 
         print("\n" + "=" * 80)
         print("INVENTORY FETCH COMPLETED!")

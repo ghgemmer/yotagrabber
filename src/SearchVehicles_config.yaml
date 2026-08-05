@@ -1,66 +1,14 @@
-{username: "MyName",  # Not used for now
+{username: "ghgemmer",  # Not used for now
 
 # resultsFileName is the file where match results are appended to.
 resultsFileName: '.\SearchVehiclesResults.txt',
 
-# useLocalInventoryFile -  Indicates to use the existing raw local vehicle inventory file for the model (parquet file) 
-# and not query the website to get current inventory.
-# Default is False
-# !!!!!  When true, the search program will only do one search and then exit the program, thus continuous searching is disabled.
-# !!!!!  Thus minWaitTimeBetweenSearches, and maxRandomAdderTimeBetweenSearches are not applicable in this case
-# This is typically used when a higher level script/batch program runs the vehicles.py program to get the current
-# inventory from the website for a given model (which creates that local inventory file for that model) and then runs IN SERIES
-# one or more searches that use different user match criteria on that model.
-# These different searches put their results in different results files (specified in the config file)
-# and the email/text notifications for each can use different prefixes (specified in the config file) to easily allow 
-# the user to see which match criteria the notification is for.
-# This can be used to reduce the amount of traffic the website receives for a given model by getting the current inventory once
-# for one or more models and then running the several searches against it in series. 
-# This also allows the script/batch/powershell program to be more flexibly scheduled by the user via the OS
-# to run at whatever intervals/times the user wants
-#
-# Another alternative is the user can just run each search in a separate command/terminal window and directory, with 
-# useLocalInventoryFile to False in each config file. This maintains the separate search times, search results and 
-# unique notifications as above but does increase traffic to the website as each continuous search is 
-# requesting the inventory at the same time and could potentially overload the toyota website causing it
-# to throttle or block you.
-#
-# Note that alternativley the user can always combine all the user criteria together(via Or logic), set useLocalInventoryFile
-# to False, and the search program will continuously search when started up. The disadvantge to that is it is 
-# harder to see which individual criteria matched in the search results logs, notifications and email/texts.
-#   
-#useLocalInventoryFile: False,
 
-# runOnceAndExit - Indicates to run the search program for one pass and then exit. i.e. it is not run continuosly
-# Default is False
-# This is typically used when running several searches in sequence (serially) for the same model via a higher level
-# script/batch file/power shell to avoid potentially overloading the toyota 
-# website causing it to throttle or block you.
-# 
-# runOnceAndExit: False,
-
-# maxNumberRawMissingVehicles - Indicates the maximum number of Raw missing vehicles we allow. 
-# When the inventory is gotten for a given model we get an indication upfront of how many vehicles there are for that model.
-# If we cannot get all those vehicles then the number we don't get are considered missing.
-# We will only report results if the number of missing vehicles is less than or equal to this value
-# otherwise we consider the data returned from the website to be insufficient to show results.
-# Default 0.
-#maxNumberRawMissingVehicles: 0,
-
-# CenterLatAndLong -  The latitude and longitude of a center point from which distances are calculated to the Dealers.
-#                     That distance is what appears in the DistanceFromCenter column.
-# example:  CenterLatLong: [41.978382, -91.668626]
-# Default if not present is CenterLatLong: [None, None]
-#CenterLatLong: [41.978382, -91.668626],
-
-
-# minWaitTimeBetweenSearches is the minimum time to wait between searches (that is after each search completes but before the next search)
-# so as to not overload the website with requests.
+# minWaitTimeBetweenSearches is the minimum time to wait between searches when nothing was found so as to not overload the website with requests.
 # maxRandomAdderTimeBetweenSearches is the max random time to add to the min time to get the total time between searches to provide some randomness
 # Time delay before next search  = minWaitTimeBetweenSearches + (random number between 0 and 1 * maxRandomAdderTimeBetweenSearches)
 # !!! Note that by hitting the return key you can end any current wait and immediately proceed
 # !!! Hitting Ctrl-C terminates the program
-# When useLocalInventoryFile is True or runOnceAndExit is True these search times are not applicable.
 minWaitTimeBetweenSearches: 21600, # 60 * 60 * 6 secs
 maxRandomAdderTimeBetweenSearches: 1800, # 60*30 secs
 
@@ -68,9 +16,6 @@ maxRandomAdderTimeBetweenSearches: 1800, # 60*30 secs
 # def filterDataFrame (df):  
 #    where df is the passed panda data frame to be filtered to meet the desired user match criteria and the function return value 
 #    is the filtered data frame (leaving df unchanged)
-#    The dataframe column names are shown in any of the model csv files in the output directory
-#    The syntax for filtering/selection is that for a pandas dataframe, so see online pandas documentation for further detail.
-#    See Example_UserMatchCriteriaFilter.py for an example of the filtering syntax.
 # 
 # def criteriaPrintableString ():  
 #    returns a printable string containing the user match criteria.  This can be the panda expression used to do the filtering
@@ -79,39 +24,16 @@ maxRandomAdderTimeBetweenSearches: 1800, # 60*30 secs
 # See Example_UserMatchCriteriaFilter.py for an example of this file.
 # userMatchCriteriaFilterFileName config item must be present and the file must exist otherwise a config file error is issued.
 # 
-userMatchCriteriaFilterFileName: '.\XSE_PP_CloseToIowa_UserMatchCriteriaFilter.py',
+userMatchCriteriaFilterFileName: '.\Test_UserMatchCriteriaFilter.py',
 
 
-# outputResultsMethod -  Determines how match results are output to the running history file, and user notifications.
+# outputResultsMethod -  Determines how unfiltered match results are output to the running history file, and user notifications.
 # Default is outputAllSearchResultsOnChange when commented out.
 # outputResultsMethod is one of the following values:
-# "outputAllSearchResultsOnChange" -  Outputs all the unfiltered search results to the history file and user notifications with the exception that
-# if only removals have occurred we do not notify the user via email/text/sound unless alsoNotifyOnOnlyRemovals is True (useful when user cannot access the history file to see current match status in one place)
-# "outputChangedSearchResultsOnChange" - Outputs only the changes in unfiltered search results to the history file and notifications when changes occur with the exception that
-# if only removals have occurred we do not notify the user via email/text/sound unless alsoNotifyOnOnlyRemovals is True (useful when user cannot access the history file to see current match status in one place)
-# "outputAddedSearchResultsOnChange"  - Outputs only the added units compared to the previous results (thus removals, modified, and stay the same not printed) when changes occur
-# Thus removed, modified, and stay the same are not output when changes occur.  This option is useful if you
-# only want to be notified when new vins are added (usually allocated so not built yet) which typically is when you have the highest 
-# chance of seeing something before everyone else and calling the dealer to attempt to secure it (assuming no waiting lists in effect) 
-# Tips: If there is a large number of match results (Say over 30),  choosing the outputChangedSearchResultsOnChange may be
-# more useful as typically the changes in match results from one search to the next are small and thus you can quickly visually
-# see what changed in text file sent in the emails.
-# Note that regardless of the outputResultsMethod selected option,  you can always search for 
-# *ADDED, *MODED, *REMOVED in that email text file to quickly find those changes anyway.
-#  
-#outputResultsMethod: "outputAllSearchResultsOnChange",
-
-# alsoNotifyOnOnlyRemovals - When only removals have occurred, indicates, when outputResultsMethod != outputAddedSearchResultsOnChange, if we also notify the 
-# user via emails/texts (if those are enabled) .  Useful when user cannot access the 
-# history file to see current match status in one place.
-# Default is False when not present.
-alsoNotifyOnOnlyRemovals: False,
-
-# showRemovalsWhenOutputStatusIsAll - Indicates, when outputResultsMethod = outputAllSearchResultsOnChange, 
-# if we also show removals in the history file and notifications  
-# Normally these are not shown when outputResultsMethod = outputAllSearchResultsOnChange.
-# Default is False
-showRemovalsWhenOutputStatusIsAll: False,
+# "outputAllSearchResultsOnChange" -  Outputs all the unfiltered search results to the history file and user notifications when changes occur 
+# "outputChangedSearchResultsOnChange" - Outputs only the changes in unfiltered search results to the history file and notifications when changes occur
+# "outputAddedSearchResultsOnChange"  - Outputs only the added units compared to the previous results (thus removals and stay the same not printed) when changes occur
+outputResultsMethod: "outputAddedSearchResultsOnChange",
 
 # For debugging set this to true
 debugEnabled: False,
@@ -237,7 +159,7 @@ textOnlyMatchesNotification: True,
 # Note that in general choose the SMS one over the MMS as long as not sending pictures too.
 # The SMS ones usually limit text to 160 chars.
 # 
-# AT&T: NO LONGER SUPPORTS SMS and MMS VIA EMAIL. number@txt.att.net (SMS), number@mms.att.net (MMS)
+# AT&T: NO LONGER SUPPORTS SMS and MMS VIA EMAIL.  number@txt.att.net (SMS), number@mms.att.net (MMS)
 # Boost Mobile: number@sms.myboostmobile.com (SMS), number@myboostmobile.com (MMS)
 # C-Spire: number@cspire1.com
 # Consumer Cellular: number@mailmymobile.net
@@ -258,9 +180,9 @@ textOnlyMatchesNotification: True,
 # Virgin Mobile: number@vmobl.com (SMS), number@vmpix.com (MMS)
 # Xfinity Mobile: number@vtext.com (SMS), number@mypixmessages.com (MMS)
 
-"notificationTextMsgToAddress": '11234567890.11234567890.FCcsw16C9-@txt.voice.google.com',
-#"notificationTextMsgToAddress": '11234567890',
-#"notificationTextMsgToAddress": '1234567890@vtext.com',
+"notificationTextMsgToAddress": '13197750436.13197750436.FCcsw16C9-@txt.voice.google.com',
+#"notificationTextMsgToAddress": '13199294361',
+#"notificationTextMsgToAddress": '3199294361@vtext.com',
 
 # For verizon phone nubmers leave the long distance "1" prefix off the verizon number.  Also check other numbers for this as well
 # <number>@vtext.com for email to text appears to be delayed sometimes in receiving message by about 10 minutes and sometimes even way longer so may not be reliable enough???
@@ -269,17 +191,17 @@ textOnlyMatchesNotification: True,
 
 # If you want to send a text message and the textingMethod  is not textMessagingViaEmail then set this  as the 10 digit phone number 
 # of the sender of the text (with possibly a 1 prefix added), otherwise leave it commented out or non blank and valid.
-#twilio phone number 11234567890
-"notificationTextMsgFromAddress": '11234567890',
-#"notificationTextMsgFromAddress": '11234567890',
+#twilio phone number 13193204240
+"notificationTextMsgFromAddress": '13193204240',
+#"notificationTextMsgFromAddress": '12064743795',
 
 # If you want to send email notifications set this email "To" address otherwise leave it commented out
 # This is the overall enable/disable of sending email notifications.
-"notificationEmailToAddress": "MyName@gmail.com",
+"notificationEmailToAddress": "ghgemmer@gmail.com",
 
 # If want to send email notifications or text messages via emails set this sender address with your own email address otherwise leave it commented out or non blank and valid
-"notificationSenderEmailAddress": "MyName@gmail.com",
-#"notificationSenderEmailAddress": "silly@gmail.com",
+"notificationSenderEmailAddress": "ghgemmer@gmail.com",
+#"notificationSenderEmailAddress": "exchangesearchoperationsgg@gmail.com",
 
 # authenticationAuthorizationPath is path to where the google project credentials.json and token.json files are when using
 # the  "emailMessagingWithGmailAndCreds" emailingMethod.  If not using that emailingMethod then leave it commented out or non blank and valid
@@ -295,16 +217,15 @@ textOnlyMatchesNotification: True,
 # authorizaton can be edited at anytime to change scopes, etc (using the OAuth consent screen , and click on the Edit button).
 # Then download the credentials.json file
 # The credentials.json file contains the project ID, project name, client ID (an ID for you), client secret (for secure access).
-# When you run the python search for matching vehicles it will request credentials from the gmail app.
+# When you run the python search for matching timeshare unit exchanges program it will request credentials from the gmail app.
 # If it is the first time is has requested these (i.e. token.json does not exist in authenticationAuthorizationPath), it will cause the project to send 
-# a permission request to the user (to the device the program was started on) asking the user to allow the search vehicles inventory program to have gmail send privileges. 
+# a permission request to the user (to the device the program was started on) asking the user to allow the timeshare exhange search program to have gmail send privileges. 
 # See https://developers.google.com/workspace/guides/create-project for creating a google developers project (google cloud project)
 # See https://developers.google.com/workspace/guides/enable-apis for enabling the gmail google API for this project.
 # See https://developers.google.com/workspace/guides/configure-oauth-consent, and https://developers.google.com/workspace/guides/auth-overview 
 # for creating credentials and downloading the credentials.json file.
 # Note that for now levae the project at a "test" status and only you as the user.
 # See https://cloud.google.com/docs/authentication/end-user for general overview of authentication as an end user.
-# To access your existing google cloud projects go to https://console.cloud.google.com/home
 
 "authenticationAuthorizationPath": '.\',
 

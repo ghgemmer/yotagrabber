@@ -1,17 +1,68 @@
-Readme.txt updated 12/8/2025  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
-No Alerts.
+Readme.txt updated 7/28/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+No Alerts - 
+Last update -  Added description of Toyota allocation process and how the spreadsheets can help you.
+
 
 This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
-The inventory is obtained from the same place the Toyota Inventory search website (https://www.toyota.com/search-inventory/)
+The inventory is obtained from the same place the national Toyota Inventory search website (https://www.toyota.com/search-inventory/)
 gets its data from (which is https://api.search-inventory.toyota.com/graphql ).  The folder also contains the sold inventory 
-(defined as inventory that appeared at one time in a run, but no longer appears in the inventory obtained from the website), as well as Change History 
+(defined as inventory that was obtained from the website by a program run at some point, 
+but no longer appears in the inventory obtained from the website), as well as Change History 
 event files for the last 14 days which contain added VINs, modified contents of existing VINs, or removed VINs between runs of the inventory 
 collection over that time period.
 
-All files are read only view on my google drive.  Thus if you wish to do filtering, etc you need 
-download the file and open it or save it to your own google drive.
+See https://www.youtube.com/watch?v=dT1BWDsf90U for a detailed explanation of the Toyota allocation process.
+Generally, per the video, Toyota allocates vehicles to dealers/regions based on expected demand, historical purchases, and the types of cars/colors they 
+can produce in the factory at that point in time. Allocations are in mixed model/colors format.
+A customer, with rare exceptions, does not order a car.
+The customer makes their desire known to the dealer and the dealer either waits for an allocation from Toyota that matches that, 
+or the dealer swaps (generally the allocation before the car is delivered) with other dealers to get that car.
+Now there are cases, per the allocation video, where a customer might pay upfront for a vehicle and the dealer can then make a request 
+to Toyota to put that in their allocation process and Toyota will attempt to fit that in, but those are not common.
 
-Folder updates typically show up each day around 6am CDT.
+The spreadsheets allow a person to see vehicles when they are allocated so they can maximize their ability to get the car they want, 
+and hopefully get it earlier than it would normally take.
+They also allow a person to easily compare prices between dealers (local or not) for the exact car they want or close matches.
+
+Note that some dealers may actually hide cars from the national Toyota Search Inventory website, even when they are NOT
+considered sold or reserved or spoken for, and only show them on the dealers website.  Thus they would not
+appear on the spreadsheets.
+Per the Google AI summary, Possible reasons for why they hide these cars, are:
+"Dealers often hide or delay listing new Toyota allocations on Toyota.com to manage local market demand and customer waitlists. 
+This allows them to avoid hundreds of unwanted calls, save vehicles for in-person buyers, 
+and maintain local pricing advantages or markups without showing nationwide availability.
+The most common reasons for this inventory discrepancy include:
+
+- Preventing Out-of-State Competition: High-demand models (like RAV4 Hybrids or the Grand Highlander) see massive nationwide searches. 
+Dealers often hide allocated cars on the national site to deter out-of-state buyers, preferring to sell to locals or nearby customers.
+
+- Protecting Waitlists: Dealerships operate on waitlists. When they get a new allocation, they call the next customer in line. 
+Hiding the car from the public site prevents people from trying to "jump the line" or place a deposit on an already spoken-for vehicle.
+
+- Controlling Markups: If a highly coveted car is listed on Toyota.com with a base MSRP, 
+the dealer faces a flood of inquiries and must deal with angry buyers when they add market adjustments. 
+Stashing the inventory lets them negotiate markups directly with in-person leads."
+
+Stevinson Toyota East of Aurora Colorado has been observed (on 5/22/2026) to hide approx half of their large Rav4 allocation like this. 
+There are probably other dealers that do this but only Stevinson Toyota East has been brought to my attention.
+Because of this you should also do a cursory check of some local/regional dealer websites when looking for a vehicle,
+after you have looked through the spreadsheet.
+
+All files are read only view on my google drive.  Thus if you wish to do filtering, sorting, etc, you need 
+download the file and open it with Excel, or save it to your own google drive.
+On a downloaded file you can use Excel to open it and then use the Sorting or Data -> Filter operation.
+Data -> Filter allows you to filter any desired column to only see rows that contain the indicated values.
+
+
+Folder updates typically show up each day by 6am CDT. The inventory run for that starts 
+at 9pm CDT the previous day and typically runs through the night and into the very early morning to
+collect the inventory for all the models.
+Inventory for all models are collected first then all of them are uploaded in one shot to the google drive
+at the end.  The first models inventory is obtained from the website starting at 9pm CDT, then the second models
+inventory is obtained after that, and so forth and so on through the night and early morning, and then once all modesl 
+are obtained they are all uploaded to the google drive.  The infoDateTime column in the spreadsheet indicates when 
+that inventory was obtained.
+ 
 Each model's current inventory is placed in a <model>.csv file.  A raw  (filename <model>_Lastraw.parquet)
 python pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model
 before various filtering/modification is applied for the csv file, such as removal of many fields we don't use or 
@@ -26,7 +77,7 @@ the inventory (or reappeared after disappearing), and a LastChangedDateTime whic
 any information for that VIN changed.
 
 The sold inventory files are for VINs that no longer appear in the current inventory (were seen at one time 
-by the inventory run but have since disappered).
+by the inventory run but have since disappered from the Toyota inventory search website).
 These files are named  <model>_<year>_Sold.csv with the associated raw parquet in <model>_<year>_Sold_raw.parquet
 Also note that currently if a temp VIN is turned into a real VIN, and thus the temp VIN disappears, 
 the temp VIN is treated as Sold, because it disappeared from current inventory, and is placed in the associated Sold file. 
@@ -36,17 +87,26 @@ A user can determine the real VIN that has replaced a temp VIN by using the Chan
 Once a temp VIN in the sold file is older than 16 weeks it is assumed it has been replaced with a real VIN 
 and/or the user no longer needs use of the temp VIN, and it is removed from the sold files.  This period of
 time also allows some statistics to be run on the day of the month allocations appear.
+Also VINs can move from the Sold file back to the current inventory file (non sold) if they disappeared from the
+Toyota search inventory website then reappear there.  This is rare but can sometime happen if a car sale falls through
+or someone who the car was reserved for, and considered sold, decides they don't want it.  It can also sometimes happen when a  
+quality control hold on the car at the port of entry occurs for a long time.
 Older model year sold files will be archived at some point, when it appears there is no longer any inventory of that year left.
 
 Note that the contents of the VIN entries in the sold inventory files do not update after being placed in that file because there is no data 
 to update them with from the Toyota search inventory website anymore. I.E, the website no longer returns that VIN and contents for it,
 and that is the only website that the vehicle information is obtained from by the program.
 
+Also a dealer may have the vehicle removed from the Toyota search inventory website results (thus showing up in the Sold files)
+if they consider it sold for all practical purposes and/or don't want to get calls about it from other potential buyers.
+The vehicle may still appear on the dealer website in this case as well.
+Likewise, some dealers may not use the Pre-Sold field.
+
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.
 They contains all changes between runs of the inventory collection,
 which are any added (new or reappeared) VINs, modified contents of existing VINs, or removed VINs. 
 This allows a user to see the changes that occurred from run to run.
-Only the last 14 days of changes are kept.
+Changes are only kept for the last 14 days.
 A typical use of this file is to watch for changes to the column values of a specific VIN  (sort by VIN and find the specific
 VIN).  The user can visually scan for changes between values in the rows for that VIN or look at the
 List of Changes column (for change types of MODED) to see a concise list of only the changes that occured between the current row
@@ -63,18 +123,22 @@ List of Changes
 
 A user can determine, with reasonable certainty, the real VIN that has replaced a temp VIN by using the Change History file,
 assuming this is done before 14 days after the temp VIN disappeared from the inventory.
-Open the Change History .csv file in Excel and sort ascending by "Dealer Website".  
-Insert a blank column to the right of the "isTempVin" column.
-Turn on data filtering.
-Add the following formula to row 2 of that new blank column
-=OR(AND(S2=FALSE, S3=TRUE,U2=U3, A2="ADDED", A3="REMOVED", B2=B3,I2=I3, AS2=AS3), AND(S1=FALSE, S2=TRUE,U1=U2, A1="ADDED", A2="REMOVED", B1=B2, I1=I2, AS1=AS2))
-then copy and paste that cell to all the other cells below in that column
-Now filter on the value TRUE for that new column.
-You should see pairs of rows, were each pair is ADDED followed by REMOVED. The ADDED one contains the real VIN 
-and the REMOVED contains the temp VIN and all the other columns should match between the two (excluding obvious ones that
-will be different).  The above formula doesn't check that all columns match, just that the Selling Price, Options and
-Event DateTime match between the columns which in general if they do then the others probably match as well, but you 
-need to visually verify the other columns just to make sure.
+Open the Change History .csv file in Excel  select the entire spreadsheet, 
+and select Data ---> Sort ascending and enter levels "Dealer Website", then "Model", then "Options", then "Color", then "Int Color", then "Selling Price", then "Event DateTime"
+Now add a new column to the right of the "isTempVin" column and in the second row (the one below the headers column names)
+place the following formula  (the formula is comparing the sort by values in the row to those in the row above it)
+=AND(U1=U2, B1=B2, I1=I2, D1=D2, E1=E2, F1=F2, AS1=AS2)
+Then copy and paste that cell to all the cells below it in that column
+Now find the temp VIN you are looking for where the row has "RowChangeType" = "REMOVED" and the newely added column has the value TRUE
+(if no such row exists then a real VIN has not been assigned yet)
+Now starting from that row go up one row and if the "RowChangeType" = "ADDED", and isTempVIN = FALSE,  then 
+that is, assuming there are not multiple vehicles for that dealer that have those exact same sort by values,  
+the row with the real VIN that is associated  with that temp VIN.
+If not, then on the current row , verify the row has the newly added column value of TRUE and repeat the steps (if the current row does not have
+the newly added column value of TRUE then you are at the end of the set of possible real VINs that could be for that temp VIN).
+Once you have found a real VIN using the above, continue the steps to see if there are multiple real VINs that could be for that temp VIN.
+If there are not then you have found the real VIN for that temp VIN otherwise there are multiple VINS and you can't tell which one is the
+actual real VIN for that temp VIN.   
 
 
 A log file InventoryRunlog.txt is also provided which indicates when the inventory search started, log of
@@ -89,7 +153,7 @@ the latest is at the bottom of the file.
 
 
 Column definitions that are not obvious or to remove any ambiguity are as follows.  Note that all prices exclude
-state sales tax, license and registration fees, doc fees, and any other mandatory fees the dealer charges, 
+state sales tax, title/registration fees, doc fees, and any other mandatory fees the dealer charges, 
 and thus are NOT Out The Door prices.  Also sometimes a discount will be shown on the Toyota Inventory Search Website but
 the dealer shows a higher price (usually TSRP with no discount) for some reason.  Sometimes this is because the dealer has
 tacked on other items not shown in the options (Paint protection, etc) and to get the discount shown on the toyota website
@@ -100,11 +164,11 @@ possible to remove those items.
            The top level model name is left off (Camry, 4Runner, etc) as the file name implies it.
 "Color" - Exterior color
 "Int Color" - Interior color
-"Base MSRP" -  Is as shown on the cars window sticker and is the Base manufacturer retail price 
+"Base MSRP" -  Is as shown on the cars window sticker and is the Base Manufacturer Suggested Retail price 
 "Total MSRP" -  Also referred to as the Total SRP (Suggested Retail Price) as shown on the cars window sticker is the 
                 Base MSRP + all the factory and Port installed options/packages + delivery/handling fees  
-                (excludes taxes and other fees like Doc fee, registration fees, etc)
-"Selling Price" -  is the total dealer price (excluding taxes, fees) = Total MSRP + Dealer installed options + Dealer Markup/Discount/adjustments
+                (excludes taxes and other fees like Doc fee, title/registration fees, etc)
+"Selling Price" -  is the total dealer price (excluding taxes, title/reg, etc fees) = Total MSRP + Dealer installed options + Dealer Markup/Discount/adjustments
                    It is the bottom line final price the Toyota Search Inventory website shows with the exeptions indicated below.
                    Note that this value in general matches the dealer website value but can be different if the dealer website 
                    has additional adjustments it does not reflect back to the Toyota Search Inventory database or has not correctly updated those
@@ -142,15 +206,16 @@ possible to remove those items.
                 otherwise just "Total MSRP".  This is based on observation from dealer websites so may not be exactly correct in all cases.
 "Hold Status" - There is uncertainty as to what exactly this field indicates. One opinion is it 
                 indicates the degree to which that vehicle is available/spoken for.  Generally, when looking for a vehicle,
-                you want to first contact dealers where PreSold is False and the hold status is blank , then those where it is "Available",  
+                you want to first contact dealers where PreSold is False and the hold status is blank or None , then those where it is "Available",  
                 then lastly where it is "Dealer hold".
-                In this interpretation "Dealer hold" means the vehicle is spoken for already, and Available or blank means it is not.
+                In this interpretation "Dealer hold" means the vehicle is spoken for already, and Available or blank or None means it is not.
                 Another opinion is hold status indicates whether a dealer would offer the vehicle to another dealer for a swap or sale.
                 In this intepretation "Dealer hold" indicates the vehicle will not be offered to other dealers
-                for swapping or sale (which, among other reasons, might possibly be because it is in high demand or being held for someone or there is a waiting list for it)
-                ,  and blank of Available indicates they would.
+                for swapping or sale, which, among other reasons, might possibly be because it is in high demand/rare or being held for someone or there is a waiting list for it,
+                ,  and blank or None or Available indicates they would.
                 
-"Pre-Sold" - The vehicle sale is pending or considered sold for all practical purposes.
+"Pre-Sold" - The vehicle sale is pending or considered sold for all practical purposes.  
+             Some dealers may not use this field and thus it would always show FALSE.
                 .
 "Shipping Status" - "Factory to port" -  Allocated, or in production, or on the ship, or sitting at the port
                     "Port to dealer" -  Checked in at the port and in the process of moving from the port to the dealership lot.
@@ -212,8 +277,7 @@ database and changes only infrequently, so is not dynamically extracted from the
 to reduce the time it takes to get the inventory.
 
 For issues or questions contact ghgemmer@gmail.com
-See github repository https://github.com/ghgemmer/yotagrabber
-for the source code for this forked project.
+See github repository https://github.com/ghgemmer/yotagrabber for the source code for this forked project.
 
 That project also added a higher level search program searchForVehicles.py that can notify the user via any
 combination of sound, email, text whenever changes in the inventory data occur for a specified match criteria.

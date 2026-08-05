@@ -3,6 +3,7 @@
 import random
 import numpy as np
 from inputimeout import inputimeout, TimeoutOccurred
+from timeit import default_timer as timer
 import sys
 import json
 import os.path
@@ -12,9 +13,67 @@ import requests.exceptions
 import requests
 import pandas as pd
 import re
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
+from inputimeout import inputimeout, TimeoutOccurred
+from yotagrabber import wafbypassDealerInfo
 from typing import List, Tuple, Dict, Any, Optional
 
 forceRspFailureTest: int = 0 # set to > 0 to perform tests related to forcing a response failure to test request retry
+
+def getUserInput(promptStr, sleepTime):
+    # Outputs the prompt if not null, and waits for a user input (with an ending CR which is not returned with the result) for the sleepTime
+    # returns a tuple (timedOut, userInput) where timedOut is True if timed out before input, otherwise userInput has the user entry
+    # without the CR
+    userInput = ""
+    timedOut = False
+    try:
+        userInput = inputimeout(prompt=promptStr, timeout=(sleepTime))
+    except TimeoutOccurred:
+        timedOut = True
+    return (timedOut, userInput)
+
+
+forceRspFailureTest = 0 # set to > 0 to perform tests related to forcing a response failure to test request retry
+
+def printSendRequestDetailsToString(r, dataInRequest=None, showHeaders = False, showData = True):
+    #Excludes r.history redirects.
+    printString = "-----------------------"  + "\n"
+    printString += "r.request.method  " + str(r.request.method) + "\n"
+    #print("r.request.method", r.request.method)
+    printString += "r.request.url  " + str(r.request.url) + "\n"
+    #print("r.request.url",r.request.url )
+    if dataInRequest is not None:
+        printString += "dataInRequest =  " + str(dataInRequest) + "\n"
+        #print("dataInRequest =", str(dataInRequest))
+    if showHeaders:
+        printString += "r.request.headers  " + str(r.request.headers) + "\n"
+        #print("r.request.headers", r.request.headers)
+        printString += "response r.headers  " + str(r.headers) + "\n"
+        #print("response r.headers", r.headers)
+    printString += "r.url  " + str(r.url) + "\n"
+    #print("r.url", r.url)
+    printString += "r.status_code  " + str(r.status_code) + "\n"
+    #print("r.status_code", r.status_code )
+    if showData:
+        printString += "r.request.body: " + str(r.request.body) + "\n"
+    return printString
+
+def printSendRequestDetails(r, dataInRequest=None, showHeaders = False, printIt = True, showData = True, showHistory = True):
+    # ShowHistory - indicates if r.history is shown which occurs when redirects occur
+    # showData - if True shows the body data in a POST request
+    # showHeaders - if True shows the request and response headers
+    # dataInRequest -  If not None prints the dataInRequest which is a dictionary that represents what the data in a POST Body is (which matches
+    # the data shown by showData but easier to view.
+    printString = ""
+    if showHistory:
+        # Print everything before last redirect that occurred if there were redirects.
+        for rsp in r.history:
+            printString += printSendRequestDetailsToString(rsp, dataInRequest=dataInRequest, showHeaders=showHeaders, showData=showData)
+            dataInRequest = None  # only print dataInRequest on first request that was sent.
+    printString += printSendRequestDetailsToString(r, dataInRequest=dataInRequest, showHeaders=showHeaders, showData=showData)
+    if printIt:
+        print(printString)
+    return printString
 
 def interruptibleSleep(sleepTime: float) -> bool:
     wasInterrupted = False
@@ -90,7 +149,7 @@ def updateAddressComponentsIn(rowSeries: pd.Series) -> pd.Series:
     rowSeries["state"] = state
     rowSeries["zip"] = zipcode
     return rowSeries
-
+    
 def formatPhoneNumber(phoneNumberStr: Any) -> str:
     # Strip all non-digit characters to handle both formatted and unformatted phone numbers
     # Input is Any because pandas might pass it as an object/int/str
@@ -98,11 +157,92 @@ def formatPhoneNumber(phoneNumberStr: Any) -> str:
     digitsOnly = ''.join(c for c in s_phoneNumber if c.isdigit())
     if len(digitsOnly) == 10:
         formattedPhoneNumberStr = "(" + digitsOnly[:3] + ") " + digitsOnly[3:6] + "-" + digitsOnly[6:]
-        return formattedPhoneNumberStr
+        return formattedPhoneNumberStr 
     else:
         # Return original if not 10 digits
         return s_phoneNumber
     
+def handle_response(response):
+    # Print out URL and status code for every network resource
+    print(f"URL: {response.url} | Status: {response.status}")
+    
+    # Conditionally extract data if it's a target API endpoint
+    if "api.ws.dpcmaps.toyota.com/v1/dealers" in response.url and (response.status == 200):
+        #print("JSON Data:", response.json())
+        pass
+
+def getDealersUsingBrowser(dealersInfoUrl):
+    """Run a browser, to satisy the dealers WAF, to get the dealers json file.  Left in for history of what seemed to work or not"""
+    resp = None
+    dealersJson = None
+    while True:
+        try:
+            with sync_playwright() as playwright:
+                browser = playwright.chromium.launch(headless=False) # headless=True does not seem to work for at all for anything, as get a status code 403 as the first and only response sent back by the server on the page.goto.
+                #browser = playwright.firefox.launch(headless=True)  # page.on("response", response_handler) with Firefox regardless of headless or not,  does not seem to see last response which is the one we wanted and thus page.expect_response does not work
+                try:
+                    dealersJson = None
+                    #context = browser.new_context(viewport={"width": 1920, "height": 1080})
+                    context = browser.new_context(viewport={"width": 10, "height": 10})
+                    page = context.new_page()
+                    #page = browser.new_page()
+                    #getUserInput("Enter Cr to terminate browser inspection", 10000)
+                    #page.goto(dealersInfoUrl)
+                    if 1:  # Works with firefox headless = True or False, and chromium headless = False  
+                        page.goto(dealersInfoUrl)
+                        print("page.wait_for_load_state('networkidle', timeout=10000)")
+                        page.wait_for_load_state("networkidle", timeout=10000)
+                        json_string = page.locator("body > pre").inner_text()
+                        dealersJson = json.loads(json_string)
+                    if 0:
+                        response_info = page.wait_for_response(lambda resp: (resp.status == 200) and ("api.ws.dpcmaps.toyota.com/v1/dealers" in resp.url))
+                        print("Got to point A")
+                        page.goto(dealersInfoUrl)
+                        responseA = response_info
+                        dealersJson = responseA.json()
+                        print("Json data", dealersJson)
+                    if 0:
+                        page.on("response", handle_response)
+                        page.goto(dealersInfoUrl)
+                        print("Waiting 7 seconds")
+                        page.wait_for_timeout(7000)
+                        print("Page content", page.content()) 
+                        json_string = page.locator("body > pre").inner_text()
+                        dealersJson = json.loads(json_string)
+                        #getUserInput("Enter Cr to terminate browser inspection", 1000)
+                    #getUserInput("Enter Cr to terminate browser inspection", 1000)
+                    if 0:  # Works with chromium with headless = False.  Firefox seems to fail in any case of headless setting.
+                        #page.on("response", handle_response) 
+                        with page.expect_response(lambda response: (response.status == 200) and ("api.ws.dpcmaps.toyota.com/v1/dealers" in response.url)) as response_info:
+                        #with page.expect_response(lambda response: (response.status == 200) and ("/mp_verify" in response.url)) as response_info:
+                            page.goto(dealersInfoUrl)
+                        #getUserInput("Enter Cr to terminate browser inspection", 1000)
+                        responseA = response_info
+                        print ("response_info.value" , repr(response_info.value))
+                        response = response_info.value
+                        print ("response.url", response.url)
+                        print ("response.status", response.status)
+                        print ("response.headers", response.headers)
+                        #print("response.text()", response.text())
+                        dealersJson = response.json()
+                except Exception as inst:
+                    print("Error: run_browser: exception in code going to dealersInfoUrl page: ", dealersInfoUrl, str(inst))
+                finally:
+                    browser.close()
+            if dealersJson is not None:
+                break
+            else:
+                print("Error: run_browser was None")
+                sleepTime = 60* 10
+                print("Waiting time ", sleepTime, "secs before retrying WAF Bypass")
+                getUserInput("Enter Cr to terminate wait early", sleepTime)
+        except Exception as inst:
+            print("Error: run_browser: exception", str(inst))
+            sleepTime = 60* 10
+            print("Waiting time ", sleepTime, "secs before retrying WAF Bypass")
+            getUserInput("Enter Cr to terminate wait early", sleepTime)
+    return dealersJson
+
 def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFileName: str = "", vehicleMake: str = "toyota") -> None:
     print("This program updates the passed dealer file (or creates that file if not present)") 
     print("with any dealers found (new or update of existing), during the search ")
@@ -138,7 +278,7 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
     else:
         print("Reading in zip codes from file:", zipCodeFileName)
         zipCodesToUpdateDealers = readInZipCodes(zipCodeFileName, vehicleMake)
-    
+
     dealers: pd.DataFrame
     if Path(dealerFileName).is_file():
         print("Reading in existing Dealer csv", dealerFileName)
@@ -151,7 +291,11 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
     else:
         # Instead of pd.DataFrame(), match the schema.
         dealers = pd.DataFrame(columns=["code", "dealerId", "name", "url", "regionId", "state", "lat", "long", "address1", "city", "zip", "phone"])
-        
+
+    print("Getting WAF bypass for dealer info website")
+    headers = wafbypassDealerInfo.WAFBypass().run()
+    # Start a timer.
+    timer_start = timer()
     indx = 0
     for zipCode in zipCodesToUpdateDealers:
         # TODO add in retries
@@ -190,7 +334,7 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
                 
                 if resp is not None:
                     result = resp.json()
-                    break
+                break
             except (requests.exceptions.JSONDecodeError) as inst:
                 print ("updateDealers: Exception occurred with accessing json response:", str(type(inst)) + " "  + str(inst))
                 if resp is not None:
@@ -254,7 +398,7 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
                 df["address1"] = ""
                 df["city"] = ""
                 df["zip"] = ""
-                
+            
                 # perform renames to match legacy format
                 renames = {
                     "label": "name",

@@ -23,7 +23,7 @@ import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass, vehicleUtilities
 
-PROGRAM_VERSION: str = "Vehicles Program Version 6.5.1 01-10-2026 - Multi-make support"
+PROGRAM_VERSION: str = "Vehicles Program Version 6.5.2 08-04-2026 - Multi-make support"
 
 # Set to True to use local data and skip requests to the Toyota website.
 USE_LOCAL_DATA_ONLY: bool = False
@@ -697,15 +697,19 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
 def sanitizeStr(strng: Any) -> Any:
     # Replace tabs, and characters outside ascii 0 -7F range in string that might cause issues with other programs,
     # with a " ".
-    # Also replaces &nbsp with a " "
+    # Replaces &nbsp and <br> with a " "
+    # Then replaces multiple whitespaces (tabs, space, newlines) with a single space
+    # And finally trims the string of leading and trailing white spaces
     sanitizedString = strng
     if isinstance(sanitizedString, str):
         sanitizedString = sanitizedString.replace('&nbsp;', ' ')
         sanitizedString = sanitizedString.replace('<br>', ' ')
-        rePattern = r'[^\u0000-\u007F]'  # only allow ascii chars represented by hex value 0 -7F.  Pattern is the negation of htis (ie finds anything not this()
+        rePattern = r'[^\u0000-\u007F]'  # only allow ascii chars represented by hex value 0 -7F.  Pattern is the negation of this (ie finds anything not this()
         sanitizedString = re.sub(rePattern, ' ', sanitizedString)
-        rePattern = r'[\u0009]'
-        sanitizedString = re.sub(rePattern, ' ', sanitizedString)
+        # replace multiple whitespace i.e. any combination of tabs , spaces , newlines with a single space
+        sanitizedString = re.sub(r'\s+', ' ', sanitizedString)
+        # trim the line
+        sanitizedString = sanitizedString.strip()
     return sanitizedString
 
 def isNumber(value: Any) -> bool:
@@ -863,6 +867,10 @@ def transformRawDfToCsvStyleDf(inputDf: pd.DataFrame) -> pd.DataFrame:
             # This can happen if the passed df is the originalLastParquet before the
             # LastChangedDateTimeColName column has ever been added to it such as when the last parquet file did not exist
             df[LastChangedDateTimeColName] = None
+        if not ('eta.currFromDate' in df.columns):
+            df['eta.currFromDate'] = None
+        if not ('eta.currToDate' in df.columns):
+            df['eta.currToDate'] = None
         
         renames = {
             "vin": "VIN",
@@ -1404,6 +1412,10 @@ def determineRowDifferences(row: pd.Series, columnsToIgnore: List[str], original
         for column in columns1:
             oldValue = row[column+mergeSuffixRight]  # this column must exist due to the merge of old to new as the old has a new column created as the common column name +  
             newValue = row[column]
+            if isinstance(oldValue, str):
+                oldValue = sanitizeStr(oldValue)
+            if isinstance(newValue, str):
+                newValue = sanitizeStr(newValue)
             oldValueForCompare = oldValue
             newValueForCompare = newValue
             if column == "Options":
@@ -1431,6 +1443,10 @@ def determineRowDifferences(row: pd.Series, columnsToIgnore: List[str], original
                 # column in both
                 oldValue = row[column+mergeSuffixRight]  # this column must exist due to the merge of old to new as the old has a new column created as the common column name +  
                 newValue = row[column]
+                if isinstance(oldValue, str):
+                    oldValue = sanitizeStr(oldValue)
+                if isinstance(newValue, str):
+                    newValue = sanitizeStr(newValue)
                 oldValueForCompare = oldValue
                 newValueForCompare = newValue
                 if column == "Options":
@@ -1448,12 +1464,16 @@ def determineRowDifferences(row: pd.Series, columnsToIgnore: List[str], original
                 # column not in column2 so a column was added as originalColumnsInNew has the new  and  originalColumnsInOld has the old
                 rowIsTheSame = False
                 newValue = row[column]
+                if isinstance(newValue, str):
+                    newValue = sanitizeStr(newValue)
                 namesOfModifiedFieldsString += column + " :: " + "-" + " --Added-> " +  str(newValue) + " || "
             else:
                 # column must not be in columns1 as combined has only columns in 1 and or 2
                 # column not in column1 so a column was removed as originalColumnsInNew has the current and  originalColumnsInOld has the old
                 rowIsTheSame = False
                 oldValue = row[column]  # Since the column name does not overlap the old one does not have the mergeSuffixRight appended to it.
+                if isinstance(oldValue, str):
+                    oldValue = sanitizeStr(oldValue)
                 namesOfModifiedFieldsString += column + " :: " + str(oldValue) + " --Removed-> " + "-"  + " || "        
     if rowIsTheSame:
         row[rowChangeTypeColumnName] = rowSameVINContentsIndicator

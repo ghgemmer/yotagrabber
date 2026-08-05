@@ -317,7 +317,11 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
             # Toyota: zipcode with leading zeroes
              codeToSearch = ("0" * (5 - len(zipCode))) + zipCode
         print("Getting dealers for/near zipcode/state",codeToSearch, ", at zipcode list index:", indx )
-        tryCount = 1
+        # Connection resets and read timeouts are routine against this website over a run this long,
+        # so allow each zipcode 3 retries after its initial attempt, with a growing backoff between
+        # them, before giving up on it and moving on.
+        maxRetryCount = 3
+        tryCount = maxRetryCount
         result: Optional[Dict[str, Any]] = None
         while True:
             resp: Optional[requests.Response] = None
@@ -355,8 +359,11 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
                     # A good response means whatever token we are holding is still working.
                     consecutiveWafRefreshes = 0
                 break
-            except (requests.exceptions.JSONDecodeError, requests.exceptions.HTTPError) as inst:
-                print ("updateDealers: Exception occurred with accessing json response:", str(type(inst)) + " "  + str(inst))
+            except requests.exceptions.RequestException as inst:
+                # RequestException is the base of every requests failure, so this covers connection
+                # resets, read timeouts and ssl errors as well as the bad json and non 200 cases.
+                # Those used to escape this handler and abort the whole run part way through.
+                print ("updateDealers: Exception occurred with the dealers request:", str(type(inst)) + " "  + str(inst))
                 if resp is not None:
                     print("resp.status_code", resp.status_code)
                     print("resp.headers", resp.headers)
@@ -376,8 +383,11 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
                 if tryCount <= 0:
                     break
                 tryCount -= 1
-                interruptibleSleep(4)
-                print("Retrying request, tryCount = ", tryCount)
+                # Back off progressively (4, 8, 16 seconds) instead of hammering a website that is
+                # evidently already struggling.
+                backoffSeconds = 4 * (2 ** (maxRetryCount - tryCount - 1))
+                print("Retrying request in", backoffSeconds, "seconds, tryCount = ", tryCount)
+                interruptibleSleep(backoffSeconds)
         if (result is not None) and result and ("dealers" in result) and (len(result["dealers"]) > 0):
             #print("Result is", result)
             #df = pd.DataFrame.from_dict(result["dealers"])

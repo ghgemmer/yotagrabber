@@ -133,11 +133,44 @@ allocation and production pipeline data the consumer feed never gets.
 Consequence: for Lexus you get one shipping stage less warning than for Toyota.  A vehicle first
 becomes visible when it reaches "Port to dealer", where the change history will report it as ADDED.
 
-Related consequence: numberRawVehiclesMissing in the status file is not trustworthy for Lexus.  The
-website's totalRecords appears to count the withheld factory to port units, so a Lexus run normally
-reports vehicles as missing even when it has retrieved everything obtainable.  A measured RXh run
-retrieved 1629 of a claimed 1923, and repeating it with a different page size and a different number
-of search zones returned exactly the same vehicles, so the shortfall is not a collection failure.
+!!! numberRawVehiclesMissing is NOT trustworthy on Lexus: totalRecords counts the whole family !!!
+
+The pagination totalRecords that a Lexus inventory query returns is NOT the count for the series
+code that was asked for.  It is the count for a broader family that the code belongs to, while the
+vehicleSummary list IS correctly filtered to the code asked for.  Because numberRawVehiclesMissing
+is computed as totalRecords minus the vehicles retrieved, it is inflated by every vehicle in the
+family that belongs to a different series code.
+
+Measured over a full run of all 24 Lexus model codes:
+
+  code     vehicles returned            totalRecords claimed
+  IS       3379  (all "IS 350 ...")     3412
+  IS500       0                         3412   <- identical to IS
+  RXh      1723  (all "RX 350h ...")    2031
+  RX500h    191  (all "RX 500h ...")    2031   <- identical to RXh
+  RXphev    348                          364   <- its own count, not inflated
+
+The vehicle lists are correct and do not overlap: RXh and RX500h returned zero VINs in common, and
+each returned only its own trims.  So seriesCodes filtering works.  Only the count is wrong.
+
+Consequences to keep in mind:
+  - A sub series code can report a huge number "missing" while having retrieved everything that
+    exists.  RX500h reported 1840 missing and had in fact collected all 191 RX 500h vehicles.
+  - A sub series code with no inventory at all looks catastrophic rather than empty.  IS500
+    returned 0 vehicles while claiming 3412, because there are currently no IS 500 in US inventory
+    and it simply inherited the IS family count.
+  - Across that full run the raw "missing" total was 6123, but 5252 of it (86%) came from just
+    IS500 and RX500h.  Excluding those two the shortfall was 871 of 25733, about 3.4%.
+
+Because of this the program does NOT treat a large missing count as an error.  It does treat
+"the website claimed records but returned no vehicles at all" as an incomplete run, so that an
+empty result never overwrites previously stored good files (see get_all_pages).  For a Lexus sub
+series that genuinely has no inventory this shows up as completedOk false with an explanatory
+completionMsg, and the old files are left alone, which is the safe outcome either way.
+
+An earlier version of this note claimed the shortfall was the withheld factory to port units being
+counted in totalRecords.  That was wrong.  The withheld factory to port vehicles are real and are
+documented above, but they are not what numberRawVehiclesMissing is measuring.
 
 Note also that a small number of Lexus vehicles come back with a dealerCategory the program does
 not have a name for (an "L" has been seen).  Those show up in the Shipping Status column as

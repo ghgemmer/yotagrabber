@@ -697,7 +697,26 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
         completionMsg = "Did not get any vehicle pages"
         numberRawVehiclesMissing = -1
         numberRawVehiclesFound = -1
-    statusInfo = {"completedOk": gotPageInfoAtLeastOnce, "numberRawVehiclesFound": numberRawVehiclesFound, "numberRawVehiclesMissing": numberRawVehiclesMissing, "completionMsg": completionMsg, "date": str(datetime.datetime.now())}
+    completedOk = gotPageInfoAtLeastOnce
+    # The website said there were records to get but not one of them came back.  That is not a
+    # successful empty result, it is a run that retrieved nothing, so do not report it as ok.
+    # Reporting it as not ok also stops the empty result from overwriting the stored files, which
+    # is the conservative choice: the previous good data is kept rather than being wiped by what
+    # may be a transient failure.  See the df.empty handling in update_vehicles_and_return_df.
+    # A model that genuinely has no inventory reports recordsToGet as 0 and so is unaffected.
+    #
+    # Note that on lexus recordsToGet is not trustworthy for a sub series code, because the
+    # website returns the whole family's totalRecords for it (an IS500 query reports the IS
+    # count).  So this condition can fire for a lexus sub series that really does have no
+    # inventory.  That is why it only warns and preserves the old files rather than erroring out.
+    if gotPageInfoAtLeastOnce and (numberRawVehiclesFound == 0) and (recordsToGet > 0):
+        completedOk = False
+        completionMsg = ("Website reported " + str(recordsToGet) + " records for this model but returned no vehicles at all. "
+                         "Treating as an incomplete run and leaving any previously stored files alone. "
+                         "On lexus this can also mean the model code has no inventory while the website reports its "
+                         "whole family's record count.")
+        print("Error: get_all_pages:", completionMsg, "Model", MODEL)
+    statusInfo = {"completedOk": completedOk, "numberRawVehiclesFound": numberRawVehiclesFound, "numberRawVehiclesMissing": numberRawVehiclesMissing, "completionMsg": completionMsg, "date": str(datetime.datetime.now())}
     if not len(df):
         df = pd.DataFrame(columns = columnsForEmptyDfParquet)
     if "Sold" in df.columns:
@@ -1899,18 +1918,43 @@ def update_vehicles_and_return_df(useLocalData: bool = False, testModeOn: bool =
     # we write out what is now the last inventory that the next run of this program bases change history on.
     lastParquetDf.sort_values("vin", inplace=True)
     writeLastParquetAndAssociatedFiles(lastParquetDf)
-    writeCompletionStatusToFile(statusOfGetAllPages)
-    
+
     # Prune the Sold files (of old temp VIN entries, etc)
     pruneSoldFiles(MODEL if MODEL else "")
-    
-    # reset the index as the returned df assumes it. 
+
+    # reset the index as the returned df assumes it.
     df.reset_index(drop=True, inplace=True)  # drop keeps from inserting current index as a column in dataframe
-    
+
     # Write the data out to its corresponding file.
+    # This is done BEFORE the completion status is written so that a failure to write the csv is
+    # recorded in the status file.  Writing the status first would leave a status saying the run
+    # completed ok next to a csv that is still the previous run's data.
     ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
     output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
-    df.to_csv(f"{output_dir}/{MODEL}.csv", index=False)
+    csvFileName = f"{output_dir}/{MODEL}.csv"
+    csvWriteError = None
+    try:
+        df.to_csv(csvFileName, index=False)
+    except PermissionError:
+        # On Windows this is almost always the file being open in Excel or another viewer.
+        csvWriteError = ("Could not write " + csvFileName + " because the file is locked by another program. "
+                         "Close it (Excel holds a lock on an open csv) and rebuild the csv without re-querying "
+                         "the website using: update_vehicles(useLocalData=True)")
+    except Exception as inst:
+        csvWriteError = "Could not write " + csvFileName + ": " + str(type(inst)) + " " + str(inst)
+    if csvWriteError is not None:
+        print("Error: update_vehicles_and_return_df:", csvWriteError)
+        # The raw parquet was written above and is good, so the run's collected data is not lost.
+        # Record the failure in the status so it does not claim a clean completion.
+        statusOfGetAllPages["completedOk"] = False
+        existingMsg = statusOfGetAllPages.get("completionMsg") or ""
+        statusOfGetAllPages["completionMsg"] = (existingMsg + " " if existingMsg else "") + csvWriteError
+
+    writeCompletionStatusToFile(statusOfGetAllPages)
+
+    if csvWriteError is not None:
+        # Raise so the process exits non zero and a script driving several models can see the failure.
+        raise RuntimeError(csvWriteError)
     return (df, statusOfGetAllPages )
 
 def update_vehicles(useLocalData: bool = False, testModeOn: bool = False) -> None:

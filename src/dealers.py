@@ -3,7 +3,6 @@
 import random
 import numpy as np
 from inputimeout import inputimeout, TimeoutOccurred
-from timeit import default_timer as timer
 import sys
 import json
 import os.path
@@ -12,10 +11,6 @@ import ssl
 import requests.exceptions
 import requests
 import pandas as pd
-import re
-from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
-from inputimeout import inputimeout, TimeoutOccurred
-from yotagrabber import wafbypassDealerInfo
 
 
 def getUserInput(promptStr, sleepTime):
@@ -110,122 +105,12 @@ def writeZipCodes(zipCodes, startIndex, fileName):
             # write out to file
             fileh.write(str(zipCodes[indx])+ "\n")
             indx += 1
-            
-def getAddressComponents(address):
-    # Takes the full address which is in the form <street address>,<0 or more spaces><city>,<0 or more spaces>state<1 or more spaces>zipcode<0 or more spaces>
-    # (streetAddressOnly, city, state, zipcode)
-    streetAddressOnly = ""
-    city = ""
-    state = ""
-    zipcode = ""
-    rePattern = r'(^.*), *([^,]+), *([^ ]+) +([^ ]+) *$'
-    match = re.search(rePattern, address)
-    if match:
-        streetAddressOnly = match[1]
-        city = match[2]
-        state  = match[3]
-        zipcode  = match[4]
-    else:
-        print("getAddressComponents: Could not parse Address into streetAddressOnly, city, state, zipcode", address)
-    return (streetAddressOnly, city, state, zipcode)
 
-def updateAddressComponentsIn(rowSeries):
-    # takes a dataframe rowSeries with at least columns "state", "address", "address1", "city", "zip"
-    # where address contains the full address including city, state, zipcode and updates the columns 
-    # "state", "address1" (i.e. street address only), "city", "zip" with the corresponding information.
-    streetAddressOnly, city, state, zipcode = getAddressComponents(rowSeries["address"])
-    rowSeries["address1"] = streetAddressOnly
-    rowSeries["city"] = city
-    rowSeries["state"] = state
-    rowSeries["zip"] = zipcode
-    return rowSeries
-    
 
 def formatPhoneNumber(phoneNumberStr):
     formattedPhoneNumberStr = "(" + phoneNumberStr[:3] + ") " + phoneNumberStr[3:6] + "-" + phoneNumberStr[6:]
     return formattedPhoneNumberStr 
     
-def handle_response(response):
-    # Print out URL and status code for every network resource
-    print(f"URL: {response.url} | Status: {response.status}")
-    
-    # Conditionally extract data if it's a target API endpoint
-    if "api.ws.dpcmaps.toyota.com/v1/dealers" in response.url and (response.status == 200):
-        #print("JSON Data:", response.json())
-        pass
-
-def getDealersUsingBrowser(dealersInfoUrl):
-    """Run a browser, to satisy the dealers WAF, to get the dealers json file.  Left in for history of what seemed to work or not"""
-    resp = None
-    dealersJson = None
-    while True:
-        try:
-            with sync_playwright() as playwright:
-                browser = playwright.chromium.launch(headless=False) # headless=True does not seem to work for at all for anything, as get a status code 403 as the first and only response sent back by the server on the page.goto.
-                #browser = playwright.firefox.launch(headless=True)  # page.on("response", response_handler) with Firefox regardless of headless or not,  does not seem to see last response which is the one we wanted and thus page.expect_response does not work
-                try:
-                    dealersJson = None
-                    #context = browser.new_context(viewport={"width": 1920, "height": 1080})
-                    context = browser.new_context(viewport={"width": 10, "height": 10})
-                    page = context.new_page()
-                    #page = browser.new_page()
-                    #getUserInput("Enter Cr to terminate browser inspection", 10000)
-                    #page.goto(dealersInfoUrl)
-                    if 1:  # Works with firefox headless = True or False, and chromium headless = False  
-                        page.goto(dealersInfoUrl)
-                        print("page.wait_for_load_state('networkidle', timeout=10000)")
-                        page.wait_for_load_state("networkidle", timeout=10000)
-                        json_string = page.locator("body > pre").inner_text()
-                        dealersJson = json.loads(json_string)
-                    if 0:
-                        response_info = page.wait_for_response(lambda resp: (resp.status == 200) and ("api.ws.dpcmaps.toyota.com/v1/dealers" in resp.url))
-                        print("Got to point A")
-                        page.goto(dealersInfoUrl)
-                        responseA = response_info
-                        dealersJson = responseA.json()
-                        print("Json data", dealersJson)
-                    if 0:
-                        page.on("response", handle_response)
-                        page.goto(dealersInfoUrl)
-                        print("Waiting 7 seconds")
-                        page.wait_for_timeout(7000)
-                        print("Page content", page.content()) 
-                        json_string = page.locator("body > pre").inner_text()
-                        dealersJson = json.loads(json_string)
-                        #getUserInput("Enter Cr to terminate browser inspection", 1000)
-                    #getUserInput("Enter Cr to terminate browser inspection", 1000)
-                    if 0:  # Works with chromium with headless = False.  Firefox seems to fail in any case of headless setting.
-                        #page.on("response", handle_response) 
-                        with page.expect_response(lambda response: (response.status == 200) and ("api.ws.dpcmaps.toyota.com/v1/dealers" in response.url)) as response_info:
-                        #with page.expect_response(lambda response: (response.status == 200) and ("/mp_verify" in response.url)) as response_info:
-                            page.goto(dealersInfoUrl)
-                        #getUserInput("Enter Cr to terminate browser inspection", 1000)
-                        responseA = response_info
-                        print ("response_info.value" , repr(response_info.value))
-                        response = response_info.value
-                        print ("response.url", response.url)
-                        print ("response.status", response.status)
-                        print ("response.headers", response.headers)
-                        #print("response.text()", response.text())
-                        dealersJson = response.json()
-                except Exception as inst:
-                    print("Error: run_browser: exception in code going to dealersInfoUrl page: ", dealersInfoUrl, str(inst))
-                finally:
-                    browser.close()
-            if dealersJson is not None:
-                break
-            else:
-                print("Error: run_browser was None")
-                sleepTime = 60* 10
-                print("Waiting time ", sleepTime, "secs before retrying WAF Bypass")
-                getUserInput("Enter Cr to terminate wait early", sleepTime)
-        except Exception as inst:
-            print("Error: run_browser: exception", str(inst))
-            sleepTime = 60* 10
-            print("Waiting time ", sleepTime, "secs before retrying WAF Bypass")
-            getUserInput("Enter Cr to terminate wait early", sleepTime)
-    return dealersJson
-
     
 def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""):
     print("This program updates the passed dealer file (or creates that file if not present)") 
@@ -238,7 +123,7 @@ def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""
     print("The program, if terminated before finishing, can be run again and will continue the search from the remaining zip codes.")
     print("Thus, if that remaining zip code file is present the program, when started, will start from that, otherwise it will start from")
     print("the zip code file.")
-    print("The dealer file is also updated right before and in sync with the remaining zip code file is updated, again, in case the program is prematurely terminated")
+    print("The dealer file is also updated right before and in sync with the remaining zip code file update, again, in case the program is prematurely terminated")
     print("Once we have gone through all the zip codes, the remaining zip codes file will be deleted by the program")
     print("If needed you can manually delete the remaining zip codes file if you want to completely start over again.")
     print("Warning !!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -270,42 +155,21 @@ def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""
             dealers["dealerId"] = dealers["dealerId"].apply(pd.to_numeric)
     else:
         dealers = pd.DataFrame()
-    print("Getting WAF bypass for dealer info website")
-    headers = wafbypassDealerInfo.WAFBypass().run()
-    # Start a timer.
-    timer_start = timer()
     indx = 0
     for zipCode in zipCodesToUpdateDealers:
-        # TODO add in retries
         zipCodeWithLeadingZeroes = ("0" * (5 - len(zipCode))) + zipCode
         print("Getting dealers for/near zipcode",zipCodeWithLeadingZeroes, ", at zipcode list index:", indx )
         tryCount = 3
         result = None
         while True:
             try:
-                # Could not get url "https://dealers.prod.webservices.toyota.com/v1/dealers/?zipcode=" + zipCodeWithLeadingZeroes, to work
-                # as it kept giving an resp.status_code 403 for not authorized, even when set host and authority to dealers.prod.webservices.toyota.com
-                # , and even trying the wafpypass, so there is something that requires more authorization to access that.
-                # That is what the inventory get uses to get the dealers for that zip code but could not get it to work.
-                # So had to use the url below which is accessed when on the https://www.toyota.com/connected-services/toyota-app/ page
-                # and  click on the Find Dealer https://www.toyota.com/dealers/#default link on that page which pops up a map window
-                if 1:
-                    # The WAF bypass expires every 5 minutes, so we refresh about every 4 minutes.
-                    elapsed_time = timer() - timer_start
-                    if elapsed_time > 4 * 60:
-                        print("  >>> Refreshing WAF bypass for dealer info website  >>>\n")
-                        headers = wafbypassDealerInfo.WAFBypass().run()
-                        timer_start = timer()
-                    resp = requests.get(
-                            "https://api.ws.dpcmaps.toyota.com/v1/dealers?attributeKey=&searchMode=pmaProximityLayered&zipcode=" + zipCodeWithLeadingZeroes,
-                            headers = headers,
-                            timeout=20,
-                    )
-                    #print("resp.status_code", resp.status_code)
-                    result = resp.json()
-                else:
-                    #Note that Waf Bypass not needed outside of getDealersUsingBrowser, as getDealersUsingBrowser handles it implicitly internally in the request response series.
-                    result = getDealersUsingBrowser("https://api.ws.dpcmaps.toyota.com/v1/dealers?attributeKey=&searchMode=pmaProximityLayered&zipcode=" + zipCodeWithLeadingZeroes)
+                resp = requests.get(
+                        "https://dealers.prod.webservices.toyota.com/v1/dealers/?zipcode=" + zipCodeWithLeadingZeroes,
+                        headers={"Origin": "https://www.toyota.com"}, # required otherwise get a status code of 403 and fail.
+                        timeout=20,
+                )
+                #print("resp.status_code", resp.status_code)
+                result = resp.json()
                 break
             except (requests.exceptions.ReadTimeout) as inst:
                 print ("updateDealers: Exception occurred with ReadTimeout")
@@ -337,50 +201,7 @@ def updateDealers(dealerFileName, zipCodeFileName, dealerAddersJsonFileName = ""
             #df = pd.DataFrame.from_dict(result["dealers"])
             df = pd.json_normalize(result["dealers"])
             #print ("df is", df)
-            #address column includes street address, city, state zipcode
-            df = df[["code", "label", "details.uriWebsite", "position.lat", "position.lng", "address", "phone"]]
-            #legacy format columns are "code", "dealerId", "name", "url", "regionId", "state", "lat", "long", "address1", "city", "zip", "phone"
-            # Add dealerId to match legacy format which is the same as the code field
-            df["dealerId"] = df["code"]
-            # add other columns to match legacy format
-            df["regionId"] = 9999  # use dummy value as this url data does not have region ID and other processing fortunately doesn't need it currently.
-            df["state"] = ""
-            df["address1"] = ""
-            df["city"] = ""
-            df["zip"] = ""
-            
-            # perform renames to match legacy format
-            renames = {
-                "label": "name",
-                "details.uriWebsite": "url",
-                "position.lat": "lat",
-                "position.lng": "long"
-            }
-            df = (
-                df[
-                    ["code",
-                    "dealerId",
-                    "label", 
-                    "details.uriWebsite",
-                    "regionId",
-                    "state",
-                    "position.lat", 
-                    "position.lng", 
-                    "address",
-                    "address1", 
-                    "city",
-                    "zip",
-                    "phone"]
-                    ]
-                .copy(deep=True)
-                .rename(columns=renames)
-            )
-            # updated address1, city, state, zipcode from the address to match legacy format
-            df = df.apply(updateAddressComponentsIn, axis=1)
-            # format phone number
-            df["phone"] = df["phone"].apply(formatPhoneNumber)
-            # remove address field as it has been split into other fields
-            df.drop(columns=["address"], inplace=True)
+            df = df[["code", "dealerId", "name", "url", "regionId", "state", "lat", "long", "address1", "city", "zip", "phone"]]
             if False:
                 # force the code and dealerId fields to ints as the vehicles.py expects that type (i.e. leading 0s are removed)
                 df["code"] = df["code"].apply(pd.to_numeric)

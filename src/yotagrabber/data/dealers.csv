@@ -1296,7 +1296,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 60416,60416,Lexus of Fremont,https://www.lexusfremont.com,,CA,37.49712,-121.97358,5600 Cushing Parkway,Fremont,94538,(510) 657-6600,lexus
 60417,60417,Lexus of Serramonte,https://www.lexusserramonte.com,,CA,37.675137,-122.46177,700 Serramonte Boulevard,Colma,94014,(650) 994-2255,lexus
 60420,60420,Lexus of Sacramento,https://www.lexusofsacramento.com,,CA,38.612236,-121.40111,2600 Fulton Avenue,Sacramento,95821,(916) 485-3987,lexus
-60425,60425,Lexus Monterey Peninsula,https://www.lexusmontereypeninsula.com,,CA,36.61262,-121.846886,1721 Del Monte Blvd,Seaside,93955,(831) 393-3030,lexus
+60425,60425,Lexus Monterey Peninsula,https://www.lexusmontereypeninsula.com,,CA,36.61262,-121.846886,4A Heitzinger Plaza,Seaside,93955,(831) 393-3030,lexus
 60426,60426,Lexus of Oxnard,https://www.lexusofoxnard.com,,CA,34.227303,-119.15266,1640 Auto Center Dr.,Oxnard,93036,(805) 988-8500,lexus
 60428,60428,"Lexus of Concord, LLC",https://www.lexusofconcord.com,,CA,37.97631,-122.04357,2001 Market Street,Concord,94520,(925) 682-3033,lexus
 60429,60429,Lexus of Pleasanton,https://www.lexusofpleasanton.com,,CA,37.70036,-121.87518,4345 Rosewood Dr.,Pleasanton,94588,(925) 847-0678,lexus
@@ -1329,11 +1329,13 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 60605,60605,New Country Lexus of Westport,https://www.newcountrylexusofwestport.com,,CT,41.139126,-73.31855,1317 Post Road East,Westport,06880,(203) 255-1531,lexus
 60606,60606,DARCARS Lexus of Greenwich,http://www.lexusofGreenwich.com,,CT,41.021694,-73.62693,19 Railroad Avenue,Greenwich,06830,(203) 869-8740,lexus
 60608,60608,Crabtree Lexus of New Haven,https://www.crabtreelexus.com,,CT,41.28707,-72.88571,655 Main Street,East Haven,06512,(203) 466-9999,lexus
+60609,60609,Lexus of Westport,https://www.lexusofwestport.com,,CT,41.139126,-73.31855,1317 Post Road East,Westport,06880,(203) 255-1531,lexus
 60704,60704,Lexus of Wilmington,https://www.lexusofwilmington.com,,DE,39.75678,-75.56961,2100 Pennsylvania Ave,Wilmington,19806,(302) 427-4400,lexus
 60901,60901,Lexus of Tampa Bay,https://www.lexusoftampabay.com,,FL,28.001358,-82.50568,5852 N. Dale Mabry,Tampa,33614,(813) 888-8221,lexus
 60904,60904,Lexus of Pembroke Pines,https://www.lexusofpembrokepines.com,,FL,26.006527,-80.363365,16150 Pines Blvd.,Pembroke Pines,33027,(954) 443-2020,lexus
 60905,60905,JM Lexus,https://www.jmlexus.com,,FL,26.272812,-80.19595,5350 West Sample Road,Margate,33073,(954) 972-2200,lexus
 60906,60906,Lexus of Winter Park,https://www.lexusofwinterpark.com,,FL,28.59956,-81.30653,305 North Semoran Blvd,Winter Park,32792,(407) 671-0000,lexus
+60914,60914,Lexus of Winter Park,https://www.lexusofwinterpark.com,,FL,28.59956,-81.30653,305 North Semoran Blvd,Winter Park,32792,(407) 671-0000,lexus
 60915,60915,Lexus of Kendall,https://www.lexusofkendall.com,,FL,25.669992,-80.32149,10943 South Dixie Highway,Miami,33156,(786) 460-4830,lexus
 60916,60916,Lexus of Palm Beach,https://www.lexusofpalmbeach.com,,FL,26.70636,-80.13047,5700 Okeechobee Boulevard,West Palm Beach,33417,(561) 683-2600,lexus
 60917,60917,Lexus of Melbourne,https://www.lexusofmelbourne.com,,FL,28.2361,-80.72158,6927 Bromley Drive,Viera,32940,(800) 245-3987,lexus
@@ -1348,6 +1350,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 60933,60933,Lexus of Orange Park,https://www.lexusoforangepark.com,,FL,30.21943,-81.737915,7040 Blanding Blvd.,Jacksonville,32244,(904) 777-5100,lexus
 60934,60934,Lexus of Orlando,https://www.lexusoforlando.com,,FL,28.478924,-81.45197,5725 Major Blvd.,Orlando,32819,(407) 678-5100,lexus
 60935,60935,Lexus of Fort Myers,https://www.lexusoffortmyers.com,,FL,26.536053,-81.87206,14200 South Tamiami Trail,Fort Myers,33912,(239) 481-9797,lexus
+60937,60937,Lexus of Orlando,https://www.lexusoforlando.com,,FL,28.478924,-81.45197,5725 Major Blvd.,Orlando,32819,(407) 678-5100,lexus
 61001,61001,Nalley Lexus-Smyrna,https://www.nalleylexussmyrna.com,,GA,33.886227,-84.47338,2750 South Cobb Parkway,Smyrna,30080,(770) 428-9600,lexus
 61002,61002,Hennessy Lexus of Atlanta,https://www.lexusatlanta.com,,GA,33.909508,-84.28926,5955 Peachtree Ind. Blvd.,Atlanta,30341,(770) 457-6800,lexus
 61003,61003,Butler Lexus,https://www.butlerlexus.com,,GA,32.915565,-83.70785,4550 Riverside Drive,Macon,31210,(478) 477-0700,lexus
@@ -1384,7 +1387,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 61704,61704,Price LeBlanc Lexus,https://www.priceleblanclexus.com,,LA,30.376633,-91.03563,13200 Airline Highway,Baton Rouge,70817,(225) 753-1500,lexus
 61802,61802,Berlin City Lexus of Portland,https://www.berlincitylexus.com,,ME,43.68317,-70.32552,191 Riverside Street,Portland,04103,(207) 321-3477,lexus
 61902,61902,Len Stoler Lexus,https://www.lenstolerlexus.com,,MD,39.437313,-76.80145,11311 Reisterstown Rd,Owings Mills,21117,(410) 581-7000,lexus
-61903,61903,DARCARS Lexus of Silver Spring,https://www.lexusofsilverspring.com,,MD,39.060375,-76.960556,2505 Prosperity Terrace,Silver Spring,20904,(301) 680-0400,lexus
+61903,61903,DARCARS Lexus of Silver Spring,https://www.lexusofsilverspring.com,,MD,39.060345,-76.96223,12511 Prosperity Drive,Silver Spring,20904,(301) 680-0400,lexus
 61904,61904,Sheehy Lexus of Annapolis,https://www.sheehylexusofannapolis.com,,MD,39.0196,-76.47801,121 Ferguson Road,Annapolis,21409,(443) 399-2468,lexus
 61906,61906,Ourisman Lexus of Rockville,https://www.ourismanlexusofrockville.com,,MD,39.109707,-77.15915,15501 Frederick Road,Rockville,20855,(301) 762-9009,lexus
 61930,61930,Lexus of Towson,https://www.lexusoftowson.com,,MD,39.41225,-76.61137,1040 York Road,Towson,21204,(410) 769-9400,lexus
@@ -1411,7 +1414,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 62702,62702,Dolan Lexus,https://www.dolanrenolexus.com,,NV,39.46089,-119.781975,7175 S. Virginia Street,Reno,89511,(775) 826-5050,lexus
 62703,62703,Lexus of Las Vegas,https://www.lexusoflasvegas.com,,NV,36.14465,-115.23767,6600 W. Sahara Avenue,Las Vegas,89146,(702) 942-6600,lexus
 62730,62730,Lexus of Henderson,https://www.lexusofhenderson.com,,NV,36.04824,-115.018875,7736 Eastgate Road,Henderson,89011,(702) 228-7736,lexus
-62803,62803,Lexus of Manchester,https://www.lexusofmanchesternh.com,,NH,42.955917,-71.48161,18 Kilton Road,Bedford,03110,(603) 218-3500,lexus
+62803,62803,Lexus of Bedford,https://www.lexusbedford.com,,NH,42.955917,-71.48161,18 Kilton Road,Bedford,03110,(603) 218-3500,lexus
 62901,62901,Lexus of Cherry Hill,https://www.lexusofcherryhill.com,,NJ,39.920616,-74.947556,1230 Route 73 South,Mt. Laurel,08054,(856) 727-1111,lexus
 62906,62906,Haldeman Lexus of Princeton,https://www.haldemanlexusofprinceton.com,,NJ,40.262527,-74.71998,2630 Business Rte 1 North,Lawrenceville,08648,(609) 243-7077,lexus
 62907,62907,Tri-County Lexus,https://www.tricountylexus.com,,NJ,40.88163,-74.20726,700 Route 46 West,Little Falls,07424,(973) 890-5900,lexus
@@ -1430,7 +1433,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 63105,63105,Rallye Lexus,https://www.rallyelexus.com,,NY,40.856922,-73.62012,20 Cedar Swamp Road,Glen Cove,11542,(516) 676-4000,lexus
 63106,63106,Burdick Lexus,https://www.burdicklexus.com,,NY,43.15285,-76.11157,5947 East Circle Drive,Cicero,13039,(315) 458-7800,lexus
 63107,63107,Northtown Lexus,https://www.northtownlexus.com,,NY,42.97878,-78.79116,3845 Sheridan Drive,Amherst,14226,(716) 839-4600,lexus
-63108,63108,New Country Lexus of Latham,https://www.newcountrylexusoflatham.com,,NY,42.77195,-73.75254,999 New Loudon Road,Latham,12110,(518) 786-1000,lexus
+63108,63108,New Country Lexus of Latham,https://www.newcountrylexusoflatham.com,,NY,42.763947,-73.80046,979 Troy-Schenectady Road,Latham,12110,(518) 786-1000,lexus
 63109,63109,Ray Catena Lexus,https://www.raycatenalexus.com,,NY,40.932503,-73.74888,1435 Boston Post Road,Larchmont,10538,(914) 833-5000,lexus
 63110,63110,Lexus of Manhattan,https://www.lexusofmanhattan.com,,NY,40.76514,-73.99528,677-679 11th Avenue,New York City,10019,(212) 977-4400,lexus
 63111,63111,New Country Lexus of Great Neck,https://www.newcountrylexusofgreatneck.com,,NY,40.77706,-73.72737,250 Northern Boulevard,Great Neck,11021,(516) 466-0439,lexus
@@ -1472,6 +1475,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 63732,63732,Thompson Lexus Willow Grove,https://www.thompsonlexuswillowgrove.com,,PA,40.162437,-75.126274,2560 Maryland Road,Willow Grove,19090,(267) 367-5100,lexus
 63733,63733,Bobby Rahal Lexus of Lancaster County,https://www.bobbyrahallexusoflancaster.com,,PA,40.13283,-76.2145,4251 Oregon Pike,Ephrata,17522,(717) 803-2100,lexus
 63802,63802,Lexus of Warwick,https://www.lexusofwarwick.com,,RI,41.697155,-71.4999,1095 Centerville Road,Warwick,02886,(401) 822-2122,lexus
+63804,63804,Lexus of Warwick,https://www.lexusofwarwick.com,,RI,41.697155,-71.4999,1095 Centerville Road,Warwick,02886,(401) 824-2249,lexus
 63904,63904,"Jim Hudson Lexus, Columbia",https://www.hudsonlexus.com,,SC,34.133896,-80.965515,328 Killian Road,Columbia,29203,(803) 754-9500,lexus
 63905,63905,Hendrick Lexus Charleston,https://www.hendricklexuscharleston.com,,SC,32.793182,-80.047104,2424 Savannah Highway,Charleston,29414,(843) 852-0100,lexus
 63907,63907,Lexus of Greenville,https://www.lexusofgreenville.com,,SC,34.8114,-82.33448,2836 Laurens Road,Greenville,29607,(864) 281-1111,lexus
@@ -1508,10 +1512,13 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 64606,64606,"Lexus of Seattle, LLC",https://www.lexusofseattle.com,,WA,47.814636,-122.32142,20300 Highway 99,Lynnwood,98036,(425) 774-7900,lexus
 64608,64608,Findlay Lexus of Spokane,https://www.findlaylexusofspokane.com,,WA,47.653793,-117.427376,1030 West Third Avenue,Spokane,99201,(509) 747-7000,lexus
 64630,64630,Lexus of Tacoma at Fife,https://www.lexusoftacomafife.com,,WA,47.241524,-122.375206,1708 40th Ave. Court East,Fife,98424,(253) 922-7100,lexus
+64631,64631,Lexus of Vancouver,https://www.lexus-vancouver.com,,WA,45.61899,-122.53043,420 SE 139th Avenue,Vancouver,98684,(360) 719-3100,lexus
 64702,64702,Moses Lexus,https://www.moseslexus.com,,WV,38.387905,-81.82814,1433 MacCorkle Avenue,St. Albans,25177,(304) 727-7777,lexus
 64804,64804,Bergstrom Lexus of Appleton,https://www.bergstromlexusofappleton.com,,WI,44.292496,-88.46749,3060 Victory Lane,Appleton,54913,(920) 968-7300,lexus
 64806,64806,Lexus of Brookfield,https://www.lexusofbrookfield.com,,WI,43.036007,-88.161674,20001 West Bluemound,Brookfield,53045,(262) 797-2000,lexus
 64807,64807,Bergstrom Lexus of Madison,https://www.bergstromlexusofmadison.com,,WI,43.11218,-89.52004,8000 Airport Road,Middleton,53562,(608) 821-6000,lexus
 64831,64831,Lexus of Milwaukee,https://www.lexusofmilwaukee.com,,WI,43.11872,-87.92809,1433 W. Silver Spring Drive,Glendale,53209,(414) 228-9000,lexus
 65002,65002,Kendall Lexus of Alaska,https://www.kendalllexusofalaska.com,,AK,61.157845,-149.8657,6930 Old Seward Highway,Anchorage,99518,(907) 279-8506,lexus
+65401,65401,Lexus Carlsbad,https://www.lexuscarlsbad.com,,CA,33.131508,-117.32588,5444 Paseo Del Norte,Carlsbad,92008,(760) 438-2300,lexus
+65402,65402,Lexus Escondido,https://www.lexusescondido.com,,CA,33.107327,-117.09643,1205 Auto Park Way,Escondido,92029,(760) 747-2300,lexus
 ,,,,,,,,,,,,

@@ -270,6 +270,7 @@ src/ToyotaSearchInventoryWebSourcePages/*
 !/src/yotagrabber/data/dealers.csv
 !/src/yotagrabber/data/zipcodes.txt
 !/src/yotagrabber/data/dealers_Adders.json
+!/src/yotagrabber/data/lexus_state_codes.txt
 
 
 # reinclude this immediate child directory in /src/ (gitignore rule)

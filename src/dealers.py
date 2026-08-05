@@ -292,8 +292,18 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
         # Instead of pd.DataFrame(), match the schema.
         dealers = pd.DataFrame(columns=["code", "dealerId", "name", "url", "regionId", "state", "lat", "long", "address1", "city", "zip", "phone"])
 
-    print("Getting WAF bypass for dealer info website")
-    headers = wafbypassDealerInfo.WAFBypass().run()
+    # Only the Toyota dealer info website sits behind the AWS WAF.  The Lexus endpoint answers a
+    # plain request, so don't pay for a browser launch whose headers we would never send.
+    headers: Optional[Dict[str, str]] = None
+    if vehicleMake != "lexus":
+        print("Getting WAF bypass for dealer info website")
+        headers = wafbypassDealerInfo.WAFBypass().run()
+    # The WAF token has a limited lifetime and a long run can easily outlive it, so we get a fresh one
+    # mid run when the website starts rejecting us (see the 403 handling below).  Each refresh costs a
+    # browser launch, so stop refreshing once several in a row have not helped, which means we are
+    # being rejected for some reason a new token will not cure.
+    consecutiveWafRefreshes = 0
+    maxConsecutiveWafRefreshes = 3
     # Start a timer.
     timer_start = timer()
     indx = 0
@@ -326,21 +336,42 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
                             timeout=20,
                     )
                 else:
-                    # Toyota: zipcode-based API
+                    # Toyota: zipcode-based API.  The WAF headers gathered above are required here,
+                    # otherwise the website answers 403 for every zipcode.
                     resp = requests.get(
                             "https://api.ws.dpcmaps.toyota.com/v1/dealers?attributeKey=&searchMode=pmaProximityLayered&zipcode=" + codeToSearch,
                             timeout=20,
+                            headers=headers,
                     )
                 
                 if resp is not None:
+                    if resp.status_code != 200:
+                        # A WAF rejection comes back as well formed json (a 403 carrying a "message"
+                        # field), so resp.json() succeeds and the failure would otherwise slip past the
+                        # retry below and be reported as merely an empty result.  Retry on any non 200.
+                        raise requests.exceptions.HTTPError(
+                                "status code " + str(resp.status_code), response=resp)
                     result = resp.json()
+                    # A good response means whatever token we are holding is still working.
+                    consecutiveWafRefreshes = 0
                 break
-            except (requests.exceptions.JSONDecodeError) as inst:
+            except (requests.exceptions.JSONDecodeError, requests.exceptions.HTTPError) as inst:
                 print ("updateDealers: Exception occurred with accessing json response:", str(type(inst)) + " "  + str(inst))
                 if resp is not None:
                     print("resp.status_code", resp.status_code)
                     print("resp.headers", resp.headers)
                 result = None
+                # A 403 part way through a run normally means the WAF token has expired, which left
+                # alone would fail every remaining zipcode.  Get a fresh token and retry this zipcode
+                # without consuming its retry, so a long run heals itself and carries on.
+                if ((vehicleMake != "lexus")
+                        and (resp is not None) and (resp.status_code == 403)
+                        and (consecutiveWafRefreshes < maxConsecutiveWafRefreshes)):
+                    consecutiveWafRefreshes += 1
+                    print("Got a 403, the WAF token has likely expired.  Getting a fresh WAF bypass,",
+                          "refresh", consecutiveWafRefreshes, "of", maxConsecutiveWafRefreshes)
+                    headers = wafbypassDealerInfo.WAFBypass().run()
+                    continue
                 # retry
                 if tryCount <= 0:
                     break

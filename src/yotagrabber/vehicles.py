@@ -55,15 +55,33 @@ forceQueryRspFailureTest: int = 0 # set to > 0 to perform tests related to forci
 totalPageRetries: int = 0
 MAX_TOTAL_PAGE_RETIRES_FOR_MODEL: int = 2 * 3 * 30 # say on avg 3 groups of 2 retries per page (10 sec avg per retry) over 30 pages  giving 30 minutes extra worst case per model
 
-# Stop once this many page numbers in a row have produced no new vehicles at all.
+# Stop once this many page numbers in a row have produced no new vehicles at all.  Use 0 to disable
+# the check for a make, in which case the loop only ends on the normal all found / page limit breaks.
+#
 # Without this the loop keeps requesting every remaining page whenever some records are permanently
 # unreachable, because it only stops when it has found every record the website claims exist.  A
 # measured lexus RX run spent 12 consecutive page numbers, each firing a query for every search
-# zone, retrieving nothing new before it finally ran out of pages.
-# The trade off is that a genuine late trickle of vehicles after a long flat stretch is given up on,
-# so keep this comfortably above 1.  In that same RX run a threshold of 3 would have stopped at page
-# 8 instead of 20 and given up 3 of 4841 vehicles.
-MAX_CONSECUTIVE_PAGES_WITH_NO_NEW_VEHICLES: int = 3
+# zone, retrieving nothing new before it finally ran out of pages.  Lexus needs the check because
+# recordsToGet is not trustworthy for a sub series (the website returns the whole family's
+# totalRecords for it) so the all found break can never fire there.  In that same RX run a threshold
+# of 3 would have stopped at page 8 instead of 20 and given up 3 of 4841 vehicles.
+#
+# Toyota is the opposite case and the check is off for it.  recordsToGet is trustworthy for toyota,
+# so the all found break does end those runs on its own.  Replaying 23 nightly toyota runs (805
+# model runs, 8019 page numbers) showed a threshold of 3 firing on 19 model runs and giving up 235
+# vehicles, up to 51 in one model, because a long flat stretch is a normal part of a multi zone
+# toyota run rather than a sign that the rest is unreachable.  Each zone returns vehicles ordered by
+# ascending distance from its zipcode, so vehicles far from every zone sit at the tail of every
+# ordering and are only reached on the deepest pages, while the vehicles between the zones get
+# covered from several directions at once and produce a plateau of duplicate only pages before them.
+# 14 of those 19 stops happened on pages where every zone had replied in full with no retries, and
+# in 18 of the 19 the run went on to finish on the all found break at a totalRecords that had not
+# moved, so the vehicles given up were existing inventory that would have been recorded as sold.
+# The grind it avoids is small: only 2.8% of page numbers in those runs produced nothing.
+MAX_CONSECUTIVE_PAGES_WITH_NO_NEW_VEHICLES: Dict[str, int] = {
+    "toyota": 0,
+    "lexus": 3
+}
 
 LastChangedDateTimeColName: str = "LastChangedDateTime"
 columnsForEmptyDfParquet: List[str] = ["vin", "isTempVin", "dealerCd", "dealerCategory", "price.baseMsrp", "price.totalMsrp", "price.sellingPrice", "price.dioTotalDealerSellingPrice", "price.advertizedPrice", "price.nonSpAdvertizedPrice", "price.dph", "price.dioTotalMsrp", "price.dealerCashApplied", "isPreSold", "holdStatus", "year", "drivetrain.code", "model.marketingName", "extColor.marketingName", "intColor.marketingName", "dealerMarketingName", "dealerWebsite", "eta.currFromDate", "eta.currToDate", 'transmission.transmissionType', 'mpg.combined', 'mpg.city', 'mpg.highway', 'engine.engineCd', 'engine.name', 'cab.code', 'cab', 'bed.code', 'bed', "FirstAddedDate", LastChangedDateTimeColName, "infoDateTime", "options"]
@@ -571,6 +589,7 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
     # Count of page numbers in a row that have yielded no new vehicles.  See
     # MAX_CONSECUTIVE_PAGES_WITH_NO_NEW_VEHICLES.
     consecutivePagesWithNoNewVehicles = 0
+    maxConsecutivePagesWithNoNewVehicles = MAX_CONSECUTIVE_PAGES_WITH_NO_NEW_VEHICLES.get(vehicle_make, 0)
     # Perform the queries for the model
     # Toyota's API won't return any vehicles past past 40.
     maxPagesToGet = 40
@@ -605,9 +624,17 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
         # This could be corrected by adding more spread out locales
         print(f"Getting page {page_number} of {MODEL} vehicles")
         firstPageInfoForThisPageNumber = True
+        # Track whether every search zone actually answered for this page number.  A zone whose
+        # query_toyota call gave up after all its retries contributes nothing, which looks exactly
+        # like a zone that only returned vehicles we already had.  See the use of
+        # pageAnsweredByEveryZone below.
+        zonesQueriedForThisPageNumber = 0
+        zonesThatAnsweredForThisPageNumber = 0
         for queryDetailString in vehicleQueryObjects:
+            zonesQueriedForThisPageNumber += 1
             result = query_toyota(page_number, vehicleQueryObjects[queryDetailString], headers)
             if result and "vehicleSummary" in result:
+                zonesThatAnsweredForThisPageNumber += 1
                 pages = result["pagination"]["totalPages"]
                 if pages is None:
                     #Treat pages returned as None as 0
@@ -664,7 +691,16 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
         
         # Track page numbers that produced nothing new, so a run whose remaining records are
         # unreachable stops instead of grinding through every remaining page.
-        if len(df) == last_run_counter:
+        # Only a page number that every zone answered counts.  If a zone exhausted its retries then
+        # this page number never got that zone's slice of the results at all, so it says nothing
+        # about whether the remaining records are reachable, and treating it as a flat page can end
+        # the run early over what is really a transient website or WAF failure.
+        pageAnsweredByEveryZone = (zonesThatAnsweredForThisPageNumber == zonesQueriedForThisPageNumber)
+        if not pageAnsweredByEveryZone:
+            print("Note: only", zonesThatAnsweredForThisPageNumber, "of", zonesQueriedForThisPageNumber,
+                  "search zones answered for page", page_number,
+                  "so this page number is not counted towards stopping early. Model", MODEL)
+        if (len(df) == last_run_counter) and pageAnsweredByEveryZone:
             consecutivePagesWithNoNewVehicles += 1
         else:
             consecutivePagesWithNoNewVehicles = 0
@@ -675,7 +711,7 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
         elif page_number >= pagesToGet:
             print("Error: Reached total pages for this vehicle (or page limit) of", page_number, ". All vehicles were not found! Model " , MODEL ,  "missing ", recordsToGet - len(df), "vehicles")
             break
-        elif consecutivePagesWithNoNewVehicles >= MAX_CONSECUTIVE_PAGES_WITH_NO_NEW_VEHICLES:
+        elif maxConsecutivePagesWithNoNewVehicles and (consecutivePagesWithNoNewVehicles >= maxConsecutivePagesWithNoNewVehicles):
             print("Stopping early: the last", consecutivePagesWithNoNewVehicles, "page numbers produced no new vehicles, so the remaining",
                   recordsToGet - len(df), "are treated as unreachable. Model", MODEL)
             break

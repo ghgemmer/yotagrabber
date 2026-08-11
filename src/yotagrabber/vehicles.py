@@ -23,7 +23,7 @@ import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass, vehicleUtilities
 
-PROGRAM_VERSION: str = "Vehicles Program Version 6.5.2 08-04-2026 - Multi-make support"
+PROGRAM_VERSION: str = "Vehicles Program Version 6.6.0 08-10-2026 - Failed page recovery and lossy run handling"
 
 # Set to True to use local data and skip requests to the Toyota website.
 USE_LOCAL_DATA_ONLY: bool = False
@@ -40,6 +40,10 @@ VEHICLE_MAKE: Optional[str] = os.environ.get("VEHICLE_MAKE")
 MODEL_SEARCH_ZIPCODE: Optional[str] = os.environ.get("MODEL_SEARCH_ZIPCODE")
 MODEL_SEARCH_RADIUS: Optional[str] = os.environ.get("MODEL_SEARCH_RADIUS")
 
+# Dump the complete http exchange when the HTTP_WIRE_DEBUG environment variable is set.  Done at
+# import time so it covers the wafbypass requests as well as the query requests below.
+vehicleUtilities.enableHttpWireLogging()
+
 # GraphQL Page Size for vehicle searches
 # Lexus API returns "Transformation too large" errors with pageSize=250 on high-inventory
 # models like RX. Using smaller page size (e.g., 200) avoids this AppSync limitation.
@@ -54,6 +58,30 @@ forceQueryRspFailureTest: int = 0 # set to > 0 to perform tests related to forci
 
 totalPageRetries: int = 0
 MAX_TOTAL_PAGE_RETIRES_FOR_MODEL: int = 2 * 3 * 30 # say on avg 3 groups of 2 retries per page (10 sec avg per retry) over 30 pages  giving 30 minutes extra worst case per model
+
+# The deepest record offset any single query can reach, measured 08-10-2026 against the live
+# endpoint.  The server answers while (pageNo * pageSize) <= this and returns
+# data.locateVehiclesByZip = null beyond it.  Confirmed at two page sizes on toyota tacoma
+# (49,201 records, totalPages 197):
+#     pageSize 250 -> last good page 56, first dead page 57   (56 * 250 = 14000)
+#     pageSize 200 -> last good page 70, first dead page 71   (70 * 200 = 14000)
+# so the ceiling is on the record offset, not on the page count.
+#
+# This matters here for one reason only: a page past this offset produces the SAME null result as
+# a genuine failure, and costs a full set of retries to find that out.  The recovery pass uses it
+# to avoid retrying a page that cannot possibly return anything.
+#
+# Note this does NOT agree with MAX_PAGES_TO_GET below, whose comment says the API returns nothing
+# past page 40.  That was measured to be false on the above date: pages 41 to 56 returned full
+# pages of vehicles.  Raising MAX_PAGES_TO_GET is a separate change with its own measurement and is
+# deliberately not done here.
+MAX_REACHABLE_RECORD_OFFSET: int = 14000
+
+# Deepest page number any one query is walked to.  At the current value the offset ceiling above
+# cannot be reached (40 * 250 = 10000 < 14000), so the recovery pass check against it is purely
+# defensive.  It stops being defensive the moment this number is raised, which is why the two are
+# defined together.
+MAX_PAGES_TO_GET: int = 40
 
 # Stop once this many page numbers in a row have produced no new vehicles at all.  Use 0 to disable
 # the check for a make, in which case the loop only ends on the normal all found / page limit breaks.
@@ -584,6 +612,15 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
     recordsToGet = -1
     numberRawVehiclesMissing = -1
     gotPageInfoAtLeastOnce = False
+    # Every (zone, page number) whose query_toyota call gave up after all its retries.  Such a page
+    # is otherwise skipped silently and its vehicles are simply absent from the run, which then
+    # looks exactly like those vehicles having left the lot.  These are re-requested once after the
+    # main loop below, see the recovery pass.
+    failedPages: List[Tuple[str, int]] = []
+    pagesRecoveredByRetry = 0
+    # Page size is needed to work out the record offset a page number lands on, for the
+    # MAX_REACHABLE_RECORD_OFFSET check in the recovery pass.
+    pageSizeInUse = VEHICLE_MAKE_PAGE_SIZE.get(vehicle_make, 250)
     # Set a last run counter.
     last_run_counter = 0
     # Count of page numbers in a row that have yielded no new vehicles.  See
@@ -592,7 +629,7 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
     maxConsecutivePagesWithNoNewVehicles = MAX_CONSECUTIVE_PAGES_WITH_NO_NEW_VEHICLES.get(vehicle_make, 0)
     # Perform the queries for the model
     # Toyota's API won't return any vehicles past past 40.
-    maxPagesToGet = 40
+    maxPagesToGet = MAX_PAGES_TO_GET
     maxRecordsToGet =  100000 # limit this to the max vehicles we will ever get from all the pages
     # Note that there may be more records than this since there may be more pages than maxPagesToGet,
     # but we can only access maxPagesToGet pages of records.
@@ -675,6 +712,11 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
                     pagesToGet = pages
                 if recordsToGet > records:
                     recordsToGet = records
+            else:
+                # All retries used up for this zone on this page number.  Remember it so the
+                # recovery pass below can try it again with a fresh WAF bypass instead of the run
+                # quietly going on without those vehicles.
+                failedPages.append((queryDetailString, page_number))
             elapsed_time = timer() - timer_start
             if elapsed_time > 4 * 60:
                 print("  >>> Refreshing WAF bypass >>>\n")
@@ -722,7 +764,69 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
         page_number += 1
         sleep(10)
         continue
-    
+
+    # Recovery pass for pages that used up all their retries during the main loop.
+    #
+    # This is worth doing because the pagination was measured to be stateless: a page can be asked
+    # for on its own, with a brand new leadid, and it returns the same slice as it would have when
+    # walked to in order.  That was checked on both makes and at deep page numbers as well as
+    # shallow ones, so a single page really can be picked up on its own without re-walking.
+    #
+    # A fresh WAF bypass is taken first, on purpose.  The most likely reason all three attempts
+    # failed is the bypass having gone stale or the site throttling this client, and retrying with
+    # the same headers seconds later would just fail the same way.  New headers make this attempt
+    # independent of whatever caused the original failure.
+    #
+    # One pass, not a loop, so the extra time is bounded.  Duplicate vins cost nothing: the
+    # drop_duplicates on vin in the main loop already handles overlap.
+    if failedPages:
+        print("\n=== Recovery pass:", len(failedPages), "page(s) failed during the run, retrying them ===")
+        print("  >>> Taking a fresh WAF bypass before retrying >>>")
+        headers = wafbypass.WAFBypass(vehicle_make).run()
+        timer_start = timer()
+        stillFailedPages: List[Tuple[str, int]] = []
+        for zoneName, failedPageNumber in failedPages:
+            # A page past the endpoint's reachable record offset returns a null result, which is
+            # indistinguishable from a genuine failure and costs a full set of retries to discover.
+            # Never spend the recovery pass on one.
+            if (failedPageNumber * pageSizeInUse) > MAX_REACHABLE_RECORD_OFFSET:
+                print("  Skipping", zoneName, "page", failedPageNumber,
+                      "as it is past the reachable record offset of", MAX_REACHABLE_RECORD_OFFSET,
+                      "and cannot return anything.")
+                stillFailedPages.append((zoneName, failedPageNumber))
+                continue
+            print("  Retrying", zoneName, "page", failedPageNumber)
+            elapsed_time = timer() - timer_start
+            if elapsed_time > 4 * 60:
+                print("  >>> Refreshing WAF bypass >>>\n")
+                headers = wafbypass.WAFBypass(vehicle_make).run()
+                timer_start = timer()
+            result = query_toyota(failedPageNumber, vehicleQueryObjects[zoneName], headers)
+            if result and "vehicleSummary" in result:
+                recoveredCount = len(result["vehicleSummary"])
+                if recoveredCount > 0:
+                    adderDfNormalized = pd.json_normalize(result["vehicleSummary"])
+                    for col in adderDfNormalized.columns:
+                        if adderDfNormalized[col].isna().all():
+                            adderDfNormalized[col] = ""
+                    adderDfNormalized["infoDateTime"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    if df.empty:
+                        df = adderDfNormalized
+                    else:
+                        df = pd.concat([df, adderDfNormalized], ignore_index=True)
+                vehiclesBefore = len(df)
+                df.drop_duplicates(subset=["vin"], inplace=True)
+                pagesRecoveredByRetry += 1
+                print("    recovered", recoveredCount, "vehicles,", vehiclesBefore - len(df),
+                      "of them already had, total now", len(df))
+            else:
+                print("    still failed")
+                stillFailedPages.append((zoneName, failedPageNumber))
+            sleep(10)
+        failedPages = stillFailedPages
+        print("=== Recovery pass done:", pagesRecoveredByRetry, "page(s) recovered,",
+              len(failedPages), "still missing ===\n")
+
     completionMsg = ""
     if gotPageInfoAtLeastOnce:
         numberRawVehiclesFound = len(df)
@@ -752,7 +856,27 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
                          "On lexus this can also mean the model code has no inventory while the website reports its "
                          "whole family's record count.")
         print("Error: get_all_pages:", completionMsg, "Model", MODEL)
-    statusInfo = {"completedOk": completedOk, "numberRawVehiclesFound": numberRawVehiclesFound, "numberRawVehiclesMissing": numberRawVehiclesMissing, "completionMsg": completionMsg, "date": str(datetime.datetime.now())}
+    # A page that never came back, even after the recovery pass, means part of the inventory was
+    # not collected.  Flag it so update_vehicles_and_return_df does not read the resulting absence
+    # as vehicles having left the lot.  This is deliberately NOT folded into completedOk: the run
+    # did collect real data that is worth storing, it just cannot be trusted to say what is gone.
+    lossyRun = bool(failedPages)
+    if lossyRun:
+        lossyMsg = (str(len(failedPages)) + " page(s) never came back even after the recovery pass ("
+                    + ", ".join(zone + " p" + str(pageNo) for zone, pageNo in failedPages)
+                    + "). Vehicles on those pages are missing from this run, so nothing is being "
+                      "marked Sold or REMOVED for it.")
+        completionMsg = (completionMsg + " " if completionMsg else "") + lossyMsg
+        print("Warning: get_all_pages:", lossyMsg, "Model", MODEL)
+    statusInfo = {"completedOk": completedOk, "numberRawVehiclesFound": numberRawVehiclesFound,
+                  "numberRawVehiclesMissing": numberRawVehiclesMissing,
+                  "completionMsg": completionMsg, "date": str(datetime.datetime.now()),
+                  # Failure accounting, so the rate of page failures becomes visible over a run of
+                  # nightly collections instead of having to be guessed at.
+                  "lossyRun": lossyRun,
+                  "pagesHardFailed": len(failedPages),
+                  "pagesRecoveredByRetry": pagesRecoveredByRetry,
+                  "totalPageRetries": totalPageRetries}
     if not len(df):
         df = pd.DataFrame(columns = columnsForEmptyDfParquet)
     if "Sold" in df.columns:
@@ -1590,14 +1714,22 @@ def determineRowDifferences(row: pd.Series, columnsToIgnore: List[str], original
         
     return row
 
-def getChangeHistory(oldDf: pd.DataFrame, newDf: pd.DataFrame, lastChangeHistorydf: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def getChangeHistory(oldDf: pd.DataFrame, newDf: pd.DataFrame, lastChangeHistorydf: pd.DataFrame,
+                     suppressRemovedClassification: bool = False) -> Tuple[pd.DataFrame, pd.DataFrame]:
     # returns a data frame  that is the concatenation of the lastChangeHistorydf
-    # and the added, modified, removed entries between the passed old df and the new df with 
+    # and the added, modified, removed entries between the passed old df and the new df with
     # an indicator if the old and new value in the row was different and the old value as well, and
     # then limits the result to only the last 2 weeks of entries (infoDateTime field is not older than 2 weeks)
     # and also returns a dataframe that does not include the lastChangeHistorydf.
     # The tuple returned is  (changeHistoryWithLastDf,  changeHistoryCurrentOnlyDf)
-    # All passed data frames must be df raw to csv style generated dataframes 
+    # All passed data frames must be df raw to csv style generated dataframes
+    #
+    # suppressRemovedClassification is for a run that failed to collect part of the inventory (see
+    # lossyRun in get_all_pages).  A REMOVED row is decided purely by a vin being in the old df and
+    # not in the new one, so on a lossy run every vin on a page that failed to come back would be
+    # reported as REMOVED even though it is still sitting on the lot.  With this set those rows are
+    # left out.  ADDED and MODED are unaffected: they are decided from vins that did come back and
+    # so are still correct on a lossy run.
     #
     global columnsForEmptyChangeHistoryCsvDf
     global changeHistoryUseThisAsTodaysDateForTesting
@@ -1664,11 +1796,19 @@ def getChangeHistory(oldDf: pd.DataFrame, newDf: pd.DataFrame, lastChangeHistory
     #dfNewMerged.reset_index(drop=True, inplace=True)
     #dfNewMergeOnlyCommonVins.reset_index(drop=True, inplace=True)
     #dfOldMerged.reset_index(drop=True, inplace=True)
+    dfRemovedRows = dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator]
     frames_to_concat = [
         dfNewMerged[dfNewMerged[rowChangeTypeColumnName] == rowAddedNewVINIndicator],
         dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName] == rowModifiedVINContentsIndicator],
-        dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator]
     ]
+    if suppressRemovedClassification:
+        # The run did not collect the whole inventory, so a vin missing from the new df does not
+        # mean it left the lot.  Leave these out rather than record a change that did not happen.
+        print("Warning: getChangeHistory: incomplete run, so NOT recording", len(dfRemovedRows),
+              "vins as", rowRemovedVINIndicator, ". They stay in the last parquet and will be",
+              "re-evaluated on the next complete run.")
+    else:
+        frames_to_concat.append(dfRemovedRows)
     frames_to_concat = [df for df in frames_to_concat if not df.empty]
     
     if frames_to_concat:
@@ -1825,7 +1965,20 @@ def update_vehicles_and_return_df(useLocalData: bool = False, testModeOn: bool =
             emptyDfWithFinalColumnsForCsv = pd.DataFrame(columns = columnsForEmptyDfParquet)
             return (emptyDfWithFinalColumnsForCsv, statusOfGetAllPages)
         
-    # TODO Determine how missing vehicles in the statusOfGetAllPages affects the below.  Do not want to update certain things
+    # A lossy run is one where at least one page never came back, even after the recovery pass in
+    # get_all_pages.  Those vehicles are still on the lot, we simply failed to fetch them, so the
+    # two places that infer "this vin is gone" from "this vin is not in df" have to be turned off
+    # for this run.  See the Sold column below and the getChangeHistory call further down.
+    #
+    # The data itself is still written.  Blocking the write instead would mean a model whose page
+    # keeps failing has a csv that goes stale for days, which trades fabricated data for no data.
+    # Prices and newly arrived inventory in what we DID collect are still good and still get saved.
+    runIsLossy = bool(statusOfGetAllPages.get("lossyRun", False))
+    if runIsLossy:
+        print("Warning: update_vehicles_and_return_df: this run did not collect the whole inventory for model",
+              MODEL, "-", statusOfGetAllPages.get("pagesHardFailed", "?"),
+              "page(s) never came back. Not marking any vin as Sold or REMOVED for this run.")
+
     #
     # The following code section updates the df and lastParquetDf appropriately as follows:
     '''
@@ -1884,9 +2037,14 @@ def update_vehicles_and_return_df(useLocalData: bool = False, testModeOn: bool =
             if "WhoDidMergeComeFrom_" in df.columns:
                 # if for some reason that df has this which it shouldn't, remove it
                 df.drop(['WhoDidMergeComeFrom_'], axis=1, inplace=True)
-            # Set all entries in lastParquetDf to initially sold. This will later on be overriden if there is a matching VIN in the new raw df, 
+            # Set all entries in lastParquetDf to initially sold. This will later on be overriden if there is a matching VIN in the new raw df,
             # otherwise it must be sold if it no longer appears in the new raw df which was obtained from the inventory website.
-            lastParquetDf["Sold"] = True
+            # On a lossy run we cannot make that inference, because a vin can also be absent from
+            # the new raw df simply because the page carrying it failed to come back.  Leaving these
+            # False means nothing is classified sold this run: re-seen vins still get refreshed with
+            # their new data by the concat and drop_duplicates below, and vins that were not seen
+            # just stay in the last parquet unchanged until a complete run can judge them.
+            lastParquetDf["Sold"] = (not runIsLossy)
             # Note that the merge below will add a FirstAddedDate, LastChangedDateTimeColName, and WhoDidMergeComeFrom_ to df even if
             # there are no VINs in common between df and lastParquetMergeColumnsOnlyDf, those not matching VINs in df
             # will have either None or NaN in the FirstAddedDate and LastChangedDateTimeColName column
@@ -1941,7 +2099,8 @@ def update_vehicles_and_return_df(useLocalData: bool = False, testModeOn: bool =
     # Get new change history using the original last parquet in a csv style data frame as the old df
     #  and the df (already in csv style) as the new df
     originalLastParquetInCsvStyleDf = transformRawDfToCsvStyleDf(originalLastParquetDF)
-    changeHistoryDf, changeHistoryCurrentOnlyDf = getChangeHistory(originalLastParquetInCsvStyleDf, df, lastChangeHistorydf)
+    changeHistoryDf, changeHistoryCurrentOnlyDf = getChangeHistory(originalLastParquetInCsvStyleDf, df, lastChangeHistorydf,
+                                                                   suppressRemovedClassification = runIsLossy)
     # write out the change history to its associated files
     changeHistoryDf.to_parquet(getChangeHistoryParquetFileName(), index=False)
     changeHistoryDf.to_csv(getChangeHistoryCsvFileName(), index=False)

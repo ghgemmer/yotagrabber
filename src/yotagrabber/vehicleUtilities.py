@@ -1,11 +1,53 @@
 """Common vehicle utilities used by the programs."""
+import http.client
 import json
+import logging
+import os
 import pathlib
 from typing import Tuple, Optional, Union
 from yotagrabber import config
 
 vehicleMakeLexus: str = "lexus"
 vehicleMakeToyota: str = "toyota"
+
+# Set the HTTP_WIRE_DEBUG environment variable to a non empty value to dump every http request
+# and response exchanged with the website.  See enableHttpWireLogging below.
+HTTP_WIRE_DEBUG: Optional[str] = os.environ.get("HTTP_WIRE_DEBUG")
+
+httpWireLoggingEnabled: bool = False
+
+
+def enableHttpWireLogging(force: bool = False) -> bool:
+    """
+    Dump the complete http exchange (request line, request headers, request body, response status
+    and response headers) for every request the requests library makes.
+
+    This is wire level, unlike the resp.request.headers view the DEBUG_ENABLED prints use.  The
+    Host header is added below requests by http.client, so it shows up here but not there, and the
+    header order here is the order actually sent.  Both matter when comparing a request the website
+    rejects against one a browser makes, because the WAF fingerprints on them.
+
+    The response body is not printed, because it is often megabytes of gzipped json, and the caller
+    already has it decompressed as resp.text / resp.json().
+
+    Off unless the HTTP_WIRE_DEBUG environment variable is set, or force is passed, because it is
+    very noisy over a full multi page run.  Returns whether logging is now on.
+    """
+    global httpWireLoggingEnabled
+    if not (force or HTTP_WIRE_DEBUG):
+        return False
+    if httpWireLoggingEnabled:
+        # basicConfig only takes effect once, and debuglevel is global, so there is nothing to
+        # repeat.  Guard anyway so callers can call this freely.
+        return True
+    http.client.HTTPConnection.debuglevel = 1
+    logging.basicConfig(level=logging.DEBUG)
+    logging.getLogger("urllib3").setLevel(logging.DEBUG)
+    # http.client writes its dump with print rather than logging, so it lands on stdout while the
+    # urllib3 lines land on stderr.  Redirect one of them if you need the two interleaved in a file.
+    httpWireLoggingEnabled = True
+    print("HTTP wire logging enabled")
+    return True
 
 
 def getVehicleMakeDealersFullFileName(vehicleMake: str) -> pathlib.Path:

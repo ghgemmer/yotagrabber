@@ -202,6 +202,7 @@ credentials.json
 !/src/lexusDealerSiteInventory.py
 !/src/Rx350UserMatchCriteriaFilter.py
 !/src/Rx350hUserMatchCriteriaFilter.py
+!/src/searchRx350hLuxuryMidwest.py
 !/src/SearchVehiclesRx350_config.yaml
 !/src/SearchVehiclesRx350h_config.yaml
 

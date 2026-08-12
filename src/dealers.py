@@ -3,7 +3,6 @@
 import random
 import numpy as np
 from inputimeout import inputimeout, TimeoutOccurred
-from timeit import default_timer as timer
 import sys
 import json
 import os.path
@@ -12,10 +11,6 @@ import ssl
 import requests.exceptions
 import requests
 import pandas as pd
-import re
-from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
-from inputimeout import inputimeout, TimeoutOccurred
-from yotagrabber import wafbypassDealerInfo
 from typing import List, Tuple, Dict, Any, Optional
 
 forceRspFailureTest: int = 0 # set to > 0 to perform tests related to forcing a response failure to test request retry
@@ -120,36 +115,6 @@ def writeZipCodes(zipCodes: List[str], startIndex: int, fileName: str) -> None:
             fileh.write(str(zipCodes[indx])+ "\n")
             indx += 1
             
-def getAddressComponents(address: str) -> Tuple[str, str, str, str]:
-    # Takes the full address which is in the form <street address>,<0 or more spaces><city>,<0 or more spaces>state<1 or more spaces>zipcode<0 or more spaces>
-    # (streetAddressOnly, city, state, zipcode)
-    streetAddressOnly = ""
-    city = ""
-    state = ""
-    zipcode = ""
-    rePattern = r'(^.*), *([^,]+), *([^ ]+) +([^ ]+) *$'
-    match = re.search(rePattern, address)
-    if match:
-        streetAddressOnly = match[1]
-        city = match[2]
-        state  = match[3]
-        zipcode  = match[4]
-    else:
-        print("getAddressComponents: Could not parse Address into streetAddressOnly, city, state, zipcode", address)
-    return (streetAddressOnly, city, state, zipcode)
-
-def updateAddressComponentsIn(rowSeries: pd.Series) -> pd.Series:
-    # takes a dataframe rowSeries with at least columns "state", "address", "address1", "city", "zip"
-    # where address contains the full address including city, state, zipcode and updates the columns 
-    # "state", "address1" (i.e. street address only), "city", "zip" with the corresponding information.
-    # We cast to str to satisfy type checkers that these fields are strings
-    streetAddressOnly, city, state, zipcode = getAddressComponents(str(rowSeries["address"]))
-    rowSeries["address1"] = streetAddressOnly
-    rowSeries["city"] = city
-    rowSeries["state"] = state
-    rowSeries["zip"] = zipcode
-    return rowSeries
-    
 def formatPhoneNumber(phoneNumberStr: Any) -> str:
     # Strip all non-digit characters to handle both formatted and unformatted phone numbers
     # Input is Any because pandas might pass it as an object/int/str
@@ -162,87 +127,6 @@ def formatPhoneNumber(phoneNumberStr: Any) -> str:
         # Return original if not 10 digits
         return s_phoneNumber
     
-def handle_response(response):
-    # Print out URL and status code for every network resource
-    print(f"URL: {response.url} | Status: {response.status}")
-    
-    # Conditionally extract data if it's a target API endpoint
-    if "api.ws.dpcmaps.toyota.com/v1/dealers" in response.url and (response.status == 200):
-        #print("JSON Data:", response.json())
-        pass
-
-def getDealersUsingBrowser(dealersInfoUrl):
-    """Run a browser, to satisy the dealers WAF, to get the dealers json file.  Left in for history of what seemed to work or not"""
-    resp = None
-    dealersJson = None
-    while True:
-        try:
-            with sync_playwright() as playwright:
-                browser = playwright.chromium.launch(headless=False) # headless=True does not seem to work for at all for anything, as get a status code 403 as the first and only response sent back by the server on the page.goto.
-                #browser = playwright.firefox.launch(headless=True)  # page.on("response", response_handler) with Firefox regardless of headless or not,  does not seem to see last response which is the one we wanted and thus page.expect_response does not work
-                try:
-                    dealersJson = None
-                    #context = browser.new_context(viewport={"width": 1920, "height": 1080})
-                    context = browser.new_context(viewport={"width": 10, "height": 10})
-                    page = context.new_page()
-                    #page = browser.new_page()
-                    #getUserInput("Enter Cr to terminate browser inspection", 10000)
-                    #page.goto(dealersInfoUrl)
-                    if 1:  # Works with firefox headless = True or False, and chromium headless = False  
-                        page.goto(dealersInfoUrl)
-                        print("page.wait_for_load_state('networkidle', timeout=10000)")
-                        page.wait_for_load_state("networkidle", timeout=10000)
-                        json_string = page.locator("body > pre").inner_text()
-                        dealersJson = json.loads(json_string)
-                    if 0:
-                        response_info = page.wait_for_response(lambda resp: (resp.status == 200) and ("api.ws.dpcmaps.toyota.com/v1/dealers" in resp.url))
-                        print("Got to point A")
-                        page.goto(dealersInfoUrl)
-                        responseA = response_info
-                        dealersJson = responseA.json()
-                        print("Json data", dealersJson)
-                    if 0:
-                        page.on("response", handle_response)
-                        page.goto(dealersInfoUrl)
-                        print("Waiting 7 seconds")
-                        page.wait_for_timeout(7000)
-                        print("Page content", page.content()) 
-                        json_string = page.locator("body > pre").inner_text()
-                        dealersJson = json.loads(json_string)
-                        #getUserInput("Enter Cr to terminate browser inspection", 1000)
-                    #getUserInput("Enter Cr to terminate browser inspection", 1000)
-                    if 0:  # Works with chromium with headless = False.  Firefox seems to fail in any case of headless setting.
-                        #page.on("response", handle_response) 
-                        with page.expect_response(lambda response: (response.status == 200) and ("api.ws.dpcmaps.toyota.com/v1/dealers" in response.url)) as response_info:
-                        #with page.expect_response(lambda response: (response.status == 200) and ("/mp_verify" in response.url)) as response_info:
-                            page.goto(dealersInfoUrl)
-                        #getUserInput("Enter Cr to terminate browser inspection", 1000)
-                        responseA = response_info
-                        print ("response_info.value" , repr(response_info.value))
-                        response = response_info.value
-                        print ("response.url", response.url)
-                        print ("response.status", response.status)
-                        print ("response.headers", response.headers)
-                        #print("response.text()", response.text())
-                        dealersJson = response.json()
-                except Exception as inst:
-                    print("Error: run_browser: exception in code going to dealersInfoUrl page: ", dealersInfoUrl, str(inst))
-                finally:
-                    browser.close()
-            if dealersJson is not None:
-                break
-            else:
-                print("Error: run_browser was None")
-                sleepTime = 60* 10
-                print("Waiting time ", sleepTime, "secs before retrying WAF Bypass")
-                getUserInput("Enter Cr to terminate wait early", sleepTime)
-        except Exception as inst:
-            print("Error: run_browser: exception", str(inst))
-            sleepTime = 60* 10
-            print("Waiting time ", sleepTime, "secs before retrying WAF Bypass")
-            getUserInput("Enter Cr to terminate wait early", sleepTime)
-    return dealersJson
-
 def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFileName: str = "", vehicleMake: str = "toyota") -> None:
     print("This program updates the passed dealer file (or creates that file if not present)") 
     print("with any dealers found (new or update of existing), during the search ")
@@ -292,20 +176,10 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
         # Instead of pd.DataFrame(), match the schema.
         dealers = pd.DataFrame(columns=["code", "dealerId", "name", "url", "regionId", "state", "lat", "long", "address1", "city", "zip", "phone"])
 
-    # Only the Toyota dealer info website sits behind the AWS WAF.  The Lexus endpoint answers a
-    # plain request, so don't pay for a browser launch whose headers we would never send.
-    headers: Optional[Dict[str, str]] = None
-    if vehicleMake != "lexus":
-        print("Getting WAF bypass for dealer info website")
-        headers = wafbypassDealerInfo.WAFBypass().run()
-    # The WAF token has a limited lifetime and a long run can easily outlive it, so we get a fresh one
-    # mid run when the website starts rejecting us (see the 403 handling below).  Each refresh costs a
-    # browser launch, so stop refreshing once several in a row have not helped, which means we are
-    # being rejected for some reason a new token will not cure.
-    consecutiveWafRefreshes = 0
-    maxConsecutiveWafRefreshes = 3
-    # Start a timer.
-    timer_start = timer()
+    # Neither dealer endpoint needs a WAF bypass any more.  The Toyota one is reached through the
+    # older dealers.prod.webservices.toyota.com url below, which only wants an Origin header, and
+    # the Lexus one answers a plain request.  So there is no browser launch and no token to keep
+    # alive on either path.
     indx = 0
     for zipCode in zipCodesToUpdateDealers:
         # TODO add in retries
@@ -340,24 +214,24 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
                             timeout=20,
                     )
                 else:
-                    # Toyota: zipcode-based API.  The WAF headers gathered above are required here,
-                    # otherwise the website answers 403 for every zipcode.
+                    # Toyota: zipcode-based API.  An Origin header is all this url needs; without it
+                    # the website answers 403 for every zipcode.  This is the url the inventory get
+                    # uses, and unlike the dpcmaps one it returns the legacy fields directly,
+                    # including the real regionId and the address already split into components.
                     resp = requests.get(
-                            "https://api.ws.dpcmaps.toyota.com/v1/dealers?attributeKey=&searchMode=pmaProximityLayered&zipcode=" + codeToSearch,
+                            "https://dealers.prod.webservices.toyota.com/v1/dealers/?zipcode=" + codeToSearch,
                             timeout=20,
-                            headers=headers,
+                            headers={"Origin": "https://www.toyota.com"},
                     )
-                
+
                 if resp is not None:
                     if resp.status_code != 200:
-                        # A WAF rejection comes back as well formed json (a 403 carrying a "message"
+                        # A rejection can come back as well formed json (a 403 carrying a "message"
                         # field), so resp.json() succeeds and the failure would otherwise slip past the
                         # retry below and be reported as merely an empty result.  Retry on any non 200.
                         raise requests.exceptions.HTTPError(
                                 "status code " + str(resp.status_code), response=resp)
                     result = resp.json()
-                    # A good response means whatever token we are holding is still working.
-                    consecutiveWafRefreshes = 0
                 break
             except requests.exceptions.RequestException as inst:
                 # RequestException is the base of every requests failure, so this covers connection
@@ -368,17 +242,9 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
                     print("resp.status_code", resp.status_code)
                     print("resp.headers", resp.headers)
                 result = None
-                # A 403 part way through a run normally means the WAF token has expired, which left
-                # alone would fail every remaining zipcode.  Get a fresh token and retry this zipcode
-                # without consuming its retry, so a long run heals itself and carries on.
-                if ((vehicleMake != "lexus")
-                        and (resp is not None) and (resp.status_code == 403)
-                        and (consecutiveWafRefreshes < maxConsecutiveWafRefreshes)):
-                    consecutiveWafRefreshes += 1
-                    print("Got a 403, the WAF token has likely expired.  Getting a fresh WAF bypass,",
-                          "refresh", consecutiveWafRefreshes, "of", maxConsecutiveWafRefreshes)
-                    headers = wafbypassDealerInfo.WAFBypass().run()
-                    continue
+                # There is no WAF token to refresh any more, so a 403 here just retries and backs
+                # off like any other failure.  A persistent 403 now means the Origin header is no
+                # longer sufficient rather than a token having expired.
                 # retry
                 if tryCount <= 0:
                     break
@@ -427,53 +293,13 @@ def updateDealers(dealerFileName: str, zipCodeFileName: str, dealerAddersJsonFil
                 df["regionId"] = ""
                 df["vehicleMake"] = "lexus"
             else:
-                # Toyota field mapping
-                #address column includes street address, city, state zipcode
-                df = df[["code", "label", "details.uriWebsite", "position.lat", "position.lng", "address", "phone"]]
-                #legacy format columns are "code", "dealerId", "name", "url", "regionId", "state", "lat", "long", "address1", "city", "zip", "phone"
-                # Add dealerId to match legacy format which is the same as the code field
-                df["dealerId"] = df["code"]
-                # add other columns to match legacy format
-                df["regionId"] = 9999  # use dummy value as this url data does not have region ID and other processing fortunately doesn't need it currently.
-                df["state"] = ""
-                df["address1"] = ""
-                df["city"] = ""
-                df["zip"] = ""
-            
-                # perform renames to match legacy format
-                renames = {
-                    "label": "name",
-                    "details.uriWebsite": "url",
-                    "position.lat": "lat",
-                    "position.lng": "long"
-                }
-                df = (
-                    df[
-                        ["code",
-                        "dealerId",
-                        "label", 
-                        "details.uriWebsite",
-                        "regionId",
-                        "state",
-                        "position.lat", 
-                        "position.lng", 
-                        "address",
-                        "address1", 
-                        "city",
-                        "zip",
-                        "phone"]
-                        ]
-                    .copy(deep=True)
-                    .rename(columns=renames)
-                )
+                # Toyota field mapping.  The dealers.prod.webservices url already returns the legacy
+                # column names, so there is nothing to rename, no dummy regionId to invent and no
+                # combined address field to split back apart.
+                df = df[["code", "dealerId", "name", "url", "regionId", "state", "lat", "long",
+                         "address1", "city", "zip", "phone"]].copy(deep=True)
                 # Add vehicleMake column for Toyota
                 df["vehicleMake"] = "toyota"
-            # updated address1, city, state, zipcode from the address to match legacy format
-            # Only needed for Toyota which has a full address field; Lexus already has separated components
-            if vehicleMake == "toyota":
-                df = df.apply(updateAddressComponentsIn, axis=1)
-                # remove address field as it has been split into other fields (Toyota only)
-                df.drop(columns=["address"], inplace=True)
             # format phone number
             df["phone"] = df["phone"].apply(formatPhoneNumber)
             

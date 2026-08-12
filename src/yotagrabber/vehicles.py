@@ -618,6 +618,10 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
     # main loop below, see the recovery pass.
     failedPages: List[Tuple[str, int]] = []
     pagesRecoveredByRetry = 0
+    # Set when the loop ends because we already hold every record the website says exists.  A page
+    # that failed is then of no consequence: whatever it was carrying we got from another page or
+    # another zone, so there is nothing to recover and nothing missing from the run.
+    allVehiclesFound = False
     # Page size is needed to work out the record offset a page number lands on, for the
     # MAX_REACHABLE_RECORD_OFFSET check in the recovery pass.
     pageSizeInUse = VEHICLE_MAKE_PAGE_SIZE.get(vehicle_make, 250)
@@ -749,6 +753,7 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
         if len(df) >= recordsToGet:
             # we found total records indicated by any one request, which is all the records we are looking for.
             print("All vehicles found. Model ", MODEL)
+            allVehiclesFound = True
             break
         elif page_number >= pagesToGet:
             print("Error: Reached total pages for this vehicle (or page limit) of", page_number, ". All vehicles were not found! Model " , MODEL ,  "missing ", recordsToGet - len(df), "vehicles")
@@ -779,7 +784,17 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
     #
     # One pass, not a loop, so the extra time is bounded.  Duplicate vins cost nothing: the
     # drop_duplicates on vin in the main loop already handles overlap.
-    if failedPages:
+    #
+    # Skipped entirely when the loop ended on the all found break.  A page can fail and still cost
+    # us nothing, because a zone returns every vehicle in the country ordered by distance and the
+    # other pages and zones cover the same vehicles from a different direction.  Once the collected
+    # count reaches what the website says exists there is nothing left to go and fetch, so retrying
+    # would spend requests to re-collect vins we already hold.
+    if failedPages and allVehiclesFound:
+        print("\nNote:", len(failedPages), "page(s) failed during the run, but every record the",
+              "website reported was collected anyway, so there is nothing to recover and the run",
+              "is not treated as lossy. Model", MODEL)
+    if failedPages and not allVehiclesFound:
         print("\n=== Recovery pass:", len(failedPages), "page(s) failed during the run, retrying them ===")
         print("  >>> Taking a fresh WAF bypass before retrying >>>")
         headers = wafbypass.WAFBypass(vehicle_make).run()
@@ -860,7 +875,11 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
     # not collected.  Flag it so update_vehicles_and_return_df does not read the resulting absence
     # as vehicles having left the lot.  This is deliberately NOT folded into completedOk: the run
     # did collect real data that is worth storing, it just cannot be trusted to say what is gone.
-    lossyRun = bool(failedPages)
+    # A failed page only makes the run lossy if we did not end up with the whole inventory anyway.
+    # Without the allVehiclesFound term a page that failed harmlessly would suppress Sold and
+    # REMOVED for the entire run, which quietly stops real sold vehicles from ever being detected -
+    # a worse outcome than the false sold entries this is all meant to prevent.
+    lossyRun = bool(failedPages) and not allVehiclesFound
     if lossyRun:
         lossyMsg = (str(len(failedPages)) + " page(s) never came back even after the recovery pass ("
                     + ", ".join(zone + " p" + str(pageNo) for zone, pageNo in failedPages)

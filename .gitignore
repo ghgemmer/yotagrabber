@@ -251,7 +251,6 @@ src/ToyotaSearchInventoryWebSourcePages/*
 !/src/yotagrabber/vehicles.py
 !/src/yotagrabber/config.py
 !/src/yotagrabber/wafbypass.py
-!/src/yotagrabber/wafbypassDealerInfo.py
 !/src/yotagrabber/vehiclesTestWithChangeHistoryIndividualColumns.py
 !/src/yotagrabber/vehicleUtilities.py
 

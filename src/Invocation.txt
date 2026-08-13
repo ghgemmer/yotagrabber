@@ -211,42 +211,6 @@ filterDataFrame and criteriaPrintableString at module level and does its environ
 yotagrabber imports inside main(), so importing it as a filter has no side effects.
 
 --------------------------------------------------------------
-One off search: every RX 350h at the dealers in a list of zipcodes
-
-searchRx350hByZipcodes.py answers "what do these particular dealers have" and then exits.  Same
-paradigm as searchRx350hLuxuryMidwest.py above: one off, no notification, writes none of the
-tracked output files, sets VEHICLE_MAKE and MODEL itself, and doubles as a
-userMatchCriteriaFilterFileName.
-
-py searchRx350hByZipcodes.py                            the built in zipcode list, collect fresh
-py searchRx350hByZipcodes.py 60173 60559 60642 60025    those zipcodes instead
-py searchRx350hByZipcodes.py --use-last-data            search output/RXh_Lastraw.parquet, no requests
-py searchRx350hByZipcodes.py 60025 --radius 40          also dealers within 40 miles of a listed zip
-py searchRx350hByZipcodes.py --trim LUXURY --trim PREMIUM+ --available-only
-
-A zipcode matches the DEALER's zipcode, not a radius, because the question is what a specific
-dealer has.  The four built in zipcodes are each one Lexus dealer: 60173 Woodfield, 60559 McGrath
-Westmont, 60642 McGrath Chicago, 60025 Fields Glenview.  --radius widens it to dealers near those
-zipcodes as well, which needs the zipcode to be locatable from a dealer sitting in it (either make
-counts) since there is no zipcode to coordinate table in this project.  A zipcode with no dealer in
-it, say 60601 in the Chicago loop, cannot anchor a radius and is warned about.
-
-Unlike the midwest search, NO trim, colour or interior filter is applied by default, since the point
-is to see everything those dealers have.  --trim is repeatable and widens (any of the given trims),
---interior narrows to interiors containing the given text.
-
-Output is grouped in the order the zipcodes were given, with a Miles From Zip and Nearest Zip column
-measured from the searched zipcodes rather than from the collection centre, and goes to
-output/RXh_ByZipcode.csv (--out to change that).  Summaries by dealer and by trim are printed.
-
-Note the Dealer Zip column arrives as an integer, so a leading zero zipcode like 06810 has already
-lost its zero by then.  Both sides of the comparison are zero padded so those still match, which is
-worth keeping if you copy this filter elsewhere.
-
-A measured run over the 09-Aug collection found 30 vehicles across the four built in dealers, and
-with --radius 30 around 60025 alone found 42 across six dealers.
-
---------------------------------------------------------------
 Getting the LEXUS factory to port vehicles anyway, from the dealer websites
 
 The inventory API will not give you factory to port vehicles for Lexus, but individual Lexus

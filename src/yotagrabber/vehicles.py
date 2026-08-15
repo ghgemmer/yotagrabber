@@ -1733,8 +1733,7 @@ def determineRowDifferences(row: pd.Series, columnsToIgnore: List[str], original
         
     return row
 
-def getChangeHistory(oldDf: pd.DataFrame, newDf: pd.DataFrame, lastChangeHistorydf: pd.DataFrame,
-                     suppressRemovedClassification: bool = False) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def getChangeHistory(oldDf: pd.DataFrame, newDf: pd.DataFrame, lastChangeHistorydf: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
     # returns a data frame  that is the concatenation of the lastChangeHistorydf
     # and the added, modified, removed entries between the passed old df and the new df with
     # an indicator if the old and new value in the row was different and the old value as well, and
@@ -1743,12 +1742,10 @@ def getChangeHistory(oldDf: pd.DataFrame, newDf: pd.DataFrame, lastChangeHistory
     # The tuple returned is  (changeHistoryWithLastDf,  changeHistoryCurrentOnlyDf)
     # All passed data frames must be df raw to csv style generated dataframes
     #
-    # suppressRemovedClassification is for a run that failed to collect part of the inventory (see
-    # lossyRun in get_all_pages).  A REMOVED row is decided purely by a vin being in the old df and
-    # not in the new one, so on a lossy run every vin on a page that failed to come back would be
-    # reported as REMOVED even though it is still sitting on the lot.  With this set those rows are
-    # left out.  ADDED and MODED are unaffected: they are decided from vins that did come back and
-    # so are still correct on a lossy run.
+    # Note a REMOVED row is decided purely by a vin being in the old df and not in the new one.  On
+    # a run that failed to collect part of the inventory that would wrongly report vins as REMOVED
+    # when they are still sitting on the lot, which is why update_vehicles_and_return_df carries
+    # those vins forward into newDf before calling this, rather than this having to know about it.
     #
     global columnsForEmptyChangeHistoryCsvDf
     global changeHistoryUseThisAsTodaysDateForTesting
@@ -1815,19 +1812,11 @@ def getChangeHistory(oldDf: pd.DataFrame, newDf: pd.DataFrame, lastChangeHistory
     #dfNewMerged.reset_index(drop=True, inplace=True)
     #dfNewMergeOnlyCommonVins.reset_index(drop=True, inplace=True)
     #dfOldMerged.reset_index(drop=True, inplace=True)
-    dfRemovedRows = dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator]
     frames_to_concat = [
         dfNewMerged[dfNewMerged[rowChangeTypeColumnName] == rowAddedNewVINIndicator],
         dfNewMergeOnlyCommonVins[dfNewMergeOnlyCommonVins[rowChangeTypeColumnName] == rowModifiedVINContentsIndicator],
+        dfOldMerged[dfOldMerged[rowChangeTypeColumnName] == rowRemovedVINIndicator]
     ]
-    if suppressRemovedClassification:
-        # The run did not collect the whole inventory, so a vin missing from the new df does not
-        # mean it left the lot.  Leave these out rather than record a change that did not happen.
-        print("Warning: getChangeHistory: incomplete run, so NOT recording", len(dfRemovedRows),
-              "vins as", rowRemovedVINIndicator, ". They stay in the last parquet and will be",
-              "re-evaluated on the next complete run.")
-    else:
-        frames_to_concat.append(dfRemovedRows)
     frames_to_concat = [df for df in frames_to_concat if not df.empty]
     
     if frames_to_concat:
@@ -1996,7 +1985,32 @@ def update_vehicles_and_return_df(useLocalData: bool = False, testModeOn: bool =
     if runIsLossy:
         print("Warning: update_vehicles_and_return_df: this run did not collect the whole inventory for model",
               MODEL, "-", statusOfGetAllPages.get("pagesHardFailed", "?"),
-              "page(s) never came back. Not marking any vin as Sold or REMOVED for this run.")
+              "page(s) never came back.")
+        # Carry the vins we failed to fetch back into the current inventory, taking them from the
+        # last run.  Everything downstream decides "this vin is gone" from "this vin is not in df",
+        # in three separate places: the Sold column, the REMOVED classification in getChangeHistory,
+        # and the csv that gets published.  Putting the vins back here fixes all three at once and
+        # lets the rest of the function work exactly as it does on a normal run, which is far easier
+        # to reason about than special casing each place in turn.
+        #
+        # The carried over rows keep their previous infoDateTime rather than being stamped with now,
+        # so a row that was not actually re-checked this run still says when it was last really seen.
+        if lastRawParquetFileExists and len(lastParquetDf) and ("vin" in lastParquetDf.columns):
+            vinsCollected = set(df["vin"]) if (not df.empty) and ("vin" in df.columns) else set()
+            vinsNotCollected = set(lastParquetDf["vin"]) - vinsCollected
+            if vinsNotCollected:
+                carriedOverDf = lastParquetDf[lastParquetDf["vin"].isin(vinsNotCollected)].copy(deep=True)
+                # These three are re-derived below for every row of df, so drop them here to keep
+                # the carried over rows the same shape as the freshly collected ones.
+                for columnName in ("FirstAddedDate", LastChangedDateTimeColName, "Sold"):
+                    if columnName in carriedOverDf.columns:
+                        carriedOverDf.drop(columns=[columnName], inplace=True)
+                df = carriedOverDf if df.empty else pd.concat([df, carriedOverDf], ignore_index=True)
+                print("Warning: carried", len(carriedOverDf), "vin(s) forward from the last run that",
+                      "this run failed to fetch, so they are not treated as sold or removed. Model", MODEL)
+        else:
+            print("Warning: no previous inventory to carry vins forward from, so this run's missing",
+                  "vehicles are simply absent. Model", MODEL)
 
     #
     # The following code section updates the df and lastParquetDf appropriately as follows:
@@ -2058,12 +2072,10 @@ def update_vehicles_and_return_df(useLocalData: bool = False, testModeOn: bool =
                 df.drop(['WhoDidMergeComeFrom_'], axis=1, inplace=True)
             # Set all entries in lastParquetDf to initially sold. This will later on be overriden if there is a matching VIN in the new raw df,
             # otherwise it must be sold if it no longer appears in the new raw df which was obtained from the inventory website.
-            # On a lossy run we cannot make that inference, because a vin can also be absent from
-            # the new raw df simply because the page carrying it failed to come back.  Leaving these
-            # False means nothing is classified sold this run: re-seen vins still get refreshed with
-            # their new data by the concat and drop_duplicates below, and vins that were not seen
-            # just stay in the last parquet unchanged until a complete run can judge them.
-            lastParquetDf["Sold"] = (not runIsLossy)
+            # This stays unconditional even on a lossy run: the vins that run failed to fetch have
+            # already been put back into df above, so they match here and come out not sold, and a
+            # vin that is genuinely absent is still correctly detected as sold.
+            lastParquetDf["Sold"] = True
             # Note that the merge below will add a FirstAddedDate, LastChangedDateTimeColName, and WhoDidMergeComeFrom_ to df even if
             # there are no VINs in common between df and lastParquetMergeColumnsOnlyDf, those not matching VINs in df
             # will have either None or NaN in the FirstAddedDate and LastChangedDateTimeColName column
@@ -2118,8 +2130,10 @@ def update_vehicles_and_return_df(useLocalData: bool = False, testModeOn: bool =
     # Get new change history using the original last parquet in a csv style data frame as the old df
     #  and the df (already in csv style) as the new df
     originalLastParquetInCsvStyleDf = transformRawDfToCsvStyleDf(originalLastParquetDF)
-    changeHistoryDf, changeHistoryCurrentOnlyDf = getChangeHistory(originalLastParquetInCsvStyleDf, df, lastChangeHistorydf,
-                                                                   suppressRemovedClassification = runIsLossy)
+    # No lossy run special casing needed here either: a vin this run failed to fetch was carried
+    # forward into df above, so it is present in both sides of this comparison, unchanged, and is
+    # classified as neither REMOVED nor MODED.
+    changeHistoryDf, changeHistoryCurrentOnlyDf = getChangeHistory(originalLastParquetInCsvStyleDf, df, lastChangeHistorydf)
     # write out the change history to its associated files
     changeHistoryDf.to_parquet(getChangeHistoryParquetFileName(), index=False)
     changeHistoryDf.to_csv(getChangeHistoryCsvFileName(), index=False)

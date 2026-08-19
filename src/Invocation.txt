@@ -51,16 +51,15 @@ run, script and output file exactly as before.
 Lexus model codes are short series codes (RX, RXh, NX, ES, GX, TX, ...), not the lowercase names
 Toyota uses.  Watch the letter case: the hybrids use a lowercase h (RXh, not RXH) and the plug in
 hybrids a lowercase phev (RXphev).  The seriesCodes argument is case sensitive, so copy the code
-out of output/lexus_models_raw.json exactly.  Get the current list with:
+out of output/lexus/models_raw.json exactly.  Get the current list with:
 
 set VEHICLE_MAKE=lexus
 py -c "from yotagrabber import models; models.update_models()"
 
-That writes output/lexus_models.json and output/lexus_models_raw.json (Toyota keeps
-output/models.json, so the two makes do not collide).  Every make writes into the one output
-directory and is told apart by that file name prefix.  Per model output files do not need a prefix
-because the uppercase Lexus codes never clash with the lowercase Toyota ones, so an RX run writes
-output/RX.csv, output/RX_Lastraw.parquet and so on directly.
+That writes output/lexus/models.json and output/lexus/models_raw.json.  Every make other than
+Toyota keeps its output in its own output/<make> directory, so the makes cannot collide.  Toyota
+stays directly in output/ so its existing files and the github workflow are unaffected.  An RX run
+therefore writes output/lexus/RX.csv, output/lexus/RX_Lastraw.parquet and so on.
 
 IMPORTANT: a trim such as the RX 350 is NOT a model code.  It is a trim inside the RX series, so
 you pull the whole RX series and then filter the trim in the user match criteria filter.  As of the
@@ -185,13 +184,13 @@ tracked output files (no parquet, no change history, no sold files), so it can b
 without disturbing what the scheduled runs maintain.  It sets VEHICLE_MAKE and MODEL itself.
 
 py searchRx350hLuxuryMidwest.py                   collect a national RXh inventory, then search
-py searchRx350hLuxuryMidwest.py --use-last-data   search output/RXh_Lastraw.parquet, no requests
+py searchRx350hLuxuryMidwest.py --use-last-data   search output/lexus/RXh_Lastraw.parquet, no requests
 py searchRx350hLuxuryMidwest.py --zip 52402 --radius 600      fresh, but only around that zip
 py searchRx350hLuxuryMidwest.py --states IL WI IA MN          override the states kept
 py searchRx350hLuxuryMidwest.py --states                      keep every state
 py searchRx350hLuxuryMidwest.py --any-interior --available-only
 
-Matches print closest dealer first and are written to output/RXh_LUXURY_Macadamia_Midwest.csv
+Matches print closest dealer first and are written to output/lexus/RXh_LUXURY_Macadamia_Midwest.csv
 (--out to change that).  Distance is a real number of miles computed from the dealer and center
 coordinates, not the Excel formula vehicles.py puts in DistanceFromCenter, which does not survive
 being filtered and re-sorted.  States default to the 12 census midwest ones.

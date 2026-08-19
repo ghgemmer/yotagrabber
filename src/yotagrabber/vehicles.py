@@ -357,39 +357,54 @@ def get_vehicle_query_Objects() -> Dict[str, str]:
 
     return vehicleQueryObjects
     
+def getPageFilesDebugDirName() -> str:
+    """
+    Return the directory the PAGE_FILES_DEBUG_ENABLED per page dumps are written to, creating it
+    if it is missing.  It sits under the make's own output directory so a lexus run's pages do
+    not land among toyota's.
+    """
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
+    pagesDir = f"{output_dir}/pages"
+    try:
+        Path(pagesDir).mkdir(parents=True, exist_ok=True)
+    except OSError as inst:
+        print("Warning: getPageFilesDebugDirName: could not create", pagesDir, ":", inst)
+    return pagesDir
+
 def getChangeHistoryParquetFileName() -> str:
     ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
-    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
     parquetFileName = f"{output_dir}/{MODEL}_ChangeHistory.parquet"
     return parquetFileName
 
 def getChangeHistoryCsvFileName() -> str:
     ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
-    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
     parquetFileName = f"{output_dir}/{MODEL}_ChangeHistory.csv"
     return parquetFileName
 
 def getLastRawParquetFileName() -> str:
     ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
-    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
     parquetFileName = f"{output_dir}/{MODEL}_Lastraw.parquet"
     return parquetFileName
     
 def getInventoryTestParquetFileName() -> str:
     ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
-    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
     parquetFileName = f"{output_dir}/{MODEL}_raw.parquet"
     return parquetFileName
 
 def getLastRawStatusFileName() -> str:
     ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
-    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
     statusFileName = f"{output_dir}/{MODEL}_LastStatusInfo.json"
     return statusFileName
 
 def getInventoryTestStatusFileName() -> str:
     ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
-    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
     statusFileName = f"{output_dir}/{MODEL}_StatusInfo.json"
     return statusFileName
     
@@ -527,13 +542,13 @@ def query_toyota(page_number: int, query: str, headers: Optional[Dict[str, str]]
             if PAGE_FILES_DEBUG_ENABLED:
                 request_id = f"{MODEL}_{page_number}_{str(uuid.uuid4())[:8]}"
                 try:
-                    with open(f"output/pages/{request_id}_query.graphql", "w", encoding='utf-8') as f:
+                    with open(f"{getPageFilesDebugDirName()}/{request_id}_query.graphql", "w", encoding='utf-8') as f:
                         f.write(query)
                 except Exception as e:
                     print(f"Warning: Could not write debug query file: {e}")
                 if resp:
                     try:
-                        with open(f"output/pages/{request_id}_response.json", "w", encoding='utf-8') as f:
+                        with open(f"{getPageFilesDebugDirName()}/{request_id}_response.json", "w", encoding='utf-8') as f:
                             f.write(resp.text)
                     except Exception as e:
                         print(f"Warning: Could not write debug response file: {e}")
@@ -706,7 +721,7 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
                     infoDateTime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     adderDfNormalized["infoDateTime"] = infoDateTime
                     if PAGE_FILES_DEBUG_ENABLED:
-                        adderDfNormalized.to_csv(f"output/pages/{MODEL}{queryDetailString}_raw_page{page_number}.csv", index=False)
+                        adderDfNormalized.to_csv(f"{getPageFilesDebugDirName()}/{MODEL}{queryDetailString}_raw_page{page_number}.csv", index=False)
                     if df.empty:
                         df = adderDfNormalized
                     else:
@@ -732,7 +747,7 @@ def get_all_pages() -> Tuple[pd.DataFrame, Dict[str, Any]]:
         # Drop any duplicate VINs.
         df.drop_duplicates(subset=["vin"], inplace=True)
         if PAGE_FILES_DEBUG_ENABLED:
-            df.to_csv(f"output/pages/{MODEL}_raw_page{page_number}.csv", index=False)
+            df.to_csv(f"{getPageFilesDebugDirName()}/{MODEL}_raw_page{page_number}.csv", index=False)
         print(f"Found {len(df)} (+{len(df)-last_run_counter}) vehicles so far.\n")
         
         # Track page numbers that produced nothing new, so a run whose remaining records are
@@ -1336,14 +1351,14 @@ def getFileNameForSoldRawParquet(model: str, year: int) -> str:
     # model is a str, and year is a number
     #  output/<model>_<year>_Sold_raw.parquet
     ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
-    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
     return f"{output_dir}/" + model + "_" + "{:04d}".format(year) + "_Sold_raw.parquet"
     
 def getFileNameForSoldCsv(model: str, year: int) -> str:
     # model is a str, and year is a number
     # returns output/<model>_<year>_Sold.csv
     ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
-    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
     return f"{output_dir}/" + model + "_" + "{:04d}".format(year) + "_Sold.csv"
     
 def valueIsStrType(value: Any) -> bool:
@@ -1358,7 +1373,9 @@ def pruneSoldFiles(model: str) -> None:
     global changeHistoryUseThisAsTodaysDateForTesting
     global maxDaysToKeepTempVinSold
     # Get the sold raw parquet file names for the model
-    searchPathAndPatterns = os.path.join("output/", model + "_????_Sold_raw.parquet")
+    ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
+    searchPathAndPatterns = os.path.join(output_dir, model + "_????_Sold_raw.parquet")
     fileNamesWithPath = glob.glob(searchPathAndPatterns)
     #print("Pruning Sold files of old temp VINs")
     for fileNameWithPath in fileNamesWithPath:
@@ -2158,7 +2175,7 @@ def update_vehicles_and_return_df(useLocalData: bool = False, testModeOn: bool =
     # recorded in the status file.  Writing the status first would leave a status saying the run
     # completed ok next to a csv that is still the previous run's data.
     ok, vehicle_make = vehicleUtilities.validateVehicleMake(VEHICLE_MAKE)
-    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else "output")
+    output_dir = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota)
     csvFileName = f"{output_dir}/{MODEL}.csv"
     csvWriteError = None
     try:

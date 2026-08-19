@@ -220,8 +220,14 @@ credentials.json
 !/src/output/rav4pluginhybrid_NewMethodComparedToOld.xlsx
 !/src/output/models.json
 !/src/output/models_raw.json
-!/src/output/lexus_models.json
-!/src/output/lexus_models_raw.json
+
+# reinclude files in /src/output/lexus, the lexus make's own output directory
+# Same two step as above: the directory itself has to be reincluded before git will look at
+# anything inside it, then its contents are excluded and the wanted files reincluded.
+!/src/output/lexus/
+/src/output/lexus/*
+!/src/output/lexus/models.json
+!/src/output/lexus/models_raw.json
 
 # reinclude files in /src/ToyotaSearchInventoryWebSourcePages
 # Must do this as git ignores that subdirectory (and anything in it on down) 

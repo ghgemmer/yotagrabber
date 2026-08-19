@@ -4,7 +4,7 @@ import json
 import logging
 import os
 import pathlib
-from typing import Tuple, Optional, Union
+from typing import Set, Tuple, Optional, Union
 from yotagrabber import config
 
 vehicleMakeLexus: str = "lexus"
@@ -58,36 +58,44 @@ def getVehicleMakeDealersFullFileName(vehicleMake: str) -> pathlib.Path:
     filename = pathlib.Path(f"{config.BASE_DIRECTORY}/dealers.csv")
     return filename
 
+# The output directories this process has already created, so the repeated calls the file name
+# getters make below do not re-stat the directory every time.
+outputDirsAlreadyCreated: Set[str] = set()
+
+
 def getVehicleMakeRelOutDirNoEndSlash(vehicleMake: str) -> str:
     """
-    Get the relative output directory (no ending slash) that holds the output files.
+    Get the relative output directory (no ending slash) for the passed vehicle make.
     Returns path relative to the src/ directory (typical working directory).
 
-    Every vehicle make writes into the one output directory.  Makes are told apart by a file
-    name prefix (see getOutputFileNamePrefix) rather than by a per make subdirectory.
-    """
-    return "./output"
+    Each make keeps its output files in its own directory, so nothing has to be told apart by
+    name.  Toyota is the exception: it stays directly in output/ so its existing files, and the
+    github workflow that commits them, keep working unchanged.
 
-def getOutputFileNamePrefix(vehicleMake: str) -> str:
-    """
-    Return the prefix to put on output file names that are not already model specific.
-
-    Toyota gets no prefix so that its existing output files keep their current names.  Any
-    other make gets a prefix so its files sit alongside toyota's in the output directory
-    without colliding.  Per model output files do not need this because toyota model codes
-    are lowercase names and lexus model codes are uppercase series codes, so they never clash.
+    Creates the directory if it is missing, because every caller is on its way to reading or
+    writing a file in it, and a make being collected for the first time has no directory yet.
     """
     if vehicleMake == vehicleMakeToyota:
-        return ""
-    return vehicleMake + "_"
+        outputDir = "./output"
+    else:
+        outputDir = f"./output/{vehicleMake}"
+    if outputDir not in outputDirsAlreadyCreated:
+        try:
+            pathlib.Path(outputDir).mkdir(parents=True, exist_ok=True)
+            outputDirsAlreadyCreated.add(outputDir)
+        except OSError as inst:
+            # Report it and carry on.  The caller may only be reading, in which case the missing
+            # directory is harmless, and a caller that is writing gets a clearer error of its own.
+            print("Warning: getVehicleMakeRelOutDirNoEndSlash: could not create", outputDir, ":", inst)
+    return outputDir
 
 def getModelsFileName(vehicleMake: str) -> str:
     """Return the name of the curated models file for the vehicle make."""
-    return getVehicleMakeRelOutDirNoEndSlash(vehicleMake) + "/" + getOutputFileNamePrefix(vehicleMake) + "models.json"
+    return getVehicleMakeRelOutDirNoEndSlash(vehicleMake) + "/models.json"
 
 def getModelsRawFileName(vehicleMake: str) -> str:
     """Return the name of the raw models file for the vehicle make."""
-    return getVehicleMakeRelOutDirNoEndSlash(vehicleMake) + "/" + getOutputFileNamePrefix(vehicleMake) + "models_raw.json"
+    return getVehicleMakeRelOutDirNoEndSlash(vehicleMake) + "/models_raw.json"
 
 def validateVehicleMake(userInputVehicleMake: Optional[str]) -> Tuple[bool, Optional[str]]:
     """

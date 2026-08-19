@@ -56,10 +56,14 @@ def main() -> None:
 
         vehicles.update_vehicles()
 
-        # Every make writes into the one output directory.  Per model file names do not need a
-        # make prefix because toyota model codes are lowercase names and lexus model codes are
-        # uppercase series codes, so the two never collide.
-        output_dir: Path = Path("output")
+        # Each make keeps its files in its own output directory, except toyota which stays
+        # directly in output/.  Ask the same helper the writes went through rather than
+        # rebuilding the rule here.
+        from yotagrabber import vehicleUtilities
+
+        ok, vehicle_make = vehicleUtilities.validateVehicleMake(make)
+        output_dir: Path = Path(vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(
+            vehicle_make if (ok and vehicle_make) else vehicleUtilities.vehicleMakeToyota))
 
         print("\n" + "=" * 80)
         print("INVENTORY FETCH COMPLETED!")

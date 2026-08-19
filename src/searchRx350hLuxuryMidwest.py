@@ -25,7 +25,7 @@ Two data sources
     measured run was around 20 pages with a WAF bypass refresh every 4 minutes) and deliberately
     writes NONE of the tracked output files, so an on demand search never disturbs the parquet,
     change history and sold files that the nightly runs and searchForVehicles.py maintain.
-    --use-last-data: reuse output/RXh_Lastraw.parquet from the last collection instead.  Instant and
+    --use-last-data: reuse output/lexus/RXh_Lastraw.parquet from the last collection instead.  Instant and
     makes no requests, but only as current as that file (the run date is printed).
 
     To collect inventory AND update the tracked files, that is the existing command, not this one:
@@ -72,7 +72,7 @@ INTERIOR_TEXT: str = "Macadamia semi-aniline leather and Ash Bamboo trim"
 # they are left in so the region is the standard one rather than a guess.
 MIDWEST_STATES: List[str] = ["IL", "IN", "IA", "KS", "MI", "MN", "MO", "NE", "ND", "OH", "SD", "WI"]
 
-DEFAULT_OUTPUT_FILE: str = "output/RXh_LUXURY_Macadamia_Midwest.csv"
+DEFAULT_OUTPUT_FILE: str = f"output/{VEHICLE_MAKE}/RXh_LUXURY_Macadamia_Midwest.csv"
 
 # Columns printed to the console.  The csv written out keeps every column.
 CONSOLE_COLUMNS: List[str] = [
@@ -250,7 +250,7 @@ def parseArgs(argv: Optional[List[str]] = None) -> argparse.Namespace:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--use-last-data", action="store_true",
-                        help="search output/%s_Lastraw.parquet instead of querying the website" % MODEL_CODE)
+                        help="search output/%s/%s_Lastraw.parquet instead of querying the website" % (VEHICLE_MAKE, MODEL_CODE))
     parser.add_argument("--zip", dest="zipCode", default=None,
                         help="collect only around this zip code instead of nationally (needs --radius)")
     parser.add_argument("--radius", default=None,

@@ -1,3 +1,5 @@
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -64,6 +66,9 @@ db.sqlite3-journal
 # Flask stuff:
 instance/
 .webassets-cache
+
+# git diff files
+*.diff
 
 # Scrapy stuff:
 .scrapy
@@ -192,7 +197,14 @@ credentials.json
 !/src/createTestParquetFiles.py
 !/src/RunUserVehicleSearchesExample.bat
 !/src/waitForSeconds.py
+!/src/fetch_vehicles.py
 !/src/WaitForTimeWindow.py
+!/src/lexusDealerSiteInventory.py
+!/src/Rx350UserMatchCriteriaFilter.py
+!/src/Rx350hUserMatchCriteriaFilter.py
+!/src/searchRx350hLuxuryMidwest.py
+!/src/SearchVehiclesRx350_config.yaml
+!/src/SearchVehiclesRx350h_config.yaml
 
 # reinclude files in /src/ouput
 # Must do this as git ignores that subdirectory (and anything in it on down) 
@@ -206,6 +218,16 @@ credentials.json
 !/src/output/4runner_NewMethodComparedToOLd.xlsx
 !/src/output/rav4pluginhybrid_Lastraw_VerifySellingPriceMethod.xlsx
 !/src/output/rav4pluginhybrid_NewMethodComparedToOld.xlsx
+!/src/output/models.json
+!/src/output/models_raw.json
+
+# reinclude files in /src/output/lexus, the lexus make's own output directory
+# Same two step as above: the directory itself has to be reincluded before git will look at
+# anything inside it, then its contents are excluded and the wanted files reincluded.
+!/src/output/lexus/
+/src/output/lexus/*
+!/src/output/lexus/models.json
+!/src/output/lexus/models_raw.json
 
 # reinclude files in /src/ToyotaSearchInventoryWebSourcePages
 # Must do this as git ignores that subdirectory (and anything in it on down) 
@@ -235,8 +257,8 @@ src/ToyotaSearchInventoryWebSourcePages/*
 !/src/yotagrabber/vehicles.py
 !/src/yotagrabber/config.py
 !/src/yotagrabber/wafbypass.py
-!/src/yotagrabber/wafbypassDealerInfo.py
 !/src/yotagrabber/vehiclesTestWithChangeHistoryIndividualColumns.py
+!/src/yotagrabber/vehicleUtilities.py
 
 # reinclude this immediate child directory in /src/yotagrabber/  (gitignore rule)
 !/src/yotagrabber/graphql/
@@ -257,6 +279,7 @@ src/ToyotaSearchInventoryWebSourcePages/*
 !/src/yotagrabber/data/dealers.csv
 !/src/yotagrabber/data/zipcodes.txt
 !/src/yotagrabber/data/dealers_Adders.json
+!/src/yotagrabber/data/lexus_state_codes.txt
 
 
 # reinclude this immediate child directory in /src/ (gitignore rule)

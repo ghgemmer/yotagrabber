@@ -35,7 +35,7 @@ class modelsClass:
         self.vehicleMake = None
     def read_local_data(self):
         """Read local raw data from the disk instead of querying website."""
-        fileName = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(self.vehicleMake) + "/models_raw.json"
+        fileName = vehicleUtilities.getModelsRawFileName(self.vehicleMake)
         with open(fileName, "r") as fileh:
             result = json.load(fileh)
         return result
@@ -62,7 +62,7 @@ class modelsClass:
             result = self.read_local_data()
         else:
             result = self.query_for_models()
-            fileName = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(self.vehicleMake) + "/models_raw.json"
+            fileName = vehicleUtilities.getModelsRawFileName(self.vehicleMake)
             df = pd.json_normalize(result)
             df.to_json(
                 fileName, orient="records", indent=2
@@ -85,7 +85,7 @@ class modelsClass:
         # These could be models out of production, or new ones that for some reason are not yet shown, or other reasons
         models = self.addOtherModels(models)
         models.drop_duplicates(subset=["modelCode"], keep='last', inplace=True)
-        fileName = vehicleUtilities.getVehicleMakeRelOutDirNoEndSlash(self.vehicleMake) + "/models.json"
+        fileName = vehicleUtilities.getModelsFileName(self.vehicleMake)
         models.to_json(fileName, orient="records", indent=2)
 
 class genericToyotaModelsClass(modelsClass):

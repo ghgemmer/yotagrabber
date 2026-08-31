@@ -15,6 +15,7 @@ playwright = "^1.38.0"
 brotli = "^1.1.0"
 inputimeout = "1.0.4"
 numpy = "^1.26.2"
+pathlib = "^1.0.1"
 
 
 [tool.poetry.group.dev.dependencies]

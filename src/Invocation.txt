@@ -40,6 +40,211 @@ rem set MODEL=rav4pluginhybrid
 rem either py or python as the first word below
 py searchForVehicles.py SearchVehicles_config.yaml
 
+--------------------------------------------------------------
+Getting LEXUS inventory instead of Toyota
+
+The Lexus inventory is served by the same GraphQL endpoint and the same schema as Toyota, so the
+same programs handle both.  Select the make with the VEHICLE_MAKE environment variable.
+VEHICLE_MAKE is optional and defaults to toyota, so leaving it unset keeps every existing Toyota
+run, script and output file exactly as before.
+
+Lexus model codes are short series codes (RX, RXh, NX, ES, GX, TX, ...), not the lowercase names
+Toyota uses.  Watch the letter case: the hybrids use a lowercase h (RXh, not RXH) and the plug in
+hybrids a lowercase phev (RXphev).  The seriesCodes argument is case sensitive, so copy the code
+out of output/lexus/models_raw.json exactly.  Get the current list with:
+
+set VEHICLE_MAKE=lexus
+py -c "from yotagrabber import models; models.update_models()"
+
+That writes output/lexus/models.json and output/lexus/models_raw.json.  Every make other than
+Toyota keeps its output in its own output/<make> directory, so the makes cannot collide.  Toyota
+stays directly in output/ so its existing files and the github workflow are unaffected.  An RX run
+therefore writes output/lexus/RX.csv, output/lexus/RX_Lastraw.parquet and so on.
+
+IMPORTANT: a trim such as the RX 350 is NOT a model code.  It is a trim inside the RX series, so
+you pull the whole RX series and then filter the trim in the user match criteria filter.  As of the
+2026 model year the RX family splits four ways:
+  RX      - the gas RX, this is where every RX 350 trim lives
+  RXh     - the RX HYBRID (the RX 350h)
+  RXphev  - the RX PLUG-IN HYBRID
+  RX500h  - the RX 500H F SPORT PERFORMANCE
+
+To search for an RX 350:
+
+C:\Users\GregG\AppData\Local\Programs\yotagrabber_venv\Scripts\activate
+cd C:\Users\GregG\Documents\GitHub\yotagrabber\src
+set VEHICLE_MAKE=lexus
+set MODEL=RX
+py searchForVehicles.py SearchVehiclesRx350_config.yaml
+
+where the config file's userMatchCriteriaFilterFileName points at Rx350UserMatchCriteriaFilter.py.
+
+!!! Model column contents on Lexus - read this before writing a match criteria filter !!!
+
+Lexus supplies no separate model title, so models.py sets the title equal to the model code (see
+lexusModelsClass.standardizeFields).  vehicles.py then strips "<title> " off the front of the
+marketing name.  Because the code is not always a prefix of the marketing name, the result differs
+between the gas and hybrid series:
+
+  MODEL=RX    title "RX"    "RX 350 PREMIUM awd"    starts with "RX "  -> "350 PREMIUM awd"
+  MODEL=RXh   title "RXh"   "RX 350h PREMIUM+ awd"  has no "RXh "      -> unchanged
+
+So a filter on the gas RX matches on "350", while a filter on the RX hybrid still matches on the
+full "RX 350h".  The supplied Rx350UserMatchCriteriaFilter.py and Rx350hUserMatchCriteriaFilter.py
+are already written this way and were checked against a real collected data set (RX matched 3340 of
+4834 vehicles, RXh matched 1230 of 1629, the rest excluded by the price/pre-sold/hold criteria).
+If you write your own filter, print a few Model values first rather than assuming which form it is.
+
+Also note the drivetrain case: Lexus returns it LOWERCASE ("awd", "fwd"), unlike Toyota which
+returns "4x4" / "AWD".  So str.contains("AWD") matches nothing on Lexus data; use "awd" or pass
+case=False.  Trim names are uppercase (PREMIUM, PREMIUM+, LUXURY, F SPORT DESIGN, F SPORT HANDLING).
+
+If MODEL is not listed in the models file at all, the run does not abort.  It prints a warning,
+lists the model codes that are available, and keeps the full marketing name in the Model column.
+
+!!! IMPORTANT LEXUS DATA LIMITATION: no factory to port inventory !!!
+
+Lexus does not publish factory to port vehicles (dealerCategory "A") to the public inventory feed
+at all.  Toyota does, and for Toyota they are usually the single most common status.  Measured:
+
+  Toyota rav4pluginhybrid   2757 of 3986 vehicles were "A", and 765 of those had isTempVin true
+  Lexus RX and RXh          0 of 6463 vehicles were "A", and 0 had isTempVin true
+
+Factory to port vehicles have not been built yet, so they carry a TEMPORARY vin, which is
+recognizable because it has a letter inside the last 6 characters (JTMAB3FV0S110BL34) where a real
+vin's last 6 are all digits (2T2BBMCA4TC138242).  Lexus returns no such vins whatsoever.
+
+This is NOT something the graphql query is filtering out, and it cannot be fixed from the inventory
+API.  See lexusDealerSiteInventory.py further below for a way to get these vehicles from the dealer
+websites instead, which DO publish them.  The API side was checked thoroughly:
+  - lexus.com itself issues only 4 graphql operations and locateVehiclesByZip is its only inventory
+    query, with the same arguments this program sends, so the lexus website cannot show them either
+  - there is no argument to ask for them.  inTransit, includeInTransit, dealerCategory,
+    dealerCategories, inventoryStatus, includeIncoming, orderStatus, showInTransit, pipeline and
+    includeAll are all rejected as UnknownArgument
+  - getVehicleByVin also returns null for a known factory to port lexus vin, so the vehicle is
+    absent from the feed entirely rather than merely being left out of the paged search results
+  - the lexus resolver is a separate implementation from the toyota one.  Its type is named
+    L_VehicleSummary, which is why the two brands behave differently
+A dealer can see these vehicles in Dealer Daily, an authenticated dealer portal that carries
+allocation and production pipeline data the consumer feed never gets.
+
+Consequence: for Lexus you get one shipping stage less warning than for Toyota.  A vehicle first
+becomes visible when it reaches "Port to dealer", where the change history will report it as ADDED.
+
+!!! numberRawVehiclesMissing is NOT trustworthy on Lexus: totalRecords counts the whole family !!!
+
+The pagination totalRecords that a Lexus inventory query returns is NOT the count for the series
+code that was asked for.  It is the count for a broader family that the code belongs to, while the
+vehicleSummary list IS correctly filtered to the code asked for.  Because numberRawVehiclesMissing
+is computed as totalRecords minus the vehicles retrieved, it is inflated by every vehicle in the
+family that belongs to a different series code.
+
+Measured over a full run of all 24 Lexus model codes:
+
+  code     vehicles returned            totalRecords claimed
+  IS       3379  (all "IS 350 ...")     3412
+  IS500       0                         3412   <- identical to IS
+  RXh      1723  (all "RX 350h ...")    2031
+  RX500h    191  (all "RX 500h ...")    2031   <- identical to RXh
+  RXphev    348                          364   <- its own count, not inflated
+
+The vehicle lists are correct and do not overlap: RXh and RX500h returned zero VINs in common, and
+each returned only its own trims.  So seriesCodes filtering works.  Only the count is wrong.
+
+Consequences to keep in mind:
+  - A sub series code can report a huge number "missing" while having retrieved everything that
+    exists.  RX500h reported 1840 missing and had in fact collected all 191 RX 500h vehicles.
+  - A sub series code with no inventory at all looks catastrophic rather than empty.  IS500
+    returned 0 vehicles while claiming 3412, because there are currently no IS 500 in US inventory
+    and it simply inherited the IS family count.
+  - Across that full run the raw "missing" total was 6123, but 5252 of it (86%) came from just
+    IS500 and RX500h.  Excluding those two the shortfall was 871 of 25733, about 3.4%.
+
+Because of this the program does NOT treat a large missing count as an error.  It does treat
+"the website claimed records but returned no vehicles at all" as an incomplete run, so that an
+empty result never overwrites previously stored good files (see get_all_pages).  For a Lexus sub
+series that genuinely has no inventory this shows up as completedOk false with an explanatory
+completionMsg, and the old files are left alone, which is the safe outcome either way.
+
+An earlier version of this note claimed the shortfall was the withheld factory to port units being
+counted in totalRecords.  That was wrong.  The withheld factory to port vehicles are real and are
+documented above, but they are not what numberRawVehiclesMissing is measuring.
+
+Note also that a small number of Lexus vehicles come back with a dealerCategory the program does
+not have a name for (an "L" has been seen).  Those show up in the Shipping Status column as
+"Unknown (L)" and a warning is printed, so they are not mistaken for a real status.
+
+--------------------------------------------------------------
+One off search: RX 350h LUXURY awd, Macadamia semi-aniline interior, midwest dealers
+
+searchRx350hLuxuryMidwest.py answers that one question on demand and then exits.  Unlike
+searchForVehicles.py it does not run on an interval, does not notify, and writes none of the
+tracked output files (no parquet, no change history, no sold files), so it can be run at any time
+without disturbing what the scheduled runs maintain.  It sets VEHICLE_MAKE and MODEL itself.
+
+py searchRx350hLuxuryMidwest.py                   collect a national RXh inventory, then search
+py searchRx350hLuxuryMidwest.py --use-last-data   search output/lexus/RXh_Lastraw.parquet, no requests
+py searchRx350hLuxuryMidwest.py --zip 52402 --radius 600      fresh, but only around that zip
+py searchRx350hLuxuryMidwest.py --states IL WI IA MN          override the states kept
+py searchRx350hLuxuryMidwest.py --states                      keep every state
+py searchRx350hLuxuryMidwest.py --any-interior --available-only
+
+Matches print closest dealer first and are written to output/lexus/RXh_LUXURY_Macadamia_Midwest.csv
+(--out to change that).  Distance is a real number of miles computed from the dealer and center
+coordinates, not the Excel formula vehicles.py puts in DistanceFromCenter, which does not survive
+being filtered and re-sorted.  States default to the 12 census midwest ones.
+
+A national collection takes roughly as long as any other full RXh run.  --zip with --radius uses
+the single locale search and is much quicker, but only reaches dealers inside that radius: a 300
+mile radius run from Iowa reached IA, IL, WI, MN, MO and NE but not MI, IN or OH, so use a radius
+big enough for the whole region or leave it off.
+
+The trim, interior and state literals are constants at the top of the file.  If the search comes
+back empty it prints how many vehicles survived each criterion and lists the Model or Int Color
+values actually present, because Lexus renaming a trim or interior between model years otherwise
+looks identical to there being no inventory.
+
+The file doubles as a searchForVehicles.py userMatchCriteriaFilterFileName: it supplies
+filterDataFrame and criteriaPrintableString at module level and does its environment setting and
+yotagrabber imports inside main(), so importing it as a filter has no side effects.
+
+--------------------------------------------------------------
+Getting the LEXUS factory to port vehicles anyway, from the dealer websites
+
+The inventory API will not give you factory to port vehicles for Lexus, but individual Lexus
+dealer websites do publish them, labelled "In Production".  Those are the vehicles that are still
+worth phoning a dealer about, because they have not reached the port yet and so their port
+installed options can still be changed.  lexusDealerSiteInventory.py collects them:
+
+py lexusDealerSiteInventory.py "output\lexus_inproduction.csv" IL WI IN
+py lexusDealerSiteInventory.py "output\lexus_inproduction.csv" --model "RX 350h"
+py lexusDealerSiteInventory.py "output\lexus_inproduction.csv"          (all 51 states)
+
+With no state codes it does the whole country.  --model keeps only vehicles whose name contains
+the given text and can be repeated.  --all-status keeps in transit and in stock vehicles too
+instead of only the in production ones.  The output csv has the dealer phone number on every row.
+
+This program is completely standalone.  It reads the dealer websites directly and does not use the
+graphql API, the dealers.csv file, or the VEHICLE_MAKE environment variable.
+
+Coverage caveat: Lexus dealers run 5 different website platforms and each needs its own reader.
+Only the DealerOn reader is written so far, which is 26 of the 245 US Lexus dealers.  The program
+prints the platform breakdown every run and says which ones it is skipping, so the gap is visible
+rather than silent.  The remaining platforms are Dealer Inspire (88 dealers), Dealer.com (73),
+Dealer eProcess (33) and MOTIVE (22).  Adding one is a matter of writing another reader class
+with a readInventory method next to DealerOnReader.
+
+Note that not every dealer publishes in production vehicles even on a supported platform.  Of the
+4 DealerOn dealers in IL/WI/IN, 2 listed them and 2 listed none at all.
+
+For updating the Lexus dealers in data/dealers.csv see the dealers.py section further below.
+After updating dealers you do NOT need to re-scrape the website to pick up the new dealer
+information.  Re-run the model with local data and it will rebuild the .csv from the raw parquet
+already on disk:
+
+py -c "from yotagrabber import vehicles; vehicles.update_vehicles(useLocalData=True)"
+
 !!!!!!!!!!!!!!!!!!!!!!!!!!  WARNING
 Warning: It is strongly suggested that to reduce traffic to the toyota website and reduce the possiblity of responses
 being throttled or you being completely blocked that you don't run multiple searchForVehicles in parallel.
@@ -210,7 +415,13 @@ able to open as a spreadsheet (get a non accessible at this time type error mess
 For updating the dealers.csv that vehicles.py uses to find the state a dealerId is in (the graphql only has the dealerId
 , which is a number, and not the dealer state and some other dealer detail, for it) run the following
 
-py dealers.py ".\yotagrabber\data\dealers.csv" ".\yotagrabber\data\zipcodes.txt" ".\yotagrabber\data\dealers_Adders.json"
+py dealers.py ".\yotagrabber\data\dealers.csv" ".\yotagrabber\data\zipcodes.txt" ".\yotagrabber\data\dealers_Adders.json" "toyota"
+
+Note that vehicleMake parameter is optional and defaults to "toyota" if not present.
+If you want to run for lexus then replace "toyota" with "lexus" (and ensure the zipcodes file has state codes instead of zipcodes).
+If you don't have a dealerAdders file but want to specify the vehicleMake, use "" for the dealerAdders file parameter.
+For example, with Lexus:
+py dealers.py ".\yotagrabber\data\dealers.csv" ".\yotagrabber\data\lexus_state_codes.txt" "" "lexus"
 
 Note that this can take a few hours to run as it spreads out its request over time so as to not
 overwhelm the toyota website.

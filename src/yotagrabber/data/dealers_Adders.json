@@ -10,7 +10,8 @@
     "lat" : 42.4927,
     "long" : -83.0278,
     "url" : "https://www.gollingtoyota.com",
-    "regionId" : "22"
+    "regionId" : "22",
+    "vehicleMake" : "toyota"
     },
   {
     "code" : "06055",
@@ -24,6 +25,7 @@
     "lat" : 41.925260,
     "long" : -71.874733,
     "url" : "https://www.mcgeetoyotaofputnam.com/",
-    "regionId" : "16"
+    "regionId" : "16",
+    "vehicleMake" : "toyota"
     }
 ]

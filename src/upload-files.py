@@ -41,30 +41,72 @@ def get_credentials(credentialsFileName):
 def get_gdrive_service(credentialsFileName):
     creds = get_credentials(credentialsFileName)
     return build('drive', 'v3', credentials= creds)
+    
+def get_nested_folder_info(service, path, current_parent_id='root'):
+    # returns the folder info for the path folder starting at the current_parent_id folder
+    # Return info for the folder is a dictionary with keys "id", "name", "mimeType")
+    # The path name is the google folder names separated by "/".  For example  "grandparent/parent/child", or "grandparent/parent", etc
+    # Assumes path does not have a leading or trailing "/"
+    path_parts = path.split("/")
+    folderInfo = get_nested_folder_info_A(service, path_parts, current_parent_id)
+    return folderInfo
+    
+def get_nested_folder_info_A(service, path_parts, current_parent_id='root'):
+    """
+    Finds the file info of the subfolder by traversing a path list.
+    # Return info for the folder is a dictionary with keys "id", "name", "mimeType")
+    :param service: Authorized Drive API service instance.
+    :param path_parts: List of folder names in order, e.g., ['Grandparent', 'Parent', 'Subfolder']
+    :param current_parent_id: The ID to start searching from (defaults to 'root').
+    Usage example: folder_id = get_nested_folder_id_A(drive_service, ['Grandparent', 'Parent', 'Subfolder'])
+    """
+    #print ("path_parts", path_parts)
+    folderInfo = None
+    for folder_name in path_parts:
+        # Construct query to find the specific folder inside the current parent
+        query = (
+            f"name = '{folder_name}' and "
+            f"'{current_parent_id}' in parents and "
+            f"mimeType = 'application/vnd.google-apps.folder' and "
+            f"trashed = false"
+        )
+        
+        result = None
+        page_token = None    
+        results = (
+            service.files()
+            .list(
+                q=query,
+                spaces="drive",
+                fields="nextPageToken, files(id, name, mimeType)",
+                pageToken=page_token,
+            )
+            .execute()
+            )
+        
+        files = results.get('files', [])
+        if not files:
+            print(f"Folder '{folder_name}' not found under parent '{current_parent_id}'.")
+            return None
+            
+        folderInfo = files[0]
+        #print("get_nested_folder_id_A: results of file folder name part query for", folder_name, "is", folderInfo)
+        # Move down to the next level
+        current_parent_id = files[0]['id']
+        
+    #print("get_nested_folder_id_A: return value ", folderInfo)
+    return folderInfo
 
 def findGoogleDriveFolder(service, name):
     # find the first level that has that a folder with that name and return that folder Id, name, type as a tuple or
-    # None if not found
-    filetype = "application/vnd.google-apps.folder"
-    #filetype = "folder"
-    query=f"mimeType='{filetype}' and name='{name}'"
-    #print("query is", query)
+    # None if not found. Name can have folder separator format using "/" delimiter.  For example parent/child
     result = None
-    page_token = None    
-    # pylint: disable=maybe-no-member
-    response = (
-        service.files()
-        .list(
-            q=query,
-            spaces="drive",
-            fields="nextPageToken, files(id, name, mimeType)",
-            pageToken=page_token,
-        )
-        .execute()
-        )
-    for file in response.get("files", []):
-        result = (file["id"], file["name"], file["mimeType"])
-        break
+    try:
+        result = get_nested_folder_info(service, name)
+    except Exception as inst:
+        print ("findGoogleDriveFolder: Exception occurred in finding nested folder", str(type(inst)) + " "  + str(inst))
+        # reraise the exception
+        raise
     return result
 
 def fileIsInDriveFolder(service, folder_id, filename):
@@ -90,7 +132,7 @@ def upload_inventory_files(directory, googleDriveFolderName, credentialsFileName
     if info is None:
         print("Error:  Google Drive Folder", folderName, "does not exist")
         return
-    folder_id = info[0]
+    folder_id = info["id"]
     print("Google Drive Folder", folderName, "ID is", folder_id)
     # create or replace the files in that folder
     files = os.listdir( directory )

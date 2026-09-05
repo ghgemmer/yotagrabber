@@ -1,7 +1,7 @@
 # yotagrabber
 
-Forked version of major/yotagrabber (major/yotagrabber gets inventory data from Toyota's GraphQL endpoints and major/lexgrabber from that same GraphQL endpoint and
-periodically updates and posts csv data files for all the models with that inventory data)
+Forked version of major/yotagrabber (major/yotagrabber gets inventory data from Toyota's GraphQL endpoints and major/lexgrabber for Lexus 
+from that same GraphQL endpoint and periodically updates and posts csv data files for all the models with that inventory data)
 
 Contains updates due to Toyota website changes and graphql field changes as well completing/making more robust and reliable 
 the lexus inventory collection functionality.  

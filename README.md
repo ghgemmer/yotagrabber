@@ -1,9 +1,11 @@
 # yotagrabber
 
-Forked version of major/yotagrabber (major/yotagrabber gets inventory data from Toyota's GraphQL endpoints and
+Forked version of major/yotagrabber (major/yotagrabber gets inventory data from Toyota's GraphQL endpoints and major/lexgrabber from that same GraphQL endpoint and
 periodically updates and posts csv data files on all the toyota models with that inventory data)
 
-Contains updates due to Toyota website changes and graphql field changes.  Also contains new features/enhancements.
+Contains updates due to Toyota website changes and graphql field changes as well completing/making more robust and reliable 
+the lexus inventory collection functionality.  
+Also contains new features/enhancements.
 
 The previously existing vehicles.py was updated to:
 
@@ -33,6 +35,9 @@ last 14 days which contain added VINs, modified contents of existing VINs, or re
 collection over that time period.  New columns added for this file were RowChangeType  (ADDED, MODED, REMOVDE)
 , Event DateTime, and List of Changes (text of any column that changed value and its old and new value)
 
+- Completing and making more robust and reliable the lexus inventory collection. Lexus inventory collection is more complicated due to the 
+fact that the totalRecords field reported in the inventory response is not accurate.  See the Invocation.txt file for further detail 
+on how this is handled to determie if we have obtained all the vehicles for a given Lexus model.
 
 Also added a dealers.py program that can generate the dealers.csv file that is used to lookup the dealer Id to
 dealer state that vehicles.py uses.
@@ -64,5 +69,5 @@ inventory files to the google drive (default is not to upload). Note that in ord
 you must use google developers to create a project to enable your google drive to be accessed via that, and must create credentials to be used
 for that access.  This is the same as what must be done if you use gmail as the sender source for the email option when running searchForVehicles.py 
 
-See Invocation.txt as to how to invoke the various programs.
+See Invocation.txt as to how to invoke the various programs and any limitations.
 

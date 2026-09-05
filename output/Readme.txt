@@ -1,15 +1,61 @@
-Readme.txt updated 7/28/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 9/5/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Added description of Toyota allocation process and how the spreadsheets can help you.
+Last update -  Added Lexus inventory support and reorganized Readme.txt contents
+
+TABLE OF CONTENTS
+Section 1 Overview
+Section 1.1 Toyota Specific Details
+Section 1.2 Lexus Specific Details
+Section 2 Files
+Section 2.1 Current Inventory Files
+Section 2.2 Sold Files
+Section 2.3 Change History Files
+Section 2.4 Other Files
+Section 3 Spreadsheet Column Definitions
+Section 4 Higher Level Search Criteria Functionality
+Section 5 Program Source Code
+Section 6 Contacts
+Section 7 Acknowledgements
+-------------------------------------------------------------------------------------
+
+Section 1 Overview
 
 
-This folder contains the new/allocated inventory for all Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.
-The inventory is obtained from the same place the national Toyota Inventory search website (https://www.toyota.com/search-inventory/)
-gets its data from (which is https://api.search-inventory.toyota.com/graphql ).  The folder also contains the sold inventory 
+This folder/subfolders contains the new/allocated inventory for the following vehicle Makes:
+
+    1) All Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.  This is contained in the Vehicle_Inventory
+google drive folder.
+
+    2)  All Lexus vehicle models in the US, including Alaska, but currently excluding Hawaii.  This is contained in the Vehicle_Inventory/lexus
+google drive sub folder.
+
+The folder/subfolders also contains the sold inventory 
 (defined as inventory that was obtained from the website by a program run at some point, 
 but no longer appears in the inventory obtained from the website), as well as Change History 
 event files for the last 14 days which contain added VINs, modified contents of existing VINs, or removed VINs between runs of the inventory 
 collection over that time period.
+
+The spreadsheets allow a person to see vehicles when they are allocated, with exceptions for Lexus, so they can maximize their ability to get 
+the car they want, and hopefully get it earlier than it would normally take.
+They also allow a person to easily compare prices between dealers (local or not), with exceptions, for the exact car they want or close matches.
+
+
+
+-------------------------------------------------------------------------------------
+
+Section 1.1 Toyota Specific Details
+
+Toyota Inventory Folder updates typically show up each day by 6am CDT. The inventory run for that starts 
+at 9pm CDT the previous day and typically runs through the night and into the very early morning to
+collect the inventory for all the models.
+Inventory for all models are collected first then all of them are uploaded in one shot to the google drive
+at the end.  The first models inventory is obtained from the website starting at 9pm CDT, then the second models
+inventory is obtained after that, and so forth and so on through the night and early morning, and then once all modesl 
+are obtained they are all uploaded to the google drive.  The infoDateTime column in the spreadsheet indicates when 
+that inventory was obtained.
+
+The Toyota inventory is obtained from the same place the national Toyota Inventory search website (https://www.toyota.com/search-inventory/)
+gets its data from (which is https://api.search-inventory.toyota.com/graphql ).  
 
 See https://www.youtube.com/watch?v=dT1BWDsf90U for a detailed explanation of the Toyota allocation process.
 Generally, per the video, Toyota allocates vehicles to dealers/regions based on expected demand, historical purchases, and the types of cars/colors they 
@@ -20,11 +66,7 @@ or the dealer swaps (generally the allocation before the car is delivered) with 
 Now there are cases, per the allocation video, where a customer might pay upfront for a vehicle and the dealer can then make a request 
 to Toyota to put that in their allocation process and Toyota will attempt to fit that in, but those are not common.
 
-The spreadsheets allow a person to see vehicles when they are allocated so they can maximize their ability to get the car they want, 
-and hopefully get it earlier than it would normally take.
-They also allow a person to easily compare prices between dealers (local or not) for the exact car they want or close matches.
-
-Note that some dealers may actually hide cars from the national Toyota Search Inventory website, even when they are NOT
+Note that some dealers may actually hide cars from the national Search Inventory website, even when they are NOT
 considered sold or reserved or spoken for, and only show them on the dealers website.  Thus they would not
 appear on the spreadsheets.
 Per the Google AI summary, Possible reasons for why they hide these cars, are:
@@ -48,33 +90,73 @@ There are probably other dealers that do this but only Stevinson Toyota East has
 Because of this you should also do a cursory check of some local/regional dealer websites when looking for a vehicle,
 after you have looked through the spreadsheet.
 
+-------------------------------------------------------------------------------------
+
+Section 1.2 Lexus Specific Details
+
+Lexus Inventory Folder updates typically show up each day by 8am CDT. The inventory run for that starts after the
+Toyota inventory run has completed and has been uploaded.
+
+The Lexus inventory is obtained from the same place the national Lexus Inventory search website (https://www.lexus.com/search-inventory/)
+gets its data from (which is the same as what Toyota uses, https://api.search-inventory.toyota.com/graphql, but with the brand parameter
+being Lexus instead of Toyota ).
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  Lexus inventory obtained from the above website DOES NOT INCLUDE vehicles that are in the build phase (ie. have not been built yet) 
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Thus the spreadsheets would not show these vehicles.
+Only the dealers website would include showing such vehicles and only for dealers that are Monogram Lexus dealers, 
+so if want to see these you would need to look at the dealers website.
+Possible reasons for this per the AI summary answer to 
+"why does the lexus corporate search inventory website not return any vehicles in the In build phase, but the toyota corporate search inventory website does?"
+are as follows:
+Lexus restricts early-stage vehicle tracking on its corporate website to protect the dealership experience, ensure pricing accuracy, and manage customer expectations for high-end buyers. While Toyota operates a high-volume, self-service model, Lexus relies on private dealer pipelines for vehicles that are not yet fully built.
+Data Visibility and Dealer Control
+Dealer Allocations: Lexus corporate pushes "In Build" allocations directly to dealer-specific internal management systems, not the public site.
+Pricing Fluctuations: Luxury vehicles have complex, high-cost options and packages that can change mid-build, making early public pricing risky.
+Custom Ordering: Many Lexus vehicles in the early build phase are already spoken for via dealership waitlists and are intentionally hidden online.
+
+In addition to the above, just like for Toyota vehicles, some Lexus dealers may actually hide cars from the national Search Inventory website, 
+even when not in the build phase, and they are NOT
+considered sold or reserved or spoken for, and only show them on the dealers website.  Thus they would not
+appear on the spreadsheets.  See Section 1.1 Toyota Specific Details for these reasons.
+
+
+-------------------------------------------------------------------------------------
+
+Section 2 Files
+
 All files are read only view on my google drive.  Thus if you wish to do filtering, sorting, etc, you need 
 download the file and open it with Excel, or save it to your own google drive.
 On a downloaded file you can use Excel to open it and then use the Sorting or Data -> Filter operation.
 Data -> Filter allows you to filter any desired column to only see rows that contain the indicated values.
 
+-------------------------------------------------------------------------------------
 
-Folder updates typically show up each day by 6am CDT. The inventory run for that starts 
-at 9pm CDT the previous day and typically runs through the night and into the very early morning to
-collect the inventory for all the models.
-Inventory for all models are collected first then all of them are uploaded in one shot to the google drive
-at the end.  The first models inventory is obtained from the website starting at 9pm CDT, then the second models
-inventory is obtained after that, and so forth and so on through the night and early morning, and then once all modesl 
-are obtained they are all uploaded to the google drive.  The infoDateTime column in the spreadsheet indicates when 
-that inventory was obtained.
- 
+Section 2.1 Current Inventory Files
+
 Each model's current inventory is placed in a <model>.csv file.  A raw  (filename <model>_Lastraw.parquet)
 python pandas parquet file is also created which is the raw inventory obtained from the Toyota website for the model
 before various filtering/modification is applied for the csv file, such as removal of many fields we don't use or 
 want to show in the .csv file, some field names and content are modified for readability,  etc. 
 There is also a <model>_LastStatusInfo.json file  associated
 with the raw parquet file that indicates status details of the obtained raw inventory which are: 
-did the inventory get work (got valid inventory responses although may be missing some vehicles),  
-how many vehicles found, how many vehicles were missing, date and time of the get.
+did the inventory get complete ok ,  
+how many vehicles found, how many vehicles were missing, date and time of the get,
+was the get lossy (i.e if we did not get all the vehicles, and we had page request failures, were we finally able to re request a failed page 
+and not get a failure),
 Note that the .parquet and .csv file also include an infoDateTime column which indicates when the information for
 that row was updated from the toyota website, as well as a FirstAddedDate for the date the VIN first appeared in 
 the inventory (or reappeared after disappearing), and a LastChangedDateTime which indicates the last date and time 
 any information for that VIN changed.
+
+-------------------------------------------------------------------------------------
+
+Section 2.2 Sold Files
+
 
 The sold inventory files are for VINs that no longer appear in the current inventory (were seen at one time 
 by the inventory run but have since disappered from the Toyota inventory search website).
@@ -97,10 +179,14 @@ Note that the contents of the VIN entries in the sold inventory files do not upd
 to update them with from the Toyota search inventory website anymore. I.E, the website no longer returns that VIN and contents for it,
 and that is the only website that the vehicle information is obtained from by the program.
 
-Also a dealer may have the vehicle removed from the Toyota search inventory website results (thus showing up in the Sold files)
+Also a dealer may have the vehicle removed from the search inventory website results (thus showing up in the Sold files)
 if they consider it sold for all practical purposes and/or don't want to get calls about it from other potential buyers.
 The vehicle may still appear on the dealer website in this case as well.
 Likewise, some dealers may not use the Pre-Sold field.
+
+-------------------------------------------------------------------------------------
+
+Section 2.3 Change History Files
 
 Change History events are in the  <model>_ChangeHistory.csv and .parquet files.
 They contains all changes between runs of the inventory collection,
@@ -140,17 +226,42 @@ Once you have found a real VIN using the above, continue the steps to see if the
 If there are not then you have found the real VIN for that temp VIN otherwise there are multiple VINS and you can't tell which one is the
 actual real VIN for that temp VIN.   
 
+-------------------------------------------------------------------------------------
 
-A log file InventoryRunlog.txt is also provided which indicates when the inventory search started, log of
-progress on getting each model (graphql inventory page number on , number of pages, number of records, i.e. vehicles, 
-any error messages or retries) as well as if the program could not find all the inventory for a given model and how many 
-vehicles were missing for that model in that case. Note that as each page of vehicle inventory is gotten for a given
+Section 2.4 Other Files
+
+This Readme.txt file is provided in the Vehicle_Inventory folder.
+
+Also the models.json and models_raw.json which contain the models for the specific Make are stored in each Vehicle Make folder 
+
+A log file InventoryRunlog.txt is also provided, but only in the Vehicle_Inventory folder , and is the run log for all get Make inventories performed.
+This file includes output on the progress and status of the run, and includes, but is not limited to, such items as
+ 
+- When the inventory search started,
+
+- Getting the models for a given Make
+ 
+- Log of progress on getting each model (graphql inventory page number on , number of pages, number of records, i.e. vehicles, 
+any error messages or page failure retries),
+
+- If the program could not find all the inventory for a given model and how many 
+vehicles were missing for that model in that case, and if the run was lossy.
+
+- Progress and completion status of the google drive file upload 
+
+Note that as each page of vehicle inventory is gotten for a given
 model, the total records (total number of vehicles for that model that will be returned over the total number
 of pages indicated for that model ) the website returns can change on the fly.  So sometimes when we get close
 to the end of the inventory pages for a model, we may miss a few just newly added vehicles.  These will then
 show up the next time the inventory search is run. The InventoryRunlog may also contain several days runs so
-the latest is at the bottom of the file.
+the latest is at the bottom of the file.   In the case of Lexus inventory collection,  
+the total vehicles records count can be unreliable for various reasons as described in the 
+https://github.com/ghgemmer/yotagrabber/tree/main/src  Invocation.txt file.  However the code handles this
+to determine if all the vehicles have been obtained.
 
+-------------------------------------------------------------------------------------
+
+Section 3 Spreadsheet Column Definitions
 
 Column definitions that are not obvious or to remove any ambiguity are as follows.  Note that all prices exclude
 state sales tax, title/registration fees, doc fees, and any other mandatory fees the dealer charges, 
@@ -276,15 +387,18 @@ corrected typically within a day or two. This is because the dealer state inform
 database and changes only infrequently, so is not dynamically extracted from the website when the inventory is extracted
 to reduce the time it takes to get the inventory.
 
-For issues or questions contact ghgemmer@gmail.com
-See github repository https://github.com/ghgemmer/yotagrabber for the source code for this forked project.
 
-That project also added a higher level search program searchForVehicles.py that can notify the user via any
+-------------------------------------------------------------------------------------
+
+Section 4 Higher Level Search Criteria Functionality
+
+Beyond the updating of inventory spreadsheets on the google drive, there is the capability to run 
+a higher level search program, searchForVehicles.py, that can notify the user via any
 combination of sound, email, text whenever changes in the inventory data occur for a specified match criteria.
 This allows a user to be alerted whenever what they are looking for has changed and then look at the attached
 log file to view the changes.  That program uses a config YAML file that can specify how often to search, the
 match filter criteria filename, sound file options, texting options, email options, how changes are reported,
-log file options, etc. See SearchVehicles-Example_config.yaml for all the configuration items that can be set
+log file options, etc. See SearchVehicles-Example_config.yaml on github for all the configuration items that can be set
 
 searchForVehicles.py runs the vehicles.py update_vehicles() method to collect an inventory of all vehicles in
 the US for a desired model , or all vehicles within a specified distance from a specified zip code for that
@@ -292,3 +406,29 @@ model (limited to 10,000 vehicles at most when specify zipcode), and then runs a
 looking for specific vehicles.  Whenever any inventory changes occur for that match criteria the program notifies the user via 
 any user specified combination of sound, email, text.
 
+-------------------------------------------------------------------------------------
+
+Section 5 Program Source Code
+
+See github repository https://github.com/ghgemmer/yotagrabber for the source code for this forked project.
+
+-------------------------------------------------------------------------------------
+
+Section 6 Contacts
+
+For issues or questions contact ghgemmer@gmail.com
+
+-------------------------------------------------------------------------------------
+
+Section 7 Acknowledgements
+
+Thanks to Major Hayden, Senior Principal Software Engineer at Red Hat, for the project major/yotagrabber that the code was forked from.
+Thanks to 4minh for the 4minh/yotagrabber github project (forked from my ghgemmer/yotagrabber) for taking my initial rough modifications 
+for adding Lexus support and multi Make support and moving them along as well as correcting Panda warning messages, 
+and further investigating the known issues with collecting Lexus inventory.
+Thanks to alantweir for the alantweir/yotagrabber fork of 4minh,  for further investigation of the Lexus inventory issues, 
+determining why they occur, and modifying the code to handle those issues.  This includes observations of how failed pages can be re-requested,
+and what the record counts and number of missing vehicles could mean when getting Lexus inventory, as well as providing additional status information on failed pages, and
+whether the results had too many page failures to the point that vehicles that no longer appeared in the inventorty website, 
+should still be left in the current inventory files and not treated as sold for that run.
+Also thanks to smarty pants Claude Code. 

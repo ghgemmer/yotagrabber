@@ -1,5 +1,7 @@
-# Gets list of Toyota models, current inventory for each model in the US
-# and upload this to a google drive
+# Gets list of inventory for the indicated vehicle makes for each model in the US
+# and uploads this to a google drive
+
+$Vehicle_Makes = 'toyota', 'lexus'
 
 function Get-VehicleModels {
     # Gets a list of all models (fields modelCode, Title) and writes it to the json file output/models.json
@@ -29,8 +31,6 @@ function Get-VehicleInventoryForModelsA {
         $uploadInventory = "",
         $credentialsFileName = ""
     )
-    $curDate = Get-Date
-    Write-Host "Started Vehicle Inventory search at" $curDate
     #Write-Host "uploadInventory is " $uploadInventory
     #Write-Host "credentialsFileName is " $credentialsFileName
     cd $DirectoryToRunIn
@@ -38,43 +38,63 @@ function Get-VehicleInventoryForModelsA {
     Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
     .$PythonVENVPowershellActivateScript
     $timeout = 60*3
-    # Get a list of all the current models first
-    Write-Host "Getting list of Vehicle Models"
-    Get-VehicleModels
-    if ($LASTEXITCODE -eq 0) {     
-        $models = Get-Content -Raw -Path "output/models.json" | ConvertFrom-Json       
-        Write-Host "Getting list of Vehicle Inventory"
-        foreach ($model in $models) {
-            Write-Host "Sleeping $timeout seconds before next operation"
-            Start-Sleep -Seconds $timeout
-            # set environment variable that update_vehicles uses
-            $env:MODEL = $model.modelCode
-            # Update that models inventory
-            Write-Host "Getting inventory for $env:MODEL "
-            poetry run update_vehicles
-            if ($LASTEXITCODE -ne 0) { 
-                Write-Host "Error: Failed to get inventory for model $MODEL"
-            }    
-        }
+    foreach ($vehicleMake in $Vehicle_Makes) {
+        $env:VEHICLE_MAKE = $vehicleMake
         $curDate = Get-Date
-        Write-Host "Vehicle Inventory search Completed" $curDate
-        if ($uploadInventory -eq "upload") {
-            if ($credentialsFileName -eq "") {
-                $credentialsFileName = "inventory_credentials.json"
+        Write-Host $curDate "Started Vehicle Inventory search for Make" $vehicleMake
+        # Get a list of all the current models first
+        Write-Host "Getting list of Vehicle Models for Make" $vehicleMake
+        Get-VehicleModels
+        if ($LASTEXITCODE -eq 0) { 
+            if ($vehicleMake -eq 'toyota') {
+                $outputDir =  ".\output"
             }
-            Write-Host "Uploading Inventory to Google Drive Started"
-            py src\upload-files.py ".\output"  "Vehicle_Inventory"  $credentialsFileName
-            if ($LASTEXITCODE -ne 0) { 
-                Write-Host "Error: Failed to upload all inventory to google drive"
-            } 
             else {
-                Write-Host "Uploading Inventory to Google Drive Completed"
-            }   
+                $outputDir =  ".\output\" + $vehicleMake
+            }
+            $modelFileName =  $outputDir + "\models.json"
+            $models = Get-Content -Raw -Path $modelFileName | ConvertFrom-Json 
+            $curDate = Get-Date
+            Write-Host $curDate "Getting list of Vehicle Inventory for Make" $vehicleMake
+            foreach ($model in $models) {
+                Write-Host "Sleeping $timeout seconds before next operation"
+                Start-Sleep -Seconds $timeout
+                # set environment variable that update_vehicles uses
+                $env:MODEL = $model.modelCode
+                # Update that models inventory
+                $curDate = Get-Date
+                Write-Host $curDate "Getting inventory for $env:MODEL "
+                poetry run update_vehicles
+                if ($LASTEXITCODE -ne 0) { 
+                    Write-Host "Error: Failed to get inventory for model $MODEL"
+                }    
+            }
+            $curDate = Get-Date
+            Write-Host $curDate "Vehicle Inventory search Completed" 
+            if ($uploadInventory -eq "upload") {
+                if ($credentialsFileName -eq "") {
+                    $credentialsFileName = "inventory_credentials.json"
+                }
+                Write-Host "Uploading Inventory to Google Drive Started for Make" $vehicleMake
+                if ($vehicleMake -eq 'toyota') {
+                    $googleFolderName =  "Vehicle_Inventory"
+                }
+                else {
+                    $googleFolderName =  "Vehicle_Inventory/" + $vehicleMake
+                }
+                py src\upload-files.py $outputDir  $googleFolderName  $credentialsFileName
+                if ($LASTEXITCODE -ne 0) { 
+                    Write-Host "Error: Failed to upload all inventory to google drive for Make" $vehicleMake
+                } 
+                else {
+                    Write-Host "Uploading Inventory to Google Drive Completed"
+                }   
+            }
         }
-    }
-    else
-    {
-        Write-Host "Error: Failed to get list of Vehicle Models.  Aborting Search"
+        else
+        {
+            Write-Host "Error: Failed to get list of Vehicle Models.  Aborting Search"
+        }
     }
     
 }

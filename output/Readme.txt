@@ -1,6 +1,6 @@
-Readme.txt updated 9/5/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 9/6/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Added Lexus inventory support and reorganized Readme.txt contents
+Last update -  Updated wording on Lexus support
 
 TABLE OF CONTENTS
 Section 1 Overview
@@ -123,6 +123,8 @@ In addition to the above, just like for Toyota vehicles, some Lexus dealers may 
 even when not in the build phase, and they are NOT
 considered sold or reserved or spoken for, and only show them on the dealers website.  Thus they would not
 appear on the spreadsheets.  See Section 1.1 Toyota Specific Details for these reasons.
+Because of this you should also do a cursory check of some local/regional dealer websites when looking for a vehicle,
+after you have looked through the spreadsheet.
 
 
 -------------------------------------------------------------------------------------

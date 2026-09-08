@@ -1,6 +1,6 @@
-Readme.txt updated 9/6/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 9/8/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Updated wording on Lexus support
+Last update -  Updated wording in Overview indicating daily updates
 
 TABLE OF CONTENTS
 Section 1 Overview
@@ -21,7 +21,7 @@ Section 7 Acknowledgements
 Section 1 Overview
 
 
-This folder/subfolders contains the new/allocated inventory for the following vehicle Makes:
+This folder/subfolders contains the daily updated new/allocated inventory for the following vehicle Makes:
 
     1) All Toyota vehicle models in the US, including Alaska, but currently excluding Hawaii.  This is contained in the Vehicle_Inventory
 google drive folder.

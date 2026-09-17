@@ -1,7 +1,10 @@
 # yotagrabber
 
 Forked version of major/yotagrabber (major/yotagrabber gets inventory data from Toyota's GraphQL endpoints and major/lexgrabber for Lexus 
-from that same GraphQL endpoint and periodically updates and posts csv data files for all the models with that inventory data)
+from that same GraphQL endpoint and periodically updates and posts csv data files for all the models with that inventory data).
+Also updates from 4minh for the 4minh/yotagrabber github project (forked from my ghgemmer/yotagrabber) and 
+alantweir for the alantweir/yotagrabber fork of 4minh,  for further investigation of the Lexus inventory collection issues and 
+implementations to handle them.
 
 Contains updates due to Toyota website changes and graphql field changes as well completing/making more robust and reliable 
 the lexus inventory collection functionality.  

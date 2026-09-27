@@ -1,6 +1,6 @@
-Readme.txt updated 9/8/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 9/26/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Updated wording in Overview indicating daily updates
+Last update -  Updated how current inventory file is typically used when looking to purchase a vehicle.
 
 TABLE OF CONTENTS
 Section 1 Overview
@@ -39,8 +39,7 @@ The spreadsheets allow a person to see vehicles when they are allocated, with ex
 the car they want, and hopefully get it earlier than it would normally take.
 They also allow a person to easily compare prices between dealers (local or not), with exceptions, for the exact car they want or close matches.
 
-
-
+See section 2. Files for typical ways to use the spreadsheets.
 -------------------------------------------------------------------------------------
 
 Section 1.1 Toyota Specific Details
@@ -154,6 +153,18 @@ Note that the .parquet and .csv file also include an infoDateTime column which i
 that row was updated from the toyota website, as well as a FirstAddedDate for the date the VIN first appeared in 
 the inventory (or reappeared after disappearing), and a LastChangedDateTime which indicates the last date and time 
 any information for that VIN changed.
+
+When searching for a vehicle of interest to purchase, you would typically download the 
+appropriate current inventory model file of interest  (for example 4runner.csv for the current 4runner new/allocated inventory),
+and open it with Excel.  Then you would select the whole datasheet and click on Data --> Filter.  At this point the column headers
+have drop down lists so you can select only the attributes you want your vehicle to have (say certain trims, colors, price or markup range, 
+options, distance from you, etc).
+Also in the drop down list you can use more advanced filtering by using the Text Filter or Number Filter selection. 
+You can also sort up to one column using the drop down list,  and if you need to sort more than one columne then use Data ---> Sort.
+You then would typically first want to look for vehicles with Pre-Sold = False and Hold Status of None or blank or Available.
+Then go to the dealer website shown for each vehicle and verify the car is there and matches the spreadsheet. 
+Then contact the dealer to determine if it is actually available and has the expected attributes.
+Once you have done all that then if you still need/want to keep looking you can expand the search to include Hold Status = DealerHold.
 
 -------------------------------------------------------------------------------------
 

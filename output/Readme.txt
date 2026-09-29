@@ -1,6 +1,6 @@
-Readme.txt updated 9/26/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 9/29/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts - 
-Last update -  Updated how current inventory file is typically used when looking to purchase a vehicle.
+Last update -  Updated higher level search functionality description to mention I could run search requests for users.
 
 TABLE OF CONTENTS
 Section 1 Overview
@@ -411,7 +411,9 @@ combination of sound, email, text whenever changes in the inventory data occur f
 This allows a user to be alerted whenever what they are looking for has changed and then look at the attached
 log file to view the changes.  That program uses a config YAML file that can specify how often to search, the
 match filter criteria filename, sound file options, texting options, email options, how changes are reported,
-log file options, etc. See SearchVehicles-Example_config.yaml on github for all the configuration items that can be set
+log file options, etc. See SearchVehicles-Example_config.yaml on github for all the configuration items that can be set.
+As long as I'm not inundated with requests, I can generally run this search for you so you don't have to install
+configure and continuously run the program yourself.  Just contact me via email. 
 
 searchForVehicles.py runs the vehicles.py update_vehicles() method to collect an inventory of all vehicles in
 the US for a desired model , or all vehicles within a specified distance from a specified zip code for that

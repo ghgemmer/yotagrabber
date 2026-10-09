@@ -23,7 +23,7 @@ import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass, vehicleUtilities
 
-PROGRAM_VERSION: str = "Vehicles Program Version 6.6.0 08-10-2026 - Failed page recovery and lossy run handling"
+PROGRAM_VERSION: str = "Vehicles Program Version 6.6.1 10-08-2026 - Used more zones for Toyota Sienna to get all vehicles"
 
 # Set to True to use local data and skip requests to the Toyota website.
 USE_LOCAL_DATA_ONLY: bool = False
@@ -299,8 +299,10 @@ def get_vehicle_query_Objects() -> Dict[str, str]:
             default_radius = 10000
         else:
             # Toyota: multi-zone strategy based on model volume
-            if MODEL in [ "camry", "tacoma", "tundra", "rav4hybrid", "rav4", "corolla", "corollacross", "4runner"]:
+            if MODEL in [ "camry", "tacoma", "tundra", "rav4hybrid", "rav4", "corolla", "corollacross", "4runner", "sienna"]:
                 # note that the tacoma is the largest number of vehicles (some 44,000 for the last 2 years), followed by tundra, camry, rav4hybrid, rav4
+                # For the case of sienna it appears that model could be clustered in an area that the alaska,hawaii,west,central,east zone strategy
+                # does not get all 18000 some vehicles for.
                 vehicleQueryZonesToUse = ["alaska", "hawaii", "west", "central", "midIllinois", "east", "atlanta", "topLeftCornerContlUS", "portlandOregon", "bottomLeftCornerContlUS", "midCalifornia", "upperCalifornia", "topRightCornerContlUS", "midPennsylvania", "rochesterNewYork", "albanyNewYork", "bostonMA", "midTennessee", "midOhio", "richmondVA", "bottomRightCornerContlUS", "panhandleFlorida", "midFlorida", "bottomCenterContlUS", "midTexas", "midArizona", "renoNevada", "topCenterContlUS" ]
             elif MODEL in ["grandhighlander" ]:
                 # some zone seem to almost never work so removed them and seemed to cause more problems in others.

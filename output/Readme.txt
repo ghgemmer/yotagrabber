@@ -1,6 +1,6 @@
-Readme.txt updated 9/29/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
-No Alerts - 
-Last update -  Updated higher level search functionality description to mention I could run search requests for users.
+Readme.txt updated 10/08/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Alert - Toyota Sienna has been missing vehicles the last few runs so updated the inventory program to hopefully handle this 
+Last update -  9/29/2026 Updated higher level search functionality description to mention I could run search requests for users.
 
 TABLE OF CONTENTS
 Section 1 Overview

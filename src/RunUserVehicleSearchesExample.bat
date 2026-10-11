@@ -19,6 +19,8 @@ echo Also assumes you have activated the appropriate python virtual environment
 echo Hit return to continue or Ctrl-C to abort
 pause
 :loopstart
+# Comment the following time window wait out if no wait or change the start and end HH:MM times as needed
+py WaitForTimeWindow.py  "04:00, 20:00" 
 echo -----------
 set MODEL=rav4pluginhybrid
 echo Model is %MODEL%

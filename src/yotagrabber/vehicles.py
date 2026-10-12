@@ -23,7 +23,7 @@ import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass, vehicleUtilities
 
-PROGRAM_VERSION: str = "Vehicles Program Version 6.6.1 10-08-2026 - Used more zones for Toyota Sienna to get all vehicles"
+PROGRAM_VERSION: str = "Vehicles Program Version 6.6.2 10-11-2026 - Corrected Last change date, and List of Changes incorrectly showing Nan to blank as a change which it is not"
 
 # Set to True to use local data and skip requests to the Toyota website.
 USE_LOCAL_DATA_ONLY: bool = False
@@ -1563,7 +1563,7 @@ def getChangeHistoryFinalColumnsSelect(originalColumnsInOld: pd.Index, originalC
     return finalColumnsSelect
 
 def valueIsNanNoneNull(value: Any) -> bool:
-    return (value is None) or (isinstance(value, float) and np.isnan(value))
+    return (value is None) or (isinstance(value, float) and np.isnan(value)) or (isinstance(value, str) and (value == "")) 
     
 def getOptionDifferences(oldOptions: Any, newOptions: Any) -> str:
     # returns a string of the differences between the old and new options.  If null is returned then there are no differences.

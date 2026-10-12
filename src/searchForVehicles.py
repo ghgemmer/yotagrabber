@@ -41,7 +41,7 @@ from timeit import default_timer as timer
 from yotagrabber import vehicles
 
 # Version
-searchForVehiclesVersionStr = "Ver 2.1 June 26 2025"  #
+searchForVehiclesVersionStr = "Ver 2.2 October 11 2026 - Corrected Comparison of Nan,None to blank and vice versa as no change"  #
 
 class userMatchCriteria:
     def __init__(self):
@@ -947,7 +947,7 @@ def getSearchResultsColumnsLabelsStr(columns , columnsToIgnore):
     return labelsStr
     
 def valueIsNanNoneNull(value):
-    return (value is None) or (isinstance(value, float) and np.isnan(value))
+    return (value is None) or (isinstance(value, float) and np.isnan(value)) or (isinstance(value, str) and (value == "")) 
 
 
 

@@ -1,5 +1,5 @@
-Readme.txt updated 10/11/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
-Alerts -  10/11/2026 The LastChangedDateTime and Change History File were falsely reporting Nan,None to blank as a change.  The program has been corrected but the Change History files need to all be modified to remove rows where this was the only change in the row
+Readme.txt updated 10/12/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Alerts -  10/12/2026 All Change History files have been corrected
 Last update -  10/11/2026 Updated higher level search functionality description to mention I could run search requests for users.
 
 TABLE OF CONTENTS

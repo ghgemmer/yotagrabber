@@ -1,6 +1,6 @@
-Readme.txt updated 10/14/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 10/16/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Alerts Currently-  Last Alert was 10/12/2026 All Change History files have been corrected
-Last update -  10/11/2026 Updated higher level search functionality description to mention I could run search requests for users.
+Last update -  10/16/2026 Changed Higher Level Search Functionality description to Higher Level Automated Search Feature.
 
 TABLE OF CONTENTS
 Section 1 Overview
@@ -12,7 +12,7 @@ Section 2.2 Sold Files
 Section 2.3 Change History Files
 Section 2.4 Other Files
 Section 3 Spreadsheet Column Definitions
-Section 4 Higher Level Search Criteria Functionality
+Section 4 Higher Level Automated Search Feature
 Section 5 Program Source Code
 Section 6 Contacts
 Section 7 Acknowledgements
@@ -403,7 +403,7 @@ to reduce the time it takes to get the inventory.
 
 -------------------------------------------------------------------------------------
 
-Section 4 Higher Level Search Criteria Functionality
+Section 4 Higher Level Automated Search Feature
 
 Beyond the updating of inventory spreadsheets on the google drive, there is the capability to run 
 a higher level search program, searchForVehicles.py, that can notify the user via any

@@ -1,5 +1,5 @@
-Readme.txt updated 10/16/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
-No Alerts Currently-  Last Alert was 10/12/2026 All Change History files have been corrected
+Readme.txt updated 10/19/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Alert 10/19/2026 -   Toyota has changed the interface to the graphql again, breaking the program, so hopefully I can get it figured out in the next few days
 Last update -  10/16/2026 Changed Higher Level Search Functionality description to Higher Level Automated Search Feature.
 
 TABLE OF CONTENTS

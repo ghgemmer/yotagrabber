@@ -23,8 +23,7 @@ import requests
 from collections.abc import Iterable
 from yotagrabber import config, wafbypass, vehicleUtilities
 
-PROGRAM_VERSION: str = "Vehicles Program Version 6.6.2 10-11-2026 - Corrected Last change date, and List of Changes incorrectly showing Nan to blank as a change which it is not"
-
+PROGRAM_VERSION: str = "Vehicles Program Version 6.6.3 10-19-2026 - leadid field no longer valid for graphql query so removed it"
 # Set to True to use local data and skip requests to the Toyota website.
 USE_LOCAL_DATA_ONLY: bool = False
 
@@ -281,7 +280,7 @@ def get_vehicle_query_Objects() -> Dict[str, str]:
         query = query.replace("VEHICLE_MAKE", brand)
         query = query.replace("PAGESIZE", str(page_size))
         query = query.replace("DISTANCEMILES", MODEL_SEARCH_RADIUS)
-        query = query.replace("LEADIDUUID", str(uuid.uuid4()))
+        #query = query.replace("LEADIDUUID", str(uuid.uuid4()))
         vehicleQueryObjects["SingleZipCode_" + MODEL_SEARCH_ZIPCODE + "_RadiusMiles_" + MODEL_SEARCH_RADIUS] = query
     else:
         # Determine zone strategy based on vehicle make
@@ -354,7 +353,7 @@ def get_vehicle_query_Objects() -> Dict[str, str]:
             query = query.replace("VEHICLE_MAKE", brand)
             query = query.replace("PAGESIZE", str(page_size))
             query = query.replace("DISTANCEMILES", str(default_radius + randbelow(1000)))
-            query = query.replace("LEADIDUUID", str(uuid.uuid4()))
+            #query = query.replace("LEADIDUUID", str(uuid.uuid4()))
             vehicleQueryObjects[zone] = query
 
     return vehicleQueryObjects

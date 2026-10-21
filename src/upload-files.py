@@ -1,6 +1,8 @@
 import sys
 import json
 import os
+import socket
+from time import sleep
 from pathlib import Path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -123,6 +125,8 @@ def upload_inventory_files(directory, googleDriveFolderName, credentialsFileName
     """
     uploads the vehicle inventory files and logs from directory to the googleDriveFolderName 
     """
+    #Increase read timeouts to mitigate long stalls.
+    socket.setdefaulttimeout(120)
     # authenticate account
     service = get_gdrive_service(credentialsFileName)
     
@@ -163,23 +167,65 @@ def upload_inventory_files(directory, googleDriveFolderName, credentialsFileName
               ) 
             ):
             fileid = fileIsInDriveFolder(service, folder_id, filename)
+            chunksize = 1024 * 1024
             if fileid:
                 # filename already exists in that google drive folder
-                file_metadata = {}
-                # update the file
-                media = MediaFileUpload(Path(directory + "/" + filename), resumable=True)
-                fileInfo = service.files().update(fileId=fileid, body=file_metadata, media_body=media, fields="id").execute()
-                print("Replaced existing google drive file", filename, "having ID", fileid )
+                tryCount = 3
+                uploadSucceded = False
+                while tryCount:
+                    file_metadata = {}
+                    # update the file
+                    media = MediaFileUpload(Path(directory + "/" + filename), chunksize=chunksize, resumable=True)
+                    try:
+                        request = service.files().update(fileId=fileid, body=file_metadata, media_body=media, fields="id")
+                        response = None
+                        while response is None:
+                            status, response = request.next_chunk()
+                            #if status:
+                            #    print(f"Uploaded {int(status.progress() * 100)}%")
+                        print("Replaced existing google drive file", filename, "having ID", fileid )
+                        uploadSucceded = True
+                        break
+                    except Exception as inst:
+                        print ("upload_inventory_files: Exception occurred in uploading file next chunk", filename, str(type(inst)) + " "  + str(inst))
+                        tryCount -= 1
+                        tm = 20
+                        print("sleeping", tm, " secs before retrying")
+                        sleep(tm)
+                        print ("Retrying file upload, trycount =", tryCount)
+                if not uploadSucceded:
+                    print ("upload_inventory_files: failed to upload file", filename)
+                    
             else:
-                # first, define file metadata, such as the name and the parent folder ID
-                file_metadata = {
-                    "name": filename,
-                    "parents": [folder_id]
-                }
-                # create that file in the google drive folder
-                media = MediaFileUpload(Path(directory + "/" + filename), resumable=True)
-                file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-                print("File:", filename, "with ID", file.get("id") , "did not exist in drive folder and was created/uploaded")
+                tryCount = 3
+                uploadSucceded = False
+                while tryCount:
+                    # first, define file metadata, such as the name and the parent folder ID
+                    file_metadata = {
+                        "name": filename,
+                        "parents": [folder_id]
+                    }
+                    # create that file in the google drive folder
+                    media = MediaFileUpload(Path(directory + "/" + filename), chunksize=chunksize, resumable=True)
+                    try:
+                        request = service.files().create(body=file_metadata, media_body=media, fields='id')
+                        response = None
+                        while response is None:
+                            status, response = request.next_chunk()
+                            #if status:
+                            #    print(f"Uploaded {int(status.progress() * 100)}%")
+                        print("File:", filename, "with ID", response.get("id") , "did not exist in drive folder and was created/uploaded")
+                        uploadSucceded = True
+                        break
+                    except Exception as inst:
+                        print ("upload_inventory_files: Exception occurred in uploading file next chunk", filename, str(type(inst)) + " "  + str(inst))
+                        tryCount -= 1
+                        tm = 20
+                        print("sleeping", tm, " secs before retrying")
+                        sleep(tm)
+                        print ("Retrying file upload, trycount =", tryCount)
+                if not uploadSucceded:
+                    print ("upload_inventory_files: failed to upload file", filename)
 
 if __name__ == '__main__':
     directory = sys.argv[1]

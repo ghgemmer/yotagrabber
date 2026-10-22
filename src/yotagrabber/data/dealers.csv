@@ -811,48 +811,48 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 31202,31202,Nye Toyota,https://www.nyetoyota.com,16.0,NY,43.076483,-75.68303,1441 Genesee Street,Oneida,13421,(315) 363-1000,toyota
 31203,31203,Maguire Toyota of Grand Island,https://www.maguiretoyotaofgrandisland.com,16.0,NY,43.015246,-78.971947,1974 Alvin Road,Grand Island,14072,(716) 773-7505,toyota
 31204,31204,Toyota of Bay Ridge Brooklyn,https://www.toyotaofbayridge.com,9999.0,NY,40.63566,-74.016338,6401 6th Avenue,Brooklyn,11220,(718) 439-7888,toyota
-32001,32001,Toyota of Greensboro,https://www.toyotaofgreensboro.com,50,NC,36.109296,-79.828663,2630 Battleground Avenue,Greensboro,27408,(336) 288-1190,toyota
+32001,32001,Toyota of Greensboro,https://www.toyotaofgreensboro.com,50.0,NC,36.109296,-79.828663,2630 Battleground Avenue,Greensboro,27408,(336) 288-1190,toyota
 32015,32015,Cox Toyota,https://www.coxtoyota.com,9999.0,NC,36.06358,-79.523555,3860 Danbrook Road,Burlington,27215,(336) 226-6361,toyota
 32024,32024,Massey Toyota,https://www.masseytoyota.com,50.0,NC,35.261223,-77.660323,4760 Highway 70 West,Kinston,28504,(252) 523-6111,toyota
 32069,32069,Peterson Toyota,https://www.petersontoyota.com,50.0,NC,34.652941,-78.999895,4381 Fayetteville Road,Lumberton,28359,(910) 738-5241,toyota
 32076,32076,Rick Hendrick Toyota,https://www.rickhendricktoyota.com,50.0,NC,35.061941,-78.967596,1969 Skibo Road,Fayetteville,28314,(910) 868-5071,toyota
-32082,32082,Vann York Toyota,https://www.vannyorktoyota.com,50,NC,35.983698,-80.009287,500 Eastchester Drive,High Point,27262,(336) 885-9016,toyota
-32096,32096,Scott Clark Toyota,https://www.scottclarkstoyota.com,50,NC,35.101511,-80.68129,13052 Marie Garris Drive,Matthews,28105,(704) 535-1972,toyota
+32082,32082,Vann York Toyota,https://www.vannyorktoyota.com,50.0,NC,35.983698,-80.009287,500 Eastchester Drive,High Point,27262,(336) 885-9016,toyota
+32096,32096,Scott Clark Toyota,https://www.scottclarkstoyota.com,50.0,NC,35.101511,-80.68129,13052 Marie Garris Drive,Matthews,28105,(704) 535-1972,toyota
 32097,32097,Fred Anderson Toyota,https://www.fredandersontoyota.com,50.0,NC,35.893626,-78.757037,9101 Glenwood Avenue,Raleigh,27617,(919) 787-0099,toyota
-32106,32106,Hendrick Toyota Concord,https://www.hendricktoyotaconcord.com,50,NC,35.364186,-80.706176,7670 Bruton Smith Blvd.,Concord,28027,(704) 979-7700,toyota
+32106,32106,Hendrick Toyota Concord,https://www.hendricktoyotaconcord.com,50.0,NC,35.364186,-80.706176,7670 Bruton Smith Blvd.,Concord,28027,(704) 979-7700,toyota
 32110,32110,Cloninger Toyota,https://www.cloningertoyota.com,9999.0,NC,35.646171,-80.491457,511 Jake Alexander Blvd. South,Salisbury,28147,(704) 755-6508,toyota
-32111,32111,Modern Toyota,https://www.moderntoyota.com,50,NC,36.04643,-80.261699,3178 Peters Creek Parkway,Winston-Salem,27127,(336) 785-3100,toyota
+32111,32111,Modern Toyota,https://www.moderntoyota.com,50.0,NC,36.04643,-80.261699,3178 Peters Creek Parkway,Winston-Salem,27127,(336) 785-3100,toyota
 32113,32113,Bryan Easler Toyota,https://www.bryaneaslertoyota.com,9999.0,NC,35.29988,-82.43941,1409 Spartanburg Highway,Hendersonville,28792,(828) 693-7261,toyota
 32115,32115,Griffin Toyota,https://www.griffintoyota.com,50.0,NC,34.909397,-79.717169,949 U.S. Highway 74 East,Hamlet,28345,(910) 582-3300,toyota
 32118,32118,Greenville Toyota,https://www.greenvilletoyota.com,50.0,NC,35.564457,-77.403553,3615 South Memorial Drive,Greenville,27834,(252) 321-3000,toyota
 32125,32125,Pinehurst Toyota,https://www.pinehursttoyota.com,50.0,NC,35.16495,-79.423031,10760 US Highway 15-501,Southern Pines,28387,(910) 692-2424,toyota
-32126,32126,Town & Country Toyota,https://www.townandcountrytoyota.com,50,NC,35.113484,-80.88284,9101 South Boulevard,Charlotte,28273,(704) 552-7600,toyota
-32129,32129,Mike Johnson's Hickory Toyota,https://www.hickorytoyota.com,50,NC,35.712047,-81.325241,435 Highway 70 S.E.,Hickory,28602,(828) 328-5586,toyota
+32126,32126,Town & Country Toyota,https://www.townandcountrytoyota.com,50.0,NC,35.113484,-80.88284,9101 South Boulevard,Charlotte,28273,(704) 552-7600,toyota
+32129,32129,Mike Johnson's Hickory Toyota,https://www.hickorytoyota.com,50.0,NC,35.712047,-81.325241,435 Highway 70 S.E.,Hickory,28602,(828) 328-5586,toyota
 32130,32130,Hendrick Toyota Wilmington,https://www.toyotaofwilmington.com,50.0,NC,34.248139,-77.862593,5640 Market Street,Wilmington,28405,(910) 791-9735,toyota
 32131,32131,Pecheles Ford Toyota,https://www.pechelestoyota.com,50.0,NC,35.591636,-77.099851,4020 Highway 264 West,Washington,27889,(252) 975-1500,toyota
 32133,32133,Fred Anderson Toyota of Sanford,https://www.toyotaofsanford.com,50.0,NC,35.442921,-79.127445,3321 Highway 87 South,Sanford,27332,(919) 708-5000,toyota
 32134,32134,Toyota of New Bern,https://www.toyotaofnewbern.com,50.0,NC,35.003988,-76.988107,5010 Highway 70 East,New Bern,28560,(252) 637-7200,toyota
 32136,32136,Hubert Vester Toyota of Wilson,https://www.hubertvestertoyota.com,50.0,NC,35.7481,-77.9671,3712 Raleigh Road Pkwy.,Wilson,27896,(252) 291-5300,toyota
-32139,32139,Toyota of Gastonia,https://www.toyotaofgastonia.com,50,NC,35.255481,-81.09268,4821 Wilkinson Boulevard,Gastonia,28056,(704) 824-7777,toyota
+32139,32139,Toyota of Gastonia,https://www.toyotaofgastonia.com,50.0,NC,35.255481,-81.09268,4821 Wilkinson Boulevard,Gastonia,28056,(704) 824-7777,toyota
 32140,32140,Toyota of Goldsboro,https://www.toyotaofgoldsboro.com,50.0,NC,35.371125,-77.931012,301 N. Oak Forest Road,Goldsboro,27534,(919) 778-3232,toyota
 32141,32141,Modern Toyota of Boone,https://www.moderntoyotaofboone.com,9999.0,NC,36.22267,-81.65288,225 Modern Drive,Boone,28607,(828) 264-1491,toyota
 32142,32142,Hendrick Toyota Apex,https://www.hendricktoyotaapex.com,50.0,NC,35.749877,-78.836851,1210 Laura Village Drive,Apex,27523,(919) 335-1600,toyota
-32143,32143,Flow Toyota of Statesville,https://www.flowtoyotaofstatesville.com,50,NC,35.78056,-80.86273,997 Folger Drive,Statesville,28625,(704) 872-2771,toyota
+32143,32143,Flow Toyota of Statesville,https://www.flowtoyotaofstatesville.com,50.0,NC,35.78056,-80.86273,997 Folger Drive,Statesville,28625,(704) 872-2771,toyota
 32144,32144,Mount Airy Toyota,https://www.mountairytoyota.com,9999.0,NC,36.5095,-80.624961,508 N Andy Griffith Pkwy,Mount Airy,27030,(336) 786-2118,toyota
 32146,32146,Deacon Jones Toyota,https://www.deaconjonestoyota.com,50.0,NC,34.99123,-78.35533,1613 Sunset Avenue,Clinton,28328,(910) 592-8951,toyota
-32147,32147,Classic Toyota of Wilkesboro,https://www.classictoyotawilkesboro.com,50,NC,36.15528,-81.168728,1511 West D Street,North Wilkesboro,28659,(336) 667-1185,toyota
+32147,32147,Classic Toyota of Wilkesboro,https://www.classictoyotawilkesboro.com,50.0,NC,36.15528,-81.168728,1511 West D Street,North Wilkesboro,28659,(336) 667-1185,toyota
 32148,32148,Fred Anderson Toyota of Asheville,https://www.ashevilletoyota.com,9999.0,NC,35.53621,-82.60152,777 Brevard Road,Asheville,28806,(828) 667-8888,toyota
 32150,32150,Stevenson-Hendrick Toyota Jacksonville,https://www.stevensonhendricktoyota.com,50.0,NC,34.790294,-77.37285,3124 New Bern Highway,Jacksonville,28546,(910) 937-1555,toyota
 32152,32152,Hall Toyota Elizabeth City,https://www.halltoyotaelizabethcity.com,50.0,NC,36.2853,-76.237246,1002 Halstead Blvd.,Elizabeth City,27909,(252) 335-4301,toyota
 32153,32153,Classic Toyota of Henderson,https://www.classictoyotahenderson.com,50.0,NC,36.3225,-78.4511,205 Toyota Lane,Henderson,27537,(252) 438-2181,toyota
 32154,32154,Mark Jacobson Toyota,https://www.markjacobsontoyota.com,50.0,NC,35.96301,-78.975932,4516 Durham Chapel Hill Blvd.,Durham,27707,(919) 493-5599,toyota
-32155,32155,Modern Toyota of Asheboro,https://www.moderntoyotaofasheboro.com,50,NC,35.703614,-79.780261,1636 Highway 64 East,Asheboro,27203,(336) 629-9148,toyota
+32155,32155,Modern Toyota of Asheboro,https://www.moderntoyotaofasheboro.com,50.0,NC,35.703614,-79.780261,1636 Highway 64 East,Asheboro,27203,(336) 629-9148,toyota
 32156,32156,Toyota of Roanoke Rapids,https://www.toyotaofroanokerapids.com,50.0,NC,36.44097,-77.6431,1836 Premier Blvd.,Roanoke Rapids,27870,(252) 537-6161,toyota
-32157,32157,Toyota of North Charlotte,https://www.toyotaofnorthcharlotte.com,50,NC,35.401471,-80.852908,13429 Statesville Road,Huntersville,28078,(704) 875-9199,toyota
+32157,32157,Toyota of North Charlotte,https://www.toyotaofnorthcharlotte.com,50.0,NC,35.401471,-80.852908,13429 Statesville Road,Huntersville,28078,(704) 875-9199,toyota
 32158,32158,Leith Toyota,https://www.leithtoyota.com,50.0,NC,35.890317,-78.563795,8005 Capital Blvd.,Raleigh,27616,(919) 876-5900,toyota
 32159,32159,CMA's Rocky Mount Toyota,https://www.cmasrockymounttoyota.com,50.0,NC,35.968973,-77.812327,943 N. Wesleyan Blvd.,Rocky Mount,27804,(252) 977-0224,toyota
 32160,32160,Ourisman Toyota,https://www.ourismantoyotarr.com,50.0,NC,36.44097,-77.6431,1836 Premier Blvd.,Roanoke Rapids,27870,(252) 537-6161,toyota
-32161,32161,Capital Toyota of Salisbury,https://www.capitaltoyotaofsalisbury.com,50,NC,35.646171,-80.491457,511 Jake Alexander Blvd. South,Salisbury,28147,(704) 755-6508,toyota
+32161,32161,Capital Toyota of Salisbury,https://www.capitaltoyotaofsalisbury.com,50.0,NC,35.646171,-80.491457,511 Jake Alexander Blvd. South,Salisbury,28147,(704) 755-6508,toyota
 33010,33010,Lloyds Toyota,https://www.lloydstoyota.com,23.0,ND,46.892392,-98.715803,500 17th St SW,Jamestown,58401,(701) 252-4690,toyota
 33017,33017,Lake Toyota,https://www.laketoyota.com,23.0,ND,48.100295,-98.859422,424 Highway 2 East,Devils Lake,58301,(701) 888-4019,toyota
 33021,33021,Corwin Toyota,https://www.corwintoyota.com,23.0,ND,46.873276,-96.844771,222 South 40th Street,Fargo,58103,(701) 282-8425,toyota
@@ -1381,6 +1381,8 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 61004,61004,Chatham Parkway Lexus,https://www.chathamparkwaylexus.com,,GA,32.064064,-81.159164,1120 Chatham Parkway,Savannah,31405,(912) 231-0005,lexus
 61006,61006,"Jim Hudson Lexus, Augusta",https://www.augustalexus.com,,GA,33.51571,-82.07178,3410 Washington Road,Martinez,30907,(706) 650-9999,lexus
 61008,61008,Butler Lexus of South Atlanta,https://www.butlerlexussouthatlanta.com,,GA,33.5645,-84.519,4025 Jonesboro Road,Union City,30291,(678) 619-3045,lexus
+61009,61009,Lexus of Atlanta,https://www.lexusatlanta.com,,GA,33.909508,-84.28926,5955 Peachtree Ind. Blvd.,Atlanta,30341,(770) 457-6800,lexus
+61010,61010,Lexus Gwinnett,https://www.lexusgwinnett.com,,GA,33.96506,-84.12891,3383 Satellite Blvd.,Duluth,30096,(770) 680-1000,lexus
 61030,61030,Hennessy Lexus of Gwinnett,https://www.lexusgwinnett.com,,GA,33.96506,-84.12891,3383 Satellite Blvd.,Duluth,30096,(770) 680-1000,lexus
 61031,61031,Nalley Lexus - Roswell,https://www.nalleylexusroswell.com,,GA,34.04311,-84.33157,980 Mansell Road,Roswell,30076,(678) 461-0800,lexus
 61101,61101,Peterson Lexus,https://www.petersonlexus.com,,ID,43.61819,-116.29478,9055 W. Fairview Avenue,Boise,83704,(208) 378-9009,lexus

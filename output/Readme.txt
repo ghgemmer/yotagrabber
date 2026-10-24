@@ -1,6 +1,6 @@
-Readme.txt updated 10/20/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 10/23/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Current Alerts -  Last Alert on 10-19-2026 -  Toyota has changed the interface to the graphql API again, and luckily program was quickly fixed same day to account for that.
-Last update -  10/16/2026 Changed Higher Level Search Functionality description to Higher Level Automated Search Feature.
+Last update -  10/23/2026 Added wording on Current Inventory Files about sorting on columns to prioritize the order you contact dealers in (Selling Price, Distance, etc).
 
 TABLE OF CONTENTS
 Section 1 Overview
@@ -160,9 +160,12 @@ and open it with Excel.  Then you would select the whole datasheet and click on 
 have drop down lists so you can select only the attributes you want your vehicle to have (say certain trims, colors, price or markup range, 
 options, distance from you, etc).
 Also in the drop down list you can use more advanced filtering by using the Text Filter or Number Filter selection. 
-You can also sort up to one column using the drop down list,  and if you need to sort more than one columne then use Data ---> Sort.
+You can also sort up to one column using the drop down list,  and if you need to sort more than one column then use Data ---> Sort.
+You could sort on Selling Price ascending to first prioritize contacting dealers with less costly vehicles meeting your criteria, or possibly distance if you have
+already specified say a maximum Selling Price using the Number filter on the Selling Price column and want to prioritize by distance, or
+sort by whatever column(s) you want to prioritize on as desired.
 You then would typically first want to look for vehicles with Pre-Sold = False and Hold Status of None or blank or Available.
-Then go to the dealer website shown for each vehicle and verify the car is there and matches the spreadsheet. 
+Then go to the dealer website shown for each vehicle, in the prioritized order, and verify the car is there and matches the spreadsheet. 
 Then contact the dealer to determine if it is actually available and has the expected attributes.
 Once you have done all that then if you still need/want to keep looking you can expand the search to include Hold Status = DealerHold.
 

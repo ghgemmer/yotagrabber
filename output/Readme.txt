@@ -1,6 +1,7 @@
-Readme.txt updated 10/23/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 10/26/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Current Alerts -  Last Alert on 10-19-2026 -  Toyota has changed the interface to the graphql API again, and luckily program was quickly fixed same day to account for that.
-Last update -  10/23/2026 Added wording on Current Inventory Files about sorting on columns to prioritize the order you contact dealers in (Selling Price, Distance, etc).
+Last update -  10/26/2026 Added wording another condition of a vehicle going from the sold file to the current file as this sometimes happens due to the inventory actually changing
+, on the fly, as it is being requested from the inventory website, and the program thinking it has gotten all the inventory when it has not
 
 TABLE OF CONTENTS
 Section 1 Overview
@@ -188,7 +189,9 @@ time also allows some statistics to be run on the day of the month allocations a
 Also VINs can move from the Sold file back to the current inventory file (non sold) if they disappeared from the
 Toyota search inventory website then reappear there.  This is rare but can sometime happen if a car sale falls through
 or someone who the car was reserved for, and considered sold, decides they don't want it.  It can also sometimes happen when a  
-quality control hold on the car at the port of entry occurs for a long time.
+quality control hold on the car at the port of entry occurs for a long time.  It also sometimes happens due to the inventory actually changing
+, on the fly, as it is being requested from the inventory website, and the program thinking it has gotten all the inventory when it has not.
+
 Older model year sold files will be archived at some point, when it appears there is no longer any inventory of that year left.
 
 Note that the contents of the VIN entries in the sold inventory files do not update after being placed in that file because there is no data 

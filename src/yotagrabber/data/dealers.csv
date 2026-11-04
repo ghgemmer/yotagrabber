@@ -1032,7 +1032,8 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 39067,39067,Midlands Toyota,https://www.mymidlandstoyota.com,50.0,SC,34.127979,-80.960248,240 Killian Commons Parkway,Columbia,29203,(803) 786-4111,toyota
 39068,39068,Spartanburg Toyota,https://www.spartanburgtoyota.com,9999.0,SC,34.919964,-81.996274,2450 Reidville Road,Spartanburg,29301,(864) 595-2300,toyota
 39069,39069,Fred Anderson Toyota of Greer,https://www.fredandersontoyotaofgreer.com,9999.0,SC,34.94933,-82.20048,13770 E. Wade Hampton Blvd.,Greer,29651,(864) 662-4800,toyota
-39070,39070,Jim Hudson Toyota Sumter,https://www.jimhudsontoyotasumter.com,50.0,SC,33.959981,-80.398134,2542 Broad Street,Sumter,29150,(803) 469-9500,toyota
+39070,39070,Jim Hudson Toyota Sumter,https://www.jimhudsontoyotasumter.com,50,SC,33.959981,-80.398134,2542 Broad Street,Sumter,29150,(803) 469-9500,toyota
+39071,39071,Capital Toyota of Florence,https://www.capitaltoyotaofflorence.com,50,SC,34.183425,-79.816285,2300 West Palmetto Street,Florence,29501,(843) 669-1676,toyota
 40009,40009,Harr Toyota,https://www.harr-toyota.com,23.0,SD,45.460643,-98.429008,4255 6th Avenue SE,Aberdeen,57401,(605) 225-3078,toyota
 40011,40011,Billion Toyota,https://www.siouxfallstoyota.com,23.0,SD,43.543666,-96.772395,4101 W. 12th Street,Sioux Falls,57106,(605) 361-7000,toyota
 40017,40017,Sharp Chevrolet-Toyota,https://www.sharptoyota.com,23.0,SD,44.889951,-97.134158,1112 9th Ave SW,Watertown,57201,(605) 886-8081,toyota

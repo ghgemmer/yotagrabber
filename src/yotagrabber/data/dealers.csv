@@ -40,6 +40,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 02056,02056,Sierra Toyota,https://www.sierratoyota-az.com,15.0,AZ,31.554366,-110.273512,2596 Fry Boulevard,Sierra Vista,85635,(520) 458-8880,toyota
 02057,02057,Bell Road Toyota,https://www.bellroadtoyota.com,15.0,AZ,33.64062,-112.103545,2020 West Bell Road,Phoenix,85023,(602) 863-0600,toyota
 02058,02058,Larry H. Miller Toyota Peoria,https://www.larrymillertoyota.com,15.0,AZ,33.637549,-112.244232,8633 West Bell Road,Peoria,85382,(623) 876-3400,toyota
+02059,02059,Avondale Toyota,https://www.avondaletoyota.com,15.0,AZ,33.459983,-112.276095,10005 West Papago Frwy.,Avondale,85323,(623) 936-7700,toyota
 03024,03024,Magness Toyota,https://www.magnesstoyota.com,60.0,AR,36.264529,-93.135271,1407 Highway 62-65 412 NO,Harrison,72601,(870) 741-5451,toyota
 03049,03049,Ryburn Toyota,https://www.ryburntoyota.com,9999.0,AR,33.626689,-91.803016,156 Highway 425 South,Monticello,71655,(870) 367-5353,toyota
 03050,03050,J. Pauley Toyota,https://www.jpauleytoyota.com,60.0,AR,35.323328,-94.396463,6200 South 36th Street,Fort Smith,72908,(479) 646-7800,toyota
@@ -66,7 +67,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 04053,04053,Toyota of Clovis,https://www.toyotaofclovis.com,12.0,CA,36.80928,-119.72947,895 West Shaw Avenue,Clovis,93612,(559) 291-5544,toyota
 04057,04057,Larry H. Miller Toyota Lemon Grove,https://www.lhmtoyotalemongrove.com,11.0,CA,32.739737,-117.052313,6800 Federal Boulevard,Lemon Grove,91945,(619) 287-2400,toyota
 04061,04061,Toyota of San Bernardino,https://www.toyotasb.com,9999.0,CA,34.073592,-117.299363,650 Auto Center Drive,San Bernardino,92408,(909) 381-4444,toyota
-04067,04067,Envision Toyota of Milpitas,https://www.toyotamilpitas.com,12.0,CA,37.417701,-121.911602,950 Thompson Street,Milpitas,95035,(408) 240-1400,toyota
+04067,04067,Envision Toyota of Milpitas,https://www.toyotamilpitas.com,12.0,CA,37.417701,-121.911602,950 Thompson Street,Milpitas,95035,(408) 479-9610,toyota
 04070,04070,Freeman Toyota,https://www.freeman-toyota.com,12.0,CA,38.407751,-122.716789,2875 Corby Avenue,Santa Rosa,95407,(707) 542-1791,toyota
 04072,04072,Hansel Toyota,https://www.hanseltoyota.com,12.0,CA,38.26495,-122.662567,1125 Auto Center Drive,Petaluma,94952,(707) 769-2333,toyota
 04073,04073,Novato Toyota,https://www.novatotoyota.com,12.0,CA,38.092567,-122.55655,115 Vintage Way,Novato,94945,(415) 897-3191,toyota
@@ -1032,8 +1033,8 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 39067,39067,Midlands Toyota,https://www.mymidlandstoyota.com,50.0,SC,34.127979,-80.960248,240 Killian Commons Parkway,Columbia,29203,(803) 786-4111,toyota
 39068,39068,Spartanburg Toyota,https://www.spartanburgtoyota.com,9999.0,SC,34.919964,-81.996274,2450 Reidville Road,Spartanburg,29301,(864) 595-2300,toyota
 39069,39069,Fred Anderson Toyota of Greer,https://www.fredandersontoyotaofgreer.com,9999.0,SC,34.94933,-82.20048,13770 E. Wade Hampton Blvd.,Greer,29651,(864) 662-4800,toyota
-39070,39070,Jim Hudson Toyota Sumter,https://www.jimhudsontoyotasumter.com,50,SC,33.959981,-80.398134,2542 Broad Street,Sumter,29150,(803) 469-9500,toyota
-39071,39071,Capital Toyota of Florence,https://www.capitaltoyotaofflorence.com,50,SC,34.183425,-79.816285,2300 West Palmetto Street,Florence,29501,(843) 669-1676,toyota
+39070,39070,Jim Hudson Toyota Sumter,https://www.jimhudsontoyotasumter.com,50.0,SC,33.959981,-80.398134,2542 Broad Street,Sumter,29150,(803) 469-9500,toyota
+39071,39071,Capital Toyota of Florence,https://www.capitaltoyotaofflorence.com,50.0,SC,34.183425,-79.816285,2300 West Palmetto Street,Florence,29501,(843) 669-1676,toyota
 40009,40009,Harr Toyota,https://www.harr-toyota.com,23.0,SD,45.460643,-98.429008,4255 6th Avenue SE,Aberdeen,57401,(605) 225-3078,toyota
 40011,40011,Billion Toyota,https://www.siouxfallstoyota.com,23.0,SD,43.543666,-96.772395,4101 W. 12th Street,Sioux Falls,57106,(605) 361-7000,toyota
 40017,40017,Sharp Chevrolet-Toyota,https://www.sharptoyota.com,23.0,SD,44.889951,-97.134158,1112 9th Ave SW,Watertown,57201,(605) 886-8081,toyota
@@ -1294,6 +1295,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 54041,54041,Toyota Carlsbad,https://www.toyotacarlsbad.com,9999.0,CA,33.132685,-117.326399,5424 Paseo Del Norte,Carlsbad,92008,(760) 438-2000,toyota
 54042,54042,Wondries Toyota,https://www.wondriestoyota.com,11.0,CA,34.09172,-118.139042,1439 West Main Street,Alhambra,91801,(626) 289-8000,toyota
 54058,54058,Toyota of Hollywood,https://www.hollywoodtoyota.com,11.0,CA,34.101528,-118.321183,6920 Sunset Blvd.,Los Angeles,90028,(323) 817-0282,toyota
+54068,54068,One Toyota of Oakland,https://www.onetoyota.com,12.0,CA,37.740045,-122.199774,8181 Oakport Street,Oakland,94621,(510) 569-1111,toyota
 60104,60104,Lexus of Mobile,https://www.lexusofmobile.com,,AL,30.656313,-88.116905,3024 Government Blvd.,Mobile,36606,(251) 478-3300,lexus
 60105,60105,Lexus of Birmingham,https://www.lexusofbirmingham.com,,AL,33.521732,-86.66446,1001 Tom Williams Way,Irondale,35210,(205) 252-5000,lexus
 60108,60108,Lexus of Huntsville,https://www.lexusofhuntsville.com,,AL,34.74976,-86.69228,6580 University Drive N.W.,Huntsville,35806,(256) 721-9560,lexus
@@ -1320,7 +1322,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 60416,60416,Lexus of Fremont,https://www.lexusfremont.com,,CA,37.49712,-121.97358,5600 Cushing Parkway,Fremont,94538,(510) 657-6600,lexus
 60417,60417,Lexus of Serramonte,https://www.lexusserramonte.com,,CA,37.675137,-122.46177,700 Serramonte Boulevard,Colma,94014,(650) 994-2255,lexus
 60420,60420,Lexus of Sacramento,https://www.lexusofsacramento.com,,CA,38.612236,-121.40111,2600 Fulton Avenue,Sacramento,95821,(916) 485-3987,lexus
-60425,60425,Lexus Monterey Peninsula,https://www.lexusmontereypeninsula.com,,CA,36.61262,-121.846886,4A Heitzinger Plaza,Seaside,93955,(831) 393-3030,lexus
+60425,60425,Lexus Monterey Peninsula,https://www.lexusmontereypeninsula.com,,CA,36.61262,-121.846886,1721 Del Monte Blvd,Seaside,93955,(831) 393-3030,lexus
 60426,60426,Lexus of Oxnard,https://www.lexusofoxnard.com,,CA,34.227303,-119.15266,1640 Auto Center Dr.,Oxnard,93036,(805) 988-8500,lexus
 60428,60428,"Lexus of Concord, LLC",https://www.lexusofconcord.com,,CA,37.97631,-122.04357,2001 Market Street,Concord,94520,(925) 682-3033,lexus
 60429,60429,Lexus of Pleasanton,https://www.lexusofpleasanton.com,,CA,37.70036,-121.87518,4345 Rosewood Dr.,Pleasanton,94588,(925) 847-0678,lexus
@@ -1549,4 +1551,5 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 65002,65002,Kendall Lexus of Alaska,https://www.kendalllexusofalaska.com,,AK,61.157845,-149.8657,6930 Old Seward Highway,Anchorage,99518,(907) 279-8506,lexus
 65401,65401,Lexus Carlsbad,https://www.lexuscarlsbad.com,,CA,33.131508,-117.32588,5444 Paseo Del Norte,Carlsbad,92008,(760) 438-2300,lexus
 65402,65402,Lexus Escondido,https://www.lexusescondido.com,,CA,33.107327,-117.09643,1205 Auto Park Way,Escondido,92029,(760) 747-2300,lexus
+65403,65403,Lexus of Fremont,https://www.lexusfremont.com,,CA,37.49712,-121.97358,5600 Cushing Parkway,Fremont,94538,(510) 657-6600,lexus
 ,,,,,,,,,,,,

@@ -1406,7 +1406,8 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 61306,61306,Lexus of Merrillville,https://www.lexusofmerrillville.com,,IN,41.47121,-87.3854,3957 West U.S. Route 30,Merrillville,46410,(219) 769-4545,lexus
 61307,61307,Jordan Lexus of Mishawaka,https://www.jordanlexusofmishawaka.com,,IN,41.699375,-86.188255,4325 North Grape Road,Mishawaka,46545,(574) 243-7700,lexus
 61401,61401,Willis Lexus,https://www.willislexus.com,,IA,41.61283,-93.75364,2131 NW 100th Street,Clive,50325,(515) 253-9900,lexus
-61403,61403,Smart Lexus of Quad Cities,https://www.smartlexusofquadcities.com,,IA,41.55978,-90.57275,101 W. Kimberly Road,Davenport,52806,(563) 388-2898,lexus
+61403,61403,Smart Lexus of Quad Cities,https://www.smartlexusofquadcities.com,,IA,41.57418,-90.54773,2021 E 53rd Street,Davenport,52807,(563) 388-2898,lexus
+61408,61408,Willis Lexus,https://www.willislexus.com,,IA,41.61283,-93.75364,2131 NW 100th Street,Clive,50325,(515) 253-9900,lexus
 61503,61503,Hendrick Lexus Kansas City,https://www.hendricklexuskansascity.com,,KS,39.004795,-94.69594,6935 W. Frontage Road,Merriam,66203,(913) 789-5100,lexus
 61504,61504,Lexus of Wichita,https://www.lexusofwichita.com,,KS,37.711212,-97.20897,1555 N. Greenwich Road,Wichita,67206,(316) 221-3475,lexus
 61602,61602,Lexus of Lexington,https://www.lexusoflexington.com,,KY,38.029926,-84.453255,1264 East New Circle Road,Lexington,40505,(859) 233-2000,lexus

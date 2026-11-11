@@ -1,7 +1,7 @@
 code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMake
 01007,01007,Bill Penney Toyota,https://www.billpenneytoyota.com,50.0,AL,34.737385,-86.65119,"4808 University Dr., N.W.",Huntsville,35816,(256) 837-1111,toyota
 01033,01033,McKinnon Toyota,https://www.mckinnontoyota.com,9999.0,AL,32.886596,-86.621391,235 Price Drive,Clanton,35046,(205) 755-3430,toyota
-01053,01053,Toyota of Dothan,https://www.toyotaofdothan.com,50.0,AL,31.192701,-85.408607,2285 Ross Clark Circle,Dothan,36301,(334) 794-0741,toyota
+01053,01053,Toyota of Dothan,https://www.toyotaofdothan.com,50,AL,31.192701,-85.408607,2285 Ross Clark Circle,Dothan,36301,(334) 794-0741,toyota
 01059,01059,Serra Toyota,https://www.serratoyota.com,50.0,AL,33.620794,-86.685932,1300 Center Point Parkway,Birmingham,35215,(205) 838-4400,toyota
 01061,01061,Limbaugh Toyota,https://www.limbaughtoyota.com,50.0,AL,33.507035,-86.881857,2200 Avenue T,Birmingham,35218,(205) 780-0500,toyota
 01064,01064,Sunny King Toyota,https://www.sunnykingtoyota.com,50.0,AL,33.613976,-85.776722,2570 U.S. Highway 78 East,Anniston,36207,(256) 835-0800,toyota
@@ -298,7 +298,8 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 09248,09248,Gettel Stadium Toyota,https://www.stadiumtoyota.com,50.0,FL,27.99287,-82.50564,5088 North Dale Mabry Highway,Tampa,33614,(813) 872-4881,toyota
 09249,09249,Fred Anderson Toyota of Cape Coral,https://www.toyotaofcapecoral.com,9999.0,FL,26.673942,-81.929736,2025 NE Pine Island Road,Cape Coral,33909,(239) 800-1215,toyota
 09250,09250,Gettel Toyota Ocala,https://www.getteltoyotaocala.com,50.0,FL,29.17816,-82.15404,"1719 S.W. College Rd,Hwy 200 W",Ocala,34471,(352) 732-0770,toyota
-09251,09251,Panama City Toyota,https://www.panamacitytoyota.com,9999.0,FL,30.175111,-85.67423,959 West 15th Street,Panama City,32401,(850) 769-3377,toyota
+09251,09251,Panama City Toyota,https://www.panamacitytoyota.com,50,FL,30.175111,-85.67423,959 West 15th Street,Panama City,32401,(850) 769-3377,toyota
+09252,09252,Marianna Toyota,https://www.mariannatoyota.com,50,FL,30.780614,-85.251002,2961 Pennsylvania Avenue,Marianna,32448,(850) 526-3511,toyota
 10015,10015,Milton Martin Toyota,https://www.miltonmartintoyota.com,50.0,GA,34.225197,-83.861868,3150 Milton Martin Toyota Way,Gainesville,30507,(770) 532-4355,toyota
 10017,10017,Butler Toyota,https://www.butlertoyota.com,50.0,GA,32.9165,-83.70941,4580 Riverside Drive,Macon,31210,(478) 476-1770,toyota
 10032,10032,Marietta Toyota,https://www.mariettatoyota.com,50.0,GA,33.934257,-84.512243,750 Cobb Parkway South,Marietta,30060,(770) 422-1490,toyota
@@ -362,7 +363,7 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 12111,12111,Crown Toyota,https://www.crowntoyotadecatur.com,21.0,IL,39.876323,-88.959282,255 W. Pershing Road,Decatur,62526,(217) 872-5000,toyota
 12112,12112,Mungenast Alton Toyota,https://www.altontoyota.com,21.0,IL,38.922019,-90.168851,850 Homer Adams Parkway,Alton,62002,(618) 208-2400,toyota
 12114,12114,Toyota of Bourbonnais,https://www.toyotaofbourbonnais.com,21.0,IL,41.162698,-87.886331,555 Latham Drive,Bourbonnais,60914,(815) 933-7700,toyota
-12118,12118,Anderson Toyota,https://www.andersontoyota.com,21.0,IL,42.31946,-88.98382,4100 N. Perryville Road,Loves Park,61111,(815) 397-8995,toyota
+12118,12118,Anderson Toyota,https://www.andersontoyota.com,21,IL,42.31946,-88.98382,4100 N. Perryville Road,Loves Park,61111,(815) 397-8995,toyota
 12125,12125,Fort's Toyota of Pekin,https://www.toyota-pekin.com,21.0,IL,40.624025,-89.620547,120 Radio City Drive,North Pekin,61554,(309) 382-4000,toyota
 12126,12126,Dan Hecht Chevrolet/Toyota,https://www.danhechttoyota.com,21.0,IL,39.098787,-88.546786,2400 South Banker Street,Effingham,62401,(217) 342-4111,toyota
 12133,12133,Romeoville Toyota,https://www.romeovilletoyota.com,9999.0,IL,41.599334,-88.123372,684 S. Weber Road,Romeoville,60446,(815) 744-2760,toyota
@@ -1258,14 +1259,14 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 48028,48028,Kolosso Toyota,https://www.kolossotoyota.com,21.0,WI,44.273612,-88.451281,3000 W. Wisconsin Avenue,Appleton,54914,(920) 738-3666,toyota
 48032,48032,Don Jacobs Toyota,https://www.donjacobstoyota.com,21.0,WI,42.940583,-87.949823,5727 S. 27th Street,Milwaukee,53221,(414) 281-3100,toyota
 48036,48036,Heiser Toyota,https://www.heisertoyota.com,9999.0,WI,43.143642,-88.053221,11301 West Metro Auto Mall,Milwaukee,53224,(414) 357-2100,toyota
-48045,48045,Hesser Toyota,https://www.hessertoyota.com,21.0,WI,42.722142,-89.0018,1811 Humes Road,Janesville,53545,(608) 754-7754,toyota
+48045,48045,Hesser Toyota,https://www.hessertoyota.com,21,WI,42.722142,-89.0018,1811 Humes Road,Janesville,53545,(608) 754-7754,toyota
 48046,48046,Mark Toyota of Plover,https://www.marktoyota.com,21.0,WI,44.45289,-89.52055,1765 Park Avenue,Plover,54467,(715) 342-5040,toyota
 48049,48049,Russ Darrow Toyota,https://www.russdarrowtoyota.com,9999.0,WI,43.427536,-88.220008,2700 W. Washington St.,West Bend,53095,(262) 334-9411,toyota
 48051,48051,Bergstrom Toyota,https://www.bergstromtoyota.com,9999.0,WI,43.979294,-88.584287,3245 S. Washburn Street,Oshkosh,54904,(920) 966-1616,toyota
 48053,48053,Ruda Chevrolet/Toyota,https://www.rudatoyota.com,21.0,WI,42.603242,-89.6584,104 Eighth Street,Monroe,53566,(608) 325-7770,toyota
 48059,48059,LeadCar Toyota Wausau,https://www.leadcartoyotawausau.com,21.0,WI,44.998022,-89.664037,2900 N. 20th Avenue,Wausau,54401,(715) 675-7775,toyota
 48060,48060,LeadCar Toyota La Crosse,https://www.leadcartoyotalacrosse.com,21.0,WI,43.805287,-91.253808,800 Third Street South,La Crosse,54601,(608) 793-7000,toyota
-48061,48061,East Madison Toyota,https://eastmadisontoyota.com,21.0,WI,43.13989,-89.28968,3501 Lancaster Drive,Madison,53718,(608) 240-7900,toyota
+48061,48061,East Madison Toyota,https://eastmadisontoyota.com,21,WI,43.13989,-89.28968,3501 Lancaster Drive,Madison,53718,(608) 240-7900,toyota
 48064,48064,International Toyota,https://www.internationaltoyota.com,21.0,WI,43.756971,-87.762033,4120 N. Frontage Road,Sheboygan,53081,(920) 458-6171,toyota
 48065,48065,Toyota of Brookfield,https://www.toyotaofbrookfield.com,9999.0,WI,43.08565,-88.168629,20655 West Capitol Drive,Brookfield,53045,(262) 781-2626,toyota
 48066,48066,Rhinelander Toyota,https://www.rhinelandertoyota.com,21.0,WI,45.656976,-89.383027,1955 North Stevens Street,Rhinelander,54501,(715) 365-8696,toyota
@@ -1273,11 +1274,12 @@ code,dealerId,name,url,regionId,state,lat,long,address1,city,zip,phone,vehicleMa
 48068,48068,Zeigler Toyota of Racine,https://www.zeiglertoyotaracine.com,9999.0,WI,42.726366,-87.952016,13350 Kilbourn Drive,Mount Pleasant,53177,(262) 886-5111,toyota
 48069,48069,Marthaler Toyota of Ashland,https://www.ashland-toyota.com,21.0,WI,46.605203,-90.856043,2301 Lakeshore Drive East,Ashland,54806,(715) 682-5252,toyota
 48070,48070,Wilde Toyota,https://www.wildetoyota.com,9999.0,WI,42.9845,-88.04776,3225 South 108th Street,West Allis,53227,(414) 545-8010,toyota
-48071,48071,Smart Motors Toyota,https://www.smarttoyota.com,21.0,WI,43.05102,-89.48171,5901 Odana Road,Madison,53719,(608) 275-7808,toyota
+48071,48071,Smart Motors Toyota,https://www.smarttoyota.com,21,WI,43.05102,-89.48171,5901 Odana Road,Madison,53719,(608) 275-7808,toyota
 48072,48072,Umansky Toyota,https://www.umanskytoyota.com,9999.0,WI,43.11941,-87.93062,1620 W. Silver Spring Dr.,Glendale,53209,(414) 228-1450,toyota
 48073,48073,Dahl Toyota Sheboygan,https://www.dahltoyotasheboygan.com,9999.0,WI,43.756971,-87.762033,4120 N. Frontage Road,Sheboygan,53081,(920) 458-6171,toyota
 48074,48074,Serra Toyota,https://www.serratoyotamke.com,9999.0,WI,42.940583,-87.949823,5727 S. 27th Street,Milwaukee,53221,(414) 281-3100,toyota
 48075,48075,Kolosso Toyota,https://www.kolossotoyota.com,9999.0,WI,44.273612,-88.451281,3000 W. Wisconsin Avenue,Appleton,54914,(920) 738-3666,toyota
+48076,48076,LeadCar Toyota Monroe,https://www.leadcartoyotamonroe.com,21,WI,42.603242,-89.6584,104 Eighth Street,Monroe,53566,(608) 325-7770,toyota
 49025,49025,Rock Springs Toyota,https://www.rockspringstoyota.com,15.0,WY,41.590307,-109.225613,401 N. Center Street,Rock Springs,82901,(307) 362-5015,toyota
 49029,49029,Fremont Toyota,https://www.fremonttoyotalander.com,15.0,WY,42.844429,-108.748,103 Fremont Way,Lander,82520,(307) 332-5011,toyota
 49030,49030,Fremont Toyota of Sheridan,https://www.fremonttoyotasheridan.com,15.0,WY,44.780704,-106.942888,1614 Coffeen Avenue,Sheridan,82801,(307) 674-4423,toyota

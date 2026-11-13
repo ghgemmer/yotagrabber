@@ -1,7 +1,6 @@
-Readme.txt updated 10/26/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
+Readme.txt updated 11/13/2026  (version history for Readme.txt at https://github.com/ghgemmer/yotagrabber/blob/main/output/Readme.txt)
 No Current Alerts -  Last Alert on 10-19-2026 -  Toyota has changed the interface to the graphql API again, and luckily program was quickly fixed same day to account for that.
-Last update -  10/26/2026 Added wording another condition of a vehicle going from the sold file to the current file as this sometimes happens due to the inventory actually changing
-, on the fly, as it is being requested from the inventory website, and the program thinking it has gotten all the inventory when it has not
+Last update -  11/13/2026 Updated wording on the Higher Level Automated Search Feature to clarify things. 
 
 TABLE OF CONTENTS
 Section 1 Overview
@@ -411,14 +410,15 @@ to reduce the time it takes to get the inventory.
 
 Section 4 Higher Level Automated Search Feature
 
-Beyond the updating of inventory spreadsheets on the google drive, there is the capability to run 
-a higher level search program, searchForVehicles.py, that can notify the user via any
-combination of sound, email, text whenever changes in the inventory data occur for a specified match criteria.
-This allows a user to be alerted whenever what they are looking for has changed and then look at the attached
-log file to view the changes.  That program uses a config YAML file that can specify how often to search, the
-match filter criteria filename, sound file options, texting options, email options, how changes are reported,
-log file options, etc. See SearchVehicles-Example_config.yaml on github for all the configuration items that can be set.
-As long as I'm not inundated with requests, I can generally run this search for you so you don't have to install
+Beyond the updating of inventory spreadsheets on the google drive, there is the capability to run a higher
+level search program, searchForVehicles.py, that can notify the user via any combination of sound, email, text
+whenever changes in the inventory data occur that then match a specified criteria (trim, color, price,etc).
+This allows a user to be alerted whenever what they are looking for has matched (trim, color, price,etc) and
+then look at the attached log file to view the results.  That program uses a config YAML file that can specify
+how often to search, the match filter criteria filename, sound file options, texting options, email options,
+how changes are reported, log file options, etc. See SearchVehicles-Example_config.yaml on github for all the
+configuration items that can be set. As long as I'm not inundated with requests, I can generally run this
+search for you so you don't have to install
 configure and continuously run the program yourself.  Just contact me via email. 
 
 searchForVehicles.py runs the vehicles.py update_vehicles() method to collect an inventory of all vehicles in
